@@ -1,0 +1,15 @@
+<?php
+
+use App\Models\User;
+
+function is_prod() {
+    return in_array(app()->environment(), ['prod', 'production']);
+}
+
+function is_non_prod() {
+    return !is_prod();
+}
+
+function get_super_admin_email() {
+    return User::getSuperAdmin('email');
+}
