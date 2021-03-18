@@ -22,7 +22,10 @@ Route::get('/', function () {
 // })->name('dashboard');
 
 
-Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
+Route::group([
+    'prefix' => 'devtools',
+    'middleware' => ['auth:sanctum', 'verified']
+], function () {
     Route::view('dashboard', 'dashboard')->name('dashboard');
     Route::view('forms', 'forms')->name('forms');
     Route::view('cards', 'cards')->name('cards');
