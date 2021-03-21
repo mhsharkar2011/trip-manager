@@ -31,6 +31,9 @@ Route::group([
     Route::view('telescope-frame', 'telescope-iframe')
     ->name('telescope.iframe');
     
+    Route::view('artisangui-iframe', 'artisangui-iframe')
+    ->name('artisangui.iframe');
+    
     //theme pages
     Route::view('dashboard', 'dashboard')->name('dashboard');
     Route::view('forms', 'forms')->name('forms');
