@@ -26,6 +26,12 @@ Route::group([
     'prefix' => 'devtools',
     'middleware' => ['auth:sanctum', 'verified']
 ], function () {
+
+    //tools
+    Route::view('telescope-frame', 'telescope-iframe')
+    ->name('telescope.iframe');
+    
+    //theme pages
     Route::view('dashboard', 'dashboard')->name('dashboard');
     Route::view('forms', 'forms')->name('forms');
     Route::view('cards', 'cards')->name('cards');
