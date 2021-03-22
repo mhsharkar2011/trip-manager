@@ -77,6 +77,7 @@ return [
     */
     'commands' => [
         'Frequeunt' => [
+            'export:postman',
             'telescope:clear',
             'telescope:prune',
             'migrate',
