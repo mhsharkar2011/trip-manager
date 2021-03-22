@@ -40,6 +40,11 @@ Route::group([
         'src' => str_replace('/', '', config('web-tinker.path'))
     ])
     ->name('webtinker.iframe');
+
+    Route::view('api-explorer', 'devtools.show-in-iframe', [
+        'src' => config('laravelapiexplorer.route')
+    ])
+    ->name('apiexplorer.iframe');
     
 
     //theme pages
