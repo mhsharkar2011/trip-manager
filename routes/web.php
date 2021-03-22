@@ -36,6 +36,12 @@ Route::group([
     ])
     ->name('artisangui.iframe');
 
+    Route::view('webtinker-iframe', 'devtools.show-in-iframe', [
+        'src' => str_replace('/', '', config('web-tinker.path'))
+    ])
+    ->name('webtinker.iframe');
+    
+
     //theme pages
     Route::view('dashboard', 'dashboard')->name('dashboard');
     Route::view('forms', 'forms')->name('forms');
