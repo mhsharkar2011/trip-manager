@@ -26,14 +26,16 @@ Route::group([
     'prefix' => 'devtools',
     'middleware' => ['auth:sanctum', 'verified']
 ], function () {
-
-    //tools
-    Route::view('telescope-frame', 'telescope-iframe')
+    Route::view('telescope-frame', 'devtools.show-in-iframe', [
+        'src' => config('telescope.path')
+    ])
     ->name('telescope.iframe');
     
-    Route::view('artisangui-iframe', 'artisangui-iframe')
+    Route::view('artisangui-iframe', 'devtools.show-in-iframe', [
+        'src' => '~artisan'
+    ])
     ->name('artisangui.iframe');
-    
+
     //theme pages
     Route::view('dashboard', 'dashboard')->name('dashboard');
     Route::view('forms', 'forms')->name('forms');
