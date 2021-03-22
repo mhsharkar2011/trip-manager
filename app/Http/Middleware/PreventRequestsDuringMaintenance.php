@@ -12,6 +12,11 @@ class PreventRequestsDuringMaintenance extends Middleware
      * @var array
      */
     protected $except = [
-        //
+        'login',
+        'telescope',
+        'telescope/*',
+        '~artisan',
+        '~artisan/*',
+        'devtools/*',
     ];
 }
