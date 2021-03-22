@@ -76,43 +76,15 @@ return [
     |
     */
     'commands' => [
-        'laravel' => [
-            'clear-compiled',
-            'down',
-            'up',
-            'env',
-            'help',
-            'inspire',
-            'list',
-            'notifications:table',
-            'package:discover',
-            'schedule:run',
-            'schema:dump',
-            'session:table',
-            'storage:link',
-            'stub:publish',
-            'auth:clear-resets',
+        'Frequeunt' => [
+            'telescope:clear',
+            'telescope:prune',
+            'migrate',
+            'migrate:fresh',
+            'make:migration',
         ],
-        'optimize' => [
-            'optimize',
-            'optimize:clear',
-        ],
-        'cache' => [
-            'cache:clear',
-            'cache:forget',
-            'cache:table',
-            'config:clear',
-            'config:cache',
-        ],
-        'database' => [
-            'db:seed',
-            'db:wipe',
-        ],
-        'events' => [
-            'event:cache',
-            'event:clear',
-            'event:generate',
-            'event:list',
+        'project' => [
+            'project:create-super-admin',
         ],
         'make' => [
             'make:cast',
@@ -147,6 +119,44 @@ return [
             'migrate:reset',
             'migrate:rollback',
             'migrate:status',
+        ],
+        'laravel' => [
+            'clear-compiled',
+            'down',
+            'up',
+            'env',
+            'help',
+            'inspire',
+            'list',
+            'notifications:table',
+            'package:discover',
+            'schedule:run',
+            'schema:dump',
+            'session:table',
+            'storage:link',
+            // 'stub:publish',
+            'auth:clear-resets',
+        ],
+        'optimize' => [
+            'optimize',
+            'optimize:clear',
+        ],
+        'cache' => [
+            'cache:clear',
+            'cache:forget',
+            'cache:table',
+            'config:clear',
+            'config:cache',
+        ],
+        'database' => [
+            'db:seed',
+            'db:wipe',
+        ],
+        'events' => [
+            'event:cache',
+            'event:clear',
+            'event:generate',
+            'event:list',
         ],
         'queue' => [
             'queue:batches-table',
