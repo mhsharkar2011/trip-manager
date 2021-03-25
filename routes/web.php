@@ -26,6 +26,11 @@ Route::group([
     'prefix' => 'devtools',
     'middleware' => ['auth:sanctum', 'verified']
 ], function () {
+    Route::view('log-viewer', 'devtools.show-in-iframe', [
+        'src' => config('log-viewer.route.attributes.prefix')
+    ])
+    ->name('logviewer.iframe');
+
     Route::view('telescope-frame', 'devtools.show-in-iframe', [
         'src' => config('telescope.path')
     ])
