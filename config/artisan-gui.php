@@ -77,7 +77,7 @@ return [
     */
     'commands' => [
         'Frequeunt' => [
-            'export:postman',
+            'project:export-postman-with-token',
             'telescope:clear',
             'telescope:prune',
             'migrate',
@@ -86,6 +86,7 @@ return [
         ],
         'project' => [
             'project:create-super-admin',
+            'project:export-postman-with-token',
         ],
         'make' => [
             'make:cast',
@@ -179,6 +180,9 @@ return [
         'view' => [
             'view:cache',
             'view:clear'
+        ],
+        'misc' => [
+            'export:postman',
         ]
     ]
 

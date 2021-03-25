@@ -16,7 +16,7 @@ function get_super_admin_email() {
 
 function __getTokenForPostman() {
     $user = User::superAdmin()->first();
-    $token = $user->tokens()->whereName('postman')->value('token');
+    $token = $user->tokens()->whereName('postman')->value('plainTextToken');
 
     if (! $token) {
         $token = $user->createToken('postman')->plainTextToken;
