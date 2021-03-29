@@ -87,6 +87,7 @@ return [
         'project' => [
             'project:create-super-admin',
             'project:export-postman-with-token',
+            'project:send-test-email',
         ],
         'make' => [
             'make:cast',
