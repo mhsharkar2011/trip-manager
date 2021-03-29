@@ -50,6 +50,9 @@ Route::group([
         'src' => config('laravelapiexplorer.route')
     ])
     ->name('apiexplorer.iframe');
+
+    Route::view('phpinfo', 'devtools.phpinfo')
+    ->name('phpinfo');
     
 
     //theme pages
