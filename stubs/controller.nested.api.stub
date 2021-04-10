@@ -17,7 +17,7 @@ class {{ class }} extends Controller
      */
     public function index({{ parentModel }} ${{ parentModelVariable }})
     {
-        //
+        return $this->respond(${{ parentModelVariable }}->{{ modelVariable }}()->latest()->paginate());
     }
 
     /**
@@ -29,7 +29,13 @@ class {{ class }} extends Controller
      */
     public function store(Request $request, {{ parentModel }} ${{ parentModelVariable }})
     {
-        //
+        $validated = $request->validate(
+            {{ model }}::validation_rules(),
+            {{ model }}::validation_messages(),
+        );
+
+        return $this->respondCreated({{ model }}::create($request->all()));
+        //return $this->respondCreated({{ model }}::create($validated));
     }
 
     /**
@@ -41,7 +47,7 @@ class {{ class }} extends Controller
      */
     public function show({{ parentModel }} ${{ parentModelVariable }}, {{ model }} ${{ modelVariable }})
     {
-        //
+        return $this->respond(${{ modelVariable }});
     }
 
     /**
@@ -54,7 +60,15 @@ class {{ class }} extends Controller
      */
     public function update(Request $request, {{ parentModel }} ${{ parentModelVariable }}, {{ model }} ${{ modelVariable }})
     {
-        //
+        $validated = $request->validate(
+            {{ model }}::validation_rules(),
+            {{ model }}::validation_messages(),
+        );
+
+        ${{ modelVariable }}->update($request->all());
+        //${{ modelVariable }}->update($validated);
+
+        return $this->respond(${{ modelVariable }});
     }
 
     /**
@@ -66,6 +80,8 @@ class {{ class }} extends Controller
      */
     public function destroy({{ parentModel }} ${{ parentModelVariable }}, {{ model }} ${{ modelVariable }})
     {
-        //
+        ${{ modelVariable }}->delete();
+
+        return $this->respondDeleted();
     }
 }
