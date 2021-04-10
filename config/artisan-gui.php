@@ -80,9 +80,10 @@ return [
             'project:export-postman-with-token',
             'telescope:clear',
             'telescope:prune',
-            'migrate',
             'migrate:fresh',
+            'make:model',
             'make:migration',
+            'migrate',
         ],
         'project' => [
             'project:create-super-admin',
