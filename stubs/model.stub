@@ -8,4 +8,18 @@ use Illuminate\Database\Eloquent\Model;
 class {{ class }} extends Model
 {
     use HasFactory;
+
+    protected $guarded = [
+        'id'
+    ];
+
+    protected static function validation_rules() {
+        return [];
+    }
+
+    protected static function validation_messages() {
+        return [];
+    }
+
+
 }

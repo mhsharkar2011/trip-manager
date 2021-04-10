@@ -13,9 +13,9 @@ class {{ class }} extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index({{ model }} ${{ modelVariable }})
     {
-        //
+        return $this->respond(${{ modelVariable }}::latest()->paginate());
     }
 
     /**
@@ -24,9 +24,15 @@ class {{ class }} extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, {{ model }} ${{ modelVariable }})
     {
-        //
+        $validated = $request->validate(
+            ${{ modelVariable }}::validation_rules(),
+            ${{ modelVariable }}::validation_messages(),
+        );
+
+        return $this->respondCreated(${{ modelVariable }}::create($request->all()));
+        //return $this->respondCreated(${{ modelVariable }}::create($validated));
     }
 
     /**
@@ -37,7 +43,7 @@ class {{ class }} extends Controller
      */
     public function show({{ model }} ${{ modelVariable }})
     {
-        //
+        return $this->respond(${{ modelVariable }});
     }
 
     /**
@@ -49,7 +55,14 @@ class {{ class }} extends Controller
      */
     public function update(Request $request, {{ model }} ${{ modelVariable }})
     {
-        //
+        $validated = $request->validate(
+            ${{ modelVariable }}::validation_rules(),
+            ${{ modelVariable }}::validation_messages(),
+        );
+
+        ${{ modelVariable }}->update($validated);
+
+        return $this->respond(${{ modelVariable }});
     }
 
     /**
@@ -60,6 +73,8 @@ class {{ class }} extends Controller
      */
     public function destroy({{ model }} ${{ modelVariable }})
     {
-        //
+        ${{ modelVariable }}->delete();
+
+        return $this->respondDeleted();
     }
 }
