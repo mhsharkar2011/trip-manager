@@ -46,6 +46,11 @@ Route::group([
     ])
     ->name('webtinker.iframe');
 
+    Route::view('api-explorer-compass', 'devtools.show-in-iframe', [
+        'src' => config('compass.path')
+    ])
+    ->name('apiexplorer.compass.iframe');
+    
     Route::view('api-explorer', 'devtools.show-in-iframe', [
         'src' => config('laravelapiexplorer.route')
     ])
@@ -53,7 +58,6 @@ Route::group([
 
     Route::view('phpinfo', 'devtools.phpinfo')
     ->name('phpinfo');
-    
 
     //theme pages
     Route::view('dashboard', 'dashboard')->name('dashboard');
