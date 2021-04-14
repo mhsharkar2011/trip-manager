@@ -14,7 +14,7 @@ class EntityController extends Controller
      */
     public function index(Entity $entity)
     {
-        return $this->respond($entity::latest()->paginate());
+        return response()->json($entity::latest()->simplePaginate());
     }
 
     /**

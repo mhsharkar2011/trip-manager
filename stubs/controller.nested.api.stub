@@ -17,7 +17,7 @@ class {{ class }} extends Controller
      */
     public function index({{ parentModel }} ${{ parentModelVariable }})
     {
-        return $this->respond(${{ parentModelVariable }}->{{ modelVariable }}()->latest()->paginate());
+        return response()->json(${{ parentModelVariable }}->{{ modelVariable }}()->latest()->simplePaginate());
     }
 
     /**
