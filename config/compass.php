@@ -32,7 +32,7 @@ return [
         ],
 
         'prefixes' => [
-            '*',
+            'api*',
         ],
 
         'exclude' => [
