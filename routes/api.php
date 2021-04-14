@@ -20,5 +20,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::resource('entities', EntityController::class);
-Route::resource('entities.fields', EntityFieldController::class);
+Route::apiResource('entities', EntityController::class);
+Route::apiResource('entities.fields', EntityFieldController::class);
