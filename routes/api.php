@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CrudGenerateController;
 use App\Http\Controllers\EntityController;
 use App\Http\Controllers\EntityFieldController;
 use Illuminate\Http\Request;
@@ -22,3 +23,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::apiResource('entities', EntityController::class);
 Route::apiResource('entities.fields', EntityFieldController::class);
+
+Route::post('entities/{entity}/crud-generate', CrudGenerateController::class);
