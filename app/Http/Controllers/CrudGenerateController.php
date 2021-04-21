@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Str;
 use Illuminate\Support\Facades\Artisan;
 use App\Models\Entity;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class CrudGenerateController extends Controller
 {
@@ -42,8 +44,8 @@ class CrudGenerateController extends Controller
             $commandArg['--validations'] = implode("#required;", $validationsArray) . "#required";
         }
 
-        if ($request->has('route')) {
-            $commandArg['--route'] = $request->route;
+        if ($entity->is_generated) {
+            $commandArg['--route'] = 'no';
         }
 
         if ($request->has('view_path')) {
@@ -76,7 +78,20 @@ class CrudGenerateController extends Controller
 
         try {
             Artisan::call('crud:api', $commandArg);
-            Artisan::call('migrate');
+
+            if ($entity->is_generated) {
+                $files = glob(database_path() . '/migrations/*_create_'.Str::plural(Str::snake($entity->name)).'_table.php');
+
+                if (count($files) > 0 && File::exists($files[0])) {
+                    File::delete($files[0]);
+                }
+            }
+
+            Artisan::call('migrate:fresh');
+            
+            $entity->update([
+                'is_generated' => true
+            ]);
         } catch (\Exception $e) {
             return response()->json($e->getMessage(), 500);
         }

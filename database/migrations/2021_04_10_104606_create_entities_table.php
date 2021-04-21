@@ -18,6 +18,7 @@ class CreateEntitiesTable extends Migration
             $table->string('name');
             $table->string('slug')->unique();
             $table->json('meta')->nullable();
+            $table->string('is_generated')->default(false);
             $table->timestamps();
         });
     }
