@@ -40,14 +40,19 @@ class ExportPostmanWithToken extends Command
      */
     public function handle()
     {
-        $command = 'export:postman';
-    
-        if ($token = __getTokenForPostman()) {
-            $command .= " --bearer={$token}";
-        }
+        /**
+         $command = 'export:postman';
+         
+         if ($token = __getTokenForPostman()) {
+             $command .= " --bearer={$token}";
+            }
+        */
+
+        $command = 'postman:collection:export postman --api --url=' . env('APP_URL');
         
         if (Artisan::call($command) === 0) { //0=success
-            $file = str_replace('Postman Collection Exported: ', '', trim(Artisan::output())); //Postman Collection Exported: postman/2021_03_24_130458_laravel_collection.json
+            // $file = str_replace('Postman Collection Exported: ', '', trim(Artisan::output())); //Postman Collection Exported: postman/2021_03_24_130458_laravel_collection.json
+            $file = str_replace('Routes exported as postman collection! Filename: ', '', trim(Artisan::output())); //Routes exported as postman collection! Filename: 2021_04_21_201555_NameForCollection_api.json
             
             if (Storage::exists($file)) {
                 $filename = basename($file);
