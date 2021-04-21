@@ -66,7 +66,7 @@ return [
     |
     */
 
-    'driver' => env('COMPASS_DRIVER', 'database'),
+    'driver' => env('COMPASS_DRIVER', 'sqlite_compass'),
 
     'storage' => [
         'database' => [
