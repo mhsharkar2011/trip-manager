@@ -52,6 +52,7 @@ class CrudGenerateController extends Controller
             $commandArg['--view-path'] = $request->view_path;
         }
 
+        $commandArg['--controller-namespace'] = 'App\Http\Controllers';
         if ($request->has('controller_namespace')) {
             $commandArg['--controller-namespace'] = $request->controller_namespace;
         }
@@ -77,17 +78,20 @@ class CrudGenerateController extends Controller
         }
 
         try {
-            Artisan::call('crud:api', $commandArg);
-
             if ($entity->is_generated) {
-                $files = glob(database_path() . '/migrations/*_create_'.Str::plural(Str::snake($entity->name)).'_table.php');
+                $name = Str::plural(Str::snake($entity->name));
+                $files = glob(database_path() . '/migrations/*_create_'.$name.'_table.php');
 
                 if (count($files) > 0 && File::exists($files[0])) {
                     File::delete($files[0]);
                 }
+
+                \Schema::dropIfExists($name);
             }
 
-            Artisan::call('migrate:fresh');
+            Artisan::call('crud:api', $commandArg);
+
+            Artisan::call('migrate');
             
             $entity->update([
                 'is_generated' => true
