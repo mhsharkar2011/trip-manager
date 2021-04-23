@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Str;
 use Illuminate\Support\Facades\Artisan;
 use App\Models\Entity;
+use App\Models\Field;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
@@ -26,15 +27,11 @@ class CrudGenerateController extends Controller
         if ($entity->has('fields')) {
             $fieldsArray = [];
             $validationsArray = [];
-            $x = 0;
             foreach ($entity->fields as $field) {
                 // if ($request->fields_required[$x] == 1) {
                 //     $validationsArray[] = $field;
                 // }
-
-                $fieldsArray[] = $field->name . '#' . $field->type[$x];
-
-                $x++;
+                $fieldsArray[] = $field->name . '#' . Field::getColumnTypeMapping($field->type);
             }
 
             $commandArg['--fields'] = implode(";", $fieldsArray);

@@ -34,5 +34,23 @@ class Field extends Model
         $this->attributes['slug'] = Str::slug($value);
     }
 
+    public static function getColumnTypeMapping($type) {
+        return [
+            'text' => 'string',
+            'number' => 'integer',
+            'image' => 'string',
+            'file' => 'string',
+            'option' => 'json',
+            'tel' => 'string',
+            'password' => 'string',
+            'url' => 'string',
+            'date' => 'datetime',
+            'time' => 'datetime',
+            'search' => 'string',
+
+        ][$type] ?? 'string';
+        
+    }
+
 
 }
