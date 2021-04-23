@@ -33,6 +33,10 @@ class Entity extends Model
         $this->attributes['slug'] = Str::slug($value);
     }
 
+    protected function setSlugAttribute($value) {
+        $this->attributes['slug'] = Str::slug($this->attributes['name']);
+    }
+
     public function fields()
     {
         return $this->hasMany(Field::class);
