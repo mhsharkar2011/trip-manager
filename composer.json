@@ -22,6 +22,7 @@
         "laravel/tinker": "^2.0",
         "livewire/livewire": "^2.0",
         "netojose/laravel-api-explorer": "^2.0",
+        "profclems/postman-collection-generator": "^1.2",
         "spatie/laravel-web-tinker": "^1.7"
     },
     "require-dev": {
