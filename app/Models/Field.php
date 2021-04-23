@@ -38,8 +38,8 @@ class Field extends Model
         return [
             'text' => 'string',
             'number' => 'integer',
-            'image' => 'string',
-            'file' => 'string',
+            'image' => 'file',
+            'file' => 'file',
             'option' => 'json',
             'tel' => 'string',
             'password' => 'string',

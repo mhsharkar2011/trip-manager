@@ -52,7 +52,11 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'name' => 'joining_date',
-                'type' => 'datetime',
+                'type' => 'date',
+            ],            
+            [
+                'name' => 'picture',
+                'type' => 'image',
             ],            
         ]);
 
