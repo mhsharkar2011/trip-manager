@@ -50,6 +50,10 @@ class DatabaseSeeder extends Seeder
                 'name' => 'message',
                 'type' => 'text',
             ],
+            [
+                'name' => 'joining_date',
+                'type' => 'datetime',
+            ],            
         ]);
 
     }
