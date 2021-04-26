@@ -47,14 +47,19 @@ class Entity extends Model
 
     public static function deleteMigrationAndDBTable($entity_name) {
         try {
-            $name = Str::plural(Str::snake($entity_name));
-            $files = glob(database_path() . '/migrations/*_create_'.$name.'_table.php');
-    
+            $name_singular = Str::singular(Str::studly($entity_name));
+            $files = glob(app_path('Models/') . $name_singular.'.php'); 
+            if (count($files) > 0 && File::exists($files[0])) {
+                File::delete($files[0]);
+            }
+            
+            $name_plural = Str::plural(Str::snake($entity_name));
+            $files = glob(database_path() . '/migrations/*_create_'.$name_plural.'_table.php');
             if (count($files) > 0 && File::exists($files[0])) {
                 File::delete($files[0]);
             }
     
-            Schema::dropIfExists($name);
+            Schema::dropIfExists($name_plural);
 
             return true;
         } catch (\Exception $ex) {
