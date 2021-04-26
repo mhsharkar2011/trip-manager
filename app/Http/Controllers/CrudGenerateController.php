@@ -31,7 +31,7 @@ class CrudGenerateController extends Controller
                 // if ($request->fields_required[$x] == 1) {
                 //     $validationsArray[] = $field;
                 // }
-                $fieldsArray[] = $field->name . '#' . Field::getColumnTypeMapping($field->type);
+                $fieldsArray[] = Str::slug($field->name, "_") . '#' . Field::getColumnTypeMapping($field->type);
             }
 
             $commandArg['--fields'] = implode(";", $fieldsArray);
