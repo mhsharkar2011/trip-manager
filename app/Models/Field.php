@@ -31,7 +31,7 @@ class Field extends Model
 
     protected function setNameAttribute($value) {
         $this->attributes['name'] = $value;
-        $this->attributes['slug'] = Str::slug($value);
+        $this->attributes['slug'] = Str::slug($value, '_');
     }
 
     public static function getColumnTypeMapping($type) {
