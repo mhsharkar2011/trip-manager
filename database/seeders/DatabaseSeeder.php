@@ -20,15 +20,19 @@ class DatabaseSeeder extends Seeder
 
         $e1->fields()->createMany([
             [
-                'name' => 'title',
+                'name' => 'Title',
                 'type' => 'string',
             ],
             [
-                'name' => 'description',
+                'name' => 'Description',
                 'type' => 'string',
             ],
             [
-                'name' => 'link',
+                'name' => 'Link 1',
+                'type' => 'string',
+            ],
+            [
+                'name' => 'Link 2',
                 'type' => 'string',
             ],
         ]);
