@@ -76,14 +76,7 @@ class CrudGenerateController extends Controller
 
         try {
             if ($entity->is_generated) {
-                $name = Str::plural(Str::snake($entity->name));
-                $files = glob(database_path() . '/migrations/*_create_'.$name.'_table.php');
-
-                if (count($files) > 0 && File::exists($files[0])) {
-                    File::delete($files[0]);
-                }
-
-                \Schema::dropIfExists($name);
+                Entity::deleteMigrationAndDBTable($entity->name);
             }
 
             Artisan::call('crud:api', $commandArg);

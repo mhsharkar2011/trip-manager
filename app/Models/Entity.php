@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Str;
+use File;
+use Schema;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -41,6 +43,23 @@ class Entity extends Model
     {
         return $this->hasMany(Field::class);
         // return $this->hasMany(Entity::class, 'foreign_key', 'local_key');
+    }
+
+    public static function deleteMigrationAndDBTable($entity_name) {
+        try {
+            $name = Str::plural(Str::snake($entity_name));
+            $files = glob(database_path() . '/migrations/*_create_'.$name.'_table.php');
+    
+            if (count($files) > 0 && File::exists($files[0])) {
+                File::delete($files[0]);
+            }
+    
+            Schema::dropIfExists($name);
+
+            return true;
+        } catch (\Exception $ex) {
+            logger($entity_name . ' deleteMigrationAndDBTable failed, error: ' . $ex->getMessage());
+        }
     }
 
 }

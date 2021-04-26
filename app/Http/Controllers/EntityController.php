@@ -72,6 +72,8 @@ class EntityController extends Controller
      */
     public function destroy(Entity $entity)
     {
+        Entity::deleteMigrationAndDBTable($entity->name);
+        
         $entity->delete();
 
         return $this->respondDeleted();
