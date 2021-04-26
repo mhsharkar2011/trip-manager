@@ -20,7 +20,7 @@ class CreateFieldsTable extends Migration
             $table->string('slug');
             $table->string('type');
             $table->json('meta')->nullable();
-            $table->integer('sort_order')->default(0);
+            $table->integer('position')->default(0);
             
             $table->foreignIdFor(Entity::class)
             ->constrained()
