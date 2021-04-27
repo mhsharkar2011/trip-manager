@@ -21,6 +21,7 @@ class CreateFieldsTable extends Migration
             $table->string('type');
             $table->json('meta')->nullable();
             $table->integer('position')->default(0);
+            $table->boolean('is_system_generated')->default(false);
             
             $table->foreignIdFor(Entity::class)
             ->constrained()
