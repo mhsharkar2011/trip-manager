@@ -20,10 +20,6 @@ class DatabaseSeeder extends Seeder
 
         $e1->fields()->createMany([
             [
-                'name' => 'Title',
-                'type' => 'string',
-            ],
-            [
                 'name' => 'Description',
                 'type' => 'string',
             ],
