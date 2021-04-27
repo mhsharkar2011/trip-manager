@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $e1 = Entity::create([
-        'name' => "Insurace Types"
+        'name' => "Insurance Types"
         ]);
 
         $e1->fields()->createMany([
