@@ -49,7 +49,17 @@ class Field extends Model
             'search' => 'string',
 
         ][$type] ?? 'string';
-        
+    }
+
+    public static function getDefaultFields() {
+        return [
+            [
+                'name' => 'Title',
+                'type' => 'string',
+                'position' => -1,
+                'is_system_generated' => true,
+            ],
+        ];
     }
 
 
