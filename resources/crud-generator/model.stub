@@ -3,10 +3,16 @@
 namespace DummyNamespace;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+
 {{useSoftDeletes}}
-class DummyClass extends Model
+class DummyClass extends Model implements HasMedia
 {
-    {{softDeletes}}/**
+    use InteractsWithMedia;
+    {{softDeletes}}
+    
+    /**
      * The database table used by the model.
      *
      * @var string
