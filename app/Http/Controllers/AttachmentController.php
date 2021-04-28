@@ -15,7 +15,7 @@ class AttachmentController extends Controller
     
     public function upload(Request $request, $entity, $id)
     {
-        $attachment_group = $request->get(Str::slug('attachment_group'), 'default');
+        $attachment_group = Str::slug($request->get('attachment_group', 'default'));
         
         $model =  sprintf("\App\Models\%s", Str::singular(Str::studly($entity)));
 
