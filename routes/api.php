@@ -4,6 +4,7 @@ use App\Http\Controllers\AttachmentController;
 use App\Http\Controllers\CrudGenerateController;
 use App\Http\Controllers\EntityController;
 use App\Http\Controllers\EntityFieldController;
+use App\Http\Controllers\InsuranceTypesController;
 use App\Models\InsuranceType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -36,3 +37,6 @@ Route::get('{entity}/{id}/attachments', [AttachmentController::class, 'get'])
 
 Route::post('{entity}/{id}/attachments', [AttachmentController::class, 'upload'])
 ->where('entity', '[a-z-A-Z]+')->whereNumber('id');
+
+Route::delete('{entity}/{id}/attachments/{attachment_id}', [AttachmentController::class, 'delete'])
+->where('entity', '[a-z-A-Z]+')->whereNumber('id')->whereNumber('attachment_id');
