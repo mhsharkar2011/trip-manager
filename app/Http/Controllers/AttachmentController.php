@@ -10,7 +10,17 @@ class AttachmentController extends Controller
     public function get(Request $request, $entity, $id)
     {
         $model =  sprintf("\App\Models\%s", Str::singular(Str::studly($entity)));
-        return response()->json((new $model)::find($id)->getMedia());
+
+        $data = (new $model)::find($id)->media()->get()
+        ->map(function($m) {
+            $m->full_url = $m->getFullUrl();
+            $m->size_human_readable = $m->human_readable_size;
+            return $m;
+        })
+        ->groupBy('collection_name')
+        ->toArray();
+    
+        return $this->respond(compact('data'));
     }
     
     public function upload(Request $request, $entity, $id)
