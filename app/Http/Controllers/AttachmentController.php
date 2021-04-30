@@ -29,8 +29,12 @@ class AttachmentController extends Controller
         
         $model =  sprintf("\App\Models\%s", Str::singular(Str::studly($entity)));
 
-        $result = (new $model)::find($id)->addMediaFromRequest('file')->toMediaCollection($attachment_group);
-        return response()->json($result);
+        $attachment = (new $model)::find($id)->addMediaFromRequest('file')->toMediaCollection($attachment_group);
+        if ($attachment->id) {
+            $attachment->full_url = $attachment->getFullUrl();
+            $attachment->size_human_readable = $attachment->human_readable_size;
+        }
+        return response()->json($attachment);
     }
 
     public function delete(Request $request, $entity, $id, $attachment_id)
