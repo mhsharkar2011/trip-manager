@@ -49,8 +49,9 @@ class GenerateCRUDCommand extends Command
 
         try {
             Artisan::call('crud:api', $commandArg);
-            Artisan::call('migrate');
+            $this->line(Artisan::output());
 
+            Artisan::call('migrate');
             $this->line(Artisan::output());
             return 1;
         } catch (\Exception $e) {
