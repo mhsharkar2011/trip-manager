@@ -77,6 +77,7 @@ return [
     */
     'commands' => [
         'Frequeunt' => [
+            'project:generate-crud',
             'project:export-postman-with-token',
             'telescope:clear',
             'telescope:prune',
