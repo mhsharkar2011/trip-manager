@@ -16,6 +16,7 @@ class Field extends Model
 
     protected $casts = [
         'meta' => 'array',
+        'is_system_generated' => 'boolean',
     ];
 
     protected static function validation_rules() {
