@@ -23,6 +23,6 @@ class alert extends Component
      */
     public function render()
     {
-        return view('components.alert');
+        return view('devpanel.components.alert');
     }
 }

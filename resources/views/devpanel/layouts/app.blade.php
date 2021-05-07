@@ -36,11 +36,11 @@
 
 <body>
     <div class="flex h-screen bg-gray-50 dark:bg-gray-900" :class="{ 'overflow-hidden': isSideMenuOpen }">
-        @include('layouts.menu')
-        @include('layouts.mobile-menu')
+        @include('devpanel.layouts.menu')
+        @include('devpanel.layouts.mobile-menu')
 
         <div class="flex flex-col flex-1 w-full">
-            @include('layouts.navigation-dropdown')
+            @include('devpanel.layouts.navigation-dropdown')
             <main class="h-full overflow-y-auto">
                 {{ $slot }}
             </main>
