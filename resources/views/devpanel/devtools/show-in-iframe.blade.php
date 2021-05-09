@@ -1,1 +1,1 @@
-<x-devtools.show-in-iframe :src="$src" />
+<x-devpanel.iframe :src="$src" />
