@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Devpanel\Controllers;
 
 use Str;
 use Illuminate\Support\Facades\Artisan;
-use App\Models\Entity;
-use App\Models\Field;
+use App\Devpanel\Models\Entity;
+use App\Devpanel\Models\Field;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
 
 class CrudGenerateController extends Controller

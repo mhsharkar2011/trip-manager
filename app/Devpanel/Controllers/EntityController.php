@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Devpanel\Controllers;
 
-use App\Models\Entity;
 use Illuminate\Http\Request;
+use App\Devpanel\Models\Entity;
+use App\Http\Controllers\Controller;
 
 class EntityController extends Controller
 {

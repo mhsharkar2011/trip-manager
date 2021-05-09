@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Devpanel\Models;
 
 use Str;
 use File;

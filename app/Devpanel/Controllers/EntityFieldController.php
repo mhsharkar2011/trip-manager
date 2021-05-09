@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Devpanel\Controllers;
 
-use App\Models\Entity;
-use App\Models\Field;
 use Illuminate\Http\Request;
+use App\Devpanel\Models\Field;
+use App\Devpanel\Models\Entity;
+use App\Http\Controllers\Controller;
 
 class EntityFieldController extends Controller
 {
