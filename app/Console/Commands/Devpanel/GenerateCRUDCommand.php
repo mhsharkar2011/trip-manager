@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\Devpanel;
 
 use Str;
 use Illuminate\Support\Facades\Artisan;
