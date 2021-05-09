@@ -17,37 +17,37 @@ Route::group([
     'prefix' => 'devtools',
     'middleware' => ['auth:sanctum', 'verified']
 ], function () {
-    Route::view('log-viewer', 'devpanel.devtools.show-in-iframe', [
+    Route::view('log-viewer', 'devpanel.tools.show-in-iframe', [
         'src' => config('log-viewer.route.attributes.prefix')
     ])
     ->name('logviewer.iframe');
 
-    Route::view('telescope-frame', 'devpanel.devtools.show-in-iframe', [
+    Route::view('telescope-frame', 'devpanel.tools.show-in-iframe', [
         'src' => config('telescope.path')
     ])
     ->name('telescope.iframe');
     
-    Route::view('artisangui-iframe', 'devpanel.devtools.show-in-iframe', [
+    Route::view('artisangui-iframe', 'devpanel.tools.show-in-iframe', [
         'src' => '~artisan'
     ])
     ->name('artisangui.iframe');
 
-    Route::view('webtinker-iframe', 'devpanel.devtools.show-in-iframe', [
+    Route::view('webtinker-iframe', 'devpanel.tools.show-in-iframe', [
         'src' => str_replace('/', '', config('web-tinker.path'))
     ])
     ->name('webtinker.iframe');
 
-    Route::view('api-explorer-compass', 'devpanel.devtools.show-in-iframe', [
+    Route::view('api-explorer-compass', 'devpanel.tools.show-in-iframe', [
         'src' => config('compass.path')
     ])
     ->name('apiexplorer.compass.iframe');
     
-    Route::view('api-explorer', 'devpanel.devtools.show-in-iframe', [
+    Route::view('api-explorer', 'devpanel.tools.show-in-iframe', [
         'src' => config('laravelapiexplorer.route')
     ])
     ->name('apiexplorer.iframe');
 
-    Route::view('phpinfo', 'devpanel.devtools.phpinfo')
+    Route::view('phpinfo', 'devpanel.tools.phpinfo')
     ->name('phpinfo');
 
     //theme pages
