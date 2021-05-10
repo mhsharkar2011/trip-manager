@@ -24,3 +24,31 @@ function __getTokenForPostman() {
 
     return $token;
 }
+
+/*---LIVE CMS---------------*/
+function get_templates_path() {
+    return resource_path() . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR;
+}
+
+function get_component_templates_path() {
+    return get_templates_path() . DIRECTORY_SEPARATOR . 'components' . DIRECTORY_SEPARATOR;
+}
+
+function get_component_tags($content)
+{
+    $regx = '#<x-([a-z-]*)>#'; //<x-foo-bar>
+    $matches = [];
+
+    preg_match_all($regx, $content, $matches);
+
+    return $matches[1];
+}
+
+function get_route_from_uri($page_slug) {
+    $template_id = App\LiveCMS\Models\Template::where('route', $page_slug)->value('id');
+
+    if ($template_id) {
+        return route('cms.edit', $template_id);
+    }
+}
+/*-----END LIVE CMS------------*/
