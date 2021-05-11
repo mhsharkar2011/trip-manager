@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Entity;
+use App\Devpanel\Models\Entity;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
