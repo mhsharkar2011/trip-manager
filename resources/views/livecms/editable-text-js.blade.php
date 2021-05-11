@@ -15,32 +15,47 @@
         event.preventDefault();
         jQuery(this).parent().attr('contentEditable','true');
         var old_id = jQuery(this).parent().data('editable-id');
-
-        // if(jQuery(this).parent().find('input[id="'+old_id+'"]').length === 0 ){
-        if(jQuery(this).parent().find('input[id="'+old_id+'"]').length === 0 ){
+        
+        if(jQuery(this).parent().find('input[type="hidden"]').length === 0 ){
             var old_val = jQuery(this).parent()[0].childNodes[1].nodeValue;
             var hidden_input = '<input type="hidden" name="old_field" id="'+old_id+'" value="'+old_val+'" >';
             jQuery(this).parent().prepend(hidden_input);
         }else{
             var old_val = jQuery(this).parent()[0].childNodes[2].nodeValue;
-            jQuery(this).parent().find('input[id="'+old_id+'"]')[0].value = old_val;
+            jQuery(this).parent().find('input[type="hidden"]')[0].value = old_val;
         }
     });
     
     jQuery(document).on("mouseleave", "[contenteditable=true]" , function(event) {
         var url = "{{ route('textUpdate') }}";
-        var csrf_token = jQuery('meta[name="csrf-token"]').attr('content');
+        var csrf_token = "{{ csrf_token() }}";
         var editable_id = jQuery(this).data('editable-id');
         var edited_data = jQuery(this)[0].childNodes[2].nodeValue;
-        var original_data = jQuery(this).find('input[id="'+editable_id+'"]')[0].value;
+        var original_data = jQuery(this).find('input[type="hidden"]')[0].value;
         var route_name = "<?php echo request()->route()->uri; ?>";
+            if(route_name == '/'){
+                route_name = 'welcome';
+            }
+        var pos = jQuery("[data-editable-id]").index(this);
+
+        //related component name and edited text position
+        var component_name = '';
+        var position_in_component = '';
+        if(jQuery(this).closest("[data-edit-template]").length){
+            component_name = jQuery(this).closest("[data-edit-template]").data('edit-template');            
+            position_in_component =jQuery(this).closest("[data-edit-template]").find("[data-editable-id]").index(this);
+        }
+
 
         var changes = {
             '_token' : csrf_token,
             'original_text' : original_data,
             'edited_text' : edited_data,
             'editable_id' : editable_id,
-            'route_name' : route_name,            
+            'route_name' : route_name,
+            'position' : pos,
+            'position_in_component': position_in_component,
+            'component' : component_name,            
         }
 
         var changes_arr = {};
@@ -49,7 +64,7 @@
         }
         
         if(original_data !== edited_data){
-            changes_arr[editable_id] = changes;
+            changes_arr[pos] = changes;
             sessionStorage.setItem('old_data',JSON.stringify(changes_arr));
             if(jQuery(this).find('button').length < 2)
             {
@@ -64,12 +79,14 @@
         event.preventDefault();
         changes = JSON.parse(sessionStorage.getItem('old_data'));
         var id = jQuery(this).parent().data('editable-id');
-        var message = "Are you sure to publish the following changes ? \n\n"+changes[id].original_text +' => '+ changes[id].edited_text;
+        var pos = jQuery("[data-editable-id]").index(jQuery(this).parent());
+
+        var message = "Are you sure to publish the following changes ? \n\n"+changes[pos].original_text +' => '+ changes[pos].edited_text;
         // var publish = confirm(message);
         // if(publish){
             var url = "{{ route('textUpdate') }}";
-            jQuery.post(url,changes[id]);
-            jQuery(this).parent()[0].childNodes[2].nodeValue = changes[id].edited_text; 
+            jQuery.post(url,changes[pos]);
+            jQuery(this).parent()[0].childNodes[2].nodeValue = changes[pos].edited_text; 
             jQuery(this).parent().find('button[class="text_unpublish"]').remove();
             jQuery(this).remove();
         // }else{
@@ -84,10 +101,11 @@
     jQuery(document).on("click", "button.text_unpublish", function(event) {
         event.preventDefault();
         var id = jQuery(this).parent().data('editable-id');
+        var pos = jQuery("[data-editable-id]").index(jQuery(this).parent());
         changes = JSON.parse(sessionStorage.getItem('old_data'));
-        var session_data = changes[id];
+        var session_data = changes[pos];
         jQuery(this).parent()[0].childNodes[2].nodeValue = session_data.original_text;
-        delete changes[id];
+        delete changes[pos];
         sessionStorage.setItem('old_data',JSON.stringify(changes));
         jQuery(this).parent().find('button[class="text_publish"]').remove();
         jQuery(this).remove();
@@ -96,7 +114,7 @@
     jQuery(document).on("click", "button#publish_all_btn", function(event) {
         event.preventDefault();
         changes = JSON.parse(sessionStorage.getItem('old_data'));
-        csrf_token = jQuery('meta[name="csrf-token"]').attr('content');
+        csrf_token = "{{ csrf_token() }}";
         var route_name = "<?php echo request()->route()->uri; ?>";
 
         var data = {};
