@@ -1,6 +1,8 @@
 <?php
 
-use App\LiveCMS\Controllers;
+use App\LiveCMS\Controllers\ImagesController;
+use App\LiveCMS\Controllers\PagesController;
+use App\LiveCMS\Controllers\TextEditController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,6 +22,8 @@ Route::get('livecms/image-upload-form', [ImagesController::class, 'index'])
 Route::post('livecms/image-upload', [ImagesController::class, 'post_upload'])
 ->name('imagesUpload');
 
-Route::post('livecms/text-update', [App\LiveCMS\Controllers\TextEditController::class, 'update'])
+Route::post('livecms/text-update', [TextEditController::class, 'update'])
 ->name('textUpdate');
 
+Route::resource('livecms', PagesController::class)
+->middleware('auth:sanctum');

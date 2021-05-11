@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\View;
 
-class TemplateController extends Controller
+class PagesController extends Controller
 {
     /**
      * Display a listing of the resource.

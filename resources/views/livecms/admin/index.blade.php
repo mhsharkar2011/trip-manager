@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout title="Pages">
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -10,7 +10,7 @@
                                     Page 
                                 </th>
                                 <th scope="col" class="relative px-6 py-3 text-right">
-                                    <a href="{{ route('cms.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" >New</a>
+                                    <a href="{{ route('livecms.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" >New</a>
                                     <span class="sr-only">Edit</span>
                                 </th>
                             </tr>
@@ -20,14 +20,14 @@
                             <tr>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="text-sm text-gray-900">
-                                        <a href="{{ route('cms.edit', $t->id) }}">
+                                        <a href="{{ route('livecms.edit', $t->id) }}">
                                             {{ ucwords(str_replace('-', ' ', $t->path)) }}
                                         </a>
                                     </div>
                                     <!-- <div class="text-sm text-gray-500">Optimization</div> -->
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    <a href="{{ route('cms.edit', $t->id) }}" class="text-gray-600 hover:text-gray-900">Edit</a>
+                                    <a href="{{ route('livecms.edit', $t->id) }}" class="text-gray-600 hover:text-gray-900">Edit</a>
                                 </td>
                             </tr>
                             @endforeach
