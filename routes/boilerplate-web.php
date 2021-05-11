@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,6 +13,22 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('devpanel/login', function () {
+    if (isDevpanelAutoLoginEnabled()) {
+        if (! User::superAdminExists()) {
+            \Artisan::call('project:create-super-admin');
+        }
+
+        $superadmin = User::getSuperAdmin();
+
+        auth()->loginUsingId($superadmin->id);
+
+        return redirect()->intended('/devtools/dashboard');
+    }
+
+    abort(403, 'Superadmin login is not allowed');
+})->name('devpanel.superadmin.login');
 
 Route::group([
     'prefix' => 'devtools',

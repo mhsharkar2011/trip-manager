@@ -76,4 +76,8 @@ class User extends Authenticatable
         return $attr? optional($u)->{$attr} : $u;
     }
 
+    public static function superAdminExists($attr = null) {
+        return self::superAdmin()->exists();
+    }
+
 }
