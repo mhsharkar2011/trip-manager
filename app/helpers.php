@@ -25,6 +25,10 @@ function __getTokenForPostman() {
     return $token;
 }
 
+function isDevpanelAutoLoginEnabled() {
+    return !! env('SUPERADMIN_AUTO_LOGIN');
+}
+
 /*---LIVE CMS---------------*/
 function get_templates_path() {
     return resource_path() . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR;
