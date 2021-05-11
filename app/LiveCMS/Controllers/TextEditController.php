@@ -16,7 +16,7 @@ class TextEditController extends Controller
     public function update(Request $request){
         $dom = new Dom;
         $dom->setOptions(
-            (new Options())->setPreserveLineBreaks(true)
+            (new Options())->setPreserveLineBreaks(true)->setRemoveScripts(false)->setRemoveStyles(false)
         );
 
         $inp = $request->all();
