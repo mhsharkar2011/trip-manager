@@ -25,5 +25,5 @@ Route::post('livecms/image-upload', [ImagesController::class, 'post_upload'])
 Route::post('livecms/text-update', [TextEditController::class, 'update'])
 ->name('textUpdate');
 
-Route::resource('livecms', PagesController::class)
+Route::resource('cms', PagesController::class)
 ->middleware('auth:sanctum');
