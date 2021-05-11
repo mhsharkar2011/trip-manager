@@ -29,7 +29,7 @@
             $body.find('img#orig_img')[0].srcset = img_src;
             $body.find('img#orig_img').removeAttr('src');
         }else{
-            $body.find('img#orig_img')[0].src = img_src;
+            $body.find('img#orig_img')[0].src = '../'+img_src;
             $body.find('img#orig_img').removeAttr('srcset');
         }
 
