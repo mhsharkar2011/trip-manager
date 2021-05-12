@@ -1,11 +1,5 @@
 <?php
 
-use App\Http\Controllers\AttachmentController;
-use App\Http\Controllers\CrudGenerateController;
-use App\Http\Controllers\EntityController;
-use App\Http\Controllers\EntityFieldController;
-use App\Http\Controllers\InsuranceTypesController;
-use App\Models\InsuranceType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
