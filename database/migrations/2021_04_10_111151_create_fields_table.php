@@ -19,6 +19,7 @@ class CreateFieldsTable extends Migration
             $table->string('name');
             $table->string('slug');
             $table->string('type');
+            $table->string('type_label');
             $table->json('meta')->nullable();
             $table->integer('position')->default(0);
             $table->boolean('is_system_generated')->default(false);
