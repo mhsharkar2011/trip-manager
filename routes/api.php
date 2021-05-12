@@ -23,4 +23,3 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::resource('pages', 'App\Http\Controllers\PagesController', ['except' => ['create', 'edit']]);
