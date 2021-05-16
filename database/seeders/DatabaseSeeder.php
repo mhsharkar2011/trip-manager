@@ -22,14 +22,17 @@ class DatabaseSeeder extends Seeder
             [
                 'name' => 'Description',
                 'type' => 'string',
+                'type_label' => 'string',
             ],
             [
                 'name' => 'Link 1',
                 'type' => 'string',
+                'type_label' => 'string',
             ],
             [
                 'name' => 'Link 2',
                 'type' => 'string',
+                'type_label' => 'string',
             ],
         ]);
 
@@ -41,22 +44,27 @@ class DatabaseSeeder extends Seeder
             [
                 'name' => 'name',
                 'type' => 'string',
+                'type_label' => 'string',
             ],
             [
                 'name' => 'designation',
                 'type' => 'string',
+                'type_label' => 'string',
             ],
             [
                 'name' => 'message',
                 'type' => 'text',
+                'type_label' => 'text',
             ],
             [
                 'name' => 'joining_date',
                 'type' => 'date',
+                'type_label' => 'date',
             ],            
             [
                 'name' => 'picture',
                 'type' => 'image',
+                'type_label' => 'image',
             ],            
         ]);
 
