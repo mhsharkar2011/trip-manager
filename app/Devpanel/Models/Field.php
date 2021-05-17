@@ -57,6 +57,7 @@ class Field extends Model
             [
                 'name' => 'Title',
                 'type' => 'string',
+                'type_label' => 'string',
                 'position' => -1,
                 'is_system_generated' => true,
             ],
