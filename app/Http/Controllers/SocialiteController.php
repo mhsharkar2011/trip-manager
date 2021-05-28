@@ -11,14 +11,24 @@ class SocialiteController extends Controller
 {
     public function authRedirect($provider)
     {
-        return Socialite::driver($provider)->setScopes(['read_content', 'write_content'])->redirect();
+        $socialite = Socialite::driver($provider);
+       
+        if($provider == 'shopify'){
+            $socialite->setScopes(['read_content', 'write_content']);
+        }
+
+        if(\request('fe_call')){
+            $socialite->with(['state' => 'CALL_FROM_FRONTEND']);
+        }
+
+        return  $socialite->redirect();
     }
 
 
     public function authCallback($provider)
     {
-        $user_info = Socialite::driver($provider)->stateless()->user();
-        // dd($user_info);
+        $user_info = Socialite::driver($provider)->stateLess()->user();
+
         $user = \App\Models\User::firstOrCreate(
             ['email' => $user_info->getEmail()],
 
@@ -41,10 +51,19 @@ class SocialiteController extends Controller
                     'token' => $user_info->token,
                     'refreshToken' => $user_info->refreshToken,
                     'expire' => $user_info->expiresIn,
-                ]);
+                ]
+            );
+
                 
-            auth()->loginUsingId($user->id);
-            return redirect()->intended();
+            if (request('state') == 'CALL_FROM_FRONTEND') {
+                //create a token through sanctum
+                $user['access_token'] = $user->createToken('social_login')->plainTextToken;
+                //and send the token and user details in json
+                return $this->respond($user);
+            } else {
+                auth()->loginUsingId($user->id);
+                return redirect()->intended();
+            }
         }    
     }
 }

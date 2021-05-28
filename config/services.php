@@ -42,5 +42,21 @@ return [
         'redirect' => env('SHOPIFY_REDIRECT_URL'),
         'subdomain' => 'itc-test-1-local-ngrok-tarif'
     ],
+    'gitlab' => [
+        'client_id' => env('GITLAB_CLIENT_ID'),
+        'client_secret' => env('GITLAB_CLIENT_SECRET'),
+        'redirect' => env('GITLAB_REDIRECT_URL'),
+        'host' => 'https://git.sandbox3000.com',
+    ],
+    'facebook' => [    
+        'client_id' => env('FACEBOOK_CLIENT_ID'),  
+        'client_secret' => env('FACEBOOK_CLIENT_SECRET'),  
+        'redirect' => env('FACEBOOK_REDIRECT_URI') 
+    ],
+    'google' => [    
+        'client_id' => env('GOOGLE_CLIENT_ID'),  
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'),  
+        'redirect' => env('GOOGLE_REDIRECT_URI') 
+    ],
 
 ];
