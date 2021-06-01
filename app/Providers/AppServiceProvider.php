@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use Davidhsianturi\Compass\Contracts\RequestRepository;
+use Davidhsianturi\Compass\Contracts\ResponseRepository;
 use Davidhsianturi\Compass\Storage\DatabaseRequestRepository;
+use Davidhsianturi\Compass\Storage\DatabaseResponseRepository;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -22,6 +24,10 @@ class AppServiceProvider extends ServiceProvider
          */
         $this->app->singleton(
             RequestRepository::class, DatabaseRequestRepository::class
+        );
+
+        $this->app->singleton(
+            ResponseRepository::class, DatabaseResponseRepository::class
         );
 
         $this->app->when(DatabaseRequestRepository::class)
