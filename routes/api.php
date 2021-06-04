@@ -16,6 +16,9 @@ use App\Http\Controllers\Api\AuthController;
 */
 Route::post('registration',[AuthController::class, 'registration']);
 Route::post('login',[AuthController::class, 'login']);
+Route::post('forgot/password',[AuthController::class, 'forgotPassword']);
+Route::post('password/reset', [AuthController::class, 'resetPassword']);
+
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
