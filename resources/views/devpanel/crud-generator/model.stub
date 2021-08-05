@@ -28,5 +28,13 @@ class DummyClass extends Model implements HasMedia
      */
     protected $fillable = {{fillable}};
 
+    protected static function validation_rules() {
+        return [];
+    }
+
+    protected static function validation_messages() {
+        return [];
+    }    
+
     {{relationships}}
 }
