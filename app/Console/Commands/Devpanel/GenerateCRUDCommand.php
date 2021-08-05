@@ -15,7 +15,10 @@ class GenerateCRUDCommand extends Command
      */
     protected $signature = 'project:generate-crud
                             {entity_name : Enter the Label/name to be shown e.g., Users}
-                            {fields : <field_name>#<field_type>; e.g., first_name#string; about_me#text}';
+                            {fields : <field_name>#<field_type>; e.g., first_name#string; about_me#text}
+                            {foreign_keys? : <related_model_name>#<relation_type>#<model_namespace>; e.g., post_id#id#posts#cascade}
+                            {relationships? : <related_model_name>#<relation_type>#<model_namespace>; e.g., comments#hasMany#App\Models\Comment}
+                            ';
 
     /**
      * The console command description.
@@ -46,6 +49,9 @@ class GenerateCRUDCommand extends Command
 
         $commandArg['--fields'] = $this->argument('fields');
         $commandArg['--controller-namespace'] = 'App\Http\Controllers';
+
+        $commandArg['--foreign-keys'] = $this->argument('foreign_keys');
+        $commandArg['--relationships'] = $this->argument('relationships');
 
         try {
             Artisan::call('crud:api', $commandArg);
