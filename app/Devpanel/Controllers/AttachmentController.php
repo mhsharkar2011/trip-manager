@@ -5,6 +5,7 @@ namespace App\Devpanel\Controllers;
 use Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class AttachmentController extends Controller
 {
@@ -63,7 +64,7 @@ class AttachmentController extends Controller
         $attachment_model = Media::find($attachment_id);
 
         $media_url = $attachment_model ? $attachment_model->getUrl() : '';
-        
+
         $entity_info = (new $model)::findOrFail($id)->addMediaFromUrl($media_url)->toMediaCollection();
         if ($entity_info->id) {
             $entity_info->full_url = $entity_info->getFullUrl();
