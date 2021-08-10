@@ -55,4 +55,21 @@ class AttachmentController extends Controller
             $this->respondError($e->getMessage());
         }
     }
+
+    public function attach($entity,$id,$attachment_id)
+    {
+        $model =  sprintf("\App\Models\%s", Str::singular(Str::studly($entity)));
+
+        $attachment_model = Media::find($attachment_id);
+
+        $media_url = $attachment_model ? $attachment_model->getUrl() : '';
+
+        $entity_info = (new $model)::findOrFail($id)->addMediaFromUrl($media_url)->toMediaCollection();
+        if ($entity_info->id) {
+            $entity_info->full_url = $entity_info->getFullUrl();
+            $entity_info->size_human_readable = $entity_info->human_readable_size;
+        }
+        
+        return $this->respondCreated($entity_info);
+    }
 }
