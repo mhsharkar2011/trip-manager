@@ -13,8 +13,11 @@ class AttachmentController extends Controller
     {
         $model =  sprintf("\App\Models\%s", Str::singular(Str::studly($entity)));
 
-        $data = (new $model)::find($id)->media()->get()
-        ->map(function($m) {
+        $data = (new $model)::find($id);
+
+        $data = request()->has('attachment_group') ? $data->getMedia(request('attachment_group')) : $data->media()->get();
+        
+        $data = $data->map(function($m) {
             $m->full_url = $m->getFullUrl();
             $m->size_human_readable = $m->human_readable_size;
             return $m;
