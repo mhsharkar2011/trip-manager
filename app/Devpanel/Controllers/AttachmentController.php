@@ -13,11 +13,6 @@ class AttachmentController extends Controller
         $model =  sprintf("\App\Models\%s", Str::singular(Str::studly($entity)));
 
         $data = (new $model)::find($id)->media()->get()
-        ->map(function($m) {
-            $m->full_url = $m->getFullUrl();
-            $m->size_human_readable = $m->human_readable_size;
-            return $m;
-        })
         ->groupBy('collection_name')
         ->toArray();
     
@@ -31,10 +26,6 @@ class AttachmentController extends Controller
         $model =  sprintf("\App\Models\%s", Str::singular(Str::studly($entity)));
 
         $attachment = (new $model)::find($id)->addMediaFromRequest('file')->toMediaCollection($attachment_group);
-        if ($attachment->id) {
-            $attachment->full_url = $attachment->getFullUrl();
-            $attachment->size_human_readable = $attachment->human_readable_size;
-        }
         return response()->json($attachment);
     }
 
