@@ -36,3 +36,6 @@ Route::post('{entity}/{id}/attachments', [AttachmentController::class, 'upload']
 
 Route::delete('{entity}/{id}/attachments/{attachment_id}', [AttachmentController::class, 'delete'])
 ->where('entity', '[a-z-A-Z]+')->whereNumber('id')->whereNumber('attachment_id');
+
+Route::post('{entity}/{id}/attachments/{attachment_id}/attach', [AttachmentController::class, 'attach'])
+->where('entity', '[a-z-A-Z]+')->whereNumber('id')->whereNumber('attachment_id');

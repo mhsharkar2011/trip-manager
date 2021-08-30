@@ -5,6 +5,7 @@ namespace App\Devpanel\Controllers;
 use Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class AttachmentController extends Controller
 {
@@ -12,7 +13,11 @@ class AttachmentController extends Controller
     {
         $model =  sprintf("\App\Models\%s", Str::singular(Str::studly($entity)));
 
-        $data = (new $model)::find($id)->media()->get()
+        $data = (new $model)::find($id);
+
+        $data = request()->has('attachment_group') ? $data->getMedia(request('attachment_group')) : $data->media()->get();
+        
+        $data = $data
         ->groupBy('collection_name')
         ->toArray();
     
@@ -45,5 +50,21 @@ class AttachmentController extends Controller
         } catch (\Exception $e) {
             $this->respondError($e->getMessage());
         }
+    }
+
+    public function attach($entity,$id,$attachment_id)
+    {
+        $model =  sprintf("\App\Models\%s", Str::singular(Str::studly($entity)));
+
+        $attachment_model = Media::find($attachment_id);
+
+        $media_url = $attachment_model ? $attachment_model->getUrl() : '';
+
+        $entity_info = (new $model)::findOrFail($id)->addMediaFromUrl($media_url)->toMediaCollection();
+        if ($entity_info->id) {
+            $entity_info->full_url = $entity_info->getFullUrl();
+            $entity_info->size_human_readable = $entity_info->human_readable_size;
+        }
+        return $this->respondCreated($entity_info);
     }
 }
