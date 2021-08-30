@@ -41,6 +41,8 @@ class CreateAPITokenCommand extends Command
      */
     public function handle()
     {
+        $user = null;
+
         if ($email = $this->argument('email')) {
             $user = User::whereEmail($email)->first();
         } 
