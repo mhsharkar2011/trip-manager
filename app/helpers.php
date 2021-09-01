@@ -29,6 +29,10 @@ function isDevpanelAutoLoginEnabled() {
     return !! env('SUPERADMIN_AUTO_LOGIN');
 }
 
+function isSocialLoginEnabled(){
+    return !! env('SOCIAL_LOGIN');
+}
+
 /*---LIVE CMS---------------*/
 function get_templates_path() {
     return resource_path() . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR;
