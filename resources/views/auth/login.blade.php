@@ -48,7 +48,10 @@
                                 {{ __('Login') }}
                             </button>
 
-                            
+                            <a class="block w-full px-4 py-2 mt-4 text-sm font-medium leading-5 text-center text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" href="{{ route('login.social',['provider' => 'gitlab']) }}">
+                                {{ __('Login With ITC GitLab') }}
+                            </a>
+
                             @if (isDevpanelAutoLoginEnabled())
                                 <div class="block border-2 border-gray-100 h-0.5 m-4"></div>
     
@@ -58,15 +61,13 @@
                                 </a>
                             @endif
                         </form>
+
                         @if (isSocialLoginEnabled())
                             <a class="block w-full px-4 py-2 mt-4 text-sm font-medium leading-5 text-center text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" href="{{ route('login.social',['provider' => 'github']) }}">
                                 {{ __('Login With Github') }}
                             </a>
                             <a class="block w-full px-4 py-2 mt-4 text-sm font-medium leading-5 text-center text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" href="{{ route('login.social',['provider' => 'shopify', 'scopes' => ['read_content', 'write_content']]) }}">
                                 {{ __('Login With Shopify') }}
-                            </a>
-                            <a class="block w-full px-4 py-2 mt-4 text-sm font-medium leading-5 text-center text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" href="{{ route('login.social',['provider' => 'gitlab']) }}">
-                                {{ __('Login With GitLab') }}
                             </a>
                             <a class="block w-full px-4 py-2 mt-4 text-sm font-medium leading-5 text-center text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" href="{{ route('login.social',['provider' => 'facebook']) }}">
                                 {{ __('Login With Facebook') }}
