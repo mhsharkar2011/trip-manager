@@ -2,6 +2,7 @@
 
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SocialLoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,10 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+
+Route::get('/login-social/{provider}',  [SocialLoginController::class, 'redirect'])->name('login.social');
+Route::get('/login-social/{provider}/callback', [SocialLoginController::class, 'callback'])->name('login.social.callback');
 
 Route::get('devpanel/login', function () {
     if (isDevpanelAutoLoginEnabled()) {

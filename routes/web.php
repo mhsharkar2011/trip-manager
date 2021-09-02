@@ -20,7 +20,3 @@ Route::get('/', function () {
 // Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 //     return view('dashboard');
 // })->name('dashboard');
-
-Route::get('/auth/{provider}/redirect',  [SocialiteController::class, 'authRedirect'])->name('socialite.login');
-
-Route::get('/auth/{provider}/callback', [SocialiteController::class, 'authCallback']);
