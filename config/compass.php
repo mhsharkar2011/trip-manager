@@ -87,8 +87,8 @@ return [
     */
 
     'authenticator' => [
-        'enabled' => false,
-        'guard' => 'api',
+        'enabled' => true,
+        'guard' => 'sanctum',
         'identifier' => 'email',
     ],
 

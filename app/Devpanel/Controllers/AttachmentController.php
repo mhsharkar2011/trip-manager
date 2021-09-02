@@ -5,6 +5,7 @@ namespace App\Devpanel\Controllers;
 use Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class AttachmentController extends Controller
 {
@@ -12,12 +13,11 @@ class AttachmentController extends Controller
     {
         $model =  sprintf("\App\Models\%s", Str::singular(Str::studly($entity)));
 
-        $data = (new $model)::find($id)->media()->get()
-        ->map(function($m) {
-            $m->full_url = $m->getFullUrl();
-            $m->size_human_readable = $m->human_readable_size;
-            return $m;
-        })
+        $data = (new $model)::find($id);
+
+        $data = request()->has('attachment_group') ? $data->getMedia(request('attachment_group')) : $data->media()->get();
+        
+        $data = $data
         ->groupBy('collection_name')
         ->toArray();
     
@@ -31,10 +31,6 @@ class AttachmentController extends Controller
         $model =  sprintf("\App\Models\%s", Str::singular(Str::studly($entity)));
 
         $attachment = (new $model)::find($id)->addMediaFromRequest('file')->toMediaCollection($attachment_group);
-        if ($attachment->id) {
-            $attachment->full_url = $attachment->getFullUrl();
-            $attachment->size_human_readable = $attachment->human_readable_size;
-        }
         return response()->json($attachment);
     }
 
@@ -69,7 +65,6 @@ class AttachmentController extends Controller
             $entity_info->full_url = $entity_info->getFullUrl();
             $entity_info->size_human_readable = $entity_info->human_readable_size;
         }
-        
         return $this->respondCreated($entity_info);
     }
 }
