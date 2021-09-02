@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\DB;
 
@@ -11,17 +12,19 @@ class SocialiteController extends Controller
 {
     public function authRedirect($provider)
     {
+        $data = [
+            "fe_url" => request('fe_url')
+          ];
+
+        $encrypt_data = Crypt::encrypt($data);
+
         $socialite = Socialite::driver($provider);
 
         if(request('scopes')){
             $socialite->setScopes(request('scopes'));
         }
 
-        if(\request('fe_call')){
-            $socialite->with(['state' => 'CALL_FROM_FRONTEND']);
-        }
-
-        return  $socialite->redirect();
+        return  $socialite->with(['state' => $encrypt_data])->redirect();
     }
 
 
@@ -57,11 +60,13 @@ class SocialiteController extends Controller
                 return $new_user;
         });
 
-        if (request('state') == 'CALL_FROM_FRONTEND') {
+        $decrypt_data = Crypt::decrypt(request('state'));
+        
+        if ($decrypt_data['fe_url']) {
             //create a token through sanctum
             $user['access_token'] = $user->createToken('social_login')->plainTextToken;
             //and send the token and user details in json
-            return $this->respond($user);
+            return redirect()->to(config('app.fe_url').'/'.$decrypt_data['fe_url'].'?success=true&token='.$user['access_token']);
         } else {
             auth()->loginUsingId($user->id);
             return redirect()->intended();
