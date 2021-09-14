@@ -55,12 +55,14 @@ class AttachmentController extends Controller
     public function attach($entity,$id,$attachment_id)
     {
         $model =  sprintf("\App\Models\%s", Str::singular(Str::studly($entity)));
+        $attachment_group = Str::slug(request('attachment_group', 'default'), '_');
+        $disk = request('disk') ? request('disk') : 'public';
 
         $attachment_model = Media::find($attachment_id);
 
-        $media_url = $attachment_model ? $attachment_model->getUrl() : '';
+        $anotherModel = (new $model)::findOrFail($id);
 
-        $entity_info = (new $model)::findOrFail($id)->addMediaFromUrl($media_url)->toMediaCollection();
+        $entity_info = $attachment_model->copy($anotherModel, $attachment_group,$disk);
         if ($entity_info->id) {
             $entity_info->full_url = $entity_info->getFullUrl();
             $entity_info->size_human_readable = $entity_info->human_readable_size;
