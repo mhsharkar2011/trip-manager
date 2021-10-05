@@ -5,6 +5,7 @@ use App\Devpanel\Controllers\CrudGenerateController;
 use App\Devpanel\Controllers\EntityController;
 use App\Devpanel\Controllers\EntityFieldController;
 use App\Http\Controllers\InsuranceTypesController;
+use App\Http\Controllers\PasswordRecoveryController;
 use App\Models\InsuranceType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -39,3 +40,6 @@ Route::delete('{entity}/{id}/attachments/{attachment_id}', [AttachmentController
 
 Route::post('{entity}/{id}/attachments/{attachment_id}/attach', [AttachmentController::class, 'attach'])
 ->where('entity', '[a-z-A-Z]+')->whereNumber('id')->whereNumber('attachment_id');
+
+Route::get('forgot/password', [PasswordRecoveryController::class,'passwordRecovery']);
+Route::get('change/password/{user}', [PasswordRecoveryController::class,'changePassword']);
