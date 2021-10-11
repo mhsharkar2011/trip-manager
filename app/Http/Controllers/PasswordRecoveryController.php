@@ -24,6 +24,7 @@ class PasswordRecoveryController extends Controller
 
                 return $this->respondError('Verification Code Invalid');
             }else{
+                
                 $auto_code = rand(9999,99999);
                 $user->rcovery_code = $auto_code; $user->save();
 
@@ -32,7 +33,12 @@ class PasswordRecoveryController extends Controller
                     'code' => $auto_code
                 ];
           
-                Mail::to($user->email)->send(new PasswordRecover($details));
+                try {
+                    Mail::to($user->email)->send(new PasswordRecover($details));
+                } catch (\Exception $e) {
+                    $this->respondError($e->getMessage());
+                }
+               
                 return $this->respond('Verification code send to you email.');
             }
         }
@@ -41,7 +47,19 @@ class PasswordRecoveryController extends Controller
 
     public function changePassword(User $user)
     {
-        $user->password = request('password'); $user->save();
+        $user->password = bcrypt(request('password')); $user->save();
+
+        $details = [
+            'title' => 'Your Password successfully changed.',
+            'password' => 'New password is - '.request('password')
+        ];
+
+        try {
+            Mail::to($user->email)->send(new PasswordRecover($details));
+        } catch (\Exception $e) {
+            $this->respondError($e->getMessage());
+        }
+        
         return $this->respond($user);
     }
 }

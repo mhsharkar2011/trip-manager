@@ -41,5 +41,5 @@ Route::delete('{entity}/{id}/attachments/{attachment_id}', [AttachmentController
 Route::post('{entity}/{id}/attachments/{attachment_id}/attach', [AttachmentController::class, 'attach'])
 ->where('entity', '[a-z-A-Z]+')->whereNumber('id')->whereNumber('attachment_id');
 
-Route::get('forgot/password', [PasswordRecoveryController::class,'passwordRecovery']);
-Route::get('change/password/{user}', [PasswordRecoveryController::class,'changePassword']);
+Route::post('forgot/password', [PasswordRecoveryController::class,'passwordRecovery']);
+Route::post('change/password/{user}', [PasswordRecoveryController::class,'changePassword']);
