@@ -14,7 +14,7 @@ class AddPasswordRecoveryCodeToUsers extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('rcovery_code')->nullable();
+            $table->integer('recovery_code')->nullable();
         });
     }
 
@@ -26,7 +26,7 @@ class AddPasswordRecoveryCodeToUsers extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('rcovery_code');
+            $table->dropColumn('recovery_code');
         });
     }
 }

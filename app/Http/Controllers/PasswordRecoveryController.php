@@ -13,20 +13,20 @@ class PasswordRecoveryController extends Controller
     public function passwordRecovery()
     {
         $email = request('email');
-        $code = request('rcovery_code');
+        $code = request('recovery_code');
 
         $user = User::whereEmail($email)->first();
 
         if($user){
 
             if($code){
-                if(User::whereRcoveryCode($code)->exists()) return $this->respond($user);
+                if(User::whererecoveryCode($code)->exists()) return $this->respond($user);
 
                 return $this->respondError('Verification Code Invalid');
             }else{
                 
                 $auto_code = rand(9999,99999);
-                $user->rcovery_code = $auto_code; $user->save();
+                $user->recovery_code = $auto_code; $user->save();
 
                 $details = [
                     'title' => 'Your Password recovery verification code bellow this.',
