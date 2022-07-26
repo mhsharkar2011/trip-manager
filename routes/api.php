@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\PasswordRecoveryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,10 +15,13 @@ use App\Http\Controllers\Api\AuthController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::post('registration',[AuthController::class, 'registration']);
-Route::post('login',[AuthController::class, 'login']);
-Route::post('forgot/password',[AuthController::class, 'forgotPassword']);
-Route::post('password/reset', [AuthController::class, 'resetPassword']);
+
+Route::prefix('v1')->group(function () {
+    Route::post('register',[AuthController::class, 'store']);
+    Route::post('login',[AuthController::class, 'login']);
+    Route::post('forgotpassword', [PasswordRecoveryController::class,'passwordRecovery']);
+    Route::post('change/password/{user}', [PasswordRecoveryController::class,'changePassword']);
+});
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
