@@ -59,7 +59,8 @@ class CreateSuperAdminUserCommand extends Command
 
         try {
             $userT->insert([
-                'name' => $this->name,
+                'first_name' => $this->name,
+                'last_name' => '',
                 'email' => $this->email,
                 'password' => bcrypt($this->password),
                 'role' => User::ROLE_SUPER_ADMIN,
