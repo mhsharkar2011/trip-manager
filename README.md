@@ -27,7 +27,7 @@ docker run --rm \
 3. Run the following
 ```
 docker-compose up -d \
-&& docker-compose laravel.test exec php artisan migrate
+&& docker-compose exec laravel.test php artisan migrate
 ```
 
 4. First time it will take some time to pull the images, when done check if the containers are running. You can view with 
