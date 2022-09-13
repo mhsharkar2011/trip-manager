@@ -25,6 +25,7 @@
         "livewire/livewire": "^2.0",
         "netojose/laravel-api-explorer": "^2.0",
         "paquettg/php-html-parser": "^3.1",
+        "php-amqplib/php-amqplib": "^3.2",
         "profclems/postman-collection-generator": "^1.2",
         "socialiteproviders/gitlab": "^4.1",
         "socialiteproviders/shopify": "^4.1",

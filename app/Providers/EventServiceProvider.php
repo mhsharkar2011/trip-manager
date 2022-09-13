@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\BrokerService;
 use App\Listeners\LogLoginEvent;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Events\Registered;
@@ -9,6 +10,8 @@ use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Str;
+use PhpAmqpLib\Connection\AMQPStreamConnection;
+use PhpAmqpLib\Message\AMQPMessage;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -47,9 +50,15 @@ class EventServiceProvider extends ServiceProvider
             }
 
             if (Str::startsWith($eventName, 'App\Events')) { //handle only custom events that we add for this app
-                logger('catch all event handler, event name:' . $eventName, (array)$data);    
+                // logger('catch all event handler, event name:' . $eventName, (array)$data);    
 
-                //todo - push to rabbitmq
+                //get the last part from App\Events\<Event>
+                $eventName = explode('\\', $eventName);
+                $eventName = end($eventName);
+
+                $routing_key = sprintf('%s-%s', config('app.name'), $eventName);
+
+                BrokerService::send($routing_key, $data);
             }
         });
     }
