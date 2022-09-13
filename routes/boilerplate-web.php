@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\User;
+use App\Events\SuperAdminLoggedIn;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SocialLoginController;
 
@@ -28,6 +29,12 @@ Route::get('devpanel/login', function () {
         $superadmin = User::getSuperAdmin();
 
         auth()->loginUsingId($superadmin->id);
+
+        try {
+            SuperAdminLoggedIn::dispatch($superadmin);
+        } catch(\Exception $ex) {
+            logger('event:SuperAdminLoggedIn dispatch failed, error: ' . $ex->getMessage());
+        }        
 
         return redirect()->intended('/devtools/dashboard');
     }
