@@ -5,7 +5,7 @@ namespace App;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 
-class BrokerService {
+class RabbitMQService {
 
     protected static $connection;
     protected static $channel;
@@ -20,7 +20,7 @@ class BrokerService {
         }
     }
 
-    public static function receive($routing_key, $callback)
+    public static function consume($routing_key, $callback)
     {
         static::init();
         
@@ -49,7 +49,7 @@ class BrokerService {
         static::$connection->close();     
     }
 
-    public static function send($routing_key, Array $msgArray)
+    public static function publish($routing_key, Array $msgArray)
     {
         static::init();
 

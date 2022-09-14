@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\BrokerService;
+use App\RabbitMQService;
 use App\Listeners\LogLoginEvent;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Events\Registered;
@@ -58,7 +58,7 @@ class EventServiceProvider extends ServiceProvider
 
                 $routing_key = sprintf('%s-%s', config('app.name'), $eventName);
 
-                BrokerService::send($routing_key, $data);
+                RabbitMQService::publish($routing_key, $data);
             }
         });
     }

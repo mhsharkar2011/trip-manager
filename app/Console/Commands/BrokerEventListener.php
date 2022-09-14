@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\BrokerService;
+use App\RabbitMQService;
 use Illuminate\Console\Command;
 
 
@@ -47,7 +47,7 @@ class BrokerEventListener extends Command
         };
 
 
-        BrokerService::receive(
+        RabbitMQService::consume(
             $routing_key,
             $callback
         );
