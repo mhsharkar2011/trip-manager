@@ -30,7 +30,7 @@ class RabbitMQService {
             $passive = false,
             $durable = true,
             $exclusive = false,
-            $auto_delete = false,
+            $auto_delete = false, //default is true, set to false so that not auto deleted when there is no consumer
             $nowait = false,
             $arguments = array(),
             $ticket = null
@@ -41,7 +41,15 @@ class RabbitMQService {
 
         echo sprintf(" [*] Listening for events from RabbitMQ (Queue: %s, RoutingKey: %s). To exit press CTRL+C\n", $queue_name, $routing_key);
 
-        static::$channel->basic_consume($queue_name, '', false, false, false, false, $callback);
+        static::$channel->basic_consume(
+            $queue_name, 
+            $consumer_tag = '', 
+            $no_local = false, 
+            $no_ack = false, //so we can manually ack
+            $exclusive = false, 
+            $nowait = false, 
+            $callback
+        );
         
         while (static::$channel->is_open()) {
             static::$channel->wait();
