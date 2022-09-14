@@ -13,18 +13,17 @@ class RabbitMQService {
 
     public static function init()
     {
-        if (static::$connection === null) {
-            static::$connection  = new AMQPStreamConnection('localhost', 5672, 'admin', 'secret');
-            static::$channel = static::$connection->channel();
-            static::$channel->exchange_declare(static::exchange, 'topic', false, false, false);
-        }
+        static::$connection  = new AMQPStreamConnection('localhost', 5672, 'admin', 'secret');
+        static::$channel = static::$connection->channel();
+        static::$channel->exchange_declare(static::exchange, 'topic', false, false, false);
     }
 
     public static function consume($routing_key, $callback)
     {
         static::init();
         
-        $queue_name = sprintf('%s-%s', config('app.name'), $routing_key);
+        $routing_key = strtolower($routing_key);
+        $queue_name = strtolower(sprintf('%s-%s', config('app.name'), $routing_key));
 
         static::$channel->queue_declare(
             $queue = $queue_name,
@@ -38,7 +37,9 @@ class RabbitMQService {
         );
         static::$channel->queue_bind($queue_name, static::exchange, $routing_key);
 
-        logger('brokerService receive', compact('routing_key'));
+        // logger('brokerService receive', compact('routing_key'));
+
+        echo sprintf(" [*] Listening for events from RabbitMQ (Queue: %s, RoutingKey: %s). To exit press CTRL+C\n", $queue_name, $routing_key);
 
         static::$channel->basic_consume($queue_name, '', false, false, false, false, $callback);
         
@@ -52,10 +53,20 @@ class RabbitMQService {
     public static function publish($routing_key, Array $msgArray)
     {
         static::init();
+        //todo: set the channel to publisher confirm mode, more in the doc
+        /*
+        $channel->confirm_select();
+        $channel->set_nack_handler() {
+            function (AMQPMessage $msg) {
+                //publish msg again
+            }
+        }
+        */
 
         $msg = new AMQPMessage(json_encode($msgArray));
+        $routing_key = strtolower($routing_key);
 
-        logger('brokerService send', compact('routing_key', 'msgArray'));
+        // logger('in brokerService publish', compact('routing_key', 'msgArray'));
     
         static::$channel->basic_publish($msg, 'main', $routing_key);
     

@@ -56,7 +56,7 @@ class EventServiceProvider extends ServiceProvider
                 $eventName = explode('\\', $eventName);
                 $eventName = end($eventName);
 
-                $routing_key = sprintf('%s-%s', config('app.name'), $eventName);
+                $routing_key = sprintf('%s.%s', config('app.name'), $eventName);
 
                 RabbitMQService::publish($routing_key, $data);
             }

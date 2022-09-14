@@ -13,7 +13,9 @@ class BrokerEventListener extends Command
      *
      * @var string
      */
-    protected $signature = 'project:receive-event';
+    protected $signature = 'project:consume-rabbitmq-event 
+    {--R|routing-key= : Routing key for the queue, for routing key formats check "Topic exchange" seciton under https://www.rabbitmq.com/tutorials/tutorial-five-php.html}
+    ';
 
     /**
      * The console command description.
@@ -40,8 +42,19 @@ class BrokerEventListener extends Command
     public function handle()
     {
 
-        $routing_key = '#'; //todo - parameterize
+        $routing_key = $this->option('routing-key');
+
+        if (! $routing_key) {
+            $routing_key = $this->ask('
+                Please enter the routing key for the queue. Our usual format is <app>.<entity>.<action>, so some examples for routing keys,
+                # - listens for all events
+                pmapp.project.* - listens for all pmapp project related events
+                pmapp.# - listens for all pmapp related events
+            ');
+        }
+
         $callback = function ($msg) {
+            echo 'received event from broker' . PHP_EOL;
             logger('received event from broker: ' . $msg->delivery_info['routing_key'], (array)$msg->body);
             $msg->ack();
         };
@@ -51,8 +64,6 @@ class BrokerEventListener extends Command
             $routing_key,
             $callback
         );
-
-
         
         return 0;
     }
