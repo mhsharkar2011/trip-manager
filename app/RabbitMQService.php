@@ -13,7 +13,12 @@ class RabbitMQService {
 
     public static function init()
     {
-        static::$connection  = new AMQPStreamConnection('localhost', 5672, 'admin', 'secret');
+        static::$connection  = new AMQPStreamConnection(
+            config('services.rabbitmq.host'), 
+            config('services.rabbitmq.port'), 
+            config('services.rabbitmq.user'), 
+            config('services.rabbitmq.password')
+        );
         static::$channel = static::$connection->channel();
         static::$channel->exchange_declare(static::exchange, 'topic', false, false, false);
     }

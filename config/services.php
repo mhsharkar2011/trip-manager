@@ -61,5 +61,10 @@ return [
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),  
         'redirect' => env('GOOGLE_REDIRECT_URI') 
     ],
-
+    'rabbitmq' => [
+        'host' => env('RABBITMQ_HOST'),
+        'port' => env('RABBITMQ_PORT'),
+        'user' => env('RABBITMQ_USER'),
+        'password' => env('RABBITMQ_PASSWORD'),
+    ],    
 ];
