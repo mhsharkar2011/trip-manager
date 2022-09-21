@@ -81,6 +81,44 @@ docker ps
 [http://127.0.0.1:54321](http://127.0.0.1:54321) 
  you should be able to see the home page.
 
+# Boilerplate Features
+
+## Events
+### Local event
+For local events, Follow Laravel default event mechanism
+https://laravel.com/docs/9.x/events
+
+### Externalize Local event
+All events we create under `App\Events` will be published to a RabbitMQ Broker.
+We do this centrally through a catch all event listener in `EventServiceProvider`. For interacting with RabbitMQ we use our own `App\RabbitMQService` service class. So no extra code is necessary for this. So whatever local events we define under `App\Events` gets published to RabbitMQ by default.
+
+If you want to receive some event/message from the RabbitMQ broker, local or external, doesn't matter, run the following artisan command `php artisan project:consume-rabbitmq-event`  
+After running you will get more instruction regarding required inputs.
+
+If you want to deploy RabbitMQ locally or on a server, use the file `docker-compose.rabbitmq.yml` under the folder `rabbitmq` in the project root, so something like 
+```
+docker-compose -f rabbitmq/docker-compose.rabbitmq.yml up
+```  
+There is no Dockerfile or other file dependency, so you can also copy the file or content anywhere and use it as needed. 
+
+If you want to know more about the way we use RabbitMQ, as in how and what type of exchange and queues we use, check the following doc, the doc also has POC repo link which you use to try it out as a separate project.
+[Events POC - RabbitMQ](https://docs.google.com/document/d/1N1f-7kXIQJiEGDEGaDE9iYx_cf5Awey7qkNtfht87Mo/edit?usp=sharing)
+
+## SaaS/Multi-tenancy
+TBD
+
+## Authentication
+TBD
+
+## Authorization
+TBD
+
+## CRUD & Entity Relationships
+TBD
+
+## Attachments (File uploads)
+TBD
+
 
 # Deployment 
 TBD
