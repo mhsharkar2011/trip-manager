@@ -104,16 +104,38 @@ class ClockifyReportSummary extends Command
             exit('no entries found');
         }        
 
-        $users_sorted = collect($data['groupOne'])->sortByDesc('duration')->map(function($row) {
+        $i = 1;
+        $users_sorted = collect($data['groupOne'])
+        ->sortByDesc('duration')->map(function($row) use (&$i) {
+            $row['name_raw'] = $row['name'];
+            $row['name'] =  $i++ .'. '. $row['name'];
             $row['duration_humazined'] =  gmdate('H\h i\m', $row['duration']);
             return $row;
         });
 
         $users_sorted_output = $users_sorted->map(function($row) {
             return collect($row)->only(['name', 'duration_humazined']);
-        })->toArray();
+        });
     
-    //    dd($users_sorted_output);        
+    //    dd($users_sorted_output);       
+    
+        //find users who don't have entries
+        $response_users = Http::withHeaders([
+            'X-Api-Key' => $key,
+        ])->get('https://api.clockify.me/api/v1/workspaces/' . $workspace_id . '/users?status=ACTIVE');    
+
+        $users_all = $response_users->json();
+
+        $users_all_names = collect($users_all)->pluck('name');
+        $users_without_entries = $users_all_names->diff($users_sorted->pluck('name_raw'))->values();
+
+        // dd($users_sorted->pluck('name_raw')->values());
+
+        $i = 1;
+        $users_without_entries_arr = $users_without_entries->map(function($item) use (&$i) {
+            return ['name' => $i++ .'. '. $item];
+        })->toArray();
+        //END - find users who don't have entries
 
         $this->table(
             ['Start', 'End'],
@@ -122,7 +144,16 @@ class ClockifyReportSummary extends Command
         
         $this->table(
             ['Name', 'Duration'],
-            $users_sorted_output
+            $users_sorted_output->toArray()
+        );
+
+        $this->line('');
+        $this->line('-------------------------------');
+        $this->line('Following users have no entries');
+
+        $this->table(
+            ['Name'],
+            $users_without_entries_arr
         );
         
         return 0;
