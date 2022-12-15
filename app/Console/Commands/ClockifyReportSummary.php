@@ -42,15 +42,6 @@ class ClockifyReportSummary extends Command
      */
     public function handle()
     {
-        $key = config('clockify.api_key');
-        $workspace_id = config('clockify.workspace_id');
-
-        if (!$key || !$workspace_id) {
-            $this->error('Clockify API key or Clockify workspace ID not found in config.');
-            return 1;
-        }
-        
-        $api_base = 'https://reports.api.clockify.me/v1/workspaces/' . $workspace_id . '/reports';
         
         $subDays = $this->argument('sub-days');
 
@@ -59,9 +50,9 @@ class ClockifyReportSummary extends Command
 
         // dd([compact('start', 'end')]);
 
-        $response = Http::withHeaders([
-            'X-Api-Key' => $key,
-        ])->post($api_base . '/summary', [
+        $ClockifyReportHttp = app('Clockify\Report\Http');
+
+        $response = $ClockifyReportHttp->post('/summary', [            
             'dateRangeStart' => $start,
             'dateRangeEnd' => $end,
             "summaryFilter" => [
@@ -120,10 +111,8 @@ class ClockifyReportSummary extends Command
     //    dd($users_sorted_output);       
     
         //find users who don't have entries
-        $response_users = Http::withHeaders([
-            'X-Api-Key' => $key,
-        ])->get('https://api.clockify.me/api/v1/workspaces/' . $workspace_id . '/users?status=ACTIVE');    
-
+        $clockifyHttp = app('Clockify\Http');
+        $response_users = $clockifyHttp->get('/users?status=ACTIVE');
         $users_all = $response_users->json();
 
         $users_all_names = collect($users_all)->pluck('name');
