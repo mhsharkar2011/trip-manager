@@ -2,9 +2,8 @@
 
 namespace App\Console\Commands;
 
-use App\Models\User;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Http;
+use App\Services\Clockify\ClockifyService;
 
 class ClockifyReportSummary extends Command
 {
@@ -50,53 +49,14 @@ class ClockifyReportSummary extends Command
 
         // dd([compact('start', 'end')]);
 
-        $ClockifyReportHttp = app('Clockify\Report\Http');
+        $summary_report = ClockifyService::summary_report($start, $end);
 
-        $response = $ClockifyReportHttp->post('/summary', [            
-            'dateRangeStart' => $start,
-            'dateRangeEnd' => $end,
-            "summaryFilter" => [
-                "groups" =>  [
-                    'USER',
-                    // 'CLIENT',
-                    // 'PROJECT',
-                    // 'TASK',
-                    // 'DATE',
-                    // 'TIMEENTRY',
-                ],
-                'sortColumn' => 'DURATION',
-                'rounding' => true,
-            ],        
-            'detailedFilter' => [
-                "page" =>  1,
-                "pageSize" => 1000,
-            ],
-            // "billable" => true,
-            // "billable" => false,
-            "timeZone" => "Asia/Dhaka",
-            // "withoutDescription" => false,
-            "users" => [
-                "ids" => [
-                    // "5c495a66b079873e19e4b156", //reza
-                    // "5c5d31b6b079871c5191f064", //rony
-                    // "60d9560cd1e90c5de0b45f70", //mahmuda
-                    // "612f09c1c78ce1665195b2e6", //samiul
-                    // "5f0bd4c68c4563002b62bedd", //taushif
-                    // "60f177eb5e6d0d0c1921af61", //sabiya
-                    // "5c5d315cb079871c5191eee8", //tarif
-                ],
-                "status" => "ACTIVE"
-            ],        
-        ]);
-
-        $data = $response->json();
-
-        if (! is_array($data['groupOne'])) {
+        if (! is_array($summary_report['groupOne'])) {
             exit('no entries found');
         }        
 
         $i = 1;
-        $users_sorted = collect($data['groupOne'])
+        $users_sorted = collect($summary_report['groupOne'])
         ->sortByDesc('duration')->map(function($row) use (&$i) {
             $row['name_raw'] = $row['name'];
             $row['name'] =  $i++ .'. '. $row['name'];
@@ -108,17 +68,12 @@ class ClockifyReportSummary extends Command
             return collect($row)->only(['name', 'duration_humazined']);
         });
     
-    //    dd($users_sorted_output);       
     
         //find users who don't have entries
-        $clockifyHttp = app('Clockify\Http');
-        $response_users = $clockifyHttp->get('/users?status=ACTIVE');
-        $users_all = $response_users->json();
+        $users_all = ClockifyService::get_all_active_users();
 
         $users_all_names = collect($users_all)->pluck('name');
         $users_without_entries = $users_all_names->diff($users_sorted->pluck('name_raw'))->values();
-
-        // dd($users_sorted->pluck('name_raw')->values());
 
         $i = 1;
         $users_without_entries_arr = $users_without_entries->map(function($item) use (&$i) {
