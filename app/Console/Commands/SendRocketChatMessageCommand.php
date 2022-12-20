@@ -43,7 +43,6 @@ class SendRocketChatMessageCommand extends Command
     {
         
         $message = $this->argument('message');
-        
 
         $response = Http::withHeaders([
             'X-Auth-Token' => env('ROCKETCHAT_TOKEN'),
@@ -54,7 +53,7 @@ class SendRocketChatMessageCommand extends Command
             'channel' => '#tarif-tmp',
             'roomId' => 'aRiCXAQJcHH8ejc8m',
             'text' => $message,
-            'emoji' => ':smirk:',
+            'emoji' => ':timer:',
         ])
         ->json();
 
