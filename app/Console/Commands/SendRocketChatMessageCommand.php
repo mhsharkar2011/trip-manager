@@ -50,8 +50,8 @@ class SendRocketChatMessageCommand extends Command
             'Accept' =>'application/json',
         ])
         ->post('https://chat.sandbox3000.com/api/v1/chat.postMessage', [
-            'channel' => '#tarif-tmp',
-            'roomId' => 'aRiCXAQJcHH8ejc8m',
+            'channel' => '#i-time-police',
+            'roomId' => 'JtAE8eyQkCB6dbL3c',
             'text' => $message,
             'emoji' => ':timer:',
         ])
