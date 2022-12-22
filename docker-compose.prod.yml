@@ -38,8 +38,21 @@ services:
         - VIRTUAL_HOST=app_www.com
         - LETSENCRYPT_HOST=app_www.com
         - LETSENCRYPT_EMAIL=reza@itconquest.com
+    labels:
+      deck-chores.job1.command: sh -c "cd /var/www/html && php artisan schedule:run &> /proc/1/fd/1"
+      deck-chores.job1.cron: '* * * * * * * 0' # every minute
     # networks:
     #     - itconquest
+
+  scheduler:
+      image: funkyfuture/deck-chores:1
+      restart: unless-stopped
+      environment:
+        TIMEZONE: Asia/Dhaka
+      volumes:
+        - /var/run/docker.sock:/var/run/docker.sock
+      # networks:
+      #     - itconquest    
 
 # networks:
 #     itconquest:
