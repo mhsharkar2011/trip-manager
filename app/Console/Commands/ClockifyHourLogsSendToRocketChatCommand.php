@@ -13,7 +13,10 @@ class ClockifyHourLogsSendToRocketChatCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'project:clockify-hours-send-to-rocket-chat';
+    protected $signature = '
+        project:clockify-hours-send-to-rocket-chat
+        {--type=daily : "week" or "month", default is "daily" which need to be mentioned}
+    ';
 
     /**
      * The console command description.
@@ -39,7 +42,10 @@ class ClockifyHourLogsSendToRocketChatCommand extends Command
      */
     public function handle()
     {
+
+        $report_type = $this->option('type');
         
+        //type=daily
         $day_of_week = strtolower(now('Asia/Dhaka')->englishDayOfWeek);
 
         // $day_of_week = 'thursday'; //test
@@ -57,6 +63,28 @@ class ClockifyHourLogsSendToRocketChatCommand extends Command
             $start_dt = now('Asia/Dhaka')->subDay(3);
             $start = now('Asia/Dhaka')->subDay(3)->startOfDay()->toDateTimeLocalString();
             $end = now('Asia/Dhaka')->subDay(3)->endOfDay()->toDateTimeLocalString();
+        }
+        
+        $date = $start_dt->format('M j (l)'); //Dec 20 (Tuesday)
+
+        if ('week' == $report_type) {
+            $start_dt = now('Asia/Dhaka')->subWeek(1);
+            $start = now('Asia/Dhaka')->subWeek(1)->startOfWeek()->toDateTimeLocalString();
+            
+            $end_dt = now('Asia/Dhaka')->subWeek(1)->endOfWeek();
+            $end = now('Asia/Dhaka')->subWeek(1)->endOfWeek()->toDateTimeLocalString();
+
+            $date = 'Week - ' . $start_dt->format('M j (l)') . ' - ' . $end_dt->format('M j (l)'); 
+        } 
+
+        if ('month' == $report_type) {
+            $start_dt = now('Asia/Dhaka')->startOfMonth();
+            $start = now('Asia/Dhaka')->startOfMonth()->toDateTimeLocalString();
+            
+            $end_dt = now('Asia/Dhaka')->endOfMonth();
+            $end = now('Asia/Dhaka')->endOfMonth()->toDateTimeLocalString();
+
+            $date = 'Month ' . $start_dt->format('M j') . ' - ' . now()->format('M j'); 
         } 
 
         $summary_report = ClockifyService::summary_report($start, $end);
@@ -71,7 +99,8 @@ class ClockifyHourLogsSendToRocketChatCommand extends Command
         ->sortByDesc('duration')->map(function($row) use (&$i) {
             $row['name_raw'] = $row['name'];
             $row['name'] =  $i++ .'. '. $row['name'];
-            $row['duration_humazined'] =  \Carbon\CarbonInterval::seconds($row['duration'])->cascade()->forHumans(null, true, 2);
+            // $row['duration_humazined'] =  \Carbon\CarbonInterval::seconds($row['duration'])->cascade()->forHumans(null, true, 2);
+            $row['duration_humazined'] =  sprintf('%2dh %2dm', ($row['duration']/3600),($row['duration']/60%60));
             return $row;
         });
 
@@ -93,12 +122,14 @@ class ClockifyHourLogsSendToRocketChatCommand extends Command
         //END - find users who don't have entries        
 
         $msg = view('clockfiy-hours-rocket-chat', [
-            'date' => $start_dt->format('M j (l)'), //Dec 20 (Tuesday)
+            'date' => $date,
             'users' => $users_sorted_output->toArray(),
             'users_without_entries_arr' => $users_without_entries_arr,
         ])->render();
 
         // logger($msg);
+
+        // echo($msg);
         
         Artisan::call('project:send-rocket-chat-message', ['message' => $msg]);
 
