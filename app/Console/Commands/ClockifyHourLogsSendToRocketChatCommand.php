@@ -100,7 +100,7 @@ class ClockifyHourLogsSendToRocketChatCommand extends Command
             $row['name_raw'] = $row['name'];
             $row['name'] =  $i++ .'. '. $row['name'];
             // $row['duration_humazined'] =  \Carbon\CarbonInterval::seconds($row['duration'])->cascade()->forHumans(null, true, 2);
-            $row['duration_humazined'] =  sprintf('%2dh %2dm', ($row['duration']/3600),($row['duration']/60%60));
+            $row['duration_humazined'] =  sprintf('%1dh %1dm', ($row['duration']/3600),($row['duration']/60%60));
             return $row;
         });
 
