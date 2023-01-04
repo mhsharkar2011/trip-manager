@@ -51,10 +51,11 @@ class ProjectSetup extends Command
             exec("sed -i -r 's/SUPERADMIN_AUTO_LOGIN=false/SUPERADMIN_AUTO_LOGIN=true/' .env");
         }
 
-        if (Artisan::call('migrate --seed') === 0) { //success
-            echo(Artisan::output());
-            $this->info('Database has been migrated and seeded.');
-        }
+        //the output not showing and weird stuff happening, so will deal with later
+        // if (Artisan::call('migrate --seed') === 0) { //success
+        //     echo(Artisan::output());
+        //     $this->info('Database has been migrated and seeded.');
+        // }
         
         return 0;
     }
