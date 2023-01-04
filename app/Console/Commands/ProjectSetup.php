@@ -39,10 +39,10 @@ class ProjectSetup extends Command
      */
     public function handle()
     {
-        if (app()->environment() === 'production') {
-            $this->error('You cannot run this command in production mode, exiting.');
-            return 1;
-        }
+        // if (app()->environment() === 'production') {
+        //     $this->error('You cannot run this command in production mode, exiting.');
+        //     return 1;
+        // }
         
         if (! File::exists('.env')) {
             File::copy('.env.example', '.env');
@@ -52,8 +52,8 @@ class ProjectSetup extends Command
         }
 
         if (Artisan::call('migrate --seed') === 0) { //success
-            $this->info('Database has been migrated and seeded.');
             echo(Artisan::output());
+            $this->info('Database has been migrated and seeded.');
         }
         
         return 0;
