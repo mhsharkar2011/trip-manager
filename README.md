@@ -1,6 +1,6 @@
 # Setup project locally (Using Docker)
 
-## Option #1 - FE developer or quick testing
+## Option #1 - Easy setup with PHP and MySQL services only
 
 ### Prerequisite
 1. If you don't have Docker and Docker Compose already then
@@ -11,36 +11,27 @@ Install from [Docker Desktop](https://www.docker.com/products/docker-desktop/) a
 ```
 git clone https://git.sandbox3000.com/itc/incubator/boilerplates/laravel-boilerplate.git \
 && cd laravel-boilerplate \
-&& cp .env.example .env \
-&& touch database/database.sqlite
+&& docker-compose -f docker-compose.local.yml up -d
 ```
-2. Install Laravel dependencies
+2. Then run the following to install Laravel dependencies and then some other steps
 ```
-docker run --rm \
-    -u "$(id -u):$(id -g)" \
-    -v $(pwd):/var/www/html \
-    -w /var/www/html \
-    laravelsail/php81-composer:latest \
-    composer install --ignore-platform-reqs
-```
-
-3. Run the following
-```
-docker-compose up -d \
-&& docker-compose exec laravel.test php artisan migrate
-```
-
-4. First time it will take some time to pull the images, when done check if the containers are running. You can view with 
-```
-docker ps
+docker-compose exec www composer install \
+&& docker-compose exec www php artisan project:setup \
+&& docker-compose exec www php artisan migrate --seed
 ```
 
 5. At this point you should be able browse the site/app at
-[http://127.0.0.1:54321](http://127.0.0.1:54321) 
+[http://127.0.0.1:8800](http://127.0.0.1:8800) 
  you should be able to see the home page.
 
+6. For database you can use a mysql client and connect to it
+```
+Host: 127.0.0.1
+Port: 53306
+```
+Get the database name, user and password from the `docker-compose-local.yml` file
 
-## Option #2 - Laravel Sail for BE developers
+## Option #2 - Laravel Sail for BE developers with multiple needed services
 ### Prerequisite
 1. If you are using Windows you need to get Windows WSL2. Follow these instructions from [here](https://laravel.com/docs/9.x/installation#getting-started-on-windows). For Linux or Mac start from #2.
 
