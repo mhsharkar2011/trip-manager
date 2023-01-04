@@ -178,7 +178,7 @@ return [
         App\Providers\FortifyServiceProvider::class,
         App\Providers\JetstreamServiceProvider::class,
 
-        App\Services\Clockify\ClockifyServiceProvider::class,
+        // App\Services\Clockify\ClockifyServiceProvider::class,
 
     ],
 

@@ -25,19 +25,19 @@ class LivecmsCreatePagesTable extends Migration
                 $table->timestamps();
             });
     
-            foreach ($this->getPages() as $tpl) {
-                $template_content = $tpl['template'];
+            // foreach ($this->getPages() as $tpl) {
+            //     $template_content = $tpl['template'];
                 
-                if (View::exists($tpl['path'])) {
-                    $template_content = file_get_contents(get_templates_path() . $tpl['path'] . '.blade.php');
-                }
+            //     if (View::exists($tpl['path'])) {
+            //         $template_content = file_get_contents(get_templates_path() . $tpl['path'] . '.blade.php');
+            //     }
                 
-                Template::create([
-                    'route' => $tpl['route'],
-                    'template' => $template_content,
-                    'path' => $tpl['path'],
-                ]);
-            }
+            //     Template::create([
+            //         'route' => $tpl['route'],
+            //         'template' => $template_content,
+            //         'path' => $tpl['path'],
+            //     ]);
+            // }
         }
             
     }

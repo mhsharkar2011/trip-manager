@@ -30,9 +30,9 @@ Route::post('livecms/text-update', [TextEditController::class, 'update'])
 Route::resource('cms', PagesController::class)
 ->middleware('auth:sanctum');
 
-if (Schema::hasTable('live_cms_pages')) {
-    foreach(Template::all() as $tpl) {
-        $data = [];
-        Route::view($tpl->route, $tpl->path, $data)->name($tpl->path);
-    }
-}
+// if (Schema::hasTable('live_cms_pages')) {
+//     foreach(Template::all() as $tpl) {
+//         $data = [];
+//         Route::view($tpl->route, $tpl->path, $data)->name($tpl->path);
+//     }
+// }
