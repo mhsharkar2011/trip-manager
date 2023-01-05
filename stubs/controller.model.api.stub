@@ -16,7 +16,9 @@ class {{ class }} extends Controller
      */
     public function index((Request $request)
     {
-        return $this->respond(${{ modelVariable }}::latest()->paginate());
+        $items_per_page = request('items_per_page', self::ITEMS_PER_PAGE);
+        
+        return $this->respond(${{ modelVariable }}::latest()->paginate($items_per_page));
     }
 
     /**
