@@ -2,14 +2,17 @@
 
 namespace DummyNamespace;
 
-use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
+use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 {{useSoftDeletes}}
 class DummyClass extends Model implements HasMedia
 {
     use InteractsWithMedia;
+    use HasFactory;
+    
     {{softDeletes}}
     
     /**
