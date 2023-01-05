@@ -6,6 +6,7 @@ use DummyRootNamespaceHttp\Requests;
 
 use DummyRootNamespace{{modelNamespace}}{{modelName}};
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class DummyClass extends Controller
 {
@@ -18,7 +19,7 @@ class DummyClass extends Controller
     {
         ${{crudName}} = {{modelName}}::latest()->paginate({{pagination}});
 
-        return ${{crudName}};
+        return $this->respond(${{crudName}});
     }
 
     /**
@@ -30,10 +31,19 @@ class DummyClass extends Controller
      */
     public function store(Request $request)
     {
-        {{validationRules}}
+        $validation = Validator::make(
+            $request->all(), 
+            {{modelName}}::validation_rules(),
+            {{modelName}}::validation_messages(),
+        );
+
+        if ($validation->fails()) {
+            return $this->respondValidationError($validation->errors());
+        }   
+
         ${{crudNameSingular}} = {{modelName}}::create($request->all());
 
-        return response()->json(${{crudNameSingular}}, 201);
+        return $this->respondCreated(${{crudNameSingular}});
     }
 
     /**
@@ -43,11 +53,9 @@ class DummyClass extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show({{modelName}} ${{crudNameSingular}})
     {
-        ${{crudNameSingular}} = {{modelName}}::findOrFail($id);
-
-        return ${{crudNameSingular}};
+        return $this->respond(${{crudNameSingular}});
     }
 
     /**
@@ -58,13 +66,21 @@ class DummyClass extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, {{modelName}} ${{crudNameSingular}})
     {
-        {{validationRules}}
-        ${{crudNameSingular}} = {{modelName}}::findOrFail($id);
+        $validation = Validator::make(
+            $request->all(), 
+            {{modelName}}::validation_rules_for_update(),
+            {{modelName}}::validation_messages_for_update(),
+        );
+
+        if ($validation->fails()) {
+            return $this->respondValidationError($validation->errors());
+        }   
+
         ${{crudNameSingular}}->update($request->all());
 
-        return response()->json(${{crudNameSingular}}, 200);
+        return $this->respond(${{crudNameSingular}});
     }
 
     /**
@@ -74,10 +90,10 @@ class DummyClass extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy({{modelName}} ${{crudNameSingular}})
     {
-        {{modelName}}::destroy($id);
+        ${{crudNameSingular}}->delete();
 
-        return response()->json(null, 204);
+        return $this->respondDeleted();
     }
 }

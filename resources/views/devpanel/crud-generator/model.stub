@@ -34,7 +34,15 @@ class DummyClass extends Model implements HasMedia
 
     protected static function validation_messages() {
         return [];
-    }    
+    } 
+
+    protected static function validation_rules_for_update() {
+        return self::validation_rules();
+    }
+
+    protected static function validation_messages_for_update() {
+        return self::validation_messages();
+    }           
 
     {{relationships}}
 }
