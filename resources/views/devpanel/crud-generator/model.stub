@@ -26,7 +26,11 @@ class DummyClass extends Model implements HasMedia
      *
      * @var array
      */
-    protected $fillable = {{fillable}};
+    //protected $fillable = {{fillable}};
+
+    protected $guarded = [
+        'id'
+    ];    
 
     protected static function validation_rules() {
         return [];
