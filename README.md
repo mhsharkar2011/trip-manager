@@ -73,6 +73,37 @@ docker ps
 
 # Boilerplate Features
 
+## API Client
+We have a built in API client, named `Laravel Compass` which is a client like `Postman` that you can use to interact with the API's. Main benefits over Postman are, the routes in the app will show up automatically, a token can be selected by just clicking, payloads and also responses can be saved for others. All of these are very helpful and saves time.
+
+To use it head to [http://127.0.0.1:8800/devtools/api-explorer-compass](http://127.0.0.1:8800/devtools/api-explorer-compass) 
+
+To Login, click `"Superadmin Login"` button. This doesn't require a email, password.
+
+There are 2 pre-requisites though:
+
+1. You have to set appropriate value to the key `APP_URL` in `.env`. If you ran `project:setup` during setting up these was already set for you. Please verify. The current `APP_URL` value is displayed in the home screen of `Laravel Compass`.
+
+2. For routes that require authentication, You have to go under the `Auth` tab for a route and select `bearer` and select a token. If no tokens are available in the list, you can generate one from [http://127.0.0.1:8800/](http://127.0.0.1:8800/devtools/artisangui-iframe), click `project:create-api-token`. After you generate the token, go back to `Laravel Compass` and in the `Auth > Bearer` tab, you can click the refresh icon and you will see it in the list, select and hit `Save Requeust`.
+
+
+## Authentication
+`Register`, `Login`, `Forgot Password`, `Change Password` API are implemented. 
+These can be found in the file `api.php`, the routes prefixed under `v1`.
+
+For any route to require authentication, place it under the `auth:sanctum` middleware. You will see an example in the file `api.php`. 
+
+## Authorization
+TBD
+
+## CRUD & Entity Relationships
+To generate a CRUD head over to [http://127.0.0.1:8800/devtools/artisangui-iframe](http://127.0.0.1:8800/devtools/artisangui-iframe) and click `project:generate-crud`. 
+
+Then use the form field hints to complete the form and click `Run`. It will show you list of files generated, you can verify by checking the codebase. You can also go to `Laravel Compass` and you will see the newly generated API's (click refresh icon if necessary) and can interact from there.
+
+## Attachments (File uploads)
+TBD
+
 ## Events
 ### Local event
 For local events, Follow Laravel default event mechanism
@@ -99,19 +130,6 @@ If you want to know more about the way we use RabbitMQ, as in how and what type 
 
 ## SaaS/Multi-tenancy
 TBD
-
-## Authentication
-TBD
-
-## Authorization
-TBD
-
-## CRUD & Entity Relationships
-TBD
-
-## Attachments (File uploads)
-TBD
-
 
 # Deployment 
 TBD
