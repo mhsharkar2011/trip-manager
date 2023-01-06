@@ -84,7 +84,7 @@ There are 2 pre-requisites though:
 
 1. You have to set appropriate value to the key `APP_URL` in `.env`. If you ran `project:setup` during setting up these was already set for you. Please verify. The current `APP_URL` value is displayed in the home screen of `Laravel Compass`.
 
-2. For routes that require authentication, You have to go under the `Auth` tab for a route and select `bearer` and select a token. If no tokens are available in the list, you can generate one from [http://127.0.0.1:8800/](http://127.0.0.1:8800/devtools/artisangui-iframe), click `project:create-api-token`. After you generate the token, go back to `Laravel Compass` and in the `Auth > Bearer` tab, you can click the refresh icon and you will see it in the list, select and hit `Save Requeust`.
+2. For routes that require authentication, You have to go under the `Auth` tab for a route and select `bearer` and select a token. If no tokens are available in the list, you can generate one from [http://127.0.0.1:8800/devtools/artisangui-iframe](http://127.0.0.1:8800/devtools/artisangui-iframe), click `project:create-api-token`. After you generate the token, go back to `Laravel Compass` and in the `Auth > Bearer` tab, you can click the refresh icon and you will see it in the list, select and hit `Save Requeust`.
 
 
 ## Authentication
