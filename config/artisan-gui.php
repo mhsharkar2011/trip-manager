@@ -77,6 +77,7 @@ return [
     */
     'commands' => [
         'Frequeunt' => [
+            'project:generate-quick-crud',
             'project:generate-crud',
             'project:create-api-token',
             'project:export-postman-with-token',
