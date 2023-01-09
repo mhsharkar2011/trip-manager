@@ -60,8 +60,7 @@ class GenerateCRUDQuickCommand extends Command
 
             // Artisan::call('migrate');
             
-            $this->line('Following spec file has been generated, modified and regenerate as needed');
-            $this->newLine();
+            $this->line('Following spec file has been generated, it can be modified further and CRUD can be regenerated using the "project:generate-quick-from-file" command');
             $this->line($spec_file_entity);
             return 1;
         } catch (\Exception $e) {
