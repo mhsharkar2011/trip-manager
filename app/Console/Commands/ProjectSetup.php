@@ -52,7 +52,7 @@ class ProjectSetup extends Command
         }
 
         $this->call('migrate');
-        exec('chmod -R 777 storage boostrap');
+        exec('chmod -R 777 storage boostrap/cache');
         
         return 0;
     }
