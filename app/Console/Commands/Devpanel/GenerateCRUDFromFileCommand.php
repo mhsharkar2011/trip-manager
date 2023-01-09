@@ -66,7 +66,7 @@ class GenerateCRUDFromFileCommand extends Command
             Artisan::call('crud:api', $commandArg);
             $this->line(Artisan::output());
 
-            // Artisan::call('migrate');
+            Artisan::call('migrate');
             
             return 1;
         } catch (\Exception $e) {
