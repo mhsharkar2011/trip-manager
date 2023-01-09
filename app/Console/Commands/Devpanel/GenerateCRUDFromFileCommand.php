@@ -14,7 +14,7 @@ class GenerateCRUDFromFileCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'project:generate-quick-from-file
+    protected $signature = 'project:generate-crud-from-file
                             {file_path? : Enter the full path to the json file}
                             ';
 
