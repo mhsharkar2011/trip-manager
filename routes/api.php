@@ -37,3 +37,4 @@ Route::middleware([
 });
 
 Route::resource('cars', 'App\Http\Controllers\CarsController', ['except' => ['create', 'edit']]);
+Route::resource('vehicles', 'App\Http\Controllers\VehiclesController', ['except' => ['create', 'edit']]);
