@@ -15,10 +15,10 @@ class CreateVehiclesTable extends Migration
     {
         Schema::create('vehicles', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('sl_no');
+            $table->string('sl_no')->unique();
             $table->string('name');
-            $table->string('license_no');
-            $table->string('model');
+            $table->string('license_no')->unique();
+            $table->string('model')->unique();
             $table->timestamps();
             });
     }

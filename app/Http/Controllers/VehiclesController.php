@@ -39,10 +39,6 @@ class VehiclesController extends Controller
             Vehicle::validation_messages(),
         );
 
-        $validator = Validator::make($request->all(), [
-            'title' => 'required|unique:posts|max:255',
-            'body' => 'required',
-        ]);
         if ($validation->fails()) {
             return $this->respondValidationError($validation->errors());
         }   
