@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests;
 
-use App\Models\Car;
+use App\Models\Driver;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class CarsController extends Controller
+class DriversController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,9 +19,9 @@ class CarsController extends Controller
     {
         $items_per_page = request('items_per_page', self::ITEMS_PER_PAGE);
 
-        $cars = Car::latest()->paginate($items_per_page);
+        $drivers = Driver::latest()->paginate($items_per_page);
 
-        return $this->respond($cars);
+        return $this->respond($drivers);
     }
 
     /**
@@ -35,17 +35,17 @@ class CarsController extends Controller
     {
         $validation = Validator::make(
             $request->all(), 
-            Car::validation_rules(),
-            Car::validation_messages(),
+            Driver::validation_rules(),
+            Driver::validation_messages(),
         );
 
         if ($validation->fails()) {
             return $this->respondValidationError($validation->errors());
         }   
 
-        $car = Car::create($request->all());
+        $driver = Driver::create($request->all());
 
-        return $this->respondCreated($car);
+        return $this->respondCreated($driver);
     }
 
     /**
@@ -55,9 +55,9 @@ class CarsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(Car $car)
+    public function show(Driver $driver)
     {
-        return $this->respond($car);
+        return $this->respond($driver);
     }
 
     /**
@@ -68,21 +68,21 @@ class CarsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Car $car)
+    public function update(Request $request, Driver $driver)
     {
         $validation = Validator::make(
             $request->all(), 
-            Car::validation_rules_for_update(),
-            Car::validation_messages_for_update(),
+            Driver::validation_rules_for_update(),
+            Driver::validation_messages_for_update(),
         );
 
         if ($validation->fails()) {
             return $this->respondValidationError($validation->errors());
         }   
 
-        $car->update($request->all());
+        $driver->update($request->all());
 
-        return $this->respond($car);
+        return $this->respond($driver);
     }
 
     /**
@@ -92,9 +92,9 @@ class CarsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Car $car)
+    public function destroy(Driver $driver)
     {
-        $car->delete();
+        $driver->delete();
 
         return $this->respondDeleted();
     }

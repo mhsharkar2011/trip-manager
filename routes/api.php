@@ -34,6 +34,7 @@ Route::middleware([
 ])
 ->group(function () {
     //auth required routes will go here
+    Route::resource('drivers', 'App\Http\Controllers\DriversController', ['except' => ['create', 'edit']]);
 });
 
 Route::resource('cars', 'App\Http\Controllers\CarsController', ['except' => ['create', 'edit']]);

@@ -8,7 +8,7 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
 
-class Car extends Model implements HasMedia
+class Driver extends Model implements HasMedia
 {
     use InteractsWithMedia;
     use HasFactory;
@@ -20,7 +20,7 @@ class Car extends Model implements HasMedia
      *
      * @var string
      */
-    protected $table = 'cars';
+    protected $table = 'drivers';
 
     /**
     * The database primary key value.
@@ -34,7 +34,7 @@ class Car extends Model implements HasMedia
      *
      * @var array
      */
-    //protected $fillable = ['name'];
+    //protected $fillable = ['first_name', 'last_name', 'user_name', 'password', 'avatar', 'is_active', 'driving_licence', 'contact_number', 'address'];
 
     protected $guarded = [
         'id'
