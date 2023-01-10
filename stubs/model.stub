@@ -1,0 +1,32 @@
+<?php
+
+namespace {{ namespace }};
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class {{ class }} extends Model
+{
+    use HasFactory;
+
+    protected $guarded = [
+        'id'
+    ];
+
+    protected static function validation_rules() {
+        return [];
+    }
+
+    protected static function validation_messages() {
+        return [];
+    }
+
+    protected static function validation_rules_for_update() {
+        return self::validation_rules();
+    }
+
+    protected static function validation_messages_for_update() {
+        return self::validation_messages();
+    }     
+
+}

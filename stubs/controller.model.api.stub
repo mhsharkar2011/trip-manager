@@ -1,0 +1,92 @@
+<?php
+
+namespace {{ namespace }};
+
+use {{ namespacedModel }};
+use {{ rootNamespace }}Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+
+class {{ class }} extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index((Request $request)
+    {
+        $items_per_page = request('items_per_page', self::ITEMS_PER_PAGE);
+        
+        return $this->respond(${{ modelVariable }}::latest()->paginate($items_per_page));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $validation = Validator::make(
+            $request->all(), 
+            {{model}}::validation_rules(),
+            {{model}}::validation_messages(),
+        );
+
+        if ($validation->fails()) {
+            return $this->respondValidationError($validation->errors());
+        }           
+
+        return $this->respondCreated(${{ model }}::create($request->all()));
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \{{ namespacedModel }}  ${{ modelVariable }}
+     * @return \Illuminate\Http\Response
+     */
+    public function show({{ model }} ${{ modelVariable }})
+    {
+        return $this->respond(${{ modelVariable }});
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \{{ namespacedModel }}  ${{ modelVariable }}
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, {{ model }} ${{ modelVariable }})
+    {
+        $validation = Validator::make(
+            $request->all(), 
+            {{model}}::validation_rules_for_update(),
+            {{model}}::validation_messages_for_update(),
+        );
+
+        if ($validation->fails()) {
+            return $this->respondValidationError($validation->errors());
+        }  
+
+        ${{ modelVariable }}->update($validated);
+
+        return $this->respond(${{ modelVariable }});
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \{{ namespacedModel }}  ${{ modelVariable }}
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy({{ model }} ${{ modelVariable }})
+    {
+        ${{ modelVariable }}->delete();
+
+        return $this->respondDeleted();
+    }
+}

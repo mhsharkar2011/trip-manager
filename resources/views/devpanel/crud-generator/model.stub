@@ -1,0 +1,55 @@
+<?php
+
+namespace DummyNamespace;
+
+use Spatie\MediaLibrary\HasMedia;
+use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
+{{useSoftDeletes}}
+class DummyClass extends Model implements HasMedia
+{
+    use InteractsWithMedia;
+    use HasFactory;
+    
+    {{softDeletes}}
+    
+    /**
+     * The database table used by the model.
+     *
+     * @var string
+     */
+    protected $table = '{{table}}';
+
+    {{primaryKey}}
+
+    /**
+     * Attributes that should be mass-assignable.
+     *
+     * @var array
+     */
+    //protected $fillable = {{fillable}};
+
+    protected $guarded = [
+        'id'
+    ];    
+
+    protected static function validation_rules() {
+        return [];
+    }
+
+    protected static function validation_messages() {
+        return [];
+    } 
+
+    protected static function validation_rules_for_update() {
+        return self::validation_rules();
+    }
+
+    protected static function validation_messages_for_update() {
+        return self::validation_messages();
+    }           
+
+    {{relationships}}
+}

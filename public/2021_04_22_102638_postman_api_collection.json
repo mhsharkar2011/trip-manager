@@ -1,0 +1,435 @@
+{
+	"info": {
+		"_postman_id": "bc492c68-3785-44e4-bd24-512a0291ebb6",
+		"name": "2021_04_22_102638_postman_api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET | api/user",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/user",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET | api/entities",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/entities",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"entities"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST | api/entities",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Entity Label\",\n    \"meta\": {\n        \"note1\": \"meta is optional, if you use it store whatever you want\"\n    }\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/entities",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"entities"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET | api/entities/1",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/entities/1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"entities",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT | api/entities/{entity}",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Entity Label Edited\",\n    \"meta\": {\n        \"note1\": \"meta is optional, if you use it store whatever you want\"\n    }\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/entities/1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"entities",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PATCH | api/entities/{entity}",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/entities/1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"entities",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE | api/entities/{entity}",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/entities/1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"entities",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET | api/entities/{entity}/fields",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/entities/1/fields",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"entities",
+						"1",
+						"fields"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST | api/entities/{entity}/fields",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"link\",\n    \"type\": \"text\",\n    \"meta\": {\n        \"note1\": \"meta is optional, if you use it store whatever you want\"\n    }\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/entities/1/fields",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"entities",
+						"1",
+						"fields"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET | api/entities/{entity}/fields/{field}",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/entities/:entity/fields/:field?&",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"entities",
+						":entity",
+						"fields",
+						":field"
+					],
+					"query": [
+						{
+							"key": null
+						},
+						{
+							"key": null
+						}
+					],
+					"variable": [
+						{
+							"key": "entity",
+							"description": "(Required)"
+						},
+						{
+							"key": "field",
+							"description": "(Required)"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT | api/entities/{entity}/fields/{field}",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"title2\",\n    \"type\": \"text\",\n    \"meta\": {\n        \"note1\": \"meta is optional, if you use it store whatever you want\"\n    }\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/entities/1/fields/1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"entities",
+						"1",
+						"fields",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PATCH | api/entities/{entity}/fields/{field}",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/entities/1/fields/1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"entities",
+						"1",
+						"fields",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE | api/entities/{entity}/fields/{field}",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\\n    \\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/entities/:entity/fields/:field?&",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"entities",
+						":entity",
+						"fields",
+						":field"
+					],
+					"query": [
+						{
+							"key": null
+						},
+						{
+							"key": null
+						}
+					],
+					"variable": [
+						{
+							"key": "entity",
+							"description": "(Required)"
+						},
+						{
+							"key": "field",
+							"description": "(Required)"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST | api/entities/{entity}/crud-generate",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/entities/1/crud-generate",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"entities",
+						"1",
+						"crud-generate"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "https://trumble-agency-api.test.sandbox3000.com"
+		}
+	]
+}
