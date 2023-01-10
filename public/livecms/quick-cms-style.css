@@ -1,0 +1,23 @@
+#stat-text-iframe-container {
+    display:none;
+    color:#F25022;
+    background-color:#EFEFEF;
+    border:2px solid #00A4EF;
+    text-align:center;
+    position: fixed;
+    top: 25%;
+    right: 0;
+    z-index: 19;
+}
+
+#img-iframe-container{
+    display:none;
+    color:#F25022;
+    background-color:#EFEFEF;
+    border:2px solid #00A4EF;
+    text-align:justify;
+    position: fixed;
+    top: 30%;
+    right: 0;
+    z-index: 20;
+}
