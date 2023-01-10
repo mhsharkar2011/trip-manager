@@ -41,11 +41,21 @@ class Vehicle extends Model implements HasMedia
     ];    
 
     protected static function validation_rules() {
-        return [];
+        return [
+            'sl_no'=>'required|max:255',
+            'name'=>'required|max:255',
+            'license_no'=>'required|max:255',
+            'model'=>'required|max:255',
+        ];
     }
 
     protected static function validation_messages() {
-        return [];
+        return [
+            'sl_no'=>"Type Sl No",
+            'name'=>"Type Name",
+            'license_no'=>"Type License No",
+            'model'=>"Type Model Name here",
+        ];
     } 
 
     protected static function validation_rules_for_update() {

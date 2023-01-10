@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateVehiclesTable extends Migration
 {
@@ -14,11 +15,11 @@ class CreateVehiclesTable extends Migration
     {
         Schema::create('vehicles', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('sl_no');
+            $table->string('name');
+            $table->string('license_no');
+            $table->string('model');
             $table->timestamps();
-            $table->string('sl_no')->nullable();
-            $table->string('name')->nullable();
-            $table->string('license_no')->nullable();
-            $table->string('model')->nullable();
             });
     }
 
