@@ -23,8 +23,8 @@ class CreateDriversTable extends Migration
             $table->boolean('is_active')->default(0);
             $table->string('driving_license')->nullable();
             $table->string('contact_number')->nullable();
-            $table->timestamps();
             $table->text('address')->nullable();
+            $table->timestamps();
             });
     }
 
