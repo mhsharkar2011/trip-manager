@@ -8,7 +8,7 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
 
-class Vehicle extends Model implements HasMedia
+class VehicleType extends Model implements HasMedia
 {
     use InteractsWithMedia;
     use HasFactory;
@@ -20,7 +20,7 @@ class Vehicle extends Model implements HasMedia
      *
      * @var string
      */
-    protected $table = 'vehicles';
+    protected $table = 'vehicle_types';
 
     /**
     * The database primary key value.
@@ -34,7 +34,7 @@ class Vehicle extends Model implements HasMedia
      *
      * @var array
      */
-    //protected $fillable = ['sl_no', 'name', 'license_no', 'model'];
+    //protected $fillable = ['title', 'details'];
 
     protected $guarded = [
         'id'
@@ -42,20 +42,13 @@ class Vehicle extends Model implements HasMedia
 
     protected static function validation_rules() {
         return [
-            'sl_no'=>'required|max:255',
-            'name'=>'required|max:255',
-            'license_no'=>'required|max:255',
-            'model'=>'required|max:255',
+            'title'=>'required|max:20',
+            'details'=>'required|max:255'
         ];
     }
 
     protected static function validation_messages() {
-        return [
-            'sl_no'=>"Type Sl No",
-            'name'=>"Type Name",
-            'license_no'=>"Type License No",
-            'model'=>"Type Model Name here",
-        ];
+        return [];
     } 
 
     protected static function validation_rules_for_update() {
@@ -66,9 +59,11 @@ class Vehicle extends Model implements HasMedia
         return self::validation_messages();
     }           
 
-    public function vehiclesTypes()
+    public $timestamps = false;
+
+    public function vehicles()
     {
-        return $this->belongsTo(VehicleType::class,'vehicle_type_id');
+        return $this->hasMany(Vehicle::class);
     }
     
 }

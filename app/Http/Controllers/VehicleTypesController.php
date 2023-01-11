@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests;
 
-use App\Models\Vehicle;
+use App\Models\VehicleType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class VehiclesController extends Controller
+class VehicleTypesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,9 +19,9 @@ class VehiclesController extends Controller
     {
         $items_per_page = request('items_per_page', self::ITEMS_PER_PAGE);
 
-        $vehicles = Vehicle::with('vehiclesTypes')->latest()->paginate($items_per_page);
+        $vehicletypes = VehicleType::with('vehicles')->latest()->paginate($items_per_page);
 
-        return $this->respond($vehicles);
+        return $this->respond($vehicletypes);
     }
 
     /**
@@ -35,17 +35,17 @@ class VehiclesController extends Controller
     {
         $validation = Validator::make(
             $request->all(), 
-            Vehicle::validation_rules(),
-            Vehicle::validation_messages(),
+            VehicleType::validation_rules(),
+            VehicleType::validation_messages(),
         );
 
         if ($validation->fails()) {
             return $this->respondValidationError($validation->errors());
         }   
 
-        $vehicle = Vehicle::create($request->all());
+        $vehicletype = VehicleType::create($request->all());
 
-        return $this->respondCreated($vehicle);
+        return $this->respondCreated($vehicletype);
     }
 
     /**
@@ -55,9 +55,9 @@ class VehiclesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(Vehicle $vehicle)
+    public function show(VehicleType $vehicletype)
     {
-        return $this->respond($vehicle);
+        return $this->respond($vehicletype);
     }
 
     /**
@@ -68,21 +68,21 @@ class VehiclesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Vehicle $vehicle)
+    public function update(Request $request, VehicleType $vehicletype)
     {
         $validation = Validator::make(
             $request->all(), 
-            Vehicle::validation_rules_for_update(),
-            Vehicle::validation_messages_for_update(),
+            VehicleType::validation_rules_for_update(),
+            VehicleType::validation_messages_for_update(),
         );
 
         if ($validation->fails()) {
             return $this->respondValidationError($validation->errors());
         }   
 
-        $vehicle->update($request->all());
+        $vehicletype->update($request->all());
 
-        return $this->respond($vehicle);
+        return $this->respond($vehicletype);
     }
 
     /**
@@ -92,9 +92,9 @@ class VehiclesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Vehicle $vehicle)
+    public function destroy(VehicleType $vehicletype)
     {
-        $vehicle->delete();
+        $vehicletype->delete();
 
         return $this->respondDeleted();
     }
