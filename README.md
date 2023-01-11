@@ -106,9 +106,9 @@ Then use the form field hints to complete the form and click `Run`. It will show
 ## Option #2 (recommended for dev)
 Generate the CRUD from a json file. This is actually more useful because usually development happens incrementally. 
 
-Run the command `project:generate-crud-spec-file <entity_name>`
+Run the command `php artisan project:generate-crud-spec-file <entity_name>`
 
-This would generate a sample json spec file and output the file path. You can then modify the file further and generate CRUD through the command `project:generate-crud-from-file`
+This would generate a sample json spec file and output the file path. You can then modify the file further and generate CRUD through the command `php artisan project:generate-crud-from-file`
 
 # CRUD & Entity Relationships
 TBD
