@@ -7,14 +7,14 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 
-class GenerateCRUDQuickCommand extends Command
+class GenerateCRUDSpecFileCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'project:generate-quick-crud
+    protected $signature = 'project:generate-crud-spec-file
                             {entity_name : Enter the Label/name for the entity e.g., Posts}
                             ';
 
@@ -47,31 +47,15 @@ class GenerateCRUDQuickCommand extends Command
         $name = \Str::remove(' ', $this->argument('entity_name'));
         $commandArg['name'] = $name;
 
-        
         $spec_dir = resource_path('views/devpanel/crud-generator/entity-schema/'); 
         $spec_file_entity =  $spec_dir . $name . '.json';
 
-        $this->call('project:generate-crud-spec-file', [
-            'entity_name' => $name
-        ]);
-        
-        $commandArg['--fields_from_file'] = $spec_file_entity;
+        File::copy($spec_dir . 'example-spec.json', $spec_file_entity);
 
-        try {
-            Artisan::call('crud:api', $commandArg);
-            $this->line(Artisan::output());
-            
-            $this->call('migrate', [
-                '--force' => '',
-                '--seed' => '',
-            ]);
-            
-            return 0;
-        } catch (\Exception $e) {
-            $this->line($e->getMessage());
-        }
+        $this->line('Following spec file has been generated, it can be modified further and CRUD can be regenerated using the "project:generate-crud-from-file" command');
+        $this->line($spec_file_entity);
 
-        return 1;
+        return 0;
 
     }
 }

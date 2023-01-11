@@ -13,7 +13,7 @@ git clone https://git.sandbox3000.com/itc/incubator/boilerplates/laravel-boilerp
 && cd laravel-boilerplate \
 && docker-compose -f docker-compose.local.yml up -d
 ```
-2. Then run the following to install Laravel dependencies and then some other steps
+2. Then run the following to install Laravel dependencies and then some other required steps
 ```
 docker-compose -f docker-compose.local.yml exec www composer install \
 && docker-compose -f docker-compose.local.yml exec www php artisan project:setup
@@ -73,43 +73,54 @@ docker ps
 
 # Boilerplate Features
 
-## API Client
-We have a built in API client, named `Laravel Compass` which is a client like `Postman` that you can use to interact with the API's. Main benefits over Postman are, the routes in the app will show up automatically, a token can be selected by just clicking, payloads and also responses can be saved for others. All of these are very helpful and saves time.
+# API Client
+We have a built in API client, named `Laravel Compass` which is a client like `Postman` that you can use to interact with the API's. Main benefits over Postman are, the routes in the app will show up automatically, a token can be selected by just clicking an icon, payloads and responses can be saved so that others don't have to type those again. All of these are very helpful and saves time.
 
-To use it head to [http://127.0.0.1:8800/devtools/api-explorer-compass](http://127.0.0.1:8800/devtools/api-explorer-compass) 
+To use it head over to [http://127.0.0.1:8800/devtools/api-explorer-compass](http://127.0.0.1:8800/devtools/api-explorer-compass) 
 
 To Login, click `"Superadmin Login"` button. This doesn't require a email, password.
 
-There are 2 pre-requisites though:
+There are 2 pre-requisites to using Compass though:
 
-1. You have to set appropriate value to the key `APP_URL` in `.env`. If you ran `project:setup` during setting up these was already set for you. Please verify. The current `APP_URL` value is displayed in the home screen of `Laravel Compass`.
+1. Make sure `APP_URL` in `.env` has the correct URL to this app. If you are running the project with docker following Option#1 then it already should have the correct URL. The current `APP_URL` value is displayed in the home screen of `Laravel Compass`.
 
-2. For routes that require authentication, You have to go under the `Auth` tab for a route and select `bearer` and select a token. If no tokens are available in the list, you can generate one from [http://127.0.0.1:8800/devtools/artisangui-iframe](http://127.0.0.1:8800/devtools/artisangui-iframe), click `project:create-api-token`. After you generate the token, go back to `Laravel Compass` and in the `Auth > Bearer` tab, you can click the refresh icon and you will see it in the list, select and hit `Save Requeust`.
+2. For routes that require token authentication, You have to go under the `Auth` tab for a route and select `bearer` and select a token. If no tokens are available in the list, you can generate one from [http://127.0.0.1:8800/devtools/artisangui-iframe](http://127.0.0.1:8800/devtools/artisangui-iframe), click `project:create-api-token`. After you generate the token, go back to `Laravel Compass` and in the `Auth > Bearer` tab, you can click the refresh icon and you will see it in the list, select and hit `Save Requeust`.
 
 
-## Authentication
+# Authentication
 `Register`, `Login`, `Forgot Password`, `Change Password` API are implemented. 
 These can be found in the file `api.php`, the routes prefixed under `v1`.
 
 For any route to require authentication, place it under the `auth:sanctum` middleware. You will see an example in the file `api.php`. 
 
-## Authorization
+# Authorization
 TBD
 
-## CRUD & Entity Relationships
-To generate a CRUD head over to [http://127.0.0.1:8800/devtools/artisangui-iframe](http://127.0.0.1:8800/devtools/artisangui-iframe) and click `project:generate-crud`. 
+# CRUD generator
+## Option #1
+For this option you have to fill out a form to generate the CRUD for an entity.
+Head over to [http://127.0.0.1:8800/devtools/artisangui-iframe](http://127.0.0.1:8800/devtools/artisangui-iframe) and click `project:generate-crud`. 
 
-Then use the form field hints to complete the form and click `Run`. It will show you list of files generated, you can verify by checking the codebase. You can also go to `Laravel Compass` and you will see the newly generated API's (click refresh icon if necessary) and can interact from there.
+Then use the form field hints to complete the form and click `Run`. It will show you list of files generated, you can verify by checking the codebase. You can also go to `Laravel Compass` and you will see the newly generated API's (click refresh icon if necessary) and can interact from there. When you commit the files for the CRUD, also commit the file `database.compass.sqlite` in repo. That way others will see the payloads and responses that you saved during development.
 
-## Attachments (File uploads)
+## Option #2 (recommended for dev)
+Generate the CRUD from a json file. This is actually more useful because usually development happens incrementally. 
+
+Run the command `project:generate-crud-spec-file <entity_name>`
+
+This would generate a sample json spec file and output the file path. You can then modify the file further and generate CRUD through the command `project:generate-crud-from-file`
+
+# CRUD & Entity Relationships
+TBD
+# Attachments (File uploads)
 TBD
 
-## Events
-### Local event
+# Events
+## Local event
 For local events, Follow Laravel default event mechanism
 https://laravel.com/docs/9.x/events
 
-### Externalize Local event
+## Externalize Local event
 All events we create under `App\Events` will be published to a RabbitMQ Broker.
 We do this centrally through a catch all event listener in `EventServiceProvider`. For interacting with RabbitMQ we use our own `App\RabbitMQService` service class. So no extra code is necessary for this. So whatever local events we define under `App\Events` gets published to RabbitMQ by default.
 
