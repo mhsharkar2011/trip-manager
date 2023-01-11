@@ -96,7 +96,7 @@ For any route to require authentication, place it under the `auth:sanctum` middl
 # Authorization
 TBD
 
-# CRUD generator
+# CRUD API generator
 ## Option #1
 For this option you have to fill out a form to generate the CRUD for an entity.
 Head over to [http://127.0.0.1:8800/devtools/artisangui-iframe](http://127.0.0.1:8800/devtools/artisangui-iframe) and click `project:generate-crud`. 
@@ -111,9 +111,43 @@ Run the command `php artisan project:generate-crud-spec-file <entity_name>`
 This would generate a sample json spec file and output the file path. You can then modify the file further and generate CRUD through the command `php artisan project:generate-crud-from-file`
 
 # CRUD & Entity Relationships
-TBD
+1. For a list API, for example, `GET /posts`, to load related data, add the query parameter `?with`. So for example, to load the category and user with each posts, use API endpoint like this `GET /posts?with=category,user`
+2. .....TBD
+
 # Attachments (File uploads)
 TBD
+# Filtering, Sorting & Selected Columns
+1. Filtering, sorting will work on any list API (e.g., `GET /posts`). Here is an example request query param and format.
+```
+{
+    "query": {
+        "sort": {
+            "created_at": "desc",
+            "firstname": "asc"
+        },
+        "columns": [
+            "id",
+            "firstname",
+            "lastname"
+        ],
+        "filters": {
+            "firstname": {
+                "op": "contains",
+                "val": "john"
+            },
+            "status": "active",
+            "created_at": {
+                "op": "gt",
+                "type": "date",
+                "val": "1\/1\/2017"
+            },
+            "user_id": {
+                "op": "empty"
+            }
+        }
+    }
+}
+```
 
 # Events
 ## Local event
