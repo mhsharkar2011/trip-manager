@@ -36,5 +36,6 @@ Route::middleware([
     //auth required routes will go here
     Route::resource('drivers', 'App\Http\Controllers\DriversController', ['except' => ['create', 'edit']]);
 });
+Route::resource('vehicles', 'App\Http\Controllers\VehiclesController', ['except' => ['create', 'edit']]);
 
-Route::resource('cars', 'App\Http\Controllers\CarsController', ['except' => ['create', 'edit']]);
+Route::resource('vehicle-types', 'App\Http\Controllers\VehicleTypesController', ['except' => ['create', 'edit']]);
