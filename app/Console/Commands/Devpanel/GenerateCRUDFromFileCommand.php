@@ -46,7 +46,7 @@ class GenerateCRUDFromFileCommand extends Command
         
         // File::allFiles()
         $spec_dir = resource_path('views/devpanel/crud-generator/entity-schema/'); 
-        $files = array_diff(scandir($spec_dir), array('.', '..', 'example-spec.json'));
+        $files = array_values(array_diff(scandir($spec_dir), array('.', '..', 'example-spec.json')));
 
         $file = $this->choice(
             'Choose a json file for the CRUD?',
@@ -66,7 +66,7 @@ class GenerateCRUDFromFileCommand extends Command
             Artisan::call('crud:api', $commandArg);
             $this->line(Artisan::output());
 
-            $this->call('migrate', [
+            $this->call('migrate:fresh', [
                 '--force' => '',
                 '--seed' => '',
             ]);

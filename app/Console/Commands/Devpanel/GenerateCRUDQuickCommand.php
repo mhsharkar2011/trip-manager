@@ -61,7 +61,7 @@ class GenerateCRUDQuickCommand extends Command
             Artisan::call('crud:api', $commandArg);
             $this->line(Artisan::output());
             
-            $this->call('migrate', [
+            $this->call('migrate:fresh', [
                 '--force' => '',
                 '--seed' => '',
             ]);
