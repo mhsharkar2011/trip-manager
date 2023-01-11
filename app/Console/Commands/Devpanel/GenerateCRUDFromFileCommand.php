@@ -56,15 +56,18 @@ class GenerateCRUDFromFileCommand extends Command
             $allowMultipleSelections = false
         );
 
-        $entity_name = rtrim($file, '.json');
-
+        $entity_name = Str::replaceLast('.json', '', $file);
+        $entity_name = Str::singular(Str::studly($entity_name));
         
         $commandArg['name'] = $entity_name;
         $commandArg['--fields_from_file'] = $spec_dir . $file;
+        $commandArg['--controller-namespace'] = 'App\Http\Controllers';
 
         try {
             Artisan::call('crud:api', $commandArg);
             $this->line(Artisan::output());
+
+            $this->call('make:factory', ['name' => $entity_name . 'Factory']);
 
             $this->call('migrate:fresh', [
                 '--force' => '',
