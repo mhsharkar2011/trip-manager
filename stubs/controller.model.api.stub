@@ -18,7 +18,15 @@ class {{ class }} extends Controller
     {
         $items_per_page = request('items_per_page', self::ITEMS_PER_PAGE);
         
-        return $this->respond(${{ modelVariable }}::latest()->paginate($items_per_page));
+        ${{ modelVariable }} = {{model}}::query();
+
+        if ($with = request('with')) { //load relationships
+            ${{ modelVariable }}->with(explode(',', $with));
+        }               
+
+        ${{ modelVariable }} = ${{ modelVariable }}->latest()->paginate($items_per_page)
+
+        return $this->respond(${{ modelVariable }});
     }
 
     /**
