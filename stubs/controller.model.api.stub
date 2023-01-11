@@ -22,7 +22,12 @@ class {{ class }} extends Controller
 
         if ($with = request('with')) { //load relationships
             ${{ modelVariable }}->with(explode(',', $with));
-        }               
+        }
+
+        if ($query = request('query')) { //filter, sorting, columns
+            $query = json_decode($query, true);
+            ${{ modelVariable }}->filter(compact('query'));
+        }                          
 
         ${{ modelVariable }} = ${{ modelVariable }}->latest()->paginate($items_per_page)
 

@@ -3,6 +3,7 @@
 namespace DummyNamespace;
 
 use Spatie\MediaLibrary\HasMedia;
+use App\Devpanel\Models\FilterTrait;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,6 +13,7 @@ class DummyClass extends Model implements HasMedia
 {
     use InteractsWithMedia;
     use HasFactory;
+    use FilterTrait;
     
     {{softDeletes}}
     
