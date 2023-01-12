@@ -116,6 +116,32 @@ This would generate a sample json spec file and output the file path. You can th
 
 # Attachments (File uploads)
 TBD
+
+# Pagination
+1. All list API (e.g., `GET /posts`) are by default paginated. Here is an example response:
+```
+{
+  "status": "OK",
+  "message": "",
+  "data": {
+    "data": [
+      {//actual data here}
+    ],
+    "total": 100,
+    "per_page": 50, //default
+    "from": 1,
+    "to": 50,
+    "current_page": 1,
+    "last_page": 2
+  }
+}
+```
+To control pagination, use the following two query params
+1. `items_per_page`
+2. `page`
+
+So an example would be `GET /posts?items_per_page=20&page=2`
+
 # Filtering, Sorting & Selective Columns
 1. Filtering, sorting will work on any list API (e.g., `GET /posts`). Here is an example request query param and format. For now, only main entity props are supported, related entities are not supported yet but is coming.
 ```
