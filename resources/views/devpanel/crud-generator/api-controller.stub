@@ -30,7 +30,7 @@ class DummyClass extends Controller
             ${{crudName}}->filter(compact('query'));
         }        
         
-        ${{crudName}} = ${{crudName}}->latest()->paginate($items_per_page);
+        ${{crudName}} = ${{crudName}}->latest()->paginateWrap($items_per_page, request('page', 1));
 
         return $this->respond(${{crudName}});
     }
