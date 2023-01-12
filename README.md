@@ -116,7 +116,7 @@ This would generate a sample json spec file and output the file path. You can th
 
 # Attachments (File uploads)
 TBD
-# Filtering, Sorting & Selected Columns
+# Filtering, Sorting & Selective Columns
 1. Filtering, sorting will work on any list API (e.g., `GET /posts`). Here is an example request query param and format. For now, only main entity props are supported, related entities are not supported yet but is coming.
 ```
 {
