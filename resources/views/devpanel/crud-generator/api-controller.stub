@@ -23,20 +23,13 @@ class DummyClass extends Controller
             ${{crudName}}->with(explode(',', $with));
         }        
 
-        $has_sorting = false;
-        if ($query = request('query')) { //filter, sorting, columns
-            $query = json_decode($query, true);
-            ${{crudName}}->filter(compact('query'));
-
-            if (isset($query['sort'])) {
-                $has_sorting = true;
-            }
-        }
+        //filter, sorting, selective-columns
+        ${{crudName}}->filter({{modelName}}::parseRequest(request('query')));
 
         //set default sorting
-        if (! $has_sorting) { 
+        if (! {{modelName}}::hasSorting(request('query'))) {
             ${{crudName}}->filter({{modelName}}::getDefaultSorting());
-        }        
+        }          
         
         ${{crudName}} = ${{crudName}}->paginateWrap(
             request('items_per_page', self::ITEMS_PER_PAGE), 

@@ -30,13 +30,16 @@ class {{ class }} extends Controller
             if (isset($query['sort'])) {
                 $has_sorting = true;
             }
-        }                          
+        }
+        
+        //filter, sorting, selective-columns
+        ${{ modelVariable }}->filter({{model}}::parseRequest(request('query'))); 
 
         //set default sorting
-        if (! $has_sorting) { 
+        if (! {{model}}::hasSorting(request('query'))) {
             ${{ modelVariable }}->filter({{model}}::getDefaultSorting());
-        }        
-        
+        }          
+                
         ${{ modelVariable }} = ${{ modelVariable }}->paginateWrap(
             $items_per_page = request('items_per_page', self::ITEMS_PER_PAGE), 
             request('page', 1)
