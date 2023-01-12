@@ -170,4 +170,19 @@ trait FilterTrait {
             ]
         ];
     }
+
+    public static function parseRequest($params)
+    {
+        if ($params && is_string_json($params)) {
+            $query = json_decode($params, true);
+            return compact('query');
+        }
+    }
+
+    public static function hasSorting($params)
+    {
+        $params = static::parseRequest($params);
+        return isset($params['query']['sort']);
+    }
+
 }

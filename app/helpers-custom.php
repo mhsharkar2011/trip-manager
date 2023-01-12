@@ -60,3 +60,17 @@ function get_route_from_uri($page_slug) {
     }
 }
 /*-----END LIVE CMS------------*/
+
+function is_string_json($str) {
+    if (! is_string($str)) {
+        return false;
+    }
+
+    try {
+        json_decode($str, true, 512, JSON_THROW_ON_ERROR);
+    } catch (JsonException) {
+        return false;
+    }
+
+    return true;
+}
