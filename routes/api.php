@@ -16,6 +16,13 @@ use App\Http\Controllers\PasswordRecoveryController;
 |
 */
 
+// Fuel APIs
+Route::resource('fuel-types', 'App\Http\Controllers\FuelTypesController', ['except' => ['create', 'edit']]);
+
+// Vehicles APIs
+Route::resource('vehicles', 'App\Http\Controllers\VehiclesController', ['except' => ['create', 'edit']]);
+Route::resource('vehicle-types', 'App\Http\Controllers\VehicleTypesController', ['except' => ['create', 'edit']]);
+
 Route::prefix('v1')->group(function () {
     Route::post('register',[AuthController::class, 'store']);
     Route::post('login',[AuthController::class, 'login']);
@@ -35,6 +42,3 @@ Route::middleware([
 ->group(function () {
     //auth required routes will go here
 });
-Route::resource('vehicles', 'App\Http\Controllers\VehiclesController', ['except' => ['create', 'edit']]);
-
-Route::resource('vehicle-types', 'App\Http\Controllers\VehicleTypesController', ['except' => ['create', 'edit']]);

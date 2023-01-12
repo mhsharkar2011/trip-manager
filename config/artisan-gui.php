@@ -86,6 +86,7 @@ return [
             'make:model',
             'make:migration',
             'migrate',
+            'route:cache',
         ],
         'project' => [
             'project:create-api-token',

@@ -34,6 +34,7 @@
     },
     "require-dev": {
         "appzcoder/crud-generator": "^3.2",
+        "beyondcode/laravel-dump-server": "^1.8",
         "facade/ignition": "^2.3.6",
         "fakerphp/faker": "^1.9.1",
         "laravel/sail": "^1.16",
