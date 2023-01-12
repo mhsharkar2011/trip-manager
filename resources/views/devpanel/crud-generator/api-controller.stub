@@ -17,8 +17,6 @@ class DummyClass extends Controller
      */
     public function index(Request $request)
     {
-        $items_per_page = request('items_per_page', self::ITEMS_PER_PAGE);
-
         ${{crudName}} = {{modelName}}::query();
 
         if ($with = request('with')) { //load relationships
@@ -41,7 +39,7 @@ class DummyClass extends Controller
         }        
         
         ${{crudName}} = ${{crudName}}->paginateWrap(
-            $items_per_page, 
+            request('items_per_page', self::ITEMS_PER_PAGE), 
             request('page', 1)
         );
 
