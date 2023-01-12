@@ -63,7 +63,6 @@ trait FilterTrait {
             'lt'            => '<',
             'gte'           => '>=',
             'lte'           => '<=',
-            'orw'           => 'or',
             'between'       => 'between',
             'startswith'    => [
                 'op'        => 'LIKE',

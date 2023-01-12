@@ -167,6 +167,12 @@ So an example would be `GET /posts?items_per_page=20&page=2`
                 "type": "date",
                 "val": "1\/1\/2017"
             },
+            "updated_at": {
+                "op": "between",
+                "type": "date",
+                "val": "1\/1\/2017",
+                "val2": "1\/1\/2018",
+            },            
             "user_id": {
                 "op": "empty"
             }
