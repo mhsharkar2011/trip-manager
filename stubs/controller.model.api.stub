@@ -29,7 +29,7 @@ class {{ class }} extends Controller
             ${{ modelVariable }}->filter(compact('query'));
         }                          
 
-        ${{ modelVariable }} = ${{ modelVariable }}->latest()->paginate($items_per_page)
+        ${{ modelVariable }} = ${{ modelVariable }}->latest()->paginateWrap($items_per_page, request('page', 1));
 
         return $this->respond(${{ modelVariable }});
     }

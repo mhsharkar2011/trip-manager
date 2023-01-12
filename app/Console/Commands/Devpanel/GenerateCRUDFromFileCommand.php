@@ -62,6 +62,7 @@ class GenerateCRUDFromFileCommand extends Command
         $commandArg['name'] = $entity_name;
         $commandArg['--fields_from_file'] = $spec_dir . $file;
         $commandArg['--controller-namespace'] = 'App\Http\Controllers';
+        // $commandArg['--force'] = true; //Overwrite already existing controller.
 
         try {
             Artisan::call('crud:api', $commandArg);

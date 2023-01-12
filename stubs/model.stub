@@ -2,18 +2,12 @@
 
 namespace {{ namespace }};
 
-use Spatie\MediaLibrary\HasMedia;
-use App\Devpanel\Models\FilterTrait;
+use App\Devpanel\Models\baseModel;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 
-class {{ class }} extends Model
+class {{ class }} extends baseModel
 {
-    use InteractsWithMedia;
-    use HasFactory;
-    use FilterTrait;
-
     protected $guarded = [
         'id'
     ];
