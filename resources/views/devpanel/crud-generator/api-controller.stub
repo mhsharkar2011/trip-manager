@@ -25,12 +25,25 @@ class DummyClass extends Controller
             ${{crudName}}->with(explode(',', $with));
         }        
 
+        $has_sorting = false;
         if ($query = request('query')) { //filter, sorting, columns
             $query = json_decode($query, true);
             ${{crudName}}->filter(compact('query'));
+
+            if (isset($query['sort'])) {
+                $has_sorting = true;
+            }
+        }
+
+        //set default sorting
+        if (! $has_sorting) { 
+            ${{crudName}}->filter({{modelName}}::getDefaultSorting());
         }        
         
-        ${{crudName}} = ${{crudName}}->latest()->paginateWrap($items_per_page, request('page', 1));
+        ${{crudName}} = ${{crudName}}->paginateWrap(
+            $items_per_page, 
+            request('page', 1)
+        );
 
         return $this->respond(${{crudName}});
     }

@@ -160,4 +160,15 @@ trait FilterTrait {
 
         return $q;
     }
+
+    public static function getDefaultSorting()
+    {
+        return [
+            'query' => [
+                'sort' => [
+                    'id' => 'desc'
+                ]
+            ]
+        ];
+    }
 }
