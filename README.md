@@ -175,6 +175,8 @@ So an example would be `GET /posts?items_per_page=20&page=2`
 }
 ```
 
+2. If no sorting params are found, then the default sorting is applied, which is `orderBy id desc`, which means latest items are shown on top, which is a good default in most cases.
+
 # Events
 ## Local event
 For local events, Follow Laravel default event mechanism
