@@ -110,6 +110,31 @@ Run the command `php artisan project:generate-crud-spec-file <entity_name>`
 
 This would generate a sample json spec file and output the file path. You can then modify the file further and generate CRUD through the command `php artisan project:generate-crud-from-file`
 
+The column types available are the following: 
+* string
+* char
+* varchar
+* date
+* datetime
+* time
+* timestamp
+* text
+* mediumtext
+* longtext
+* json
+* jsonb
+* binary
+* integer
+* bigint
+* mediumint
+* tinyint
+* smallint
+* boolean
+* decimal
+* double
+* float
+* enum
+
 # CRUD & Entity Relationships
 1. For a list API, for example, `GET /posts`, to load related data, add the query parameter `?with`. So for example, to load the category and user with each posts, use API endpoint like this `GET /posts?with=category,user`
 2. .....TBD
