@@ -42,7 +42,7 @@ class FuelType extends Model implements HasMedia
 
     protected static function validation_rules() {
         return [
-            'name'=>'required|max:20'
+            'name'=>'required|max:20',
         ];
     }
 
@@ -57,7 +57,5 @@ class FuelType extends Model implements HasMedia
     protected static function validation_messages_for_update() {
         return self::validation_messages();
     }           
-
-    public $timestamps = false;
     
 }

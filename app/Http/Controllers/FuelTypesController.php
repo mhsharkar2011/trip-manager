@@ -71,7 +71,6 @@ class FuelTypesController extends Controller
      */
     public function update(Request $request, FuelType $fueltype)
     {
-        dd($fueltype);
         $validation = Validator::make(
             $request->all(), 
             FuelType::validation_rules_for_update(),
