@@ -17,7 +17,7 @@ class FuelTypesController extends Controller
      */
     public function index(Request $request)
     {
-        dd('ok');
+        
         $items_per_page = request('items_per_page', self::ITEMS_PER_PAGE);
 
         $fueltypes = FuelType::latest()->paginate($items_per_page);

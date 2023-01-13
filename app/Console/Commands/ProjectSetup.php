@@ -51,7 +51,10 @@ class ProjectSetup extends Command
             exec("sed -i -r 's/SUPERADMIN_AUTO_LOGIN=false/SUPERADMIN_AUTO_LOGIN=true/' .env");
         }
 
-        $this->call('migrate');
+        $this->call('migrate', [
+            '--force' => '',
+            '--seed' => '',
+        ]);
         exec('chmod -R 777 storage bootstrap/cache');
         
         return 0;

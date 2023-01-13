@@ -17,9 +17,24 @@ class DummyClass extends Controller
      */
     public function index(Request $request)
     {
-        $items_per_page = request('items_per_page', self::ITEMS_PER_PAGE);
+        ${{crudName}} = {{modelName}}::query();
 
-        ${{crudName}} = {{modelName}}::latest()->paginate($items_per_page);
+        if ($with = request('with')) { //load relationships
+            ${{crudName}}->with(explode(',', $with));
+        }        
+
+        //filter, sorting, selective-columns
+        ${{crudName}}->filter({{modelName}}::parseRequest(request('query')));
+
+        //set default sorting
+        if (! {{modelName}}::hasSorting(request('query'))) {
+            ${{crudName}}->filter({{modelName}}::getDefaultSorting());
+        }          
+        
+        ${{crudName}} = ${{crudName}}->paginateWrap(
+            request('items_per_page', self::ITEMS_PER_PAGE), 
+            request('page', 1)
+        );
 
         return $this->respond(${{crudName}});
     }

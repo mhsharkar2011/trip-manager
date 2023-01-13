@@ -16,9 +16,36 @@ class {{ class }} extends Controller
      */
     public function index((Request $request)
     {
-        $items_per_page = request('items_per_page', self::ITEMS_PER_PAGE);
+        ${{ modelVariable }} = {{model}}::query();
+
+        if ($with = request('with')) { //load relationships
+            ${{ modelVariable }}->with(explode(',', $with));
+        }
+
+        $has_sorting = false;
+        if ($query = request('query')) { //filter, sorting, columns
+            $query = json_decode($query, true);
+            ${{ modelVariable }}->filter(compact('query'));
+
+            if (isset($query['sort'])) {
+                $has_sorting = true;
+            }
+        }
         
-        return $this->respond(${{ modelVariable }}::latest()->paginate($items_per_page));
+        //filter, sorting, selective-columns
+        ${{ modelVariable }}->filter({{model}}::parseRequest(request('query'))); 
+
+        //set default sorting
+        if (! {{model}}::hasSorting(request('query'))) {
+            ${{ modelVariable }}->filter({{model}}::getDefaultSorting());
+        }          
+                
+        ${{ modelVariable }} = ${{ modelVariable }}->paginateWrap(
+            $items_per_page = request('items_per_page', self::ITEMS_PER_PAGE), 
+            request('page', 1)
+        );
+
+        return $this->respond(${{ modelVariable }});
     }
 
     /**
