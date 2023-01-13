@@ -17,6 +17,7 @@ use App\Http\Controllers\PasswordRecoveryController;
 */
 
 // Fuel APIs
+Route::resource('fuels', 'App\Http\Controllers\FuelsController', ['except' => ['create', 'edit']]);
 Route::resource('fuel-types', 'App\Http\Controllers\FuelTypesController', ['except' => ['create', 'edit']]);
 
 // Vehicles APIs

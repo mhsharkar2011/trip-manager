@@ -3,16 +3,20 @@
 namespace App\Models;
 
 use App\Devpanel\Models\baseModel;
+use Illuminate\Database\Eloquent\Model;
 
 
-class FuelType extends baseModel
+class Fuel extends baseModel
 {
+
+    
+    
     /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'fuel_types';
+    protected $table = 'fuels';
 
     /**
     * The database primary key value.
@@ -26,17 +30,17 @@ class FuelType extends baseModel
      *
      * @var array
      */
-    //protected $fillable = ['name', 'created_at'];
+    //protected $fillable = ['fuel_id', 'start_fuel', 'end_fuel', 'total_fuel'];
 
     protected $guarded = [
         'id'
     ];    
 
-    public $timestamps = false;
-
     protected static function validation_rules() {
         return [
-            'name'=>'required|max:20',
+            'fuel_type_id'=>'required',
+            'start_fuel'=>'required',
+            'end_fuel'=>'required'
         ];
     }
 
@@ -51,9 +55,10 @@ class FuelType extends baseModel
     protected static function validation_messages_for_update() {
         return self::validation_messages();
     }           
-    
-    public function fuels()
+
+    public function fuelTypes()
     {
-        return $this->hasMany(Fuel::class);
+        return $this->belongsTo('App\Models\FuelType','fuel_type_id');
     }
+    
 }

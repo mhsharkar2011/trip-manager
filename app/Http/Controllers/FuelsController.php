@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests;
 
-use App\Models\FuelType;
+use App\Models\Fuel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class FuelTypesController extends Controller
+class FuelsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,26 +17,26 @@ class FuelTypesController extends Controller
      */
     public function index(Request $request)
     {
-        $fuelTypes = FuelType::query();
+        $fuels = Fuel::query();
 
         if ($with = request('with')) { //load relationships
-            $fuelTypes->with(explode(',', $with));
+            $fuels->with(explode(',', $with));
         }        
 
         //filter, sorting, selective-columns
-        $fuelTypes->filter(FuelType::parseRequest(request('query')));
+        $fuels->filter(Fuel::parseRequest(request('query')));
 
         //set default sorting
-        if (! FuelType::hasSorting(request('query'))) {
-            $fuelTypes->filter(FuelType::getDefaultSorting());
+        if (! Fuel::hasSorting(request('query'))) {
+            $fuels->filter(Fuel::getDefaultSorting());
         }          
         
-        $fuelTypes = $fuelTypes->paginateWrap(
+        $fuels = $fuels->paginateWrap(
             request('items_per_page', self::ITEMS_PER_PAGE), 
             request('page', 1)
         );
 
-        return $this->respond($fuelTypes);
+        return $this->respond($fuels);
     }
 
     /**
@@ -50,17 +50,17 @@ class FuelTypesController extends Controller
     {
         $validation = Validator::make(
             $request->all(), 
-            FuelType::validation_rules(),
-            FuelType::validation_messages(),
+            Fuel::validation_rules(),
+            Fuel::validation_messages(),
         );
 
         if ($validation->fails()) {
             return $this->respondValidationError($validation->errors());
         }   
 
-        $fueltype = FuelType::create($request->all());
+        $fuel = Fuel::create($request->all());
 
-        return $this->respondCreated($fueltype);
+        return $this->respondCreated($fuel);
     }
 
     /**
@@ -70,9 +70,9 @@ class FuelTypesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(FuelType $fuelType)
+    public function show(Fuel $fuel)
     {
-        return $this->respond($fuelType);
+        return $this->respond($fuel);
     }
 
     /**
@@ -83,21 +83,21 @@ class FuelTypesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, FuelType $fuelType)
+    public function update(Request $request, Fuel $fuel)
     {
         $validation = Validator::make(
             $request->all(), 
-            FuelType::validation_rules_for_update(),
-            FuelType::validation_messages_for_update(),
+            Fuel::validation_rules_for_update(),
+            Fuel::validation_messages_for_update(),
         );
 
         if ($validation->fails()) {
             return $this->respondValidationError($validation->errors());
         }   
 
-        $fuelType->update($request->all());
+        $fuel->update($request->all());
 
-        return $this->respond($fuelType);
+        return $this->respond($fuel);
     }
 
     /**
@@ -107,9 +107,9 @@ class FuelTypesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(FuelType $fuelType)
+    public function destroy(Fuel $fuel)
     {
-        $fuelType->delete();
+        $fuel->delete();
 
         return $this->respondDeleted();
     }
