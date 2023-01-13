@@ -43,3 +43,4 @@ Route::middleware([
 ->group(function () {
     //auth required routes will go here
 });
+Route::resource('fuel-vehicle', 'App\Http\Controllers\FuelVehicleController', ['except' => ['create', 'edit']]);
