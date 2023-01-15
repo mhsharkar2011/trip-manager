@@ -9,14 +9,17 @@ Install from [Docker Desktop](https://www.docker.com/products/docker-desktop/) a
 ### Steps
 1. First clone this repo and CD into project root folder and run the following
 ```
-git clone https://git.sandbox3000.com/itc/incubator/boilerplates/laravel-boilerplate.git \
-&& cd laravel-boilerplate \
-&& docker-compose -f docker-compose.local.yml up -d
+git clone https://gitlab.com/laravel24devs/trip-manager/trip-manager-be.git
+```
+cd laravel-boilerplate
+```
+docker-compose -f docker-compose.local.yml up -d
 ```
 2. Then run the following to install Laravel dependencies and then some other required steps
 ```
-docker-compose -f docker-compose.local.yml exec www composer install \
-&& docker-compose -f docker-compose.local.yml exec www php artisan project:setup
+docker-compose -f docker-compose.local.yml exec www composer install
+```
+docker-compose -f docker-compose.local.yml exec www php artisan project:setup
 ```
 
 5. At this point you should be able browse the site/app at
