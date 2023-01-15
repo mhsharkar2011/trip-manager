@@ -21,7 +21,8 @@ class VehiclesController extends Controller
 
         $vehicles = Vehicle::with('vehiclesTypes')->latest()->paginate($items_per_page);
 
-        return $this->respond($vehicles);
+        return view('pages.vehicles',compact('vehicles'));
+        // return $this->respond($vehicles);
     }
 
     /**

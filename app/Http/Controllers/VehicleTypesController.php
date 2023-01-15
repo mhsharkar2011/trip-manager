@@ -20,8 +20,9 @@ class VehicleTypesController extends Controller
         $items_per_page = request('items_per_page', self::ITEMS_PER_PAGE);
 
         $vehicletypes = VehicleType::with('vehicles')->latest()->paginate($items_per_page);
-
-        return $this->respond($vehicletypes);
+        
+        return view('pages.vehicleTypes',compact('vehicletypes'));
+        // return $this->respond($vehicletypes);
     }
 
     /**
