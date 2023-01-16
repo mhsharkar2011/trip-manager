@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\DriverController;
 use App\Http\Controllers\PasswordRecoveryController;
 
 /*
@@ -44,3 +45,5 @@ Route::middleware([
     //auth required routes will go here
 });
 Route::resource('fuel-vehicle', 'App\Http\Controllers\FuelVehicleController', ['except' => ['create', 'edit']]);
+Route::resource('driver', 'App\Http\Controllers\DriverController', ['except' => ['create', 'edit']]);
+Route::post('driver/{id}',[DriverController::class,'avatarUpdate']);
