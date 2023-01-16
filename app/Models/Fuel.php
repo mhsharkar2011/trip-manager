@@ -61,4 +61,8 @@ class Fuel extends baseModel
         return $this->belongsTo('App\Models\FuelType','fuel_type_id');
     }
     
+    public function fuelVehicle()
+    {
+        return $this->belongsToMany(Vehicle::class,'fuel_vehicle')->withPivot('timestamps');
+    }
 }

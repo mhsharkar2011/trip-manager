@@ -71,4 +71,8 @@ class Vehicle extends Model implements HasMedia
         return $this->belongsTo(VehicleType::class,'vehicle_type_id');
     }
     
+    public function fuelVehicle()
+    {
+        return $this->belongsToMany(Fuel::class,'fuel_vehicle')->withPivot('timestamps');
+    }
 }
