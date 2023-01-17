@@ -67,7 +67,7 @@ class DriverController extends Controller
 
     public function avatarUpdate(Request $request, $id)
     {
-        // $firstName = auth('api')->user()->first_name;
+        $user = Driver::findOrFail($id);
         $validator = Validator::make(request()->all(), [
             'file' => 'required|image|mimes:jpg,jpeg,png,gif,svg',
         ]);
@@ -77,7 +77,6 @@ class DriverController extends Controller
                 'message'  => $validator->errors()->first(),
             ],415);
         }
-        $user = Driver::findOrFail($id);
 
         if ($request->hasFile('file')) {
             $filePath = public_path('/uploads/profile/images/');

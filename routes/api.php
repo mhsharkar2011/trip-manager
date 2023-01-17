@@ -41,7 +41,7 @@ Route::middleware([
 
 // Driver API
 Route::resource('driver', 'App\Http\Controllers\DriverController', ['except' => ['create', 'edit']]);
-Route::post('driver/{id}',[DriverController::class,'avatarUpdate']);
+Route::post('driver-avatar/{id}',[DriverController::class,'avatarUpdate']);
 // Vehicles APIs
 Route::resource('vehicles', 'App\Http\Controllers\VehiclesController', ['except' => ['create', 'edit']]);
 Route::resource('vehicle-types', 'App\Http\Controllers\VehicleTypesController', ['except' => ['create', 'edit']]);

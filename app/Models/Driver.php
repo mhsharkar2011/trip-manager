@@ -45,7 +45,6 @@ class Driver extends baseModel
             "driving_license"=>"required|max:20",
             "contact_number"=>"required|max:14",
             "address"=>"required|max:255",
-
         ];
     }
 
