@@ -47,3 +47,10 @@ Route::middleware([
 Route::resource('fuel-vehicle', 'App\Http\Controllers\FuelVehicleController', ['except' => ['create', 'edit']]);
 Route::resource('driver', 'App\Http\Controllers\DriverController', ['except' => ['create', 'edit']]);
 Route::post('driver/{id}',[DriverController::class,'avatarUpdate']);
+Route::resource('attendances', 'App\Http\Controllers\AttendancesController', ['except' => ['create', 'edit']]);
+Route::resource('leave-types', 'App\Http\Controllers\LeaveTypesController', ['except' => ['create', 'edit']]);
+Route::resource('leave-configs', 'App\Http\Controllers\LeaveConfigsController', ['except' => ['create', 'edit']]);
+Route::resource('leaves', 'App\Http\Controllers\LeavesController', ['except' => ['create', 'edit']]);
+Route::resource('transports', 'App\Http\Controllers\TransportsController', ['except' => ['create', 'edit']]);
+Route::resource('driver-vehicles', 'App\Http\Controllers\DriverVehiclesController', ['except' => ['create', 'edit']]);
+Route::resource('mileages', 'App\Http\Controllers\MileagesController', ['except' => ['create', 'edit']]);

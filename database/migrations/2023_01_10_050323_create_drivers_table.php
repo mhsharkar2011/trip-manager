@@ -18,6 +18,7 @@ class CreateDriversTable extends Migration
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
             $table->string('username')->nullable();
+            $table->boolean('is_active')->default(0);
             $table->string('password')->nullable();
             $table->string('avatar')->nullable();
             $table->string('driving_license')->nullable();
