@@ -16,8 +16,13 @@ class AuthController extends Controller
         request()->merge([
             'password' => bcrypt($request->get('password'))
         ]);
-        
+
         $user = User::create($request->all());
+
+        if (app()->environment() !== 'production') {
+            $user->email_verified_at = now();
+            $user->save();
+        }
         
         return $this->respond($user);
     }    
