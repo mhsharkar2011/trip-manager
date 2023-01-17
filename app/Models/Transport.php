@@ -6,7 +6,7 @@ use App\Devpanel\Models\baseModel;
 use Illuminate\Database\Eloquent\Model;
 
 
-class Fuel extends baseModel
+class Transport extends baseModel
 {
 
     
@@ -16,7 +16,7 @@ class Fuel extends baseModel
      *
      * @var string
      */
-    protected $table = 'fuels';
+    protected $table = 'transports';
 
     /**
     * The database primary key value.
@@ -30,18 +30,14 @@ class Fuel extends baseModel
      *
      * @var array
      */
-    //protected $fillable = ['fuel_id', 'start_fuel', 'end_fuel', 'total_fuel'];
+    //protected $fillable = ['user_id', 'vehicle_id', 'from_area', 'to_area', 'mileages', 'rate'];
 
     protected $guarded = [
         'id'
     ];    
 
     protected static function validation_rules() {
-        return [
-            'fuel_type_id'=>'required',
-            'start_fuel'=>'required',
-            'end_fuel'=>'required'
-        ];
+        return [];
     }
 
     protected static function validation_messages() {
@@ -56,13 +52,5 @@ class Fuel extends baseModel
         return self::validation_messages();
     }           
 
-    public function fuelTypes()
-    {
-        return $this->belongsTo('App\Models\FuelType','fuel_type_id');
-    }
     
-    public function fuelVehicle()
-    {
-        return $this->belongsToMany(Vehicle::class,'fuel_vehicle')->withPivot('timestamps');
-    }
 }

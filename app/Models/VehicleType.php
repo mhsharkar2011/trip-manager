@@ -34,7 +34,7 @@ class VehicleType extends Model implements HasMedia
      *
      * @var array
      */
-    //protected $fillable = ['title', 'details'];
+    //protected $fillable = ['title'];
 
     protected $guarded = [
         'id'
@@ -42,8 +42,7 @@ class VehicleType extends Model implements HasMedia
 
     protected static function validation_rules() {
         return [
-            'title'=>'required|max:20',
-            'details'=>'required|max:255'
+            'title'=>'required|max:20'
         ];
     }
 

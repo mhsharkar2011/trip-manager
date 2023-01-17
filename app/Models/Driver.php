@@ -6,7 +6,7 @@ use App\Devpanel\Models\baseModel;
 use Illuminate\Database\Eloquent\Model;
 
 
-class Fuel extends baseModel
+class Driver extends baseModel
 {
 
     
@@ -16,7 +16,7 @@ class Fuel extends baseModel
      *
      * @var string
      */
-    protected $table = 'fuels';
+    protected $table = 'drivers';
 
     /**
     * The database primary key value.
@@ -30,7 +30,7 @@ class Fuel extends baseModel
      *
      * @var array
      */
-    //protected $fillable = ['fuel_id', 'start_fuel', 'end_fuel', 'total_fuel'];
+    //protected $fillable = ['first_name', 'last_name', 'username', 'password', 'avatar', 'driving_license', 'contact_number', 'address', 'user_id'];
 
     protected $guarded = [
         'id'
@@ -38,9 +38,14 @@ class Fuel extends baseModel
 
     protected static function validation_rules() {
         return [
-            'fuel_type_id'=>'required',
-            'start_fuel'=>'required',
-            'end_fuel'=>'required'
+            "first_name"=>"required|max:20",
+            "last_name"=>"required|max:20",
+            "username"=>"required|max:20",
+            "password"=>"required|min:8",
+            "driving_license"=>"required|max:20",
+            "contact_number"=>"required|max:14",
+            "address"=>"required|max:255",
+
         ];
     }
 
@@ -56,13 +61,5 @@ class Fuel extends baseModel
         return self::validation_messages();
     }           
 
-    public function fuelTypes()
-    {
-        return $this->belongsTo('App\Models\FuelType','fuel_type_id');
-    }
     
-    public function fuelVehicle()
-    {
-        return $this->belongsToMany(Vehicle::class,'fuel_vehicle')->withPivot('timestamps');
-    }
 }
