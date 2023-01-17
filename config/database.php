@@ -46,7 +46,7 @@ return [
         'sqlite_compass' => [ //used for laravel compass API explorer package, so that route params saved by someone can be used by others
             'driver' => 'sqlite',
             'url' => env('DATABASE_URL'),
-            'database' => app_path('database.compass.sqlite'),
+            'database' => storage_path('database.compass.sqlite'),
             'prefix' => '',
             'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
         ],
