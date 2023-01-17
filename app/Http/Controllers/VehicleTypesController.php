@@ -17,11 +17,12 @@ class VehicleTypesController extends Controller
      */
     public function index(Request $request)
     {
+        
         $items_per_page = request('items_per_page', self::ITEMS_PER_PAGE);
 
-        $vehicletypes = VehicleType::with('vehicles')->latest()->paginate($items_per_page);
+        $vehicleTypes = VehicleType::with('vehicles')->latest()->paginate($items_per_page);
         
-        return view('pages.vehicleTypes',compact('vehicletypes'));
+        return view('pages.vehicleTypes',compact('vehicleTypes'));
         // return $this->respond($vehicletypes);
     }
 
@@ -44,9 +45,9 @@ class VehicleTypesController extends Controller
             return $this->respondValidationError($validation->errors());
         }   
 
-        $vehicletype = VehicleType::create($request->all());
+        $vehicleType = VehicleType::create($request->all());
 
-        return $this->respondCreated($vehicletype);
+        return $this->respondCreated($vehicleType);
     }
 
     /**
@@ -56,9 +57,9 @@ class VehicleTypesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(VehicleType $vehicletype)
+    public function show(VehicleType $vehicleType)
     {
-        return $this->respond($vehicletype);
+        return $this->respond($vehicleType);
     }
 
     /**
@@ -69,7 +70,7 @@ class VehicleTypesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, VehicleType $vehicletype)
+    public function update(Request $request, VehicleType $vehicleType)
     {
         $validation = Validator::make(
             $request->all(), 
@@ -81,9 +82,9 @@ class VehicleTypesController extends Controller
             return $this->respondValidationError($validation->errors());
         }   
 
-        $vehicletype->update($request->all());
+        $vehicleType->update($request->all());
 
-        return $this->respond($vehicletype);
+        return $this->respond($vehicleType);
     }
 
     /**

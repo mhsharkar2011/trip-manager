@@ -37,7 +37,9 @@ class Mileage extends baseModel
     ];    
 
     protected static function validation_rules() {
-        return [];
+        return [
+            "total_mileage"=>"required"
+        ];
     }
 
     protected static function validation_messages() {

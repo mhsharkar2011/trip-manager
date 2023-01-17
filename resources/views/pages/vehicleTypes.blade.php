@@ -3,7 +3,9 @@
 @section('title','Vehicles')
 
 @section('content')
-
+@php
+    static $id = 1;
+@endphp
 <table border="1">
     <thead>
         <tr>
@@ -13,9 +15,9 @@
         </tr>
     </thead>
     <tbody>
-        @foreach ($vehicletypes as $vType )
+        @foreach ($vehicleTypes as $vType )
         <tr>
-            <td>1</td>
+            <td>{{ $id++ }}</td>
                 <td>
                     {{ $vType->title}}
                 </td>
