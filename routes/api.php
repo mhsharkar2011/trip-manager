@@ -45,17 +45,16 @@ Route::post('driver/{id}',[DriverController::class,'avatarUpdate']);
 // Vehicles APIs
 Route::resource('vehicles', 'App\Http\Controllers\VehiclesController', ['except' => ['create', 'edit']]);
 Route::resource('vehicle-types', 'App\Http\Controllers\VehicleTypesController', ['except' => ['create', 'edit']]);
-// Driver Vehicle pivot
 Route::resource('driver-vehicles', 'App\Http\Controllers\DriverVehiclesController', ['except' => ['create', 'edit']]);
 // Fuel APIs
 Route::resource('fuels', 'App\Http\Controllers\FuelsController', ['except' => ['create', 'edit']]);
 Route::resource('fuel-types', 'App\Http\Controllers\FuelTypesController', ['except' => ['create', 'edit']]);
-
-
 Route::resource('fuel-vehicle', 'App\Http\Controllers\FuelVehicleController', ['except' => ['create', 'edit']]);
+// Attendance APIs
 Route::resource('attendances', 'App\Http\Controllers\AttendancesController', ['except' => ['create', 'edit']]);
 Route::resource('leave-types', 'App\Http\Controllers\LeaveTypesController', ['except' => ['create', 'edit']]);
 Route::resource('leave-configs', 'App\Http\Controllers\LeaveConfigsController', ['except' => ['create', 'edit']]);
 Route::resource('leaves', 'App\Http\Controllers\LeavesController', ['except' => ['create', 'edit']]);
+// Transport APIs
 Route::resource('transports', 'App\Http\Controllers\TransportsController', ['except' => ['create', 'edit']]);
 Route::resource('mileages', 'App\Http\Controllers\MileagesController', ['except' => ['create', 'edit']]);
