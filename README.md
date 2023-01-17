@@ -88,10 +88,142 @@ There are 2 pre-requisites to using Compass though:
 
 
 # Authentication
-`Register`, `Login`, `Forgot Password`, `Change Password` API are implemented. 
+`Register`, `Login`, `Forgot Password`, `Change Password` API are implemented. Request response details given below.
 These can be found in the file `api.php`, the routes prefixed under `v1`.
 
 For any route to require authentication, place it under the `auth:sanctum` middleware. You will see an example in the file `api.php`. 
+
+## Registration
+```
+POST /api/v1/register
+```
+
+payload
+```
+{
+  "first_name": "john",
+  "last_name": "doe",
+  "email": "john@example.com",
+  "password": "123456"
+}
+```
+success response
+```
+{
+	"status": "OK",
+	"message": null,
+	"data": {
+		"first_name": "john",
+		"last_name": "doe",
+		"email": "john@example.com",
+		"updated_at": "2023-01-17T18:24:25.000000Z",
+		"created_at": "2023-01-17T18:24:25.000000Z",
+		"id": <id>,
+		"profile_photo_url": "https://ui-avatars.com/api/?name=&color=7F9CF5&background=EBF4FF"
+	}
+}
+```
+## Login
+```
+POST `/api/v1/login`
+```
+payload
+```
+{
+  "email": ""
+  "password": ""
+}
+```
+
+success response
+```
+{
+    "status": "OK",
+    "message": "",
+    "companies": [
+        {
+            "company_code": null,
+            "company_name": "ITC"
+        }
+    ],
+    "roles": [],
+    "session": {
+        "access_token": "<token>",
+        "session_last_access": 0,
+        "session_start": 0
+    },
+    "user_info": {
+        "id": ,
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "email_verified_at": "",
+        "current_team_id": ,
+        "profile_photo_path": ,
+        "role": ,
+        "created_at": "",
+        "updated_at": "",
+        "recovery_code": ,
+        "profile_photo_url": ""
+    }
+}
+```
+error response
+```
+{
+    "status": "ERROR",
+    "message": "Incorrect email or password.",
+    "error_code": "RESOURCE_NOT_FOUND",
+    "errors": []
+}
+```
+## Email verificaition
+There isn't any separate API for this. After registration API call, BE sends the verification email.
+And login API checks for if email verification has been done, if not then it sends a bad request response.
+
+However, we should make the email verification check configurative (which helps in non prod environments). 
+
+FE has probable issues however, for example, one issue is, even if backend sends an error response or exception, FE will redirect to registration success page, so assigning Shakil for more investigation.
+
+## Forgot Password (with verification code in email)
+NOTE: Current implementation that has been during ebuildz has a security flaw. The flaw is, an existing user can reset other users' password if they can guess their ID, which they can easily guess because we have sequential ids. 
+
+So this API needs rework. For now adding the current implementation here
+
+### Request a password reset - a code in the email will be sent
+POST /api/v1/forgotpassword
+
+payload
+```
+{
+"email" : ""
+}
+```
+
+### Enter the code received
+
+`POST /api/v1/forgotpassword`
+
+payload
+```
+{
+"email" : ""
+"recovery_code" : ""
+}
+```
+
+### Change password
+
+TBD: This is an insecure API. TODO: make changes so that logged in users pwd get updated and ignore passed user_id
+
+`POST /api/v1/change/password/<user_id>`
+payload
+```
+{
+"password" : ""
+}
+```
+
 
 # Authorization
 TBD
