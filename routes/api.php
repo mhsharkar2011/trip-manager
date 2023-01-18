@@ -22,19 +22,12 @@ Route::prefix('v1')->group(function () {
     Route::post('login',[AuthController::class, 'login']);
     Route::post('forgotpassword', [PasswordRecoveryController::class,'passwordRecovery']);
     Route::post('change/password/{user}', [PasswordRecoveryController::class,'changePassword']);
-    
-    Route::resource('users', UserController::class)->except(['edit', 'create']);
-});
-
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
 });
 
 
 Route::middleware([
-    'auth:sanctum'
+    'auth:sanctum'     
 ])
-->group(function () {
-    //auth required routes will go here
+->group(function () { //auth required routes will go here
+    Route::resource('users', UserController::class)->except(['edit', 'create']);
 });
