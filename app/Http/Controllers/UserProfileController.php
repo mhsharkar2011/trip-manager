@@ -45,4 +45,33 @@ class UserProfileController extends Controller
         return $this->respond($user, 'Profile updated');
     }
 
+    public function change_password()
+    {
+        $validation = Validator::make(
+            request()->all(), 
+            [
+                'old_password' => 'required|password:sanctum',
+                'new_password' => 'required|confirmed',
+                'new_password_confirmation' => 'required',
+            ],
+            [
+                'old_password.password' => 'The old password did not match.'
+            ]
+        );
+
+        if ($validation->fails()) {
+            return $this->respondValidationError($validation->errors());
+        }  
+
+        $user = auth()->user();
+        if (! $user) {
+            return $this->respondBadRequest('Could not find an user from current token');
+        }
+
+        $user->password = bcrypt(request('new_password'));
+        $user->save();
+
+        return $this->respond('Password have been changed');
+    }
+
 } //class
