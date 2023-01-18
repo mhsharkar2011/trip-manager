@@ -21,16 +21,6 @@ class UserController extends Controller
             $user->with(explode(',', $with));
         }
 
-        $has_sorting = false;
-        if ($query = request('query')) { //filter, sorting, columns
-            $query = json_decode($query, true);
-            $user->filter(compact('query'));
-
-            if (isset($query['sort'])) {
-                $has_sorting = true;
-            }
-        }
-        
         //filter, sorting, selective-columns
         $user->filter(User::parseRequest(request('query'))); 
 
