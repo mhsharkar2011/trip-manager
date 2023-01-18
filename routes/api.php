@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\PasswordRecoveryController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,4 +32,7 @@ Route::prefix('v1')
 ])
 ->group(function () { //auth required routes will go here
     Route::resource('users', UserController::class)->except(['edit', 'create']);
+    
+    Route::get('my-profile', [UserProfileController::class, 'get']);
+    Route::put('my-profile', [UserProfileController::class, 'update']);
 });

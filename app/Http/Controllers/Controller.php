@@ -77,5 +77,12 @@ class Controller extends BaseController
           ->statusCode(HttpResponse::HTTP_FORBIDDEN)
           ->respondError($msg, 'FORBIDDEN', $data, $headers, HttpResponse::HTTP_FORBIDDEN);
     }
+
+    protected function respondBadRequest($msg = 'Bad Request', $data = [], $headers = [])
+    {
+        return $this
+          ->statusCode(HttpResponse::HTTP_BAD_REQUEST)
+          ->respondError($msg, 'BAD_REQUEST', $data, $headers, HttpResponse::HTTP_BAD_REQUEST);
+    }    
     
 }
