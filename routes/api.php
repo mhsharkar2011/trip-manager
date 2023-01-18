@@ -25,7 +25,8 @@ Route::prefix('v1')->group(function () {
 });
 
 
-Route::middleware([
+Route::prefix('v1')
+->middleware([
     'auth:sanctum'     
 ])
 ->group(function () { //auth required routes will go here
