@@ -79,6 +79,7 @@ return [
         'Frequeunt' => [
             'project:generate-quick-crud',
             'project:generate-crud',
+            'project:generate-crud-controller',
             'project:create-api-token',
             'project:export-postman-with-token',
             'telescope:clear',
