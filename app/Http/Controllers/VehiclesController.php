@@ -19,9 +19,9 @@ class VehiclesController extends Controller
     {
         $items_per_page = request('items_per_page', self::ITEMS_PER_PAGE);
 
-        $vehicles = Vehicle::with('vehiclesTypes')->latest()->paginate($items_per_page);
+        $vehicles = Vehicle::with('vehicleType')->latest()->paginate($items_per_page);
 
-        return view('pages.vehicles',compact('vehicles'));
+        return view('pages.vehicles',['vehicles'=>$vehicles]);
         // return $this->respond($vehicles);
     }
 

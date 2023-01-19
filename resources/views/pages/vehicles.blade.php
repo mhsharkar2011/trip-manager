@@ -12,9 +12,10 @@
             <th>ID</th>
             <th>Vehicle No.</th>
             <th>Name</th>
-            <th>License No.</th>
             <th>Model</th>
-            <th>Details</th>
+            <th>Tank Capacity</th>
+            <th>License No.</th>
+            <th>Created</th>
         </tr>
     </thead>
     <tbody>
@@ -28,15 +29,17 @@
                     {{ $vehicle->name}}
                 </td>
                 <td>
-                    {{ $vehicle->license_no}}
-                </td>
-                <td>
                     {{ $vehicle->model}}
                 </td>
                 <td>
-                    {{ $vehicle->details}}
+                    {{ $vehicle->tank_capacity}}
                 </td>
-
+                <td>
+                    {{ $vehicle->license_no}}
+                </td>
+                <td>
+                    {{ $vehicle->created_at}}
+                </td>
             </tr>
             @endforeach
     </tbody>

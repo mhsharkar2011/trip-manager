@@ -16,7 +16,7 @@ class CreateVehicleTypesTable extends Migration
         Schema::create('vehicle_types', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title')->unique();
-            $table->timestamp('created_at');
+            $table->timestamp('created_at')->useCurrent();
             });
     }
 

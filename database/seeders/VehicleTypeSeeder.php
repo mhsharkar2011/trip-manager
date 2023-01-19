@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Vehicle;
 use App\Models\VehicleType;
 use Illuminate\Database\Seeder;
 
@@ -15,14 +16,9 @@ class VehicleTypeSeeder extends Seeder
     public function run()
     {
         // VehicleType::factory(10)->create();       
-
-        $vehicletypes = ['Bus', 'Micro Bus', 'Private Car'];
-
-        foreach($vehicletypes as $vehicletype) {
-            VehicleType::factory()->create([
-                'title' => $vehicletype,
-                'created_at'=>'2023-01-11'
-                ]);
-            }
+            VehicleType::factory(5)->has(
+                Vehicle::factory(2)
+            )->create();
     }
+
 }

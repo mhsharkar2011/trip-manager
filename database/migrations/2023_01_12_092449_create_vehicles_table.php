@@ -18,9 +18,9 @@ class CreateVehiclesTable extends Migration
             $table->unsignedInteger('vehicle_type_id')->nullable();
             $table->string('sl_no')->unique();
             $table->string('name');
-            $table->string('license_no')->unique();
             $table->string('model')->unique();
-            $table->text('details')->nullable();
+            $table->integer('tank_capacity')->nullable();
+            $table->string('license_no')->unique();
             $table->timestamps();
             $table->foreign('vehicle_type_id')->references('id')->on('vehicle_types')->onDelete('cascade')->onUpdate('cascade');
             });

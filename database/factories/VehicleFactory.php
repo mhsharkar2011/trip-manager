@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Vehicle;
+use App\Models\VehicleType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -22,12 +23,15 @@ class VehicleFactory extends Factory
      */
     public function definition()
     {
-        
-        return [
-            "sl_no"=>Str::random(6),
-            "name"=>$this->faker->name,
-            "license_no"=>Str::random(9),
-            "model"=>Str::random(6),
-        ];
+        static $sl_no = "s";
+        static $model = "m";
+        static $license_no = "dha-";
+                return [
+                    'sl_no' => $sl_no."-".rand(6,10000),
+                    'name' => $this->faker->name,
+                    'model' => $model."-".Str::random(4),
+                    'tank_capacity' => '200',
+                    'license_no' => $license_no.rand(8,100000000)
+                ];
     }
 }

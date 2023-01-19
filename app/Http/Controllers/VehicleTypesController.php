@@ -22,7 +22,7 @@ class VehicleTypesController extends Controller
 
         $vehicleTypes = VehicleType::with('vehicles')->latest()->paginate($items_per_page);
         
-        return view('pages.vehicleTypes',compact('vehicleTypes'));
+        return view('pages.vehicleTypes',['vehicleTypes'=>$vehicleTypes]);
         // return $this->respond($vehicletypes);
     }
 

@@ -10,7 +10,7 @@
     <thead>
         <tr>
             <th>ID</th>
-            <th>Car Name</th>
+            <th>Vehicle Type</th>
             <th>Created At</th>
         </tr>
     </thead>

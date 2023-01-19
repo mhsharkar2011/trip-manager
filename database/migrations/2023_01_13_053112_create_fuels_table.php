@@ -16,10 +16,14 @@ class CreateFuelsTable extends Migration
         Schema::create('fuels', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('fuel_type_id')->nullable();
-            $table->integer('start_fuel')->nullable();
-            $table->integer('end_fuel')->nullable();
+            $table->unsignedInteger('mileage_id')->nullable();
+            $table->dateTime('refueling')->nullable();
+            $table->integer('volume')->nullable();
+            $table->integer('cost')->nullable();
+            $table->string('gas_station')->nullable();
             $table->timestamps();
             $table->foreign('fuel_type_id')->references('id')->on('fuel_types')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('mileage_id')->references('id')->on('mileages')->onDelete('cascade')->onUpdate('cascade');
             });
     }
 

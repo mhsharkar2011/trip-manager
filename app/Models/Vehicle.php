@@ -51,10 +51,10 @@ class Vehicle extends Model implements HasMedia
 
     protected static function validation_messages() {
         return [
-            'sl_no'=>"Type Sl No",
-            'name'=>"Type Name",
-            'license_no'=>"Type License No",
-            'model'=>"Type Model Name here",
+            // 'sl_no.required'=>"Type Sl No",
+            // 'name.required'=>"Type Name",
+            // 'license_no.required'=>"Type License No",
+            // 'model.required'=>"Type Model Name here",
         ];
     } 
 
@@ -66,7 +66,7 @@ class Vehicle extends Model implements HasMedia
         return self::validation_messages();
     }           
 
-    public function vehiclesTypes()
+    public function vehicleType()
     {
         return $this->belongsTo(VehicleType::class,'vehicle_type_id');
     }

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\DriverController;
 use App\Http\Controllers\PasswordRecoveryController;
+use App\Http\Controllers\ReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,3 +59,5 @@ Route::resource('leaves', 'App\Http\Controllers\LeavesController', ['except' => 
 // Transport APIs
 Route::resource('transports', 'App\Http\Controllers\TransportsController', ['except' => ['create', 'edit']]);
 Route::resource('mileages', 'App\Http\Controllers\MileagesController', ['except' => ['create', 'edit']]);
+
+Route::get('reports',[ReportController::class,'index']);

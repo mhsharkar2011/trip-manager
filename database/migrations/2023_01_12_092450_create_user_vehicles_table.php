@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDriverVehiclesTable extends Migration
+class CreateUserVehiclesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateDriverVehiclesTable extends Migration
      */
     public function up()
     {
-        Schema::create('driver_vehicles', function (Blueprint $table) {
+        Schema::create('user_vehicles', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('driver_id')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedInteger('vehicle_id')->nullable();
             $table->timestamps();
-            $table->foreign('driver_id')->references('id')->on('drivers')->cascadeOnDelete();
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->foreign('vehicle_id')->references('id')->on('vehicles')->cascadeOnDelete();
             });
     }
@@ -30,6 +30,6 @@ class CreateDriverVehiclesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('driver_vehicles');
+        Schema::drop('user_vehicles');
     }
 }
