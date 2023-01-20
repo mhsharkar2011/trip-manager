@@ -21,8 +21,10 @@ use App\Http\Controllers\UserProfileController;
 Route::prefix('v1')->group(function () {
     Route::post('register',[AuthController::class, 'store']);
     Route::post('login',[AuthController::class, 'login']);
-    Route::post('forgotpassword', [PasswordRecoveryController::class,'passwordRecovery']);
-    Route::post('change/password/{user}', [PasswordRecoveryController::class,'changePassword']);
+    
+    Route::get('forgot-password', [PasswordRecoveryController::class, 'send_recovery_email']);
+    Route::post('forgot-password', [PasswordRecoveryController::class, 'update_password']);
+    // Route::post('change/password/{user}', [PasswordRecoveryController::class,'changePassword']);
 });
 
 

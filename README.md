@@ -186,41 +186,33 @@ However, we should make the email verification check configurative (which helps 
 FE has probable issues however, for example, one issue is, even if backend sends an error response or exception, FE will redirect to registration success page, so assigning Shakil for more investigation.
 
 ## Forgot Password (with verification code in email)
-NOTE: Current implementation that has been during ebuildz has a security flaw. The flaw is, an existing user can reset other users' password if they can guess their ID, which they can easily guess because we have sequential ids. 
+NOTE: Usually for password reset, a link in email is sent, clicking which get to a form from which you can reset your password. But we send a code instead of a link because, right now
+if we are using a Quasar phone app build, once you leave the app and open the email client you can't get back to the app reset link automatically, hence we are using a code that you have to enter in the current screen.
 
-So this API needs rework. For now adding the current implementation here
 
 ### Request a password reset - a code in the email will be sent
-POST /api/v1/forgotpassword
+`GET /api/v1/forgot-password?email=<email>`
 
-payload
+response
 ```
 {
-"email" : ""
+	"status": "OK",
+	"message": "If the email exists in our system then an email has been sent with recovery steps."
 }
 ```
 
-### Enter the code received
 
-`POST /api/v1/forgotpassword`
+### Use the code received to update password
+
+`POST /api/v1/forgot-password`
 
 payload
 ```
 {
-"email" : ""
-"recovery_code" : ""
-}
-```
-
-### Change password
-
-TBD: This is an insecure API. TODO: make changes so that logged in users pwd get updated and ignore passed user_id
-
-`POST /api/v1/change/password/<user_id>`
-payload
-```
-{
-"password" : ""
+	"email": "",
+	"code": <code_received>,
+	"new_password": "",
+	"new_password_confirmation": ""
 }
 ```
 
