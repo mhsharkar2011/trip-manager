@@ -76,6 +76,7 @@ class PasswordRecoveryController extends Controller
         try {
             $details = [
                 'title' => 'Your password was updated from the forgot password link.',
+                'subject' => 'Your password was changed!'
                 // 'password' => 'Password is: ' . request('new_password') //better to not send it for security reasons
             ];
             Mail::to($user->email)->send(new PasswordRecover($details));
