@@ -6,7 +6,7 @@ use App\Devpanel\Models\baseModel;
 use Illuminate\Database\Eloquent\Model;
 
 
-class Mileage extends baseModel
+class RoleUser extends baseModel
 {
 
     
@@ -16,7 +16,7 @@ class Mileage extends baseModel
      *
      * @var string
      */
-    protected $table = 'mileages';
+    protected $table = 'role_users';
 
     /**
     * The database primary key value.
@@ -30,16 +30,14 @@ class Mileage extends baseModel
      *
      * @var array
      */
-    //protected $fillable = ['vehicle_id', 'total_mileage'];
+    //protected $fillable = ['role_id', 'user_id'];
 
     protected $guarded = [
         'id'
     ];    
 
     protected static function validation_rules() {
-        return [
-            "total_mileage"=>"required"
-        ];
+        return [];
     }
 
     protected static function validation_messages() {
@@ -54,9 +52,5 @@ class Mileage extends baseModel
         return self::validation_messages();
     }           
 
-    public function vehicle()
-    {
-        return $this->belongsTo(Vehicle::class,'vehicle_id');
-    }
     
 }

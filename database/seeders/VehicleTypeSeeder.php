@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Mileage;
 use App\Models\Vehicle;
 use App\Models\VehicleType;
 use Illuminate\Database\Seeder;
@@ -17,7 +18,9 @@ class VehicleTypeSeeder extends Seeder
     {
         // VehicleType::factory(10)->create();       
             VehicleType::factory(5)->has(
-                Vehicle::factory(2)
+                Vehicle::factory(2)->has(
+                    Mileage::factory(1)
+                )
             )->create();
     }
 

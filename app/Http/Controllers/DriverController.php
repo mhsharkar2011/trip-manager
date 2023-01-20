@@ -38,9 +38,10 @@ class DriverController extends Controller
             request('page', 1)
         );
 
-        dd($driver);
+        // dd($driver);
 
-        return $this->respond($driver);
+        // return $this->respond($driver);
+        return view('pages.index',['users'=>$driver]);
     }
 
     /**

@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests;
 
-use App\Models\Vehicle;
+use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class VehiclesController extends Controller
+class RolesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,14 +17,26 @@ class VehiclesController extends Controller
      */
     public function index(Request $request)
     {
-        $items_per_page = request('items_per_page', self::ITEMS_PER_PAGE);
+        $roles = Role::query();
 
-        $vehicles = Vehicle::with('users','mileages')->latest()->paginate($items_per_page);
+        if ($with = request('with')) { //load relationships
+            $roles->with(explode(',', $with));
+        }        
 
-        // dd($vehicles->toArray());
+        //filter, sorting, selective-columns
+        $roles->filter(Role::parseRequest(request('query')));
+
+        //set default sorting
+        if (! Role::hasSorting(request('query'))) {
+            $roles->filter(Role::getDefaultSorting());
+        }          
         
-        return view('pages.vehicles',['vehicles'=>$vehicles]);
-        // return $this->respond($vehicles);
+        $roles = $roles->paginateWrap(
+            request('items_per_page', self::ITEMS_PER_PAGE), 
+            request('page', 1)
+        );
+
+        return $this->respond($roles);
     }
 
     /**
@@ -38,17 +50,17 @@ class VehiclesController extends Controller
     {
         $validation = Validator::make(
             $request->all(), 
-            Vehicle::validation_rules(),
-            Vehicle::validation_messages(),
+            Role::validation_rules(),
+            Role::validation_messages(),
         );
 
         if ($validation->fails()) {
             return $this->respondValidationError($validation->errors());
         }   
 
-        $vehicle = Vehicle::create($request->all());
+        $role = Role::create($request->all());
 
-        return $this->respondCreated($vehicle);
+        return $this->respondCreated($role);
     }
 
     /**
@@ -58,9 +70,9 @@ class VehiclesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(Vehicle $vehicle)
+    public function show(Role $role)
     {
-        return $this->respond($vehicle);
+        return $this->respond($role);
     }
 
     /**
@@ -71,21 +83,21 @@ class VehiclesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Vehicle $vehicle)
+    public function update(Request $request, Role $role)
     {
         $validation = Validator::make(
             $request->all(), 
-            Vehicle::validation_rules_for_update(),
-            Vehicle::validation_messages_for_update(),
+            Role::validation_rules_for_update(),
+            Role::validation_messages_for_update(),
         );
 
         if ($validation->fails()) {
             return $this->respondValidationError($validation->errors());
         }   
 
-        $vehicle->update($request->all());
+        $role->update($request->all());
 
-        return $this->respond($vehicle);
+        return $this->respond($role);
     }
 
     /**
@@ -95,9 +107,9 @@ class VehiclesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Vehicle $vehicle)
+    public function destroy(Role $role)
     {
-        $vehicle->delete();
+        $role->delete();
 
         return $this->respondDeleted();
     }

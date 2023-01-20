@@ -7,60 +7,51 @@
     static $id = 1;
 @endphp
 
-<table border="1" width="900px">
+<table class="table table-dark table-striped table-bordered table-hover table-sm m-12">
     <thead>
         <tr>
             <th>ID</th>
-            <th>Vehicle No.</th>
-            <th>Name</th>
-            <th>Model</th>
-            <th>Tank Capacity</th>
-            <th>License No.</th>
-            <th>Created</th>
+            <th>Driver Name</th>
+            <th>Created At</th>
         </tr>
     </thead>
     <tbody>
-        @foreach ($vehicleTypes as $vType )
+        @foreach ($users as $user )
         <tr>
             <td>{{ $id++ }}</td>
-                <td>
-                    {{ $vType->sl_no}}
-                </td>
-                <td>
-                    {{ $vType->title}}
-                    <div>
-                        <table border="1">
-
-                            @foreach ($vType->vehicles as $vehicle )
-                            <tr>
-                                <td>
-                                    {{ $vehicle->name }}
-                                </td>
-                                <td>
-                                    {{ $vehicle->model }}
-                                </td>
-                                <td>
-                                    {{ $vehicle->tank_capacity }}
-                                </td>
-                            </tr>
-                            @endforeach
-                        </table>
-                    </div>
-                </td>
-                <td>
-                    {{ $vType->model}}
-                </td>
-                <td>
-                    {{ $vType->tank_capacity}}
-                </td>
-                <td>
-                    {{ $vType->license_no}}
-                </td>
-                <td>
-                    {{ $vType->created_at}}
-                </td>
+            <td>
+                {{ $user->first_name. " " . $user->last_name}}
+            </td>
+            <td>{{ $user->created_at }}</td>
+                <table class="table table-dark table-striped table-bordered table-hover table-sm m-12">
+                    @foreach ($user->vehicles as $vehicle )
+                        <tr>
+                            <td>
+                                {{ $vehicle->name}}
+                            </td>
+                            <td>
+                                {{ $vehicle->model}}
+                            </td>
+                            <td>
+                                {{ $vehicle->tank_capacity}}
+                            </td>
+                            <td>
+                                {{ $vehicle->license_no}}
+                            </td>
+                            <td>
+                                @foreach ($vehicle->mileages as $mileage )
+                                        {{ $mileage->total_mileage }}
+                                @endforeach
+                            </td>
+                            <td>
+                                {{ $vehicle->created_at}}
+                            </td>
+                        </tr>
+                    @endforeach
+                </table>
             </tr>
             @endforeach
     </tbody>
+    
 </table>
 @endsection

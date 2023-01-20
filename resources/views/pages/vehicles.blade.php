@@ -6,15 +6,17 @@
 @php
     static $id = 1;
 @endphp
-<table border="1">
+
+<table class="table table-dark table-striped table-bordered table-hover table-sm m-12">
     <thead>
         <tr>
             <th>ID</th>
-            <th>Vehicle No.</th>
-            <th>Name</th>
-            <th>Model</th>
+            <th>Vehicle Name</th>
+            <th>Driver Name</th>
+            <th>Vehicle Model</th>
             <th>Tank Capacity</th>
             <th>License No.</th>
+            <th>Mileages</th>
             <th>Created</th>
         </tr>
     </thead>
@@ -22,12 +24,14 @@
         @foreach ($vehicles as $vehicle )
         <tr>
             <td>{{ $id++ }}</td>
-                <td>
-                    {{ $vehicle->sl_no}}
-                </td>
-                <td>
-                    {{ $vehicle->name}}
-                </td>
+            <td>
+                {{ $vehicle->name}}
+            </td>
+            <td>
+                @foreach ($vehicle->users as $user )
+                        {{ $user->first_name}}
+                @endforeach
+            </td>
                 <td>
                     {{ $vehicle->model}}
                 </td>
@@ -38,10 +42,16 @@
                     {{ $vehicle->license_no}}
                 </td>
                 <td>
+                    @foreach ($vehicle->mileages as $mileage )
+                            {{ $mileage->total_mileage }}
+                    @endforeach
+                </td>
+                <td>
                     {{ $vehicle->created_at}}
                 </td>
             </tr>
             @endforeach
     </tbody>
+    
 </table>
 @endsection

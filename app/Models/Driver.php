@@ -16,7 +16,7 @@ class Driver extends baseModel
      *
      * @var string
      */
-    protected $table = 'drivers';
+    protected $table = 'users';
 
     /**
     * The database primary key value.
@@ -38,13 +38,6 @@ class Driver extends baseModel
 
     protected static function validation_rules() {
         return [
-            "first_name"=>"required|max:20",
-            "last_name"=>"required|max:20",
-            "username"=>"required|max:20",
-            "password"=>"required|min:8",
-            "driving_license"=>"required|max:20",
-            "contact_number"=>"required|max:14",
-            "address"=>"required|max:255",
         ];
     }
 
@@ -60,5 +53,9 @@ class Driver extends baseModel
         return self::validation_messages();
     }           
 
+    public function vehicles()
+    {
+        return $this->belongsToMany(Vehicle::class,'user_vehicle','user_id');
+    }
     
 }

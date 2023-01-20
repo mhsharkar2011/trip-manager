@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUserVehiclesTable extends Migration
+class CreateUserVehicleTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateUserVehiclesTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_vehicles', function (Blueprint $table) {
+        Schema::create('user_vehicle', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedInteger('vehicle_id')->nullable();

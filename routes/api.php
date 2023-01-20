@@ -61,3 +61,5 @@ Route::resource('transports', 'App\Http\Controllers\TransportsController', ['exc
 Route::resource('mileages', 'App\Http\Controllers\MileagesController', ['except' => ['create', 'edit']]);
 
 Route::get('reports',[ReportController::class,'index']);
+Route::resource('roles', 'App\Http\Controllers\RolesController', ['except' => ['create', 'edit']]);
+Route::resource('role-users', 'App\Http\Controllers\RoleUsersController', ['except' => ['create', 'edit']]);
