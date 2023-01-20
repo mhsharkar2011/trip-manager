@@ -117,4 +117,16 @@ class UserController extends Controller
 
         return $this->respondDeleted();
     }
+
+    public function get_roles()
+    {
+        $roles = collect(User::ROLES)->map(function($role) {
+            return [
+                'name' => $role
+                ,'label' => ucwords($role)
+            ];
+        });
+
+        return $this->respond($roles);
+    }
 }

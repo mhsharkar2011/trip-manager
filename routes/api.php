@@ -32,6 +32,7 @@ Route::prefix('v1')
 ])
 ->group(function () { //auth required routes will go here
     Route::resource('users', UserController::class)->except(['edit', 'create']);
+    Route::get('roles', [UserController::class, 'get_roles']);
     
     Route::get('my-profile', [UserProfileController::class, 'get']);
     Route::put('my-profile', [UserProfileController::class, 'update']);

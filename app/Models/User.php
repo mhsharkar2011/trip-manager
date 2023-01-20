@@ -69,6 +69,13 @@ class User extends Authenticatable
     ];
 
     const ROLE_SUPER_ADMIN = 'superadmin';
+    const ROLE_ADMIN = 'admin';
+    const ROLE_USER = 'user';
+
+    const ROLES = [
+        self::ROLE_ADMIN
+        ,self::ROLE_USER
+    ];
 
     public static function validation_rules()
     {
