@@ -16,7 +16,7 @@ class Transport extends baseModel
      *
      * @var string
      */
-    protected $table = 'transports';
+    protected $table = 'trips';
 
     /**
     * The database primary key value.
@@ -51,6 +51,18 @@ class Transport extends baseModel
     protected static function validation_messages_for_update() {
         return self::validation_messages();
     }           
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class,'trips','vehicle_id');
+    }
+
+    public function vehicles()
+    {
+        return $this->belongsToMany(Vehicle::class,'trips','vehicle_id')->with('mileages');
+    }
+
+
 
     
 }

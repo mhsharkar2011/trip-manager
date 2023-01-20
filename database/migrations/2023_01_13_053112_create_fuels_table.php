@@ -17,7 +17,7 @@ class CreateFuelsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('fuel_type_id')->nullable();
             $table->unsignedInteger('mileage_id')->nullable();
-            $table->dateTime('refueling')->nullable();
+            $table->timestamp('refueling')->useCurrent();
             $table->integer('volume')->nullable();
             $table->integer('cost')->nullable();
             $table->string('gas_station')->nullable();

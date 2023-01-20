@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\DriverController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SocialiteController;
+use App\Http\Controllers\TransportsController;
 use App\Http\Controllers\VehiclesController;
 use App\Http\Controllers\VehicleTypesController;
 
@@ -27,3 +29,5 @@ Route::get('/', function () {
 
 Route::get('vehicles',[VehiclesController::class,'index']);
 Route::get('vehicle-types',[VehicleTypesController::class,'index']);
+Route::get('index',[DriverController::class,'index']);
+Route::get('transports',[TransportsController::class,'index']);

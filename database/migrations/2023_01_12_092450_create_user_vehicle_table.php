@@ -17,7 +17,7 @@ class CreateUserVehicleTable extends Migration
             $table->increments('id');
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedInteger('vehicle_id')->nullable();
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->foreign('vehicle_id')->references('id')->on('vehicles')->cascadeOnDelete();
             });

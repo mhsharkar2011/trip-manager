@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 
 use App\Models\Transport;
+use Illuminate\Foundation\Support\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Validator;
 
 class TransportsController extends Controller
@@ -15,7 +17,7 @@ class TransportsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request,$format = 'view')
     {
         $transports = Transport::query();
 
@@ -36,7 +38,13 @@ class TransportsController extends Controller
             request('page', 1)
         );
 
-        return $this->respond($transports);
+        if( request()->is('api/*')){
+            //an api call
+            return $this->respond($transports);
+        }else{
+            //a web call
+            return view('pages.trip',['trips'=>$transports]);
+        }
     }
 
     /**

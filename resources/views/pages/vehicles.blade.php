@@ -29,7 +29,7 @@
             </td>
             <td>
                 @foreach ($vehicle->users as $user )
-                        {{ $user->first_name}}
+                        {{ $user->full_name}}
                 @endforeach
             </td>
                 <td>

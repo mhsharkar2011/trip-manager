@@ -15,8 +15,7 @@ class VehicleTypeSeeder extends Seeder
      * @return void
      */
     public function run()
-    {
-        // VehicleType::factory(10)->create();       
+    {   
             VehicleType::factory(5)->has(
                 Vehicle::factory(2)->has(
                     Mileage::factory(1)
