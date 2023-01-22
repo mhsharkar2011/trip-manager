@@ -30,6 +30,26 @@ Port: 53306
 ```
 Get the database name, user and password from the `docker-compose-local.yml` file
 
+### Helper script like Laravel Sail
+You will continuously need to run various commands in the php container, commands like `"php artisan migrate"`, `"composer require pckg/foo"` etc. 
+Prefixing these with `docker-compose -f docker-compose.local.yml ....` is tedious, so there is a helper script `./cli` which is a copy of `./vendor/bin/sail` with some necessary adjustments which will proxy the commands to appropriate containers. To use it, give it execute permission and start using it like sail. 
+```
+chmod +x cli
+./cli #will show available commands
+```
+
+Here are some examples:
+```
+./cli up -d
+./cli php -v
+./cli composer install
+./cli art migrate:fresh --seed
+./cli tinker
+./cli bash
+./cli mysql
+```
+
+
 ## Option #2 - Laravel Sail for BE developers with multiple needed services
 ### Prerequisite
 1. If you are using Windows you need to get Windows WSL2. Follow these instructions from [here](https://laravel.com/docs/9.x/installation#getting-started-on-windows). For Linux or Mac start from #2.
