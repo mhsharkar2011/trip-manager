@@ -27,6 +27,7 @@ Route::get('/', function () {
 // })->name('dashboard');
 
 
+Route::get('drivers',[DriverController::class,'index']);
 Route::get('vehicles',[VehiclesController::class,'index']);
 Route::get('vehicle-types',[VehicleTypesController::class,'index']);
 Route::get('index',[DriverController::class,'index']);

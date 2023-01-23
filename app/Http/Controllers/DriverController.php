@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 
 use App\Models\Driver;
+use App\Models\User;
+use Database\Seeders\UserSeeder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Validator;
@@ -17,8 +20,14 @@ class DriverController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request,$id)
     {
+
+        $users = User::getVehicles($id);
+
+        dd($users);
+        return response()->json($users);
+
         $driver = Driver::query();
 
         if ($with = request('with')) { //load relationships
@@ -41,7 +50,7 @@ class DriverController extends Controller
         // dd($driver);
 
         // return $this->respond($driver);
-        return view('pages.index',['users'=>$driver]);
+        return view('pages.driver',['users'=>$driver]);
     }
 
     /**

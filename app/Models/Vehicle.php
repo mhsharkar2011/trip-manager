@@ -82,8 +82,7 @@ class Vehicle extends Model implements HasMedia
 
     public function users()
     {
-        return $this->belongsToMany(User::class,'user_vehicle','vehicle_id')
-        ->withPivot('created_at');
+        return $this->belongsTo(User::class,'user_id');
     }
 
     public function fuels()

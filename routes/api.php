@@ -41,7 +41,7 @@ Route::middleware([
 });
 
 // Driver API
-Route::resource('driver', 'App\Http\Controllers\DriverController', ['except' => ['create', 'edit']]);
+Route::resource('drivers', 'App\Http\Controllers\DriverController', ['except' => ['create', 'edit']]);
 Route::post('driver-avatar/{id}',[DriverController::class,'avatarUpdate']);
 // Vehicles APIs
 Route::resource('vehicles', 'App\Http\Controllers\VehiclesController', ['except' => ['create', 'edit']]);
@@ -63,3 +63,5 @@ Route::resource('mileages', 'App\Http\Controllers\MileagesController', ['except'
 Route::get('reports',[ReportController::class,'index']);
 Route::resource('roles', 'App\Http\Controllers\RolesController', ['except' => ['create', 'edit']]);
 Route::resource('role-users', 'App\Http\Controllers\RoleUsersController', ['except' => ['create', 'edit']]);
+
+

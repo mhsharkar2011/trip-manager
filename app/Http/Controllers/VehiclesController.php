@@ -19,7 +19,7 @@ class VehiclesController extends Controller
     {
         $items_per_page = request('items_per_page', self::ITEMS_PER_PAGE);
 
-        $vehicles = Vehicle::with('users','mileages')->latest()->paginate($items_per_page);
+        $vehicles = Vehicle::with('users')->latest()->paginate($items_per_page);
 
         // dd($vehicles->toArray());
         

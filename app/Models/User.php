@@ -88,4 +88,5 @@ class User extends Authenticatable
         return self::superAdmin()->exists();
     }
 
+    
 }

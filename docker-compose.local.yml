@@ -2,7 +2,7 @@ version: "3.1"
 
 services:
   mysql:
-    container_name: trip_mysql
+    container_name: app_mysql
     restart: always
     image: mysql:8.0
     hostname: app_mysql
@@ -21,7 +21,7 @@ services:
   www:
     build: ./docker/itc-php81-apache
     image: itconquest/php81-apache:latest
-    container_name: trip_www
+    container_name: app_www
     depends_on: [mysql]
     restart: always
     hostname: app_www
