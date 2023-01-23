@@ -286,6 +286,34 @@ The column types available are the following:
 # Attachments (File uploads)
 TBD
 
+# Comments
+#### Before use comment crud for your entity
+Add ```Trait``` in your entity 
+```
+<?php
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class ModelName extends Model
+{
+     use Comment;
+}
+```
+
+1. Comment create api (e.g., `POST /<entity_name>/<entity_id>/comment`) Payload
+```
+{
+    "comment":"Comment for your model entity",
+    "type":"PRIVATE",
+    "project_id": null
+}
+```
+
+2. Comment fetch api (e.g., `GET /<entity_name>/<entity_id>/comment`)
+3. Comment edit, fetch & delete api (e.g., `GET, PUT, DELETE /comment/<comment_id>`)
+
+
 # Pagination
 1. All list API (e.g., `GET /posts`) are by default paginated. Here is an example response:
 ```
