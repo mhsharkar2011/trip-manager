@@ -39,4 +39,6 @@ Route::prefix('v1')
     Route::get('my-profile', [UserProfileController::class, 'get']);
     Route::put('my-profile', [UserProfileController::class, 'update']);
     Route::put('my-password-change', [UserProfileController::class, 'change_password']);
+    
+    Route::resource('projects', 'App\Http\Controllers\ProjectController', ['except' => ['create', 'edit']]);
 });
