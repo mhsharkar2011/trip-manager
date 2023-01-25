@@ -25,7 +25,7 @@ class DriverController extends Controller
 
         $users = User::getVehicles($id);
 
-        dd($users);
+        // dd($users);
         return response()->json($users);
 
         $driver = Driver::query();

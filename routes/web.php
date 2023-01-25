@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DriverController;
+use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SocialiteController;
 use App\Http\Controllers\TransportsController;
@@ -32,3 +34,13 @@ Route::get('vehicles',[VehiclesController::class,'index']);
 Route::get('vehicle-types',[VehicleTypesController::class,'index']);
 Route::get('index',[DriverController::class,'index']);
 Route::get('transports',[TransportsController::class,'index']);
+
+Route::resource('posts',PostController::class);
+//  Route::get('posts',[PostController::class,'index'])->name('posts.index');
+//  Route::get('posts',[PostController::class,'create'])->name('posts.create');
+//  Route::post('posts',[PostController::class,'store'])->name('posts.store');
+//  Route::get('posts/{id}',[PostController::class,'show'])->name('posts.show');
+
+Route::resource('comments',CommentController::class);
+
+Route::get('postComments',[CommentController::class,'postComments'])->name('comments.postComments');
