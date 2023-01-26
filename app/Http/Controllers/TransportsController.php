@@ -43,7 +43,7 @@ class TransportsController extends Controller
             return $this->respond($transports);
         }else{
             //a web call
-            return view('pages.trip',['trips'=>$transports]);
+            return view('trips.index',['trips'=>$transports]);
         }
     }
 

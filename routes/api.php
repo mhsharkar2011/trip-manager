@@ -3,11 +3,13 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\TestController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DriverController;
 use App\Http\Controllers\PasswordRecoveryController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ReportController;
+use Whoops\Util\Misc;
 
 /*
 |--------------------------------------------------------------------------
@@ -69,3 +71,7 @@ Route::resource('role-users', 'App\Http\Controllers\RoleUsersController', ['exce
 
 // Route::apiResource('posts',PostController::class);
 // Route::apiResource('comments',CommentController::class);
+
+
+Route::apiResource('users',TestController::class);
+

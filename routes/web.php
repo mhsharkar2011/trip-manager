@@ -8,6 +8,7 @@ use App\Http\Controllers\SocialiteController;
 use App\Http\Controllers\TransportsController;
 use App\Http\Controllers\VehiclesController;
 use App\Http\Controllers\VehicleTypesController;
+use App\Http\Controllers\Web\TestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,17 +31,18 @@ Route::get('/', function () {
 
 
 Route::get('drivers',[DriverController::class,'index']);
-Route::get('vehicles',[VehiclesController::class,'index']);
+
+Route::resource('vehicles',VehiclesController::class);
+
 Route::get('vehicle-types',[VehicleTypesController::class,'index']);
 Route::get('index',[DriverController::class,'index']);
-Route::get('transports',[TransportsController::class,'index']);
 
 Route::resource('posts',PostController::class);
+Route::resource('comments',CommentController::class);
 //  Route::get('posts',[PostController::class,'index'])->name('posts.index');
 //  Route::get('posts',[PostController::class,'create'])->name('posts.create');
 //  Route::post('posts',[PostController::class,'store'])->name('posts.store');
 //  Route::get('posts/{id}',[PostController::class,'show'])->name('posts.show');
 
-Route::resource('comments',CommentController::class);
 
-Route::get('postComments',[CommentController::class,'postComments'])->name('comments.postComments');
+Route::resource('users', TestController::class);

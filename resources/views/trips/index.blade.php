@@ -17,8 +17,7 @@
             <th>From Area</th>
             <th>To Area</th>
             <th>Mileages</th>
-            <th>Cost</th>
-            <th>Created At</th>
+            <th>Fuel Cost</th>
         </tr>
     </thead>
     <tbody>
@@ -50,6 +49,12 @@
                     {{ $mileage->total_mileage }}
                 @endforeach
             </td>
+            <td>
+                @foreach ($vehicle->fuels as $fuel )
+                    {{ $fuel->cost }}
+                @endforeach
+            </td>
+
             @endforeach
             </tr>
             @endforeach

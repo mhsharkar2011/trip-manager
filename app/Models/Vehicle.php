@@ -2,17 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
+use App\Devpanel\Models\baseModel;
 
-
-class Vehicle extends Model implements HasMedia
+class Vehicle extends baseModel
 {
-    use InteractsWithMedia;
-    use HasFactory;
-    
     
     
     /**
@@ -42,10 +35,11 @@ class Vehicle extends Model implements HasMedia
 
     protected static function validation_rules() {
         return [
-            'sl_no'=>'required|max:255',
+            'sl_no'=>'required|max:20',
             'name'=>'required|max:255',
-            'license_no'=>'required|max:255',
-            'model'=>'required|max:255',
+            'model'=>'required|max:20',
+            'tank_capacity'=>'required',
+            'license_no'=>'required',
         ];
     }
 
@@ -80,13 +74,18 @@ class Vehicle extends Model implements HasMedia
 
     // Users
 
-    public function users()
+    public function user()
     {
         return $this->belongsTo(User::class,'user_id');
     }
 
+    public function userVehicles()
+    {
+        return $this->belongsToMany(User::class,'user_vehicle','user_id')->withPivot('created_at');
+    }
+
     public function fuels()
     {
-        return $this->hasMany(Fuel::class);
+        return $this->hasMany(Fuel::class,'vehicle_id');
     }
 }

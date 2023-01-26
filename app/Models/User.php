@@ -88,5 +88,9 @@ class User extends Authenticatable
         return self::superAdmin()->exists();
     }
 
+    public function vehicle()
+    {
+        return $this->belongsTo(Vehicle::class,'owner_id');
+    }
     
 }

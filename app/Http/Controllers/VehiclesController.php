@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests;
-
+use App\Models\User;
 use App\Models\Vehicle;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Laravel\Sanctum\Sanctum;
 
 class VehiclesController extends Controller
 {
@@ -17,14 +19,37 @@ class VehiclesController extends Controller
      */
     public function index(Request $request)
     {
-        $items_per_page = request('items_per_page', self::ITEMS_PER_PAGE);
-
-        $vehicles = Vehicle::with('users')->latest()->paginate($items_per_page);
-
-        // dd($vehicles->toArray());
+        $vehicles = Vehicle::query();
         
-        return view('pages.vehicles',['vehicles'=>$vehicles]);
+        if ($with = request('with')) { //load relationships
+            $vehicles->with(explode(',', $with));
+        }        
+        
+        //filter, sorting, selective-columns
+        $vehicles->filter(Vehicle::parseRequest(request('query')));
+
+        //set default sorting
+        if (! Vehicle::hasSorting(request('query'))) {
+            $vehicles->filter(Vehicle::getDefaultSorting());
+        }          
+        
+        $vehicles = $vehicles->paginateWrap(
+            request('items_per_page', self::ITEMS_PER_PAGE), 
+            request('page', 1)
+        );
+
+        return view('vehicles.index',['vehicles'=>$vehicles]);
         // return $this->respond($vehicles);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return view('vehicles.create');
     }
 
     /**
@@ -48,7 +73,8 @@ class VehiclesController extends Controller
 
         $vehicle = Vehicle::create($request->all());
 
-        return $this->respondCreated($vehicle);
+        // return $this->respondCreated($vehicle);
+        return view('vehicles.index');
     }
 
     /**

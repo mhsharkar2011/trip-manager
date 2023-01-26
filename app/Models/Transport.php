@@ -59,7 +59,7 @@ class Transport extends baseModel
 
     public function vehicles()
     {
-        return $this->belongsToMany(Vehicle::class,'trips','vehicle_id')->with('mileages');
+        return $this->belongsToMany(Vehicle::class,'trips','vehicle_id')->with('mileages','fuels');
     }
 
 
