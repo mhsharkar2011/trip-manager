@@ -68,7 +68,9 @@ class TransportsController extends Controller
 
         $transport = Transport::create($request->all());
 
-        return $this->respondCreated($transport);
+        // return $this->respondCreated($transport);
+
+        return view('trips.create')->with('status','Trip created successfully');
     }
 
     /**

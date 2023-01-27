@@ -9,6 +9,7 @@ use App\Http\Controllers\DriverController;
 use App\Http\Controllers\PasswordRecoveryController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\VehicleTypesController;
 use Whoops\Util\Misc;
 
 /*
@@ -45,12 +46,12 @@ Route::middleware([
 });
 
 // Driver API
-Route::resource('drivers', 'App\Http\Controllers\DriverController', ['except' => ['create', 'edit']]);
-Route::post('driver-avatar/{id}',[DriverController::class,'avatarUpdate']);
+
+Route::post('user-avatar/{id}',[DriverController::class,'avatarUpdate']);
 // Vehicles APIs
-Route::resource('vehicles', 'App\Http\Controllers\VehiclesController', ['except' => ['create', 'edit']]);
-Route::resource('vehicle-types', 'App\Http\Controllers\VehicleTypesController', ['except' => ['create', 'edit']]);
-Route::resource('driver-vehicles', 'App\Http\Controllers\DriverVehiclesController', ['except' => ['create', 'edit']]);
+Route::apiResource('vehicles', 'App\Http\Controllers\VehiclesController',['names'=>'api/vehicles'], ['except' => ['create', 'edit']]);
+Route::apiResource('vehicle-types', 'App\Http\Controllers\VehicleTypesController', ['names'=>'api/vehicle-types'], ['except' => ['create', 'edit']]);
+Route::resource('user-vehicles', 'App\Http\Controllers\DriverVehiclesController', ['except' => ['create', 'edit']]);
 // Fuel APIs
 Route::resource('fuels', 'App\Http\Controllers\FuelsController', ['except' => ['create', 'edit']]);
 Route::resource('fuel-types', 'App\Http\Controllers\FuelTypesController', ['except' => ['create', 'edit']]);
@@ -60,8 +61,10 @@ Route::resource('attendances', 'App\Http\Controllers\AttendancesController', ['e
 Route::resource('leave-types', 'App\Http\Controllers\LeaveTypesController', ['except' => ['create', 'edit']]);
 Route::resource('leave-configs', 'App\Http\Controllers\LeaveConfigsController', ['except' => ['create', 'edit']]);
 Route::resource('leaves', 'App\Http\Controllers\LeavesController', ['except' => ['create', 'edit']]);
+
 // Transport APIs
-Route::resource('transports', 'App\Http\Controllers\TransportsController', ['except' => ['create', 'edit']]);
+Route::apiResource('trips', 'App\Http\Controllers\TransportsController', ['names'=>'api/trips'], ['except' => ['create', 'edit']]);
+
 Route::resource('mileages', 'App\Http\Controllers\MileagesController', ['except' => ['create', 'edit']]);
 
 Route::get('reports',[ReportController::class,'index']);
@@ -71,7 +74,5 @@ Route::resource('role-users', 'App\Http\Controllers\RoleUsersController', ['exce
 
 // Route::apiResource('posts',PostController::class);
 // Route::apiResource('comments',CommentController::class);
-
-
-Route::apiResource('users',TestController::class);
+// Route::apiResource('users',TestController::class);
 

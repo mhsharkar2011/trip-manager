@@ -17,12 +17,9 @@ class VehicleTypesController extends Controller
      */
     public function index(Request $request)
     {
+        $vehicleTypes = VehicleType::with('vehicles')->latest()->get();
         
-        $items_per_page = request('items_per_page', self::ITEMS_PER_PAGE);
-
-        $vehicleTypes = VehicleType::with('vehicles')->latest()->paginate($items_per_page);
-        
-        return view('pages.vehicleTypes',['vehicleTypes'=>$vehicleTypes]);
+        return view('vehicles.vehicle-type',['vehicleTypes'=>$vehicleTypes])->with('id');
         // return $this->respond($vehicletypes);
     }
 
@@ -35,19 +32,26 @@ class VehicleTypesController extends Controller
      */
     public function store(Request $request)
     {
-        $validation = Validator::make(
-            $request->all(), 
-            VehicleType::validation_rules(),
-            VehicleType::validation_messages(),
-        );
+        // $validation = Validator::make(
+        //     $request->all(), 
+        //     VehicleType::validation_rules(),
+        //     VehicleType::validation_messages(),
+        // );
 
-        if ($validation->fails()) {
-            return $this->respondValidationError($validation->errors());
-        }   
+        // if ($validation->fails()) {
+        //     return $this->respondValidationError($validation->errors());
+        // }   
 
-        $vehicleType = VehicleType::create($request->all());
+        $input = $request->all();
 
-        return $this->respondCreated($vehicleType);
+        $vehicleType = VehicleType::create($input);
+
+        if( request()->is('api/*')){
+            return $this->respondCreated($vehicleType);
+        }else{
+            return back()->with('status','Data inserted successfully');
+        }
+        
     }
 
     /**

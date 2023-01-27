@@ -9,6 +9,7 @@ use App\Http\Controllers\TransportsController;
 use App\Http\Controllers\VehiclesController;
 use App\Http\Controllers\VehicleTypesController;
 use App\Http\Controllers\Web\TestController;
+use Arcanedev\Support\Database\PrefixedModel;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,24 +26,21 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-//     return view('dashboard');
-// })->name('dashboard');
-
-
-Route::get('drivers',[DriverController::class,'index']);
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+    return view('dashboard');
+})->name('dashboard');
 
 Route::resource('vehicles',VehiclesController::class);
+Route::resource('vehicle-types',VehicleTypesController::class);
 
-Route::get('vehicle-types',[VehicleTypesController::class,'index']);
-Route::get('index',[DriverController::class,'index']);
-
-Route::resource('posts',PostController::class);
-Route::resource('comments',CommentController::class);
-//  Route::get('posts',[PostController::class,'index'])->name('posts.index');
-//  Route::get('posts',[PostController::class,'create'])->name('posts.create');
-//  Route::post('posts',[PostController::class,'store'])->name('posts.store');
-//  Route::get('posts/{id}',[PostController::class,'show'])->name('posts.show');
+Route::resource('trips',TransportsController::class);
 
 
-Route::resource('users', TestController::class);
+
+
+
+
+// Route::resource('users', TestController::class);
+
+// Route::resource('posts',PostController::class);
+// Route::resource('comments',CommentController::class);

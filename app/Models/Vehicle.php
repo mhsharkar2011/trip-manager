@@ -40,6 +40,7 @@ class Vehicle extends baseModel
             'model'=>'required|max:20',
             'tank_capacity'=>'required',
             'license_no'=>'required',
+            'vehicle_type_id'=>'required',
         ];
     }
 
@@ -76,7 +77,7 @@ class Vehicle extends baseModel
 
     public function user()
     {
-        return $this->belongsTo(User::class,'user_id');
+        return $this->belongsTo(User::class,'owner_id');
     }
 
     public function userVehicles()

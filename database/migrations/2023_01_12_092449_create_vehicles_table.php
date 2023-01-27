@@ -17,11 +17,11 @@ class CreateVehiclesTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('owner_id')->nullable();
             $table->unsignedInteger('vehicle_type_id')->nullable();
-            $table->string('sl_no')->unique();
+            $table->string('sl_no');
             $table->string('name');
-            $table->string('model')->unique();
-            $table->integer('tank_capacity')->nullable();
-            $table->string('license_no')->unique();
+            $table->string('model');
+            $table->string('tank_capacity')->nullable();
+            $table->string('license_no');
             $table->timestamps();
             $table->foreign('vehicle_type_id')->references('id')->on('vehicle_types')->onDelete('cascade')->onUpdate('cascade');
             });

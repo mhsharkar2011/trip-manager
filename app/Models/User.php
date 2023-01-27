@@ -90,7 +90,7 @@ class User extends Authenticatable
 
     public function vehicle()
     {
-        return $this->belongsTo(Vehicle::class,'owner_id');
+        return $this->belongsTo(Vehicle::class);
     }
     
 }

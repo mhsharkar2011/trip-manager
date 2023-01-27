@@ -1,13 +1,13 @@
-{{-- @extends('layouts.app')
+@extends('layouts.app')
    
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8 mt-5">
             <div class="card">
-                <div class="card-header bg-success text-white">Add Vehicle</div>
+                <div class="card-header bg-success text-white">Add Trips</div>
                 <div class="card-body">
-                    <form method="post" action="{{ route('vehicles.store') }}">
+                    <form method="post" action="{{ route('trips.store') }}">
                         @csrf
                         <div class="form-group">
                             <label class="label">SL No. </label>
@@ -44,4 +44,4 @@
         </div>
     </div>
 </div>
-@endsection   --}}
+@endsection  

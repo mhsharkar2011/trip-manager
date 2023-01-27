@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use App\Models\User;
 use App\Models\Vehicle;
+use App\Models\VehicleType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Sanctum\Sanctum;
+
+use function PHPUnit\Framework\returnSelf;
 
 class VehiclesController extends Controller
 {
@@ -19,6 +22,8 @@ class VehiclesController extends Controller
      */
     public function index(Request $request)
     {
+        $vTypes = VehicleType::all();
+
         $vehicles = Vehicle::query();
         
         if ($with = request('with')) { //load relationships
@@ -34,11 +39,11 @@ class VehiclesController extends Controller
         }          
         
         $vehicles = $vehicles->paginateWrap(
-            request('items_per_page', self::ITEMS_PER_PAGE), 
+            request('columns', self::ITEMS_PER_PAGE),
             request('page', 1)
         );
 
-        return view('vehicles.index',['vehicles'=>$vehicles]);
+        return view('vehicles.index',['vehicles'=>$vehicles,'vTypes'=>$vTypes])->with('id',(request()->input('page', 1) - 1) * self::ITEMS_PER_PAGE);
         // return $this->respond($vehicles);
     }
 
@@ -47,10 +52,10 @@ class VehiclesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        return view('vehicles.create');
-    }
+    // public function create(Request $request)
+    // {
+    //     return view('vehicles.create');
+    // }
 
     /**
      * Store a newly created resource in storage.
@@ -60,7 +65,10 @@ class VehiclesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {   
+        // $vehicle_type_id = Vehicle::with('vehicleType')->where('id',2)->get();
+        // return $vehicle_type_id;
+
         $validation = Validator::make(
             $request->all(), 
             Vehicle::validation_rules(),
@@ -70,11 +78,22 @@ class VehiclesController extends Controller
         if ($validation->fails()) {
             return $this->respondValidationError($validation->errors());
         }   
+        // dd(auth()->user()->id);
+            $input = $request->all();
+            // dd($input);
+            $input['owner_id']= auth()->user()->id;
+            $vehicle = Vehicle::create($input);
 
-        $vehicle = Vehicle::create($request->all());
+            // return Vehicle::with('vehicleType')->get();
 
-        // return $this->respondCreated($vehicle);
-        return view('vehicles.index');
+        // Toastr::success('Data successfully saved:)','Success');
+
+        if( request()->is('api/*')){
+            return $this->respond($vehicle);
+        }else{
+            return back()->with('status','Data inserted successfully');
+        }
+
     }
 
     /**
