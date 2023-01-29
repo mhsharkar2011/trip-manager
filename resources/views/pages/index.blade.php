@@ -1,62 +1,28 @@
 @extends('layouts.app')
 
-@section('title','Vehicles')
+@section('title','User | Registration')
 
 @section('content')
-@php
-    static $id = 1;
-@endphp
-
-<table class="table table-dark table-striped table-bordered table-hover table-sm m-12">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Driver Name</th>
-            <th>Created At</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach ($users as $user )
-        <tr>
-            <td>{{ $id++ }}</td>
-            <td>
-                {{ $user->first_name}}
-            </td>
-            <td>{{ $user->created_at }}</td>
-               
-            </tr>
-            <tr>
-                <td>
-                    <table class="table table-dark table-striped table-bordered table-hover table-sm m-12">
-                        @foreach ($user->vehicles as $vehicle )
-                            <tr>
-                                <td>
-                                    {{ $vehicle->name}}
-                                </td>
-                                <td>
-                                    {{ $vehicle->model}}
-                                </td>
-                                <td>
-                                    {{ $vehicle->tank_capacity}}
-                                </td>
-                                <td>
-                                    {{ $vehicle->license_no}}
-                                </td>
-                                <td>
-                                    @foreach ($vehicle->mileages as $mileage )
-                                            {{ $mileage->total_mileage }}
-                                    @endforeach
-                                </td>
-                                <td>
-                                    {{ $vehicle->created_at}}
-                                </td>
-                            </tr>
-                        @endforeach
-                    </table>
-                </td>
-            </tr>
-            @endforeach
-    </tbody>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8 mt-5" id="fuel-list">
+            <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0">
+                @if (Route::has('login'))
+                    <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
+                        @auth
+                            <a href="{{ route('dashboard') }}" class="text-sm text-gray-700 underline">Dashboard</a>
+                        @else
+                            <a href="{{ route('login') }}" class="text-sm text-gray-700 underline">Login</a>
     
-</table>
+                            @if (Route::has('register'))
+                                <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 underline">Register</a>
+                            @endif
+                        @endif
+                    </div>
+                @endif
+            </div>
+        </div>
+    </div>
+</div>
+
 @endsection

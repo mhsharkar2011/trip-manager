@@ -84,5 +84,15 @@ class AuthController extends Controller
         return response()->json(["msg" => "Password has been successfully changed"]);
     }
 
+    public function create()
+    {
+        return view('auth.register');
+    }
+
+    public function register()
+    {
+        return "Hello";
+    }
+
 
 }

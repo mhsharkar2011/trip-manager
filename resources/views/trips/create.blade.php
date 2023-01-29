@@ -1,38 +1,59 @@
-@extends('layouts.app')
+{{-- @extends('layouts.app')
+
+@section('title','Trips | Form')
    
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8 mt-5">
             <div class="card">
-                <div class="card-header bg-success text-white">Add Trips</div>
+                <div class="card-header bg-success text-white">
+                    <a class="btn btn-success" href="">Trips Form</a>
+                    <a style="float: right" class="btn btn-success text-right" href="{{ asset('trips') }}">Trips List</a>
+                </div>
                 <div class="card-body">
                     <form method="post" action="{{ route('trips.store') }}">
                         @csrf
-                        <div class="form-group">
-                            <label class="label">SL No. </label>
-                            <input type="text" name="sl_no" class="form-control" placeholder="Enter Vehicle SL Numnber" />
+                        <div class="form-group">Driver Name
+                            <select class="form-select" name="user_id">
+                                <option value="">Select Driver</option>
+                                @foreach ($users as $user)
+                                    <option value="{{ $user->id }}" >
+                                        {{ $user->full_name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <br>
+                        <div class="form-group">Vehicle Name
+                            <select class="form-select" name="vehicle_id">
+                                <option value="">Select Vehicle</option>
+                                @foreach ($vehicles as $vehicle)
+                                    <option value="{{ $vehicle->id }}" >
+                                        {{ $vehicle->name }}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
                         <br>
                         <div class="form-group">
-                            <label class="label">Vehicle Name: </label>
-                            <input type="text" name="name" class="form-control" placeholder="Enter Vehicle Name" />
+                            <label class="label">From Area: </label>
+                            <input type="textarea" row="5" name="from_area" class="form-control" />
                         </div>
                         <br>
                         <div class="form-group">
-                            <label class="label">Model: </label>
-                            <input type="text" name="model" class="form-control" placeholder="Enter Model Number" />
+                            <label class="label">To Area: </label>
+                            <input type="textarea" row="5" name="to_area" class="form-control" />
                         </div>
                         <br>
                         <div class="form-group">
-                            <label class="label">Tank Capacity: </label>
-                            <input type="text" name="tank_capacity" class="form-control" placeholder="Enter Tank Capacity" />
+                            <label class="label">Mileages</label>
+                            <input type="number" name="mileages" class="form-control" />
                         </div>
                         <br>
                         <div class="form-group">
-                            <label class="label">License No. </label>
-                            <input type="text" name="license_no" class="form-control" placeholder="Enter License Number" />
-                            {{ $input }}
+                            <label class="label">Rate</label>
+                            <input type="number" name="rate" class="form-control" />
                         </div>
                         <br>
                         <div class="form-group text-center">
@@ -44,4 +65,4 @@
         </div>
     </div>
 </div>
-@endsection  
+@endsection   --}}

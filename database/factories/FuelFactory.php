@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Fuel;
+use DateTime;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -23,6 +24,7 @@ class FuelFactory extends Factory
     public function definition()
     {
         return [
+            'refueling'=>now(),
             'volume'=>rand(100,10000),
             'cost'=>rand(100,10000),
             'gas_station'=>Str::random(16),

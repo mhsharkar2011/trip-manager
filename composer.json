@@ -17,6 +17,7 @@
         "infureal/artisan-gui": "^2.0",
         "intervention/image": "^2.5",
         "laravel/framework": "^8.0",
+        "laravel/helpers": "^1.6",
         "laravel/jetstream": "^1.2",
         "laravel/sanctum": "^2.6",
         "laravel/socialite": "^5.2",

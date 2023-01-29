@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 
 use App\Models\Fuel;
+use App\Models\FuelType;
+use App\Models\Vehicle;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -17,6 +19,9 @@ class FuelsController extends Controller
      */
     public function index(Request $request)
     {
+        $vehicles = Vehicle::select('id','name')->get();
+        $fuelTypes = FuelType::select('id','name')->get();
+
         $fuels = Fuel::query();
 
         if ($with = request('with')) { //load relationships
@@ -36,7 +41,15 @@ class FuelsController extends Controller
             request('page', 1)
         );
 
-        return $this->respond($fuels);
+        // return $this->respond($fuels);
+
+        if( request()->is('api/*')){
+            //an api call
+            return $this->respond($fuels);
+        }else{
+            //a web call
+            return view('fuels.index',['fuels'=>$fuels,'vehicles'=>$vehicles,'fuelTypes'=>$fuelTypes])->with('id',(request()->input('page', 1) - 1) * self::ITEMS_PER_PAGE);
+        }
     }
 
     /**
@@ -48,6 +61,8 @@ class FuelsController extends Controller
      */
     public function store(Request $request)
     {
+        
+
         $validation = Validator::make(
             $request->all(), 
             Fuel::validation_rules(),
@@ -58,9 +73,20 @@ class FuelsController extends Controller
             return $this->respondValidationError($validation->errors());
         }   
 
-        $fuel = Fuel::create($request->all());
+        $input = $request->all();
+        $input['user_id'] = auth()->user()->id;
+        $fuel = Fuel::create($input);
+        
 
-        return $this->respondCreated($fuel);
+        
+        
+        if( request()->is('api/*')){
+            //an api call
+            return $this->respondCreated($fuel);
+        }else{
+            //a web call
+            return back()->with('status','Fuel Loaded');
+        }
     }
 
     /**

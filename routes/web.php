@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DriverController;
+use App\Http\Controllers\FuelTypesController;
+use App\Http\Controllers\PasswordRecoveryController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SocialiteController;
@@ -26,12 +29,21 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('create',[AuthController::class,'create'])->name('auth.create');
+Route::post('register',[AuthController::class,'register'])->name('auth.register');
+
+
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
 
 Route::resource('vehicles',VehiclesController::class);
 Route::resource('vehicle-types',VehicleTypesController::class);
+
+
+Route::resource('fuel-types', FuelTypesController::class);
+Route::resource('fuels', 'App\Http\Controllers\FuelsController', ['except' => ['create', 'edit']]);
+
 
 Route::resource('trips',TransportsController::class);
 

@@ -1,39 +1,41 @@
 @extends('layouts.app')
 
-@section('title','Vehicle Types')
+@section('title','Fuel Types')
 
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8 mt-5">
             <div class="card">
-                <div class="card-header bg-success text-white">Vehicle Type List</div>
+                <div class="card-header bg-success text-white">Fuel Type List</div>
                 <div class="card-body">
                     <table class="table table-striped table-bordered table-hover table-sm m-12">
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Vehicle Type Name</th>
+                                <th>Fuel Type Name</th>
                                 <th>Created At</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($vehicleTypes as $vType )
+                            @foreach ($fuelTypes as $fType )
                             <tr>
                                 <td>
                                    {{ ++$id}}
                                 </td>
                                 <td>
-                                    {{ $vType->title }}
+                                    {{ $fType->name }}
                                 </td>
                                 <td>
-                                    {{ $vType->created_at }}
+                                    {{ $fType->created_at }}
                                 </td>
                                 </tr>
                                 @endforeach
                         </tbody>
-    
                     </table>
+                    <div class="pagination justify-content-center">
+                        {{ $fuelTypes->links() }}
+                    </div>
                 </div>
             </div>
         </div>
@@ -41,7 +43,7 @@
         {{-- Vehicle Insert --}}
         <div class="col-md-4 mt-5">
             <div class="card">
-                <div class="card-header bg-success text-white">Add Vehicle Type</div>
+                <div class="card-header bg-success text-white">Add Fuel Type</div>
                 <div class="card-body">
                     @if (session('status'))
                         <div class="alert alert-success">
@@ -49,11 +51,11 @@
                         </div>
                     @endif
 
-                    <form method="post" action="{{ route('vehicle-types.store') }}">
+                    <form method="post" action="{{ route('fuel-types.store') }}">
                         @csrf
                         <div class="form-group">
-                            <label class="label">Vehicle Type: </label>
-                            <input type="text" name="title" class="form-control" placeholder="Enter Vehicle Type" />
+                            <label class="label">Fuel Type: </label>
+                            <input type="text" name="name" class="form-control" placeholder="Enter Fuel Type" />
                         </div>
                         <br>
 

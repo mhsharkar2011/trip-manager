@@ -32,15 +32,15 @@ class VehicleTypesController extends Controller
      */
     public function store(Request $request)
     {
-        // $validation = Validator::make(
-        //     $request->all(), 
-        //     VehicleType::validation_rules(),
-        //     VehicleType::validation_messages(),
-        // );
+        $validation = Validator::make(
+            $request->all(), 
+            VehicleType::validation_rules(),
+            VehicleType::validation_messages(),
+        );
 
-        // if ($validation->fails()) {
-        //     return $this->respondValidationError($validation->errors());
-        // }   
+        if ($validation->fails()) {
+            return $this->respondValidationError($validation->errors());
+        }   
 
         $input = $request->all();
 

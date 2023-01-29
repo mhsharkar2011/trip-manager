@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 
 use App\Models\Transport;
+use App\Models\User;
+use App\Models\Vehicle;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
@@ -19,6 +21,9 @@ class TransportsController extends Controller
      */
     public function index(Request $request,$format = 'view')
     {
+        $users = User::all();
+        $vehicles = Vehicle::all();
+
         $transports = Transport::query();
 
         if ($with = request('with')) { //load relationships
@@ -43,8 +48,21 @@ class TransportsController extends Controller
             return $this->respond($transports);
         }else{
             //a web call
-            return view('trips.index',['trips'=>$transports]);
+            return view('trips.index',['trips'=>$transports,'users'=>$users,'vehicles'=>$vehicles])->with('id',(request()->input('page', 1) - 1) * self::ITEMS_PER_PAGE);
         }
+    }
+
+        /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create(Request $request)
+    {
+        $users = User::all();
+        $vehicles = Vehicle::all();
+
+        return view('trips.create',['users'=>$users,'vehicles'=>$vehicles]);
     }
 
     /**
@@ -66,11 +84,13 @@ class TransportsController extends Controller
             return $this->respondValidationError($validation->errors());
         }   
 
-        $transport = Transport::create($request->all());
+        $input = $request->all();
+    
+        $transport = Transport::create($input);
 
         // return $this->respondCreated($transport);
 
-        return view('trips.create')->with('status','Trip created successfully');
+        return back()->with('status','Trip created successfully');
     }
 
     /**

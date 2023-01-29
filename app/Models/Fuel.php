@@ -38,9 +38,11 @@ class Fuel extends baseModel
 
     protected static function validation_rules() {
         return [
-            'fuel_type_id'=>'required',
-            'start_fuel'=>'required',
-            'end_fuel'=>'required'
+            // 'fuel_type_id'=>'required',
+            'refueling'=>'required',
+            'volume'=>'required',
+            'cost'=>'required',
+            'gas_station'=>'required'
         ];
     }
 

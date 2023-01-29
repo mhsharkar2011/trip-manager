@@ -33,12 +33,24 @@ class FuelTypesController extends Controller
         
         $fuelTypes = $fuelTypes->paginateWrap(
             request('items_per_page', self::ITEMS_PER_PAGE), 
-            request('page', 1)
+            request('page',1)
         );
 
-        return $this->respond($fuelTypes);
+        
+        if( request()->is('api/*')){
+            //an api call
+            return $this->respond($fuelTypes);
+        }else{
+            //a web call
+            return view('fuels.fuel-types',['fuelTypes'=>$fuelTypes])->with('id',(request()->input('page',1)-1) * self::ITEMS_PER_PAGE);
+        }
+
     }
 
+    public function create()
+    {
+        return view('fuels.fuel-types');
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -58,9 +70,17 @@ class FuelTypesController extends Controller
             return $this->respondValidationError($validation->errors());
         }   
 
-        $fueltype = FuelType::create($request->all());
+        $fuelType = FuelType::create($request->all());
 
-        return $this->respondCreated($fueltype);
+        // return $this->respondCreated($fueltype);
+
+        if( request()->is('api/*')){
+            //an api call
+            return $this->respond($fuelType);
+        }else{
+            //a web call
+            return back()->with('status','Fuel Type added successfully');
+        }
     }
 
     /**
