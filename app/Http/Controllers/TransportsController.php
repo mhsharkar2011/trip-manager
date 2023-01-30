@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests;
-
+use App\Models\Mileage;
 use App\Models\Transport;
 use App\Models\User;
 use App\Models\Vehicle;
@@ -73,8 +73,9 @@ class TransportsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,Transport $trips, Mileage $mileage)
     {
+
         $validation = Validator::make(
             $request->all(), 
             Transport::validation_rules(),
@@ -88,7 +89,12 @@ class TransportsController extends Controller
         $input = $request->all();
         $transport = Transport::create($input);
 
-        // return $this->respondCreated($transport);
+        $mileage = new Mileage();
+
+        $mileage->vehicle_id = $transport->vehicle_id;
+        $mileage->total_mileage = $transport->mileages;
+
+        $transport->mileages()->save($mileage);
 
         return back()->with('status','Trip created successfully');
     }

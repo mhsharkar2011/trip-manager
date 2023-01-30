@@ -17,6 +17,7 @@
                                 <th>Owner Name</th>
                                 <th> Vehicle Name</th>
                                 <th>Model</th>
+                                <th>ODO Meter</th>
                                 <th>Tank Capacity</th>
                                 <th>Created At</th>
                             </tr>
@@ -42,6 +43,13 @@
                                 </td>
                                 <td>
                                     {{ $vehicle->model}}
+                                </td>
+                                <td>
+                                    @if ($vehicle->mileage == Null)
+                                       {{ 'data not found' }}
+                                       @else
+                                       {{ $vehicle->mileage->total_mileage }}
+                                   @endif
                                 </td>
                                 <td>
                                     {{ $vehicle->tank_capacity}}
@@ -90,8 +98,13 @@
                         </div>
                         <br>
                         <div class="form-group">
+                            <label class="label">Total Mileages: </label>
+                            <input type="number" name="total_mileage" class="form-control" placeholder="Enter Total Odo" />
+                        </div>
+                        <br>
+                        <div class="form-group">
                             <label class="label">Tank Capacity: </label>
-                            <input type="text" name="tank_capacity" class="form-control" placeholder="Enter Tank Capacity" />
+                            <input type="number" name="tank_capacity" class="form-control" placeholder="Enter Tank Capacity" />
                         </div>
                         <br>
                         <div class="form-group">

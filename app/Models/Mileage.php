@@ -58,5 +58,10 @@ class Mileage extends baseModel
     {
         return $this->belongsTo(Vehicle::class,'vehicle_id');
     }
+
+    public function trips()
+    {
+        return $this->hasMany(Transport::class,'vehicle_id','vehicle_id');
+    }
     
 }

@@ -65,7 +65,7 @@ Route::resource('leaves', 'App\Http\Controllers\LeavesController', ['except' => 
 // Transport APIs
 Route::apiResource('trips', 'App\Http\Controllers\TransportsController', ['names'=>'api/trips'], ['except' => ['create', 'edit']]);
 
-Route::resource('mileages', 'App\Http\Controllers\MileagesController', ['except' => ['create', 'edit']]);
+Route::apiResource('mileages', 'App\Http\Controllers\MileagesController',['names'=>'api/mileages'], ['except' => ['create', 'edit']]);
 
 Route::get('reports',[ReportController::class,'index']);
 Route::resource('roles', 'App\Http\Controllers\RolesController', ['except' => ['create', 'edit']]);

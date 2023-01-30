@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests;
+use App\Models\Mileage;
 use App\Models\User;
 use App\Models\Vehicle;
 use App\Models\VehicleType;
@@ -84,9 +85,12 @@ class VehiclesController extends Controller
 
             $vehicle = Vehicle::create($input);
 
-            // return Vehicle::with('vehicleType')->get();
+            $mileage = new Mileage();
+            $mileage->vehicle_id = $vehicle->id;
+            $mileage->total_mileage = $request->total_mileage;
 
-        // Toastr::success('Data successfully saved:)','Success');
+
+            $vehicle->mileage()->save($mileage);
 
         if( request()->is('api/*')){
             return $this->respond($vehicle);

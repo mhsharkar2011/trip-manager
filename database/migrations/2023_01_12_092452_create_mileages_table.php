@@ -14,10 +14,12 @@ class CreateMileagesTable extends Migration
     public function up()
     {
         Schema::create('mileages', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('vehicle_id')->nullable();
+            $table->id();
+            $table->unsignedInteger('vehicle_id')->nullable();
             $table->integer('total_mileage')->nullable();
+            $table->foreign('vehicle_id')->references('id')->on('vehicles')->cascadeOnDelete();
             $table->timestamps();
+            // $table->foreignId('vehicle_id')->references('id')->on('vehicles')->cascadeOnDelete()
             });
     }
 

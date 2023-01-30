@@ -39,7 +39,7 @@
                                 </td>
 
                                 <td>
-                                    {{$trip->vehicles->name}}
+                                    {{$trip->vehicle->name}}
                                 </td>
 
                                 <td>
