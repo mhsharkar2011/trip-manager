@@ -27,6 +27,7 @@ class VehicleFactory extends Factory
         static $model = "m";
         static $license_no = "dha-";
                 return [
+                    'owner_id'=>1,
                     'sl_no' => $sl_no."-".rand(6,10000),
                     'name' => $this->faker->name,
                     'model' => $model."-".Str::random(4),

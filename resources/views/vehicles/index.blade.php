@@ -31,7 +31,11 @@
                                     {{ $vehicle->sl_no}}
                                 </td>
                                 <td>
-                                    {{ $vehicle->user->full_name }}
+                                   @if ($vehicle->user == Null)
+                                       {{ 'data not found' }}
+                                       @else
+                                       {{ $vehicle->user->full_name }}
+                                   @endif
                                 </td>
                                 <td>
                                     {{ $vehicle->name}}

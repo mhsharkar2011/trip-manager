@@ -10,6 +10,7 @@ use App\Models\Vehicle;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class TransportsController extends Controller
@@ -85,7 +86,6 @@ class TransportsController extends Controller
         }   
 
         $input = $request->all();
-    
         $transport = Transport::create($input);
 
         // return $this->respondCreated($transport);

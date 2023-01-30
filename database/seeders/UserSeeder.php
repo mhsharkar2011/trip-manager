@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\Vehicle;
 use Illuminate\Database\Seeder;
 
 class UserSeeder extends Seeder
@@ -14,6 +15,8 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        User::factory(5)->create();
+        User::factory(5)->has(
+            Vehicle::factory(1)
+        )->create();
     }
 }

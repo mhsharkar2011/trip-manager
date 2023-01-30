@@ -29,8 +29,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('create',[AuthController::class,'create'])->name('auth.create');
-Route::post('register',[AuthController::class,'register'])->name('auth.register');
+// Route::get('create',[AuthController::class,'create'])->name('auth.create');
+// Route::post('register',[AuthController::class,'register'])->name('auth.register');
 
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {

@@ -8,6 +8,7 @@ use App\Models\Vehicle;
 use App\Models\VehicleType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Sanctum\Sanctum;
 
@@ -22,6 +23,7 @@ class VehiclesController extends Controller
      */
     public function index(Request $request)
     {
+
         $vTypes = VehicleType::all();
 
         $vehicles = Vehicle::query();
@@ -52,13 +54,13 @@ class VehiclesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    // public function create(Request $request)
-    // {
-    //     return view('vehicles.create');
-    // }
+    public function create(Request $request)
+    {
+        return view('vehicles.create');
+    }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created resource in storage.   
      *
      * @param \Illuminate\Http\Request $request
      *
@@ -66,8 +68,6 @@ class VehiclesController extends Controller
      */
     public function store(Request $request)
     {   
-        // $vehicle_type_id = Vehicle::with('vehicleType')->where('id',2)->get();
-        // return $vehicle_type_id;
 
         $validation = Validator::make(
             $request->all(), 
@@ -78,10 +78,10 @@ class VehiclesController extends Controller
         if ($validation->fails()) {
             return $this->respondValidationError($validation->errors());
         }   
-        // dd(auth()->user()->id);
             $input = $request->all();
-            // dd($input);
-            $input['owner_id']= auth()->user()->id;
+
+            $input['owner_id'] = auth()->user()->id;
+
             $vehicle = Vehicle::create($input);
 
             // return Vehicle::with('vehicleType')->get();
