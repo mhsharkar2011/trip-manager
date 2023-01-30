@@ -55,7 +55,7 @@ class BrokerEventListener extends Command
 
         $callback = function ($msg) {
             echo 'received event from broker' . PHP_EOL;
-            logger('received event from broker: ' . $msg->delivery_info['routing_key'], (array)$msg->body);
+            logger('received event from broker: ' . $msg->delivery_info['routing_key'], $msg->body);
             $msg->ack();
         };
 
