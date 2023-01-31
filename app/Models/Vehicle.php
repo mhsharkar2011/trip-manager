@@ -68,9 +68,9 @@ class Vehicle extends baseModel
     
 
     // Mileages
-    public function mileages()
+    public function mileage()
     {
-        return $this->hasMany(Mileage::class);
+        return $this->hasOne(Mileage::class,'vehicle_id');
     }
 
     // Users

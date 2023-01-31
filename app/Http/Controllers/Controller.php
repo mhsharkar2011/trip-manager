@@ -18,7 +18,7 @@ class Controller extends BaseController
     const ERROR_CODE_INVALID_CRDENTIALS = 'INVALID_CRDENTIALS';
     const ERROR_CODE_VALIDATION_FAILED = 'VALIDATION_FAILED';
 
-    const ITEMS_PER_PAGE = 10;
+    const ITEMS_PER_PAGE = 50;
 
     protected function statusCode($code)
     {

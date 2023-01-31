@@ -35,7 +35,7 @@
                                 
                                 
                                 <td>
-                                    {{ $trip->users->full_name }}
+                                    {{ $trip->user->full_name }}
                                 </td>
 
                                 <td>

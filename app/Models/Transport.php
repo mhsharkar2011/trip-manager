@@ -52,7 +52,7 @@ class Transport extends baseModel
         return self::validation_messages();
     }           
 
-    public function users()
+    public function user()
     {
         return $this->belongsTo(User::class,'user_id');
     }
@@ -62,9 +62,10 @@ class Transport extends baseModel
         return $this->belongsTo(Vehicle::class,'vehicle_id');
     }
 
-    public function mileages()
+    // Mileages
+    public function mileage()
     {
-        return $this->hasMany(Mileage::class,'vehicle_id');
+        return $this->belongsTo(Mileage::class,'vehicle_id');
     }
 
 

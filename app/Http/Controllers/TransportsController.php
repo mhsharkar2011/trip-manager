@@ -20,7 +20,7 @@ class TransportsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request,$format = 'view')
+    public function index(Request $request, $format = 'view')
     {
         $users = User::all();
         $vehicles = Vehicle::all();
@@ -44,6 +44,7 @@ class TransportsController extends Controller
             request('page', 1)
         );
 
+
         if( request()->is('api/*')){
             //an api call
             return $this->respond($transports);
@@ -60,10 +61,7 @@ class TransportsController extends Controller
      */
     public function create(Request $request)
     {
-        $users = User::all();
-        $vehicles = Vehicle::all();
-
-        return view('trips.create',['users'=>$users,'vehicles'=>$vehicles]);
+        return view('trips.create');
     }
 
     /**
@@ -73,7 +71,7 @@ class TransportsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,Transport $trips, Mileage $mileage)
+    public function store(Request $request)
     {
 
         $validation = Validator::make(
@@ -88,13 +86,18 @@ class TransportsController extends Controller
 
         $input = $request->all();
         $transport = Transport::create($input);
-
-        $mileage = new Mileage();
-
-        $mileage->vehicle_id = $transport->vehicle_id;
-        $mileage->total_mileage = $transport->mileages;
-
-        $transport->mileages()->save($mileage);
+        
+        $vehicle_id = $transport->vehicle_id;
+        $tripsMileage = $request->mileages; 
+        
+        // $totalMileage = Transport::where('vehicle_id',$vehicle_id)->where('mileages',$tripsMileage)->pluck('mileages');
+        
+        $mileage = Mileage::where('vehicle_id',$vehicle_id)->get();
+        // $mileage->total_mileage = $mileage->vehicle->id;
+        return $mileage;
+        
+        // dd($totalMileage);
+        
 
         return back()->with('status','Trip created successfully');
     }
@@ -108,6 +111,8 @@ class TransportsController extends Controller
      */
     public function show(Transport $transport)
     {
+        return $transport->find($transport);
+
         return $this->respond($transport);
     }
 

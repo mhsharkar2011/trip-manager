@@ -79,18 +79,18 @@ class VehiclesController extends Controller
         if ($validation->fails()) {
             return $this->respondValidationError($validation->errors());
         }   
-            $input = $request->all();
 
-            $input['owner_id'] = auth()->user()->id;
+        $input = $request->all();
+        $input['owner_id'] = auth()->user()->id;
+        $vehicle = Vehicle::create($input);
 
-            $vehicle = Vehicle::create($input);
+        $mileage = new Mileage();
+        $mileage->vehicle_id = $vehicle->id;
+        $mileage->total_mileage = $request->total_mileage;
 
-            $mileage = new Mileage();
-            $mileage->vehicle_id = $vehicle->id;
-            $mileage->total_mileage = $request->total_mileage;
-
-
-            $vehicle->mileage()->save($mileage);
+        $odoMileage = $mileage->total_mileage;
+        $mileage->total_mileage = $odoMileage;
+        $vehicle->mileage()->save($mileage);
 
         if( request()->is('api/*')){
             return $this->respond($vehicle);
@@ -109,6 +109,7 @@ class VehiclesController extends Controller
      */
     public function show(Vehicle $vehicle)
     {
+        $vehicle = $vehicle->with('mileage')->find($vehicle);
         return $this->respond($vehicle);
     }
 
