@@ -21,7 +21,7 @@ use App\Http\Controllers\UserProfileController;
 Route::prefix('v1')->group(function () {
     Route::post('register',[AuthController::class, 'store']);
     Route::post('login',[AuthController::class, 'login']);
-    
+
     Route::get('forgot-password', [PasswordRecoveryController::class, 'send_recovery_email']);
     Route::post('forgot-password', [PasswordRecoveryController::class, 'update_password']);
     // Route::post('change/password/{user}', [PasswordRecoveryController::class,'changePassword']);
@@ -30,15 +30,19 @@ Route::prefix('v1')->group(function () {
 
 Route::prefix('v1')
 ->middleware([
-    'auth:sanctum'     
+    'auth:sanctum'
 ])
 ->group(function () { //auth required routes will go here
+
+    // Log out route
+    Route::post('logout',[AuthController::class, 'logout']);
+
     Route::resource('users', UserController::class)->except(['edit', 'create']);
     Route::get('roles', [UserController::class, 'get_roles']);
-    
+
     Route::get('my-profile', [UserProfileController::class, 'get']);
     Route::put('my-profile', [UserProfileController::class, 'update']);
     Route::put('my-password-change', [UserProfileController::class, 'change_password']);
-    
+
     Route::resource('projects', 'App\Http\Controllers\ProjectController', ['except' => ['create', 'edit']]);
 });

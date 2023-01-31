@@ -23,9 +23,9 @@ class AuthController extends Controller
             $user->email_verified_at = now();
             $user->save();
         }
-        
+
         return $this->respond($user);
-    }    
+    }
 
     public function login()
     {
@@ -36,7 +36,7 @@ class AuthController extends Controller
         if($user && $user->email_verified_at === NULL) {
             return $this->respondForbidden('Your account is not active! Please verify your email address.');
         }
-        
+
         if($user && Hash::check(\request('password'),$user->password)) {
             $token = $user->createToken('api_token')->plainTextToken;
 
@@ -89,5 +89,11 @@ class AuthController extends Controller
         return response()->json(["msg" => "Password has been successfully changed"]);
     }
 
+    public function logout(Request $request)
+    {
+        $request->user()->currentAccessToken()->delete();
+
+        return response()->json(["msg" => "User logged out"], 200);
+    }
 
 }
