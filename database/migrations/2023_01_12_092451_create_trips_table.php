@@ -15,12 +15,13 @@ class CreateTripsTable extends Migration
     {
         Schema::create('trips', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->nullable();
-            $table->integer('vehicle_id')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->unsignedInteger('vehicle_id')->nullable();
             $table->string('from_area')->nullable();
             $table->string('to_area')->nullable();
             $table->integer('mileages')->nullable();
             $table->integer('rate')->nullable();
+            $table->foreign('vehicle_id')->references('id')->on('vehicles')->cascadeOnDelete();
             $table->timestamps();
             });
     }

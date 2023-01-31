@@ -14,7 +14,7 @@ class CreateFuelsTable extends Migration
     public function up()
     {
         Schema::create('fuels', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
             $table->unsignedBigInteger('user_id')->default(0);
             $table->unsignedInteger('vehicle_id')->nullable();
             $table->unsignedInteger('fuel_type_id')->nullable();
