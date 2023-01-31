@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Password;
 
 class AuthController extends Controller
 {
+    const LOGIN_API_TOKEN = 'login_api_token';
 
     public function store(Request $request)
     {
@@ -38,7 +39,7 @@ class AuthController extends Controller
         }
 
         if($user && Hash::check(\request('password'),$user->password)) {
-            $token = $user->createToken('api_token')->plainTextToken;
+            $token = $user->createToken(self::LOGIN_API_TOKEN)->plainTextToken;
 
             $response['companies'] = [
                 [
@@ -91,7 +92,7 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-        $request->user()->currentAccessToken()->delete();
+        $request->user()->tokens()->where('name', self::LOGIN_API_TOKEN)->delete();
 
         return response()->json(["msg" => "User logged out"], 200);
     }
