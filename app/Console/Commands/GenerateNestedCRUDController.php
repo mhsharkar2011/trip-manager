@@ -13,8 +13,8 @@ class GenerateNestedCRUDController extends Command
      */
     protected $signature = '
     project:generate-nested-crud-controller
-    {model : Enter the name of the model for the controller, e.g., Post, Project}
-    {parent_model : Enter the name of the parent model for the nesting, e.g., User, Company}
+    {model : Enter the name of the model for the controller, e.g., Project}
+    {parent_model : Enter the name of the parent model, e.g., Task}
 ';
     /**
      * The console command description.
