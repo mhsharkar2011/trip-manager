@@ -4,6 +4,7 @@ use App\Devpanel\Controllers\AttachmentController;
 use App\Devpanel\Controllers\CrudGenerateController;
 use App\Devpanel\Controllers\EntityController;
 use App\Devpanel\Controllers\EntityFieldController;
+use App\Devpanel\Controllers\TenantController;
 use App\Http\Controllers\InsuranceTypesController;
 use App\Models\InsuranceType;
 use Illuminate\Http\Request;
@@ -24,6 +25,8 @@ Route::apiResource('entities', EntityController::class);
 Route::apiResource('entities.fields', EntityFieldController::class);
 
 Route::post('entities/{entity}/crud-generate', CrudGenerateController::class);
+
+Route::resource('tenants', TenantController::class, ['except' => ['create', 'edit']]);
 
 /**
  * One endpoint used by all entities for retrieving, uploading attachments
