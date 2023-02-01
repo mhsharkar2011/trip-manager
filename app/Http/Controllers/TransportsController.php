@@ -7,6 +7,8 @@ use App\Models\Mileage;
 use App\Models\Transport;
 use App\Models\User;
 use App\Models\Vehicle;
+use Brian2694\Toastr\Facades\Toastr;
+use Exception;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
@@ -90,13 +92,15 @@ class TransportsController extends Controller
         $vehicle_id = $transport->vehicle_id;
         $tripsMileage = $request->mileages; 
         
-        // $totalMileage = Transport::where('vehicle_id',$vehicle_id)->where('mileages',$tripsMileage)->pluck('mileages');
+        $totalMileage = Transport::where('vehicle_id',$vehicle_id)->where('mileages',$tripsMileage)->pluck('mileages');
+        $total_mileage = new Mileage();
+
+        DB::table('mileages')->increment('total_mileage', $tripsMileage, ['vehicle_id' => $vehicle_id]);
+
+        // dd($transport->update([$mileages]));
+
         
-        $mileage = Mileage::where('vehicle_id',$vehicle_id)->get();
-        // $mileage->total_mileage = $mileage->vehicle->id;
-        return $mileage;
-        
-        // dd($totalMileage);
+       
         
 
         return back()->with('status','Trip created successfully');
