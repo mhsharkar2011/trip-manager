@@ -6,6 +6,8 @@ use {{ namespacedModel }};
 use {{ rootNamespace }}Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use {{ namespacedParentModel }};
+use Illuminate\Support\Facades\Validator;
+
 
 class {{ class }} extends Controller
 {
@@ -17,7 +19,11 @@ class {{ class }} extends Controller
      */
     public function index({{ parentModel }} ${{ parentModelVariable }})
     {
-        return response()->json(${{ parentModelVariable }}->{{ modelVariable }}()->latest()->simplePaginate());
+        return $this->respond(${{ parentModelVariable }}->{{ modelVariable }}()->paginateWrap(
+            $items_per_page = request('items_per_page', self::ITEMS_PER_PAGE), 
+            request('page', 1)
+        ));
+        
     }
 
     /**
@@ -29,12 +35,17 @@ class {{ class }} extends Controller
      */
     public function store(Request $request, {{ parentModel }} ${{ parentModelVariable }})
     {
-        $validated = $request->validate(
-            {{ model }}::validation_rules(),
-            {{ model }}::validation_messages(),
+        $validation = Validator::make(
+            $request->all(), 
+            {{model}}::validation_rules_for_update(),
+            {{model}}::validation_messages_for_update(),
         );
 
-        return $this->respondCreated({{ model }}::create($request->all()));
+        if ($validation->fails()) {
+            return $this->respondValidationError($validation->errors());
+        }  
+
+        return $this->respondCreated(${{ parentModelVariable }}->{{ modelVariable }}()->create($request->all()));
         //return $this->respondCreated({{ model }}::create($validated));
     }
 
@@ -60,10 +71,16 @@ class {{ class }} extends Controller
      */
     public function update(Request $request, {{ parentModel }} ${{ parentModelVariable }}, {{ model }} ${{ modelVariable }})
     {
-        $validated = $request->validate(
-            {{ model }}::validation_rules(),
-            {{ model }}::validation_messages(),
+       
+        $validation = Validator::make(
+            $request->all(), 
+            {{model}}::validation_rules_for_update(),
+            {{model}}::validation_messages_for_update(),
         );
+
+        if ($validation->fails()) {
+            return $this->respondValidationError($validation->errors());
+        }
 
         ${{ modelVariable }}->update($request->all());
         //${{ modelVariable }}->update($validated);
