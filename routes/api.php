@@ -41,4 +41,5 @@ Route::prefix('v1')
     Route::put('my-password-change', [UserProfileController::class, 'change_password']);
     
     Route::resource('projects', 'App\Http\Controllers\ProjectController', ['except' => ['create', 'edit']]);
+    Route::resource('projects.jobs', 'App\Http\Controllers\ProjectJobController', ['except' => ['create', 'edit']]);
 });

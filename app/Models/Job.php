@@ -6,7 +6,7 @@ use App\Devpanel\Models\baseModel;
 use Illuminate\Database\Eloquent\Model;
 
 
-class Project extends baseModel
+class Job extends baseModel
 {
 
     
@@ -16,7 +16,7 @@ class Project extends baseModel
      *
      * @var string
      */
-    protected $table = 'projects';
+    protected $table = 'jobs';
 
     /**
     * The database primary key value.
@@ -30,21 +30,14 @@ class Project extends baseModel
      *
      * @var array
      */
-    //protected $fillable = ['name', 'description'];
+    //protected $fillable = ['name', 'project_id'];
 
     protected $guarded = [
         'id'
     ];    
 
     protected static function validation_rules() {
-        return [
-            'name' => 'required'
-        ];
-    }
-
-    public function jobs()
-    {
-        return $this->hasMany(Job::class);
+        return [];
     }
 
     protected static function validation_messages() {
@@ -59,5 +52,9 @@ class Project extends baseModel
         return self::validation_messages();
     }           
 
+    public function project()
+    {
+        return $this->belongsTo('App\Models\project');
+    }
     
 }
