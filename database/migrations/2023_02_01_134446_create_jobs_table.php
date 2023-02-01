@@ -24,6 +24,7 @@ class CreateJobsTable extends Migration
                 $table->string('status')->default('DRAFT');
                 $table->integer('sequence')->default(0);
                 $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade')->onUpdate('cascade');
+                $table->integer('tenant_id')->unsigned();
             });
     }
 
