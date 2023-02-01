@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Devpanel\Models\Tenant;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -40,12 +41,15 @@ class AuthController extends Controller
         if($user && Hash::check(\request('password'),$user->password)) {
             $token = $user->createToken('api_token')->plainTextToken;
 
-            $response['companies'] = [
-                [
-                    "company_code"=> null,
-                    "company_name" => "ITC",
-                ]
-            ];
+            //tmp: for now returning all companies to test Multi-tenancy
+            //later we will return only companies that user belong to
+            $companies = Tenant::all()->map(function($t) {
+                return  [
+                    "company_id" => $t->id,
+                    "company_name" => $t->name,
+                ];
+            });
+            $response['companies'] = $companies;
             $response['roles'] = [];
             $response['session'] = [
                 'access_token' => $token

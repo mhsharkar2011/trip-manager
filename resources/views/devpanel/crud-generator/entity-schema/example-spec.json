@@ -5,11 +5,21 @@
             "type": "string"
         },
         {
+            "name": "tenant_id",
+            "type": "integer#unsigned"
+        },
+        {
             "name": "user_id",
             "type": "integer#unsigned"
         }
     ],
     "foreign_keys": [
+        {
+            "column": "tenant_id",
+            "references": "id",
+            "on": "tenants",
+            "onDelete": "cascade"
+        },
         {
             "column": "user_id",
             "references": "id",
