@@ -45,7 +45,7 @@ class AuthController extends Controller
             //later we will return only companies that user belong to
             $companies = Tenant::all()->map(function($t) {
                 return  [
-                    "company_id" => $t->id,
+                    "id" => $t->id,
                     "company_name" => $t->name,
                 ];
             });
