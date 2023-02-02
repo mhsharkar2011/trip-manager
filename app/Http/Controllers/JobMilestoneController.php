@@ -18,11 +18,18 @@ class JobMilestoneController extends Controller
      */
     public function index(Job $job)
     {
-        return $this->respond($job->milestones()->paginateWrap(
+        $job = $job->milestones();
+
+        if ($with = request('with')) { //load relationships
+             $job = $job->with(explode(',', $with));
+        }
+
+        $job = $job->paginateWrap(
             $items_per_page = request('items_per_page', self::ITEMS_PER_PAGE), 
             request('page', 1)
-        ));
-        
+        );
+
+        return $this->respond($job);
     }
 
     /**
