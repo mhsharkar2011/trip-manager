@@ -6,7 +6,7 @@ use App\Devpanel\Models\baseModel;
 use Illuminate\Database\Eloquent\Model;
 
 
-class Job extends baseModel
+class Milestone extends baseModel
 {
 
     
@@ -16,7 +16,7 @@ class Job extends baseModel
      *
      * @var string
      */
-    protected $table = 'jobs';
+    protected $table = 'milestones';
 
     /**
     * The database primary key value.
@@ -30,7 +30,7 @@ class Job extends baseModel
      *
      * @var array
      */
-    //protected $fillable = ['name', 'project_id'];
+    //protected $fillable = ['name', 'job_id', 'start_date', 'completion_date', 'status', 'description'];
 
     protected $guarded = [
         'id'
@@ -52,14 +52,9 @@ class Job extends baseModel
         return self::validation_messages();
     }           
 
-    public function project()
+    public function user()
     {
-        return $this->belongsTo('App\Models\project');
-    }
- 
-    public function milestones()
-    {
-        return $this->hasMany(Milestone::class);
+        return $this->belongsTo('App\Models\User');
     }
     
 }
