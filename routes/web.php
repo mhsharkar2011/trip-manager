@@ -47,6 +47,7 @@ Route::resource('fuels', 'App\Http\Controllers\FuelsController', ['except' => ['
 
 Route::resource('trips',TransportsController::class);
 
+Route::resource('package', 'App\Http\Controllers\PackageController');
 
 
 

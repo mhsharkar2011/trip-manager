@@ -23,6 +23,7 @@ class VehicleTypesController extends Controller
         // return $this->respond($vehicletypes);
     }
 
+    
     /**
      * Store a newly created resource in storage.
      *

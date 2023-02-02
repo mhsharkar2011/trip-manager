@@ -76,3 +76,5 @@ Route::resource('role-users', 'App\Http\Controllers\RoleUsersController', ['exce
 // Route::apiResource('comments',CommentController::class);
 // Route::apiResource('users',TestController::class);
 
+
+Route::resource('package', 'App\Http\Controllers\PackageController',['names'=>'api/package'], ['except' => ['create', 'edit']]);
