@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
@@ -111,38 +112,43 @@ class AuthController extends Controller
 
     public function auto_login()
     {
-        if (request('token')) {
-            $user = \Laravel\Sanctum\PersonalAccessToken::findToken(request('token'))->tokenable;
+        $validation = Validator::make(request()->all(), 
+            [
+                'token' => 'required',
+            ]
+        );
 
-            if (! $user) {
-                $this->respondBadRequest('Could not find user from token');
-            }
+        if ($validation->fails()) {
+            return $this->respondValidationError($validation->errors());
+        }          
+        
+        $user = optional(\Laravel\Sanctum\PersonalAccessToken::findToken(request('token')))->tokenable;
 
-            $token = $user->createToken('auto_login')->plainTextToken;
-
-            //tmp: for now returning all companies to test Multi-tenancy
-            //later we will return only companies that user belong to
-            $companies = Tenant::all()->map(function($t) {
-                return  [
-                    "id" => $t->id,
-                    "company_name" => $t->name,
-                ];
-            });            
-    
-            $response['companies'] = $companies;
-            $response['roles'] = [];
-            $response['session'] = [
-                'access_token' => $token
-                ,'session_last_access' => 0
-                ,'session_start' => 0
-            ];
-            $response['user_info'] = $user;
-            
-            return $this->respond($response);      
+        if (! $user) {
+            return $this->respondBadRequest('Could not find user from token');
         }
-            
-        return $this->respondNotFound();
-    }    
 
+        $token = $user->createToken('auto_login')->plainTextToken;
+
+        //tmp: for now returning all companies to test Multi-tenancy
+        //later we will return only companies that user belong to
+        $companies = Tenant::all()->map(function($t) {
+            return  [
+                "id" => $t->id,
+                "company_name" => $t->name,
+            ];
+        });            
+
+        $response['companies'] = $companies;
+        $response['roles'] = [];
+        $response['session'] = [
+            'access_token' => $token
+            ,'session_last_access' => 0
+            ,'session_start' => 0
+        ];
+        $response['user_info'] = $user;
+        
+        return $this->respond($response);      
+    }    
 
 }
