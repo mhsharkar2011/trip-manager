@@ -52,7 +52,7 @@ class TransportsController extends Controller
             return $this->respond($transports);
         }else{
             //a web call
-            return view('trips.index',['trips'=>$transports,'users'=>$users,'vehicles'=>$vehicles])->with('id',(request()->input('page', 1) - 1) * self::ITEMS_PER_PAGE);
+            return view('trips.index',['trips'=>$transports])->with('id',(request()->input('page', 1) - 1) * self::ITEMS_PER_PAGE);
         }
     }
 
@@ -63,7 +63,10 @@ class TransportsController extends Controller
      */
     public function create(Request $request)
     {
-        return view('trips.create');
+        $users = User::all();
+        $vehicles = Vehicle::all();
+
+        return view('trips.create-trips',['users'=>$users,'vehicles'=>$vehicles]);
     }
 
     /**

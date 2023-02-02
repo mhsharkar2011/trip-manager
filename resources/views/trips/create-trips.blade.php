@@ -1,19 +1,26 @@
-{{-- @extends('layouts.app')
+@extends('layouts.app')
 
-@section('title','Trips | Form')
-   
+@section('title','Trips | From')
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8 mt-5">
+        {{-- Trip From --}}
+        <div class="col-md-4 mt-5">
             <div class="card">
-                <div class="card-header bg-success text-white">
-                    <a class="btn btn-success" href="">Trips Form</a>
-                    <a style="float: right" class="btn btn-success text-right" href="{{ asset('trips') }}">Trips List</a>
+                <div class="card-header bg-success text-white text-center">
+                    <a style="float: center" class="btn btn-success text-center" href="">Trips Form</a>
+                    {{-- <a style="float:right" class="btn btn-success text-center" href="{{ asset('trips') }}">Trips List</a> --}}
                 </div>
                 <div class="card-body">
                     <form method="post" action="{{ route('trips.store') }}">
                         @csrf
+                        <div class="form-group">
+                            <label class="label">From Area: </label>
+                            <input type="textarea" row="5" name="from_area" class="form-control" />
+                        </div>
+                        <br>
+                        
                         <div class="form-group">Driver Name
                             <select class="form-select" name="user_id">
                                 <option value="">Select Driver</option>
@@ -52,10 +59,11 @@
                         </div>
                         <br>
                         <div class="form-group">
-                            <label class="label">Rate</label>
+                            <label class="label">Cost:</label>
                             <input type="number" name="rate" class="form-control" />
                         </div>
                         <br>
+                        
                         <div class="form-group text-center">
                             <input type="submit" class="btn btn-success text-uppercase" />
                         </div>
@@ -65,4 +73,5 @@
         </div>
     </div>
 </div>
-@endsection   --}}
+
+@endsection
