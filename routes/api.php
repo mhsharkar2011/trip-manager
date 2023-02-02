@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\PasswordRecoveryController;
+use App\Http\Controllers\SocialLoginController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserProfileController;
 
@@ -25,6 +26,8 @@ Route::prefix('v1')->group(function () {
     Route::get('forgot-password', [PasswordRecoveryController::class, 'send_recovery_email']);
     Route::post('forgot-password', [PasswordRecoveryController::class, 'update_password']);
     // Route::post('change/password/{user}', [PasswordRecoveryController::class,'changePassword']);
+
+    Route::get('login-social/{provider}',  [SocialLoginController::class, 'redirect']);
 });
 
 
