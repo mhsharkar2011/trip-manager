@@ -98,7 +98,7 @@
                         </div>
                         <br>
                         <div class="form-group">
-                            <label class="label">Total Mileages: </label>
+                            <label class="label">ODO Mileages: </label>
                             <input type="number" name="total_mileage" class="form-control" placeholder="Enter Total Odo" />
                         </div>
                         <br>
@@ -108,12 +108,12 @@
                         </div>
                         <br>
                         <div class="form-group">
-                            <label class="label">License No. </label>
+                            <label class="label">Vehicle License No. </label>
                             <input type="text" name="license_no" class="form-control" placeholder="Enter License Number" />
                         </div>
                         {{-- <input type="hidden" name="vehicle_type_id" value="{{ $input }}" /> --}}
                         <br>
-                        <div class="form-group">
+                        <div class="form-group"> Vehicle Type:
                             <select class="form-select" name="vehicle_type_id">
                                 <option value="">Select Vehicle Type</option>
                                 @foreach ($vTypes as $vType)

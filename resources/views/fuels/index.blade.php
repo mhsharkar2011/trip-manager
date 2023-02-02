@@ -72,7 +72,8 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="form-group">Fuel Name
+                        <br>
+                        <div class="form-group">Fuel Type
                             <select class="form-select" name="fuel_type_id">
                                 <option value="">Select Fuel</option>
                                 @foreach ($fuelTypes as $fType)
@@ -82,8 +83,9 @@
                                 @endforeach
                             </select>
                         </div>
+                        <br>
                         <div class="form-group">
-                            <label class="label">Fueling Date: </label>
+                            <label class="label">Refueling Date: </label>
                             <input type="datetime-local" name="refueling" class="form-control" />
                         </div>
                         <br>

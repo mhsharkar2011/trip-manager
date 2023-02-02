@@ -22,7 +22,7 @@
                                 <th>From Area</th>
                                 <th>To Area</th>
                                 <th>Mileages</th>
-                                <th>Rate</th>
+                                <th>Cost</th>
                                 <th>Created At</th>
                             </tr>
                         </thead>
@@ -55,7 +55,7 @@
                                     {{ $trip->rate}}
                                 </td>
                                 <td>
-                                    {{ $trip->created_at->format('Y-m-d')}}
+                                    {{ $trip->created_at}}
                                 </td>
                                 </tr>
                                 @endforeach
@@ -115,7 +115,7 @@
                         </div>
                         <br>
                         <div class="form-group">
-                            <label class="label">Rate</label>
+                            <label class="label">Cost:</label>
                             <input type="number" name="rate" class="form-control" />
                         </div>
                         <br>
