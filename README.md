@@ -237,6 +237,18 @@ payload
 ```
 
 
+# Social Login
+Social login has been implemented using [Laravel Socialite](https://laravel.com/docs/socialite).
+The following API is used to integrate with Frontend Frameworks
+
+`GET /api/v1/login-social/<provider_name_here>?frontend_redirect_url=<frontend_app_url_here>`
+
+for ITC Gitlab provider would be `"gitlab"` and if frontend app url is `example.com/autologin` then the above API would be:
+
+```GET /api/v1/login-social/gitlab?frontend_redirect_url=example.com/autlogin```
+
+Other providers supported out of the box are: TBD
+
 # Authorization
 TBD
 
