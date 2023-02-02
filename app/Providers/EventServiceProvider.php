@@ -27,11 +27,11 @@ class EventServiceProvider extends ServiceProvider
         Login::class => [
             LogLoginEvent::class,
         ],
-        \SocialiteProviders\Manager\SocialiteWasCalled::class => [
-            // ... other providers
-            'SocialiteProviders\\Shopify\\ShopifyExtendSocialite@handle',
-            'SocialiteProviders\\GitLab\\GitLabExtendSocialite@handle',
-        ],
+        // \SocialiteProviders\Manager\SocialiteWasCalled::class => [
+        //     // ... other providers
+        //     'SocialiteProviders\\Shopify\\ShopifyExtendSocialite@handle',
+        //     'SocialiteProviders\\GitLab\\GitLabExtendSocialite@handle',
+        // ],
     ];
 
     /**
