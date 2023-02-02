@@ -26,7 +26,7 @@ docker-compose -f docker-compose.local.yml exec www composer install \
 6. For database you can use a mysql client and connect to it
 ```
 Host: 127.0.0.1
-Port: 53306
+Port: 33006
 ```
 Get the database name, user and password from the `docker-compose-local.yml` file
 
