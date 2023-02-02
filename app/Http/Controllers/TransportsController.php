@@ -92,16 +92,10 @@ class TransportsController extends Controller
         $vehicle_id = $transport->vehicle_id;
         $tripsMileage = $request->mileages; 
         
-        $totalMileage = Transport::where('vehicle_id',$vehicle_id)->where('mileages',$tripsMileage)->pluck('mileages');
-        $total_mileage = new Mileage();
 
-        DB::table('mileages')->increment('total_mileage', $tripsMileage, ['vehicle_id' => $vehicle_id]);
+        $mileage = new Mileage();
 
-        // dd($transport->update([$mileages]));
-
-        
-       
-        
+        $mileage->where('vehicle_id',$vehicle_id)->increment('total_mileage', $tripsMileage);
 
         return back()->with('status','Trip created successfully');
     }
