@@ -19,10 +19,19 @@ class {{ class }} extends Controller
      */
     public function index({{ parentModel }} ${{ parentModelVariable }})
     {
-        return $this->respond(${{ parentModelVariable }}->{{ modelVariable }}()->paginateWrap(
+
+        ${{ parentModelVariable }} = ${{ parentModelVariable }}->{{ modelVariable }}();
+
+        if ($with = request('with')) { //load relationships
+             ${{ parentModelVariable }} = ${{ parentModelVariable }}->with(explode(',', $with));
+        }
+
+        ${{ parentModelVariable }} = ${{ parentModelVariable }}->paginateWrap(
             $items_per_page = request('items_per_page', self::ITEMS_PER_PAGE), 
             request('page', 1)
-        ));
+        );
+
+        return $this->respond(${{ parentModelVariable }});
         
     }
 

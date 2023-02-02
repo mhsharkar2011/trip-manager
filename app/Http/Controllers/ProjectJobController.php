@@ -18,10 +18,19 @@ class ProjectJobController extends Controller
      */
     public function index(Project $project)
     {
-        return $this->respond($project->jobs()->paginateWrap(
+
+        $project = $project->jobs();
+
+        if ($with = request('with')) { //load relationships
+             $project = $project->with(explode(',', $with));
+        }
+
+        $project = $project->paginateWrap(
             $items_per_page = request('items_per_page', self::ITEMS_PER_PAGE), 
             request('page', 1)
-        ));
+        );
+
+        return $this->respond($project);
         
     }
 

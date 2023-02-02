@@ -42,5 +42,5 @@ Route::prefix('v1')
     
     Route::resource('projects', 'App\Http\Controllers\ProjectController', ['except' => ['create', 'edit']]);
     Route::resource('projects.jobs', 'App\Http\Controllers\ProjectJobController', ['except' => ['create', 'edit']]);
-    Route::resource('jobs.milestone', 'App\Http\Controllers\MilestoneController', ['except' => ['create', 'edit']]);
+    Route::resource('jobs.milestone', 'App\Http\Controllers\JobMilestoneController', ['except' => ['create', 'edit']]);
 });
