@@ -2,17 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests;
-use App\Models\Mileage;
 use App\Models\Transport;
 use App\Models\User;
 use App\Models\Vehicle;
-use Brian2694\Toastr\Facades\Toastr;
-use Exception;
-use Illuminate\Foundation\Support\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Route;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class TransportsController extends Controller
@@ -92,13 +85,13 @@ class TransportsController extends Controller
         $input = $request->all();
         $transport = Transport::create($input);
         
-        $vehicle_id = $transport->vehicle_id;
-        $tripsMileage = $request->mileages; 
+        // $vehicle_id = $transport->vehicle_id;
+        // $tripsMileage = $request->mileages; 
         
 
-        $mileage = new Mileage();
+        // $mileage = new Mileage();
 
-        $mileage->where('vehicle_id',$vehicle_id)->increment('total_mileage', $tripsMileage);
+        // $mileage->where('vehicle_id',$vehicle_id)->increment('total_mileage', $tripsMileage);
 
         return back()->with('status','Trip created successfully');
     }

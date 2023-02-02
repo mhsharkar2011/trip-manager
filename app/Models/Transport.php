@@ -35,6 +35,7 @@ class Transport extends baseModel
     protected $guarded = [
         'id'
     ];    
+    
 
     protected static function validation_rules() {
         return [];
