@@ -93,5 +93,56 @@ class AuthController extends Controller
         return response()->json(["msg" => "Password has been successfully changed"]);
     }
 
+    //impersonation: for admin to login as any user
+    public function getATokenForAutoLogin($user_id)
+    {
+        if (auth('sanctum')->user()->isAdmin()) {
+            $user = User::findOrFail($user_id);
+
+            return $this->respond([
+                'data' => [
+                    'token' => $user->createToken('auto_login')->plainTextToken
+                ]
+            ]);
+        }
+
+        return $this->respondForbidden();
+    }
+
+    public function auto_login()
+    {
+        if (request('token')) {
+            $user = \Laravel\Sanctum\PersonalAccessToken::findToken(request('token'))->tokenable;
+
+            if (! $user) {
+                $this->respondBadRequest('Could not find user from token');
+            }
+
+            $token = $user->createToken('auto_login')->plainTextToken;
+
+            //tmp: for now returning all companies to test Multi-tenancy
+            //later we will return only companies that user belong to
+            $companies = Tenant::all()->map(function($t) {
+                return  [
+                    "id" => $t->id,
+                    "company_name" => $t->name,
+                ];
+            });            
+    
+            $response['companies'] = $companies;
+            $response['roles'] = [];
+            $response['session'] = [
+                'access_token' => $token
+                ,'session_last_access' => 0
+                ,'session_start' => 0
+            ];
+            $response['user_info'] = $user;
+            
+            return $this->respond($response);      
+        }
+            
+        return $this->respondNotFound();
+    }    
+
 
 }

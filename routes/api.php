@@ -28,6 +28,7 @@ Route::prefix('v1')->group(function () {
     // Route::post('change/password/{user}', [PasswordRecoveryController::class,'changePassword']);
 
     Route::get('login-social/{provider}',  [SocialLoginController::class, 'redirect']);
+    Route::post('auto-login', [AuthController::class, 'auto_login']);
 });
 
 

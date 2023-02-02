@@ -133,4 +133,9 @@ class User extends Authenticatable
         return self::superAdmin()->exists();
     }
 
+    public function isAdmin()
+    {
+        return strtolower($this->role) === 'admin';
+    }    
+
 }
