@@ -38,7 +38,7 @@ Route::prefix('v1')
 ])
 ->group(function () { //auth required routes will go here
     Route::resource('users', UserController::class)->except(['edit', 'create']);
-    Route::get('roles', [UserController::class, 'get_roles']);
+    Route::get('roles-old', [UserController::class, 'get_roles']);
     
     Route::get('my-profile', [UserProfileController::class, 'get']);
     Route::put('my-profile', [UserProfileController::class, 'update']);
@@ -47,4 +47,30 @@ Route::prefix('v1')
     Route::resource('projects', 'App\Http\Controllers\ProjectController', ['except' => ['create', 'edit']]);
     Route::resource('projects.jobs', 'App\Http\Controllers\ProjectJobController', ['except' => ['create', 'edit']]);
     Route::resource('jobs.milestone', 'App\Http\Controllers\JobMilestoneController', ['except' => ['create', 'edit']]);
+
+    // Role permission api lists
+
+        
+    Route::get('roles', [RolePermissionController::class, 'roles']);
+    Route::post('roles', [RolePermissionController::class, 'role_store']);
+    Route::put('roles/{role}', [RolePermissionController::class, 'role_update']);
+    Route::delete('roles/{role}', [RolePermissionController::class, 'role_destroy']);
+    Route::get('permissions', [RolePermissionController::class, 'permissions']);
+    Route::post('permissions', [RolePermissionController::class, 'permission_store']);
+    Route::put('permissions/{permission}', [RolePermissionController::class, 'permission_update']);
+    Route::delete('permissions/{permission}', [RolePermissionController::class, 'permission_destroy']);
+    Route::post('roles/{role}/permissions', [RolePermissionController::class, 'roles_permission_store']);
+    Route::get('roles/{role}/permissions', [RolePermissionController::class, 'roles_permissions']);
+    Route::delete('roles/{role}/permissions/{permission}', [RolePermissionController::class, 'roles_permissions_destroy']);
+    Route::post('permissions/{permission}/roles', [RolePermissionController::class, 'permissionRoles_store']);
+    Route::get('permissions/{permission}/roles', [RolePermissionController::class, 'permission_roles']);
+    Route::delete('permissions/{permission}/roles/{role}', [RolePermissionController::class, 'permissions_roles_destroy']);
+    Route::post('users/{user}/roles', [RolePermissionController::class, 'user_roles_store']);
+    Route::get('users/{user}/roles', [RolePermissionController::class, 'user_roles']);
+    Route::delete('users/{user}/roles/{role}', [RolePermissionController::class, 'user_roles_destroy']);
+    Route::post('users/{user}/permission', [RolePermissionController::class, 'user_permission_store']);
+    Route::get('users/{user}/permission', [RolePermissionController::class, 'user_permission_show']);
+    Route::delete('users/{user}/permission', [RolePermissionController::class, 'user_permission_destroy']);
+
+
 });
