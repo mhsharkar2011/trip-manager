@@ -17,6 +17,13 @@ class CreateTripsTable extends Migration
             $table->increments('id');
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedInteger('vehicle_id')->nullable();
+            $table->timestamp('booking_date');
+            $table->integer('booking_id');
+            $table->boolean('status')->default(false);
+            $table->integer('advance');
+            $table->integer('bkash_charge');
+            
+            $table->string('from_area')->nullable();
             $table->string('from_area')->nullable();
             $table->string('to_area')->nullable();
             $table->integer('mileages')->nullable();

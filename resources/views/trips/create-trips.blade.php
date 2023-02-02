@@ -15,6 +15,13 @@
                 <div class="card-body">
                     <form method="post" action="{{ route('trips.store') }}">
                         @csrf
+
+                        <div class="form-group">
+                            <label class="label">Booking Date: </label>
+                            <input type="datetime-local" name="booking_date" class="form-control" />
+                        </div>
+                        <br>
+
                         <div class="form-group">
                             <label class="label">From Area: </label>
                             <input type="textarea" row="5" name="from_area" class="form-control" />

@@ -5,7 +5,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8 mt-5">
+        <div class="col-md-12 mt-5">
             <div class="card">
                 <div class="card-header bg-success text-white">
                     <a class="btn btn-success" href="">Trips List</a>
@@ -16,13 +16,22 @@
                     <table class="table table-striped table-bordered table-hover table-sm m-12">
                         <thead>
                             <tr>
-                                <th>ID</th>
-                                <th>Driver Name</th>
-                                <th>Vehicle Name</th>
-                                <th>From Area</th>
-                                <th>To Area</th>
-                                <th>Mileages</th>
-                                <th>Cost</th>
+                                <th>Booking Date</th>
+                                <th>Customer Name</th>
+                                <th>Booking ID</th>
+                                <th>Package</th>
+                                <th>Vehicle</th>
+                                <th>Booking Period</th>
+                                <th>Status</th>
+                                <th>Advance</th>
+                                <th>Advance</th>
+                                <th>Bkash Charge</th>
+                                <th>Fuel</th>
+                                <th>Toll</th>
+                                <th>Other Cost</th>
+                                <th>Total Bill</th>
+                                <th>Balance In</th>
+                                <th>Trip Earning</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -32,7 +41,14 @@
                                 <td>
                                 {{ ++$id}}
                                 </td>
-                                
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                                 
                                 <td>
                                     {{ $trip->user->full_name }}
