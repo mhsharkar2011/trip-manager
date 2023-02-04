@@ -39,6 +39,21 @@ services:
     #   deck-chores.job1.command: sh -c "cd /var/www/html && php artisan schedule:run &> /proc/1/fd/1"
     #   deck-chores.job1.cron: '* * * * * * * 0' # every minute
 
+  phpmyadmin:
+    image: beeyev/phpmyadmin-lightweight:latest
+    links:
+      - mysql
+    environment:
+      # TZ: UTC
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: secret
+    restart: unless-stopped
+    depends_on: [mysql]
+    ports:
+      - 8089:80    
+
   # scheduler:
   #     image: funkyfuture/deck-chores:1
   #     restart: unless-stopped

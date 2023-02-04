@@ -23,7 +23,11 @@ docker-compose -f docker-compose.local.yml exec www composer install \
 [http://127.0.0.1:8800](http://127.0.0.1:8800) 
  you should be able to see the home page.
 
-6. For database you can use a mysql client and connect to it
+6. For database client, PHPMyAdmin is readily available and can be accessed at the following URL
+
+[http://127.0.0.1:8089](http://127.0.0.1:8089) 
+
+If you want to use a different Database client, then you can use the following host and port to connect to it
 ```
 Host: 127.0.0.1
 Port: 33006
