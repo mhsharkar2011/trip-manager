@@ -1,1 +1,0 @@
-<x-devpanel.iframe :src="$src" />
