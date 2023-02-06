@@ -140,4 +140,10 @@ class User extends Authenticatable
         return strtolower($this->role) === 'admin';
     }    
 
+    public function vehicle()
+    {
+        return $this->belongsTo(Vehicle::class);
+    }
+    
+
 }
