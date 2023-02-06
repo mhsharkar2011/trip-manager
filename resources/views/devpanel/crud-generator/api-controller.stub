@@ -1,0 +1,120 @@
+<?php
+
+namespace DummyNamespace;
+
+use DummyRootNamespaceHttp\Requests;
+
+use DummyRootNamespace{{modelNamespace}}{{modelName}};
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+
+class DummyClass extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index(Request $request)
+    {
+        ${{crudName}} = {{modelName}}::query();
+
+        if ($with = request('with')) { //load relationships
+            ${{crudName}}->with(explode(',', $with));
+        }        
+
+        //filter, sorting, selective-columns
+        ${{crudName}}->filter({{modelName}}::parseRequest(request('query')));
+
+        //set default sorting
+        if (! {{modelName}}::hasSorting(request('query'))) {
+            ${{crudName}}->filter({{modelName}}::getDefaultSorting());
+        }          
+        
+        ${{crudName}} = ${{crudName}}->paginateWrap(
+            request('items_per_page', self::ITEMS_PER_PAGE), 
+            request('page', 1)
+        );
+
+        return $this->respond(${{crudName}});
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $validation = Validator::make(
+            $request->all(), 
+            {{modelName}}::validation_rules(),
+            {{modelName}}::validation_messages(),
+        );
+
+        if ($validation->fails()) {
+            return $this->respondValidationError($validation->errors());
+        }   
+
+        ${{crudNameSingular}} = {{modelName}}::create($request->all());
+
+        return $this->respondCreated(${{crudNameSingular}});
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function show({{modelName}} ${{crudNameSingular}})
+    {
+        if ($with = request('with')) { //load relationships
+            ${{crudNameSingular}}->with(explode(',', $with));
+        }   
+
+        return $this->respond(${{crudNameSingular}});
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param  int  $id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, {{modelName}} ${{crudNameSingular}})
+    {
+        $validation = Validator::make(
+            $request->all(), 
+            {{modelName}}::validation_rules_for_update(),
+            {{modelName}}::validation_messages_for_update(),
+        );
+
+        if ($validation->fails()) {
+            return $this->respondValidationError($validation->errors());
+        }   
+
+        ${{crudNameSingular}}->update($request->all());
+
+        return $this->respond(${{crudNameSingular}});
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy({{modelName}} ${{crudNameSingular}})
+    {
+        ${{crudNameSingular}}->delete();
+
+        return $this->respondDeleted();
+    }
+}

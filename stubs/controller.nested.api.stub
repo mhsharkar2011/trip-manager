@@ -1,0 +1,113 @@
+<?php
+
+namespace {{ namespace }};
+
+use {{ namespacedModel }};
+use {{ rootNamespace }}Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use {{ namespacedParentModel }};
+use Illuminate\Support\Facades\Validator;
+
+
+class {{ class }} extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @param  \{{ namespacedParentModel }}  ${{ parentModelVariable }}
+     * @return \Illuminate\Http\Response
+     */
+    public function index({{ parentModel }} ${{ parentModelVariable }})
+    {
+
+        ${{ parentModelVariable }} = ${{ parentModelVariable }}->{{ modelVariable }}();
+
+        if ($with = request('with')) { //load relationships
+             ${{ parentModelVariable }} = ${{ parentModelVariable }}->with(explode(',', $with));
+        }
+
+        ${{ parentModelVariable }} = ${{ parentModelVariable }}->paginateWrap(
+            $items_per_page = request('items_per_page', self::ITEMS_PER_PAGE), 
+            request('page', 1)
+        );
+
+        return $this->respond(${{ parentModelVariable }});
+        
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \{{ namespacedParentModel }}  ${{ parentModelVariable }}
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request, {{ parentModel }} ${{ parentModelVariable }})
+    {
+        $validation = Validator::make(
+            $request->all(), 
+            {{model}}::validation_rules_for_update(),
+            {{model}}::validation_messages_for_update(),
+        );
+
+        if ($validation->fails()) {
+            return $this->respondValidationError($validation->errors());
+        }  
+
+        return $this->respondCreated(${{ parentModelVariable }}->{{ modelVariable }}()->create($request->all()));
+        //return $this->respondCreated({{ model }}::create($validated));
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \{{ namespacedParentModel }}  ${{ parentModelVariable }}
+     * @param  \{{ namespacedModel }}  ${{ modelVariable }}
+     * @return \Illuminate\Http\Response
+     */
+    public function show({{ parentModel }} ${{ parentModelVariable }}, {{ model }} ${{ modelVariable }})
+    {
+        return $this->respond(${{ modelVariable }});
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \{{ namespacedParentModel }}  ${{ parentModelVariable }}
+     * @param  \{{ namespacedModel }}  ${{ modelVariable }}
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, {{ parentModel }} ${{ parentModelVariable }}, {{ model }} ${{ modelVariable }})
+    {
+       
+        $validation = Validator::make(
+            $request->all(), 
+            {{model}}::validation_rules_for_update(),
+            {{model}}::validation_messages_for_update(),
+        );
+
+        if ($validation->fails()) {
+            return $this->respondValidationError($validation->errors());
+        }
+
+        ${{ modelVariable }}->update($request->all());
+        //${{ modelVariable }}->update($validated);
+
+        return $this->respond(${{ modelVariable }});
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \{{ namespacedParentModel }}  ${{ parentModelVariable }}
+     * @param  \{{ namespacedModel }}  ${{ modelVariable }}
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy({{ parentModel }} ${{ parentModelVariable }}, {{ model }} ${{ modelVariable }})
+    {
+        ${{ modelVariable }}->delete();
+
+        return $this->respondDeleted();
+    }
+}

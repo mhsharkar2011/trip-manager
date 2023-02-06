@@ -1,0 +1,51 @@
+<?php
+
+namespace DummyNamespace;
+
+use App\Devpanel\Models\baseModel;
+use Illuminate\Database\Eloquent\Model;
+
+{{useSoftDeletes}}
+class DummyClass extends baseModel
+{
+
+    {{softDeletes}}
+    
+    /**
+     * The database table used by the model.
+     *
+     * @var string
+     */
+    protected $table = '{{table}}';
+
+    {{primaryKey}}
+
+    /**
+     * Attributes that should be mass-assignable.
+     *
+     * @var array
+     */
+    //protected $fillable = {{fillable}};
+
+    protected $guarded = [
+        'id'
+    ];    
+
+    protected static function validation_rules() {
+        return [];
+    }
+
+    protected static function validation_messages() {
+        return [];
+    } 
+
+    protected static function validation_rules_for_update() {
+        return self::validation_rules();
+    }
+
+    protected static function validation_messages_for_update() {
+        return self::validation_messages();
+    }           
+
+    {{relationships}}
+}
