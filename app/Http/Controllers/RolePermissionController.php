@@ -14,7 +14,13 @@ class RolePermissionController extends Controller
 
     public function roles()
     {
-        $all_roles_in_database = Role::all();
+        $all_roles_in_database = Role::query();
+
+        if ($with = request('with')) { //load relationships
+            $all_roles_in_database->with(explode(',', $with));
+        }        
+        $all_roles_in_database = $all_roles_in_database->get();
+
         return $this->respond($all_roles_in_database);
     }
 
