@@ -1,0 +1,12 @@
+{
+    "fields": [
+        {
+            "name": "name",
+            "type": "string"
+        }
+    ],
+    "foreign_keys": [
+    ],
+    "relationships": [
+    ]
+}

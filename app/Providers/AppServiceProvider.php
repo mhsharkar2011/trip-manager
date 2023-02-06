@@ -6,7 +6,6 @@ use Davidhsianturi\Compass\Contracts\RequestRepository;
 use Davidhsianturi\Compass\Contracts\ResponseRepository;
 use Davidhsianturi\Compass\Storage\DatabaseRequestRepository;
 use Davidhsianturi\Compass\Storage\DatabaseResponseRepository;
-use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -48,8 +47,5 @@ class AppServiceProvider extends ServiceProvider
         if(env('FORCE_HTTPS')) {
            \URL::forceScheme('https');
         }
-
-        Paginator::useBootstrap();
-
     }
 }

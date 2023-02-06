@@ -70,9 +70,9 @@ class GenerateCRUDFromFileCommand extends Command
 
             $this->call('make:factory', ['name' => $entity_name . 'Factory']);
 
-            $this->call('migrate:fresh', [
+            //todo - if already migrated once, then truncate previous table
+            $this->call('migrate', [
                 '--force' => '',
-                '--seed' => '',
             ]);
             
             return 1;

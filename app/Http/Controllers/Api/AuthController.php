@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Devpanel\Models\Tenant;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
@@ -16,8 +18,13 @@ class AuthController extends Controller
         request()->merge([
             'password' => bcrypt($request->get('password'))
         ]);
-        
+
         $user = User::create($request->all());
+
+        if (app()->environment() !== 'production') {
+            $user->email_verified_at = now();
+            $user->save();
+        }
         
         return $this->respond($user);
     }    
@@ -35,12 +42,15 @@ class AuthController extends Controller
         if($user && Hash::check(\request('password'),$user->password)) {
             $token = $user->createToken('api_token')->plainTextToken;
 
-            $response['companies'] = [
-                [
-                    "company_code"=> null,
-                    "company_name" => "ITC",
-                ]
-            ];
+            //tmp: for now returning all companies to test Multi-tenancy
+            //later we will return only companies that user belong to
+            $companies = Tenant::all()->map(function($t) {
+                return  [
+                    "id" => $t->id,
+                    "company_name" => $t->name,
+                ];
+            });
+            $response['companies'] = $companies;
             $response['roles'] = [];
             $response['session'] = [
                 'access_token' => $token
@@ -84,15 +94,61 @@ class AuthController extends Controller
         return response()->json(["msg" => "Password has been successfully changed"]);
     }
 
-    public function create()
+    //impersonation: for admin to login as any user
+    public function getATokenForAutoLogin($user_id)
     {
-        return view('auth.register');
+        if (auth('sanctum')->user()->isAdmin()) {
+            $user = User::findOrFail($user_id);
+
+            return $this->respond([
+                'data' => [
+                    'token' => $user->createToken('auto_login')->plainTextToken
+                ]
+            ]);
+        }
+
+        return $this->respondForbidden();
     }
 
-    public function register()
+    public function auto_login()
     {
-        return "Hello";
-    }
+        $validation = Validator::make(request()->all(), 
+            [
+                'token' => 'required',
+            ]
+        );
 
+        if ($validation->fails()) {
+            return $this->respondValidationError($validation->errors());
+        }          
+        
+        $user = optional(\Laravel\Sanctum\PersonalAccessToken::findToken(request('token')))->tokenable;
+
+        if (! $user) {
+            return $this->respondBadRequest('Could not find user from token');
+        }
+
+        $token = $user->createToken('auto_login')->plainTextToken;
+
+        //tmp: for now returning all companies to test Multi-tenancy
+        //later we will return only companies that user belong to
+        $companies = Tenant::all()->map(function($t) {
+            return  [
+                "id" => $t->id,
+                "company_name" => $t->name,
+            ];
+        });            
+
+        $response['companies'] = $companies;
+        $response['roles'] = [];
+        $response['session'] = [
+            'access_token' => $token
+            ,'session_last_access' => 0
+            ,'session_start' => 0
+        ];
+        $response['user_info'] = $user;
+        
+        return $this->respond($response);      
+    }    
 
 }

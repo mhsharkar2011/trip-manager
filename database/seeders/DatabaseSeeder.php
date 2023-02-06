@@ -3,8 +3,6 @@
 namespace Database\Seeders;
 
 use App\Devpanel\Models\Entity;
-use App\Models\Vehicle;
-use App\Models\VehicleType;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -68,12 +66,6 @@ class DatabaseSeeder extends Seeder
                 'type' => 'image',
                 'type_label' => 'image',
             ],            
-        ]);
-
-        $this->call([
-            VehicleTypeSeeder::class,
-            FuelSeeder::class,
-            UserSeeder::class
         ]);
 
     }

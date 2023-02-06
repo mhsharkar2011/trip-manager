@@ -1,12 +1,11 @@
 @component('mail::message')
-# {{ $details['title'] }}
+{{ $details['title'] }}
 
 @if (isset($details['code']))
 #  {{ $details['code'] }}
 @endif
 
 @if (isset($details['password']))
-    
 #  {{ $details['password'] }}
 @endif
 

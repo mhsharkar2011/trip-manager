@@ -77,39 +77,39 @@ return [
     */
     'commands' => [
         'Frequeunt' => [
+            'project:generate-quick-crud',
             'project:generate-crud',
-            'make:controller',
-            'make:model',
-            'make:factory',
-            'make:seeder',
+            'project:generate-crud-controller',
+            'project:generate-nested-crud-controller',
+            'project:create-api-token',
+            'project:export-postman-with-token',
+            'telescope:clear',
+            'telescope:prune',
             'migrate:fresh',
             'make:model',
             'make:migration',
             'migrate',
-            'route:cache',
         ],
         'project' => [
-            'project:create-api-token',
             'project:create-super-admin',
             'project:export-postman-with-token',
             'project:send-test-email',
         ],
         'make' => [
-            'make:controller',
-            'make:model',
-            'make:factory',
-            'make:seeder',
             'make:cast',
             'make:channel',
             'make:command',
             'make:component',
+            'make:controller',
             'make:event',
             'make:exception',
+            'make:factory',
             'make:job',
             'make:listener',
             'make:mail',
             'make:middleware',
             'make:migration',
+            'make:model',
             'make:notification',
             'make:observer',
             'make:policy',
@@ -117,6 +117,7 @@ return [
             'make:request',
             'make:resource',
             'make:rule',
+            'make:seeder',
             'make:test',
         ],
         'migrate' => [
@@ -189,8 +190,6 @@ return [
         ],
         'misc' => [
             'export:postman',
-            'telescope:clear',
-            'telescope:prune',
         ]
     ]
 

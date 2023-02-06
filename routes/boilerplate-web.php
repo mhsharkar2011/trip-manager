@@ -18,7 +18,9 @@ use App\Http\Controllers\SocialLoginController;
 
 
 Route::get('/login-social/{provider}',  [SocialLoginController::class, 'redirect'])->name('login.social');
-Route::get('/login-social/{provider}/callback', [SocialLoginController::class, 'callback'])->name('login.social.callback');
+// Route::get('/login-social/{provider}/callback', [SocialLoginController::class, 'callback'])->name('login.social.callback');
+Route::get('auth/{provider}/callback', [SocialLoginController::class, 'callback'])->name('login.social.callback');
+
 
 Route::get('devpanel/login', function () {
     if (isDevpanelAutoLoginEnabled()) {

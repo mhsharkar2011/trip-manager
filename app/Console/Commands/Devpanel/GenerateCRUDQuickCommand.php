@@ -56,10 +56,14 @@ class GenerateCRUDQuickCommand extends Command
         ]);
         
         $commandArg['--fields_from_file'] = $spec_file_entity;
+        $commandArg['--controller-namespace'] = 'App\Http\Controllers';
+
 
         try {
             Artisan::call('crud:api', $commandArg);
             $this->line(Artisan::output());
+
+            $this->call('make:factory', ['name' => $name . 'Factory']);
             
             $this->call('migrate:fresh', [
                 '--force' => '',

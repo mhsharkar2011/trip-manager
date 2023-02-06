@@ -8,40 +8,51 @@ Install from [Docker Desktop](https://www.docker.com/products/docker-desktop/) a
 
 ### Steps
 1. First clone this repo and CD into project root folder and run the following
-
-a. Clone Repository
 ```
-git clone https://gitlab.com/laravel24devs/trip-manager/trip-manager-be.git
-```
-b. Go to Directory
-```
-cd laravel-boilerplate
-```
-c. Run Docker
-```
-docker-compose -f docker-compose.local.yml up -d
+git clone https://git.sandbox3000.com/itc/incubator/boilerplates/laravel-boilerplate.git \
+&& cd laravel-boilerplate \
+&& docker-compose -f docker-compose.local.yml up -d
 ```
 2. Then run the following to install Laravel dependencies and then some other required steps
-
-a. Install dependencies
 ```
-docker-compose -f docker-compose.local.yml exec www composer install
-```
-b. Project setup
-```
-docker-compose -f docker-compose.local.yml exec www php artisan project:setup
+docker-compose -f docker-compose.local.yml exec www composer install \
+&& docker-compose -f docker-compose.local.yml exec www php artisan project:setup
 ```
 
 5. At this point you should be able browse the site/app at
 [http://127.0.0.1:8800](http://127.0.0.1:8800) 
  you should be able to see the home page.
 
-6. For database you can use a mysql client and connect to it
+6. For database client, PHPMyAdmin is readily available and can be accessed at the following URL
+
+[http://127.0.0.1:8089](http://127.0.0.1:8089) 
+
+If you want to use a different Database client, then you can use the following host and port to connect to it
 ```
 Host: 127.0.0.1
-Port: 53306
+Port: 33006
 ```
 Get the database name, user and password from the `docker-compose-local.yml` file
+
+### Helper script like Laravel Sail
+You will continuously need to run various commands in the php container, commands like `"php artisan migrate"`, `"composer require pckg/foo"` etc. 
+Prefixing these with `docker-compose -f docker-compose.local.yml ....` is tedious, so there is a helper script `./cli` which is a copy of `./vendor/bin/sail` with some necessary adjustments which will proxy the commands to appropriate containers. To use it, give it execute permission and start using it like sail. 
+```
+chmod +x cli
+./cli #will show available commands
+```
+
+Here are some examples:
+```
+./cli up -d
+./cli php -v
+./cli composer install
+./cli art migrate:fresh --seed
+./cli tinker
+./cli bash
+./cli mysql
+```
+
 
 ## Option #2 - Laravel Sail for BE developers with multiple needed services
 ### Prerequisite
@@ -101,10 +112,146 @@ There are 2 pre-requisites to using Compass though:
 
 
 # Authentication
-`Register`, `Login`, `Forgot Password`, `Change Password` API are implemented. 
+`Register`, `Login`, `Forgot Password`, `Change Password` API are implemented. Request response details given below.
 These can be found in the file `api.php`, the routes prefixed under `v1`.
 
 For any route to require authentication, place it under the `auth:sanctum` middleware. You will see an example in the file `api.php`. 
+
+## Registration
+```
+POST /api/v1/register
+```
+
+payload
+```
+{
+  "first_name": "john",
+  "last_name": "doe",
+  "email": "john@example.com",
+  "password": "123456"
+}
+```
+success response
+```
+{
+	"status": "OK",
+	"message": null,
+	"data": {
+		"first_name": "john",
+		"last_name": "doe",
+		"email": "john@example.com",
+		"updated_at": "2023-01-17T18:24:25.000000Z",
+		"created_at": "2023-01-17T18:24:25.000000Z",
+		"id": <id>,
+		"profile_photo_url": "https://ui-avatars.com/api/?name=&color=7F9CF5&background=EBF4FF"
+	}
+}
+```
+## Login
+```
+POST `/api/v1/login`
+```
+payload
+```
+{
+  "email": ""
+  "password": ""
+}
+```
+
+success response
+```
+{
+    "status": "OK",
+    "message": "",
+    "companies": [
+        {
+            "company_code": null,
+            "company_name": "ITC"
+        }
+    ],
+    "roles": [],
+    "session": {
+        "access_token": "<token>",
+        "session_last_access": 0,
+        "session_start": 0
+    },
+    "user_info": {
+        "id": ,
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "email_verified_at": "",
+        "current_team_id": ,
+        "profile_photo_path": ,
+        "role": ,
+        "created_at": "",
+        "updated_at": "",
+        "recovery_code": ,
+        "profile_photo_url": ""
+    }
+}
+```
+error response
+```
+{
+    "status": "ERROR",
+    "message": "Incorrect email or password.",
+    "error_code": "RESOURCE_NOT_FOUND",
+    "errors": []
+}
+```
+## Email verificaition
+There isn't any separate API for this. After registration API call, BE sends the verification email.
+And login API checks for if email verification has been done, if not then it sends a bad request response.
+
+However, we should make the email verification check configurative (which helps in non prod environments). 
+
+FE has probable issues however, for example, one issue is, even if backend sends an error response or exception, FE will redirect to registration success page, so assigning Shakil for more investigation.
+
+## Forgot Password (with verification code in email)
+NOTE: Usually for password reset, a link in email is sent, clicking which get to a form from which you can reset your password. But we send a code instead of a link because, right now
+if we are using a Quasar phone app build, once you leave the app and open the email client you can't get back to the app reset link automatically, hence we are using a code that you have to enter in the current screen.
+
+
+### Request a password reset - a code in the email will be sent
+`GET /api/v1/forgot-password?email=<email>`
+
+response
+```
+{
+	"status": "OK",
+	"message": "If the email exists in our system then an email has been sent with recovery steps."
+}
+```
+
+
+### Use the code received to update password
+
+`POST /api/v1/forgot-password`
+
+payload
+```
+{
+	"email": "",
+	"code": <code_received>,
+	"new_password": "",
+	"new_password_confirmation": ""
+}
+```
+
+
+# Social Login
+Social login has been implemented using [Laravel Socialite](https://laravel.com/docs/socialite).
+The following API is used to integrate with Frontend Frameworks
+
+`GET /api/v1/login-social/<provider_name_here>?frontend_redirect_url=<frontend_app_url_here>`
+
+for ITC Gitlab provider would be `"gitlab"` and if frontend app url is `example.com/autologin` then the above API would be:
+
+```GET /api/v1/login-social/gitlab?frontend_redirect_url=example.com/autlogin```
+
+Other providers supported out of the box are: TBD
 
 # Authorization
 TBD
@@ -122,6 +269,31 @@ Generate the CRUD from a json file. This is actually more useful because usually
 Run the command `php artisan project:generate-crud-spec-file <entity_name>`
 
 This would generate a sample json spec file and output the file path. You can then modify the file further and generate CRUD through the command `php artisan project:generate-crud-from-file`
+
+The column types available are the following: 
+* string
+* char
+* varchar
+* date
+* datetime
+* time
+* timestamp
+* text
+* mediumtext
+* longtext
+* json
+* jsonb
+* binary
+* integer
+* bigint
+* mediumint
+* tinyint
+* smallint
+* boolean
+* decimal
+* double
+* float
+* enum
 
 # CRUD & Entity Relationships
 1. For a list API, for example, `GET /posts`, to load related data, add the query parameter `?with`. So for example, to load the category and user with each posts, use API endpoint like this `GET /posts?with=category,user`

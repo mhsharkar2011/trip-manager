@@ -1,0 +1,43 @@
+{
+    "fields": [
+        {
+            "name": "name",
+            "type": "string"
+        },
+        {
+            "name": "job_id",
+            "type": "integer#unsigned"
+        },
+        {
+            "name": "start_date",
+            "type": "datetime"
+        },
+        {
+            "name": "completion_date",
+            "type": "datetime"
+        },
+        {
+            "name": "status",
+            "type": "string"
+        },
+        {
+            "name": "description",
+            "type": "longtext"
+        }
+    ],
+    "foreign_keys": [
+        {
+            "column": "job_id",
+            "references": "id",
+            "on": "jobs",
+            "onDelete": "cascade"
+        }
+    ],
+    "relationships": [
+        {
+            "name": "user",
+            "type": "belongsTo",
+            "class": "App\\Models\\User"
+        }
+    ]
+}

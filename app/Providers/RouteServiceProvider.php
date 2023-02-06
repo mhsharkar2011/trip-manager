@@ -49,7 +49,7 @@ class RouteServiceProvider extends ServiceProvider
                 ->group(base_path('routes/boilerplate-web.php'));
                 
             Route::prefix('api')
-            ->middleware('api')
+            ->middleware('auth:sanctum')
             ->group(base_path('routes/boilerplate-api.php'));
 
             Route::middleware('web')

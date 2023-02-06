@@ -29,7 +29,7 @@
                         </div>
                         @endif
 
-                        <form method="POST" action="{{ route('auth.register') }}">
+                        <form method="POST" action="{{ route('register') }}">
                             @csrf
                             <label class="block text-sm">
                                 <span class="text-gray-700 dark:text-gray-400">Name</span>
