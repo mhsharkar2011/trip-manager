@@ -14,7 +14,7 @@
         },
         {
             "name": "parent_id",
-            "type": "integer#unsigned"
+            "type": "integer"
         },
         {
             "name": "sequence",
