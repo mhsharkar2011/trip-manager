@@ -1,14 +1,14 @@
 <?php
 
-namespace DummyNamespace;
+namespace App\Http\Controllers;
 
-use DummyRootNamespaceHttp\Requests;
+use App\Http\Requests;
 
-use DummyRootNamespace{{modelNamespace}}{{modelName}};
+use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class DummyClass extends Controller
+class ProjectController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,26 +17,26 @@ class DummyClass extends Controller
      */
     public function index(Request $request)
     {
-        ${{crudName}} = {{modelName}}::query();
+        $project = Project::query();
 
         if ($with = request('with')) { //load relationships
-            ${{crudName}}->with(explode(',', $with));
+            $project->with(explode(',', $with));
         }        
 
         //filter, sorting, selective-columns
-        ${{crudName}}->filter({{modelName}}::parseRequest(request('query')));
+        $project->filter(Project::parseRequest(request('query')));
 
         //set default sorting
-        if (! {{modelName}}::hasSorting(request('query'))) {
-            ${{crudName}}->filter({{modelName}}::getDefaultSorting());
+        if (! Project::hasSorting(request('query'))) {
+            $project->filter(Project::getDefaultSorting());
         }          
         
-        ${{crudName}} = ${{crudName}}->paginateWrap(
+        $project = $project->paginateWrap(
             request('items_per_page', self::ITEMS_PER_PAGE), 
             request('page', 1)
         );
 
-        return $this->respond(${{crudName}});
+        return $this->respond($project);
     }
 
     /**
@@ -50,17 +50,17 @@ class DummyClass extends Controller
     {
         $validation = Validator::make(
             $request->all(), 
-            {{modelName}}::validation_rules(),
-            {{modelName}}::validation_messages(),
+            Project::validation_rules(),
+            Project::validation_messages(),
         );
 
         if ($validation->fails()) {
             return $this->respondValidationError($validation->errors());
         }   
 
-        ${{crudNameSingular}} = {{modelName}}::create($request->all());
+        $project = Project::create($request->all());
 
-        return $this->respondCreated(${{crudNameSingular}});
+        return $this->respondCreated($project);
     }
 
     /**
@@ -70,13 +70,9 @@ class DummyClass extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show({{modelName}} ${{crudNameSingular}})
+    public function show(Project $project)
     {
-        if ($with = request('with')) { //load relationships
-            ${{crudNameSingular}}->with(explode(',', $with));
-        }   
-
-        return $this->respond(${{crudNameSingular}});
+        return $this->respond($project);
     }
 
     /**
@@ -87,21 +83,21 @@ class DummyClass extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, {{modelName}} ${{crudNameSingular}})
+    public function update(Request $request, Project $project)
     {
         $validation = Validator::make(
             $request->all(), 
-            {{modelName}}::validation_rules_for_update(),
-            {{modelName}}::validation_messages_for_update(),
+            Project::validation_rules_for_update(),
+            Project::validation_messages_for_update(),
         );
 
         if ($validation->fails()) {
             return $this->respondValidationError($validation->errors());
         }   
 
-        ${{crudNameSingular}}->update($request->all());
+        $project->update($request->all());
 
-        return $this->respond(${{crudNameSingular}});
+        return $this->respond($project);
     }
 
     /**
@@ -111,9 +107,9 @@ class DummyClass extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy({{modelName}} ${{crudNameSingular}})
+    public function destroy(Project $project)
     {
-        ${{crudNameSingular}}->delete();
+        $project->delete();
 
         return $this->respondDeleted();
     }

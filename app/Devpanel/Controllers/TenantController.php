@@ -1,14 +1,15 @@
 <?php
 
-namespace DummyNamespace;
+namespace App\Devpanel\Controllers;
 
-use DummyRootNamespaceHttp\Requests;
+use App\Devpanel\Models\Tenant;
+use App\Http\Controllers\Controller;
+use App\Http\Requests;
 
-use DummyRootNamespace{{modelNamespace}}{{modelName}};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class DummyClass extends Controller
+class TenantController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,26 +18,26 @@ class DummyClass extends Controller
      */
     public function index(Request $request)
     {
-        ${{crudName}} = {{modelName}}::query();
+        $tenant = Tenant::query();
 
         if ($with = request('with')) { //load relationships
-            ${{crudName}}->with(explode(',', $with));
+            $tenant->with(explode(',', $with));
         }        
 
         //filter, sorting, selective-columns
-        ${{crudName}}->filter({{modelName}}::parseRequest(request('query')));
+        $tenant->filter(Tenant::parseRequest(request('query')));
 
         //set default sorting
-        if (! {{modelName}}::hasSorting(request('query'))) {
-            ${{crudName}}->filter({{modelName}}::getDefaultSorting());
+        if (! Tenant::hasSorting(request('query'))) {
+            $tenant->filter(Tenant::getDefaultSorting());
         }          
         
-        ${{crudName}} = ${{crudName}}->paginateWrap(
+        $tenant = $tenant->paginateWrap(
             request('items_per_page', self::ITEMS_PER_PAGE), 
             request('page', 1)
         );
 
-        return $this->respond(${{crudName}});
+        return $this->respond($tenant);
     }
 
     /**
@@ -50,17 +51,17 @@ class DummyClass extends Controller
     {
         $validation = Validator::make(
             $request->all(), 
-            {{modelName}}::validation_rules(),
-            {{modelName}}::validation_messages(),
+            Tenant::validation_rules(),
+            Tenant::validation_messages(),
         );
 
         if ($validation->fails()) {
             return $this->respondValidationError($validation->errors());
         }   
 
-        ${{crudNameSingular}} = {{modelName}}::create($request->all());
+        $tenant = Tenant::create($request->all());
 
-        return $this->respondCreated(${{crudNameSingular}});
+        return $this->respondCreated($tenant);
     }
 
     /**
@@ -70,13 +71,13 @@ class DummyClass extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show({{modelName}} ${{crudNameSingular}})
+    public function show(Tenant $tenant)
     {
         if ($with = request('with')) { //load relationships
-            ${{crudNameSingular}}->with(explode(',', $with));
+            $tenant->with(explode(',', $with));
         }   
 
-        return $this->respond(${{crudNameSingular}});
+        return $this->respond($tenant);
     }
 
     /**
@@ -87,21 +88,21 @@ class DummyClass extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, {{modelName}} ${{crudNameSingular}})
+    public function update(Request $request, Tenant $tenant)
     {
         $validation = Validator::make(
             $request->all(), 
-            {{modelName}}::validation_rules_for_update(),
-            {{modelName}}::validation_messages_for_update(),
+            Tenant::validation_rules_for_update($tenant->id),
+            Tenant::validation_messages_for_update(),
         );
 
         if ($validation->fails()) {
             return $this->respondValidationError($validation->errors());
         }   
 
-        ${{crudNameSingular}}->update($request->all());
+        $tenant->update($request->all());
 
-        return $this->respond(${{crudNameSingular}});
+        return $this->respond($tenant);
     }
 
     /**
@@ -111,9 +112,9 @@ class DummyClass extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy({{modelName}} ${{crudNameSingular}})
+    public function destroy(Tenant $tenant)
     {
-        ${{crudNameSingular}}->delete();
+        $tenant->delete();
 
         return $this->respondDeleted();
     }

@@ -13,6 +13,7 @@ use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Jetstream\HasTeams;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
@@ -24,6 +25,7 @@ class User extends Authenticatable
     use TwoFactorAuthenticatable;
     // use InteractsWithMedia;
     use FilterTrait;
+    use HasRoles;
 
 
     /**
@@ -133,5 +135,10 @@ class User extends Authenticatable
     public static function superAdminExists($attr = null) {
         return self::superAdmin()->exists();
     }
+
+    public function isAdmin()
+    {
+        return strtolower($this->role) === 'admin';
+    }    
 
 }

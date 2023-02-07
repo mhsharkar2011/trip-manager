@@ -47,7 +47,7 @@ class GenerateCRUDCommand extends Command
         $commandArg = [];
         $commandArg['name'] = \Str::remove(' ', $this->argument('entity_name'));
 
-        $commandArg['--fields'] = $this->argument('fields');
+        $commandArg['--fields'] = $this->argument('fields') . 'tenant_id#integer#unassigned';
         $commandArg['--controller-namespace'] = 'App\Http\Controllers';
 
         $commandArg['--foreign-keys'] = $this->argument('foreign_keys');

@@ -43,7 +43,8 @@ class SocialLoginController extends Controller
                     'email' => $user_info->getEmail()
                 ],
                 [
-                    'name' =>$user_info->getName(),
+                    'first_name' => $user_info->getName(),
+                    'last_name' => '',
                     'email' => $user_info->getEmail(),
                 ]
             );

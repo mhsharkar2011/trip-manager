@@ -23,10 +23,14 @@ docker-compose -f docker-compose.local.yml exec www composer install \
 [http://127.0.0.1:8800](http://127.0.0.1:8800) 
  you should be able to see the home page.
 
-6. For database you can use a mysql client and connect to it
+6. For database client, PHPMyAdmin is readily available and can be accessed at the following URL
+
+[http://127.0.0.1:8089](http://127.0.0.1:8089) 
+
+If you want to use a different Database client, then you can use the following host and port to connect to it
 ```
 Host: 127.0.0.1
-Port: 53306
+Port: 33006
 ```
 Get the database name, user and password from the `docker-compose-local.yml` file
 
@@ -236,6 +240,18 @@ payload
 }
 ```
 
+
+# Social Login
+Social login has been implemented using [Laravel Socialite](https://laravel.com/docs/socialite).
+The following API is used to integrate with Frontend Frameworks
+
+`GET /api/v1/login-social/<provider_name_here>?frontend_redirect_url=<frontend_app_url_here>`
+
+for ITC Gitlab provider would be `"gitlab"` and if frontend app url is `example.com/autologin` then the above API would be:
+
+```GET /api/v1/login-social/gitlab?frontend_redirect_url=example.com/autlogin```
+
+Other providers supported out of the box are: TBD
 
 # Authorization
 TBD
