@@ -22,7 +22,7 @@ use App\Http\Controllers\UserProfileController;
 Route::prefix('v1')->group(function () {
     Route::post('register',[AuthController::class, 'store']);
     Route::post('login',[AuthController::class, 'login']);
-    
+
     Route::get('forgot-password', [PasswordRecoveryController::class, 'send_recovery_email']);
     Route::post('forgot-password', [PasswordRecoveryController::class, 'update_password']);
     // Route::post('change/password/{user}', [PasswordRecoveryController::class,'changePassword']);
@@ -34,23 +34,23 @@ Route::prefix('v1')->group(function () {
 
 Route::prefix('v1')
 ->middleware([
-    'auth:sanctum'     
+    'auth:sanctum'
 ])
 ->group(function () { //auth required routes will go here
     Route::resource('users', UserController::class)->except(['edit', 'create']);
     Route::get('roles-old', [UserController::class, 'get_roles']);
-    
+
     Route::get('my-profile', [UserProfileController::class, 'get']);
     Route::put('my-profile', [UserProfileController::class, 'update']);
     Route::put('my-password-change', [UserProfileController::class, 'change_password']);
-    
+
     Route::resource('projects', 'App\Http\Controllers\ProjectController', ['except' => ['create', 'edit']]);
     Route::resource('projects.jobs', 'App\Http\Controllers\ProjectJobController', ['except' => ['create', 'edit']]);
     Route::resource('jobs.milestone', 'App\Http\Controllers\JobMilestoneController', ['except' => ['create', 'edit']]);
 
     // Role permission api lists
 
-        
+
     Route::get('roles', [RolePermissionController::class, 'roles']);
     Route::post('roles', [RolePermissionController::class, 'role_store']);
     Route::put('roles/{role}', [RolePermissionController::class, 'role_update']);
@@ -73,6 +73,6 @@ Route::prefix('v1')
     Route::delete('users/{user}/permission', [RolePermissionController::class, 'user_permission_destroy']);
     Route::resource('activity', 'App\Http\Controllers\ActivityController', ['except' => ['create', 'edit']]);
     Route::get('users/{user_id}/activities', [ActivityController::class, 'userActivity']);
-
+    Route::resource('tasks', 'App\Http\Controllers\TaskController', ['except' => ['create', 'edit']]);
 
 });
