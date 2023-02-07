@@ -1,12 +1,50 @@
+# Table of Contents
+<!-- TOC -->
+
+- [Table of Contents](#table-of-contents)
+- [Setup project locally Using Docker](#setup-project-locally-using-docker)
+    - [1. Option #1 - Easy setup with PHP and MySQL services only](#1-option-1---easy-setup-with-php-and-mysql-services-only)
+        - [1.1. Prerequisite](#11-prerequisite)
+        - [1.2. Steps](#12-steps)
+        - [1.3. Helper script like Laravel Sail](#13-helper-script-like-laravel-sail)
+    - [2. Option #2 - Laravel Sail for BE developers with multiple needed services](#2-option-2---laravel-sail-for-be-developers-with-multiple-needed-services)
+        - [2.1. Prerequisite](#21-prerequisite)
+        - [2.2. Steps](#22-steps)
+- [Boilerplate Features](#boilerplate-features)
+    - [1. API Client](#1-api-client)
+    - [2. Authentication](#2-authentication)
+        - [2.1. Registration](#21-registration)
+        - [2.2. Login](#22-login)
+    - [3. Email verificaition](#3-email-verificaition)
+    - [4. Forgot Password with verification code in email](#4-forgot-password-with-verification-code-in-email)
+        - [4.1. Request a password reset - a code in the email will be sent](#41-request-a-password-reset---a-code-in-the-email-will-be-sent)
+        - [4.2. Use the code received to update password](#42-use-the-code-received-to-update-password)
+    - [5. Social Login](#5-social-login)
+    - [6. Authorization](#6-authorization)
+    - [7. CRUD API generator](#7-crud-api-generator)
+        - [7.1. Option #1](#71-option-1)
+        - [7.2. Option #2 recommended for dev](#72-option-2-recommended-for-dev)
+    - [8. CRUD & Entity Relationships](#8-crud--entity-relationships)
+    - [9. Attachments File uploads](#9-attachments-file-uploads)
+    - [10. Pagination](#10-pagination)
+    - [11. Filtering, Sorting & Selective Columns](#11-filtering-sorting--selective-columns)
+    - [12. Events](#12-events)
+        - [12.1. Local event](#121-local-event)
+        - [12.2. Externalize Local event](#122-externalize-local-event)
+    - [13. SaaS/Multi-tenancy](#13-saasmulti-tenancy)
+- [Deployment](#deployment)
+
+<!-- /TOC -->
+
 # Setup project locally (Using Docker)
 
-## Option #1 - Easy setup with PHP and MySQL services only
+## 1. Option #1 - Easy setup with PHP and MySQL services only
 
-### Prerequisite
+### 1.1. Prerequisite
 1. If you don't have Docker and Docker Compose already then
 Install from [Docker Desktop](https://www.docker.com/products/docker-desktop/) and keep docker running.
 
-### Steps
+### 1.2. Steps
 1. First clone this repo and CD into project root folder and run the following
 ```
 git clone https://git.sandbox3000.com/itc/incubator/boilerplates/laravel-boilerplate.git \
@@ -34,7 +72,7 @@ Port: 33006
 ```
 Get the database name, user and password from the `docker-compose-local.yml` file
 
-### Helper script like Laravel Sail
+### 1.3. Helper script like Laravel Sail
 You will continuously need to run various commands in the php container, commands like `"php artisan migrate"`, `"composer require pckg/foo"` etc. 
 Prefixing these with `docker-compose -f docker-compose.local.yml ....` is tedious, so there is a helper script `./cli` which is a copy of `./vendor/bin/sail` with some necessary adjustments which will proxy the commands to appropriate containers. To use it, give it execute permission and start using it like sail. 
 ```
@@ -54,14 +92,15 @@ Here are some examples:
 ```
 
 
-## Option #2 - Laravel Sail for BE developers with multiple needed services
-### Prerequisite
+## 2. Option #2 - Laravel Sail for BE developers with multiple needed services
+
+### 2.1. Prerequisite
 1. If you are using Windows you need to get Windows WSL2. Follow these instructions from [here](https://laravel.com/docs/9.x/installation#getting-started-on-windows). For Linux or Mac start from #2.
 
 2. If you don't have Docker and Docker Compose already then
 Install from [Docker Desktop](https://www.docker.com/products/docker-desktop/) and keep docker running.
 
-### Steps
+### 2.2. Steps
 1. First clone this repo and CD into project root folder and run the following
 ```
 git clone https://git.sandbox3000.com/itc/incubator/boilerplates/laravel-boilerplate.git \
@@ -97,7 +136,7 @@ docker ps
 
 # Boilerplate Features
 
-# API Client
+## 1. API Client
 We have a built in API client, named `Laravel Compass` which is a client like `Postman` that you can use to interact with the API's. Main benefits over Postman are, the routes in the app will show up automatically, a token can be selected by just clicking an icon, payloads and responses can be saved so that others don't have to type those again. All of these are very helpful and saves time.
 
 To use it head over to [http://127.0.0.1:8800/devtools/api-explorer-compass](http://127.0.0.1:8800/devtools/api-explorer-compass) 
@@ -111,13 +150,13 @@ There are 2 pre-requisites to using Compass though:
 2. For routes that require token authentication, You have to go under the `Auth` tab for a route and select `bearer` and select a token. If no tokens are available in the list, you can generate one from [http://127.0.0.1:8800/devtools/artisangui-iframe](http://127.0.0.1:8800/devtools/artisangui-iframe), click `project:create-api-token`. After you generate the token, go back to `Laravel Compass` and in the `Auth > Bearer` tab, you can click the refresh icon and you will see it in the list, select and hit `Save Requeust`.
 
 
-# Authentication
+## 2. Authentication
 `Register`, `Login`, `Forgot Password`, `Change Password` API are implemented. Request response details given below.
 These can be found in the file `api.php`, the routes prefixed under `v1`.
 
 For any route to require authentication, place it under the `auth:sanctum` middleware. You will see an example in the file `api.php`. 
 
-## Registration
+### 2.1. Registration
 ```
 POST /api/v1/register
 ```
@@ -147,7 +186,8 @@ success response
 	}
 }
 ```
-## Login
+
+### 2.2. Login
 ```
 POST `/api/v1/login`
 ```
@@ -201,7 +241,8 @@ error response
     "errors": []
 }
 ```
-## Email verificaition
+
+## 3. Email verificaition
 There isn't any separate API for this. After registration API call, BE sends the verification email.
 And login API checks for if email verification has been done, if not then it sends a bad request response.
 
@@ -209,12 +250,12 @@ However, we should make the email verification check configurative (which helps 
 
 FE has probable issues however, for example, one issue is, even if backend sends an error response or exception, FE will redirect to registration success page, so assigning Shakil for more investigation.
 
-## Forgot Password (with verification code in email)
+## 4. Forgot Password (with verification code in email)
 NOTE: Usually for password reset, a link in email is sent, clicking which get to a form from which you can reset your password. But we send a code instead of a link because, right now
 if we are using a Quasar phone app build, once you leave the app and open the email client you can't get back to the app reset link automatically, hence we are using a code that you have to enter in the current screen.
 
 
-### Request a password reset - a code in the email will be sent
+### 4.1. Request a password reset - a code in the email will be sent
 `GET /api/v1/forgot-password?email=<email>`
 
 response
@@ -226,7 +267,7 @@ response
 ```
 
 
-### Use the code received to update password
+### 4.2. Use the code received to update password
 
 `POST /api/v1/forgot-password`
 
@@ -241,7 +282,7 @@ payload
 ```
 
 
-# Social Login
+## 5. Social Login
 Social login has been implemented using [Laravel Socialite](https://laravel.com/docs/socialite).
 The following API is used to integrate with Frontend Frameworks
 
@@ -253,17 +294,18 @@ for ITC Gitlab provider would be `"gitlab"` and if frontend app url is `example.
 
 Other providers supported out of the box are: TBD
 
-# Authorization
+## 6. Authorization
 TBD
 
-# CRUD API generator
-## Option #1
+## 7. CRUD API generator
+
+### 7.1. Option #1
 For this option you have to fill out a form to generate the CRUD for an entity.
 Head over to [http://127.0.0.1:8800/devtools/artisangui-iframe](http://127.0.0.1:8800/devtools/artisangui-iframe) and click `project:generate-crud`. 
 
 Then use the form field hints to complete the form and click `Run`. It will show you list of files generated, you can verify by checking the codebase. You can also go to `Laravel Compass` and you will see the newly generated API's (click refresh icon if necessary) and can interact from there. When you commit the files for the CRUD, also commit the file `database.compass.sqlite` in repo. That way others will see the payloads and responses that you saved during development.
 
-## Option #2 (recommended for dev)
+### 7.2. Option #2 (recommended for dev)
 Generate the CRUD from a json file. This is actually more useful because usually development happens incrementally. 
 
 Run the command `php artisan project:generate-crud-spec-file <entity_name>`
@@ -295,14 +337,14 @@ The column types available are the following:
 * float
 * enum
 
-# CRUD & Entity Relationships
+## 8. CRUD & Entity Relationships
 1. For a list API, for example, `GET /posts`, to load related data, add the query parameter `?with`. So for example, to load the category and user with each posts, use API endpoint like this `GET /posts?with=category,user`
 2. .....TBD
 
-# Attachments (File uploads)
+## 9. Attachments (File uploads)
 TBD
 
-# Pagination
+## 10. Pagination
 1. All list API (e.g., `GET /posts`) are by default paginated. Here is an example response:
 ```
 {
@@ -327,7 +369,7 @@ To control pagination, use the following two query params
 
 So an example would be `GET /posts?items_per_page=20&page=2`
 
-# Filtering, Sorting & Selective Columns
+## 11. Filtering, Sorting & Selective Columns
 1. Filtering, sorting will work on any list API (e.g., `GET /posts`). Here is an example request query param and format. For now, only main entity props are supported, related entities are not supported yet but is coming.
 ```
 {
@@ -368,12 +410,13 @@ So an example would be `GET /posts?items_per_page=20&page=2`
 
 2. If no sorting params are found, then the default sorting is applied, which is `orderBy id desc`, which means latest items are shown on top, which is a good default in most cases.
 
-# Events
-## Local event
+## 12. Events
+
+### 12.1. Local event
 For local events, Follow Laravel default event mechanism
 https://laravel.com/docs/9.x/events
 
-## Externalize Local event
+### 12.2. Externalize Local event
 All events we create under `App\Events` will be published to a RabbitMQ Broker.
 We do this centrally through a catch all event listener in `EventServiceProvider`. For interacting with RabbitMQ we use our own `App\RabbitMQService` service class. So no extra code is necessary for this. So whatever local events we define under `App\Events` gets published to RabbitMQ by default.
 
@@ -392,37 +435,10 @@ If you want to know more about the way we use RabbitMQ, as in how and what type 
 **TODO**
 * Push eloquent/model events - We can also do this. Since Laravel eloquent fires events, we can do a central eloquent event listener and push those to RabbitMQ.
 
-## SaaS/Multi-tenancy
+## 13. SaaS/Multi-tenancy
 TBD
 
 # Deployment 
 TBD
 
 
-# Laravel PHP Framework
-
-[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
-[![Total Downloads](https://poser.pugx.org/laravel/framework/d/total.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
-[![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
-
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, queueing, and caching.
-
-Laravel is accessible, yet powerful, providing powerful tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
-
-## Official Documentation
-
-Documentation for the framework can be found on the [Laravel website](http://laravel.com/docs).
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
-
-### License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
