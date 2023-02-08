@@ -417,17 +417,71 @@ For local events, Follow Laravel default event mechanism
 https://laravel.com/docs/9.x/events
 
 ### 12.2. Externalize Local event
-All events we create under `App\Events` will be published to a RabbitMQ Broker.
-We do this centrally through a catch all event listener in `EventServiceProvider`. For interacting with RabbitMQ we use our own `App\RabbitMQService` service class. So no extra code is necessary for this. So whatever local events we define under `App\Events` gets published to RabbitMQ by default.
+All events we create under `App\Events` or `App\Providers` will be published to a RabbitMQ Broker.
+We do this centrally through a catch all event listener in `EventServiceProvider`. For interacting with RabbitMQ we use our own `App\RabbitMQService` service class. So no extra code is necessary for this. So whatever local events we define under `App\Events` or `App\Providers` gets published to RabbitMQ by default.
 
 If you want to receive some event/message from the RabbitMQ broker, local or external, doesn't matter, run the following artisan command `php artisan project:consume-rabbitmq-event`  
-After running you will get more instruction regarding required inputs.
+After running the command you will get more instruction propmted to you regarding required inputs.
+
+If you need to do additional publish/listen for cross app events then use the following methods of the `App\RabbitMQService` class. 
+
+This is an example code for publishing an event/msg
+
+```
+//publish
+$routing_key = 'pmapp.card.update'; //this is an example, probable values are explained more later
+RabbitMQService::publish($routing_key, $data_array);
+```
+
+This is an example code for consuming an event/msg
+```
+//consume/listen/subscribe
+$routing_key = 'pmapp.#' //this is an example, probable values are explained more later
+RabbitMQService::consume($routing_key, $callback);
+
+$callback = function($msg) {
+    logger('received event from broker: ' . $msg->delivery_info['routing_key'], (array) $msg->body);
+
+    $msg->ack(); //only after ack() rabbitmq will delete the event/msg from queue
+}
+```
+A bit more about routing key. We are using topic based RabbitMQ exchange, it is a list of words, delimited by dots and supports wildcards `(# and *)` in the key which helps consume selective events. Our convention for routing key is: ```<app_slug>.<entity>.<action>```, so some examples would be
+```
+pmapp.card.created
+pmapp.card.state.changed
+pmapp.project.state.changed
+```
+
+When consuming we can use following wildcards in routing key
+```
+* (star) can substitute for exactly one word.
+# (hash) can substitute for zero or more words
+```
+
+Some examples of routing keys with wildcards
+```
+#               -> listens for all events
+pmapp.#         -> listens for all pmapp related events
+pmapp.card.#    -> listens for all pmapp card related events
+pmapp.*.state.#    -> listens for all pmapp state related events for any entity
+```
+You can read more about RabbitMQ topic exchange here
+https://www.rabbitmq.com/tutorials/tutorial-five-php.html
 
 If you want to deploy RabbitMQ locally or on a server, use the file `docker-compose.rabbitmq.yml` under the folder `rabbitmq` in the project root, so something like 
 ```
 docker-compose -f rabbitmq/docker-compose.rabbitmq.yml up
 ```  
 There is no Dockerfile or other file dependency, so you can also copy the file or content anywhere and use it as needed. 
+
+After deployment add the proper host, port, user, pass values in `.env`
+
+```
+RABBITMQ_HOST=
+RABBITMQ_PORT=5670
+RABBITMQ_USER=
+RABBITMQ_PASSWORD=
+```
 
 If you want to know more about the way we use RabbitMQ, as in how and what type of exchange and queues we use, check the following doc, the doc also has POC repo link which you use to try it out as a separate project.
 [Events POC - RabbitMQ](https://docs.google.com/document/d/1N1f-7kXIQJiEGDEGaDE9iYx_cf5Awey7qkNtfht87Mo/edit?usp=sharing)
