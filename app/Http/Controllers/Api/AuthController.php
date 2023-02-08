@@ -31,7 +31,7 @@ class AuthController extends Controller
 
     public function login()
     {
-        $user = User::with('roles')->where([
+        $user = User::with('roles.permissions')->where([
             'email'=> request('email')
         ])->firstOrFail();
 
