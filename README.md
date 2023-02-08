@@ -441,7 +441,6 @@ RabbitMQService::consume($routing_key, $callback);
 
 $callback = function($msg) {
     logger('received event from broker: ' . $msg->delivery_info['routing_key'], (array) $msg->body);
-
     $msg->ack(); //only after ack() rabbitmq will delete the event/msg from queue
 }
 ```
