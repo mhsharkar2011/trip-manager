@@ -118,7 +118,7 @@ class User extends Authenticatable
     public function scopeSuperAdmin($query) {
         return $query->where('role', self::ROLE_SUPER_ADMIN);
     }
-    
+
     public function scopeNonSuperAdmin($query) {
         return $query
         ->where('role', '!=', self::ROLE_SUPER_ADMIN)
@@ -138,6 +138,11 @@ class User extends Authenticatable
     public function isAdmin()
     {
         return strtolower($this->role) === 'admin';
-    }    
+    }
+
+    public function tasks()
+    {
+        return $this->belongsToMany(Task::class, 'task_user')->withTimestamps();
+    }
 
 }

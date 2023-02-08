@@ -60,6 +60,8 @@ class TaskController extends Controller
 
         $task = Task::create($request->all());
 
+        $task->users()->sync($request->user_ids);
+
         return $this->respondCreated($task);
     }
 
@@ -100,6 +102,8 @@ class TaskController extends Controller
         }
 
         $task->update($request->all());
+
+        $task->users()->sync($request->user_ids);
 
         return $this->respond($task);
     }

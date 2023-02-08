@@ -65,5 +65,8 @@ class Task extends baseModel
     {
         return $this->belongsTo(Tenant::class);
     }
-
+    public function users() // assigned users in a tasks
+    {
+        return $this->belongsToMany(User::class, 'task_user')->withTimestamps();
+    }
 }
