@@ -49,10 +49,14 @@ class EventServiceProvider extends ServiceProvider
                 // logger('catch all event handler, event name:' . $eventName, (array)$data);
             }
 
-            if (Str::startsWith($eventName, 'App\Events')) { //handle only custom events that we add for this app
+            if (
+                Str::startsWith($eventName, 'App\Events')
+                || Str::startsWith($eventName, 'App\Providers')
+            ) { //handle only custom events that we add for this app
+
                 // logger('catch all event handler, event name:' . $eventName, (array)$data);    
 
-                //get the last part from App\Events\<Event>
+                //get the last part from App\Events|Providers\<Event>
                 $eventName = explode('\\', $eventName);
                 $eventName = end($eventName);
 
