@@ -459,9 +459,9 @@ When consuming we can use following wildcards in routing key
 
 Some examples of routing keys with wildcards
 ```
-#               -> listens for all events
-pmapp.#         -> listens for all pmapp related events
-pmapp.card.#    -> listens for all pmapp card related events
+#                  -> listens for all events
+pmapp.#            -> listens for all pmapp related events
+pmapp.card.#       -> listens for all pmapp card related events
 pmapp.*.state.#    -> listens for all pmapp state related events for any entity
 ```
 You can read more about RabbitMQ topic exchange here
