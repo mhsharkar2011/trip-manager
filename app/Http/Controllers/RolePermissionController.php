@@ -107,7 +107,7 @@ class RolePermissionController extends Controller
     public function user_roles_store(User $user, Request $request)
     {
 
-        $user->assignRole($request->roleId);
+        $user->syncRoles($request->roleIds);
         return $this->respond($user->load('roles'));
     }
 
