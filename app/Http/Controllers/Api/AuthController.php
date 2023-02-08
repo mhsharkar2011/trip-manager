@@ -31,7 +31,7 @@ class AuthController extends Controller
 
     public function login()
     {
-        $user = User::where([
+        $user = User::with('roles')->where([
             'email'=> request('email')
         ])->firstOrFail();
 
@@ -51,7 +51,7 @@ class AuthController extends Controller
                 ];
             });
             $response['companies'] = $companies;
-            $response['roles'] = [];
+            $response['roles'] = $user->roles;
             $response['session'] = [
                 'access_token' => $token
                 ,'session_last_access' => 0
