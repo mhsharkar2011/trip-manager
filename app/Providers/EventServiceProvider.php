@@ -45,8 +45,9 @@ class EventServiceProvider extends ServiceProvider
             //Framework has a lot of events
             //if we want to log all events for testing, we have to skip the log event itself,
             //otherwise will fall into infinite loop
-            if ('Illuminate\Log\Events\MessageLogged' !== $eventName) {
+            if ('Illuminate\Log\Events\MessageLogged' == $eventName) {
                 // logger('catch all event handler, event name:' . $eventName, (array)$data);
+                return;
             }
 
             if (
