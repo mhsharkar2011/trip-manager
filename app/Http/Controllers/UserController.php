@@ -78,6 +78,10 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
+        if ($with = request('with')) { //load relationships
+            $user->load(explode(',', $with));
+        }        
+
         return $this->respond($user);
     }
 
