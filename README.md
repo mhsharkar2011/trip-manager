@@ -33,6 +33,8 @@
         - [12.2. Externalize Local event](#122-externalize-local-event)
     - [13. SaaS/Multi-tenancy](#13-saasmulti-tenancy)
 - [Deployment](#deployment)
+- [Prebuild Crud](#PreBuildCrud)
+  - [1. Tasks](#1-Tasks)
 
 <!-- /TOC -->
 
@@ -441,4 +443,18 @@ TBD
 # Deployment 
 TBD
 
-
+# Prebuild Crud
+### 1. Tasks
+1. Crud for any tasks with assign any users. API (e.g., `POST api/v1/tasks`)
+```
+{
+	"title":"Need to change data model for durojan",
+	"description":"Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia",
+	"project_id":1,
+	"parent_id":"",
+	"sequence": 2,
+	"due_date":"2023-02-01T10:21:58.000000Z",
+	"time_estimate":"1",
+	"user_ids":[1,3]
+}
+```
