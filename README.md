@@ -496,25 +496,25 @@ For event data payload, our convention is the following:
 
 Here is a description of each of these attributes
 
-| Attribute      | Description |
-| ----------- | ----------- |
-| event_name      | A readable name of the event. Something that would make sense to a human.        |
-| event_key   | A slug for the event name, that can be used in code and won't change arbitrarily.        |
-| event_id   | A UUID that uniquely identifies each event, there will be use cases where this would be neede, one for example can be when we need to mention the parent event for an event.         |
-| event_source_app   | A readable name for the source app from where the event has originated        |
-| event_source_app_slug   | A slug for the source app name that can be used in code and won't change arbitrarily.        |
-| event_source_service_key   | TBD by Reza        |
-| tenant_id   | Our apps are multi-tenant aware by default, so the current tenant id under which the event originated from.       |
-| account_id   | TBD by Reza       |
-| user_id   | Current user's id under which the event originated from, so in the context of an API call, the current user would be the corresponding user to the bearer token for the API call.         |
-| user_ip   | Current user's IP, in the context of a PHP backend this would be "REMOTE_ADDR" from the event originating app/server        |
-| server_ip   | IP of the server from where the event is being published.        |
-| entity_name   | The actual event data payload can have arbitrary key values. So it's important for the originating app/service to mention the main entity for the event         |
-| entity_primary_key   | For the same reason mentioned above.        |
-| entity_primary_key_value   | Looks like this is redundant, TBD by Reza        |
-| entity_url   | If the event has originated due to a API call, then the URI of that API call.        |
-| event_time   | The date time in UTC or timestamp when the app/service is publishing the event. This is important/useful for many reasons, for example, you can see if there delay and by how much to receive an event, if an event can be deemed outdated etc.          |
-| call_stack_array   | An array of the owing event ids. There would be use cases where events are being fired due to events being received thus forming a parent > child > children relationship. This attribute will store the event ids in order so the relationship is captured.          |
+| Attribute   | Description  | Example Value |
+| ----------- | --------- | ----------- |
+| event_name  |  A readable name of the event. Something that would make sense to a human.        | `"PMAPP - An user was removed from a card"` |
+| event_key   | A slug for the event name, that can be used in code and won't change arbitrarily.        | `pmapp.card.user.removed` |
+| event_id   | A UUID that uniquely identifies each event, there will be use cases where this would be needed, one for example can be when we need to mention the parent event for an event.         | `"e7230264-9b76-49f6-9c57-e513b7bc6044"` |
+| event_source_app   | A readable name for the source app from where the event has originated        | `"PMApp"` |
+| event_source_app_slug   | A slug for the source app name that can be used in code and won't change arbitrarily.        | `"pmapp"` |
+| event_source_service_key   | TBD by Reza      |  `"app or email or notification or SMS …"`  |
+| tenant_id   | Our apps are multi-tenant aware by default, so the current tenant id under which the event originated from.       | `2232` |
+| account_id   | TBD by Reza       | `334` |
+| user_id   | Current user's id under which the event originated from, so in the context of an API call, the current user would be the corresponding user to the bearer token for the API call.         | `25` |
+| user_ip   | Current user's IP, in the context of a PHP backend this would be "REMOTE_ADDR" from the event originating app/server  | `"103.217.109.154"` |
+| server_ip   | IP of the server from where the event is being published.        | `"154.27.70.236"` |
+| entity_name   | The actual event data payload can have arbitrary key values. So it's important for the originating app/service to mention the main entity for the event         | `"users"` |
+| entity_primary_key   | For the same reason mentioned above.        | `"id"` |
+| entity_primary_key_value   | Looks like this is redundant, TBD by Reza        | |
+| entity_url   | If the event has originated due to a API call, then the URI of that API call.        | `https://pmapp-api.dev.sandbox3000.com/api/users/80/cards/3834`
+| event_time   | The date time in UTC or timestamp when the app/service is publishing the event. This is important/useful for many reasons, for example, you can see if there delay and by how much to receive an event, if an event can be deemed outdated etc.          | `1675868365` |
+| call_stack_array   | An array of the owing event ids. There would be use cases where events are being fired due to events being received thus forming a parent > child > children relationship. This attribute will store the event ids in order so the relationship is captured.          | `["e7230264-9b76-49f6-9c57-e513b7bc6044", "817b907d-c683-4e70-a8e1-19d78869c142"]` |
 
 If you want to deploy RabbitMQ locally or on a server, use the file `docker-compose.rabbitmq.yml` under the folder `rabbitmq` in the project root, so something like 
 ```
