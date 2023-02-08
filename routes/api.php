@@ -9,6 +9,7 @@ use App\Http\Controllers\DriverController;
 use App\Http\Controllers\PasswordRecoveryController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\VehicleTypesController;
 use Whoops\Util\Misc;
 
@@ -38,11 +39,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::middleware([
+
+Route::prefix('v1')->middleware([
     'auth:sanctum'
 ])
 ->group(function () {
     //auth required routes will go here
+    Route::apiResource('users',UserController::class);
+
 });
 
 // Driver API
@@ -74,7 +78,6 @@ Route::resource('role-users', 'App\Http\Controllers\RoleUsersController', ['exce
 
 // Route::apiResource('posts',PostController::class);
 // Route::apiResource('comments',CommentController::class);
-// Route::apiResource('users',TestController::class);
 
 
 Route::resource('package', 'App\Http\Controllers\PackageController',['names'=>'api/package'], ['except' => ['create', 'edit']]);
