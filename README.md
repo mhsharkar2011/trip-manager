@@ -467,6 +467,32 @@ pmapp.*.state.#    -> all pmapp state related events for any entity
 You can read more about RabbitMQ topic exchange here
 https://www.rabbitmq.com/tutorials/tutorial-five-php.html
 
+For event data payload, our convention is the following:
+
+```
+{
+  "attributes": {
+    "event_name": "Any Name of Event",
+    “event_key”: “<app>.<entity>....<sub_entity>.<action>” //pmapp.card.comment.updated     
+    "event_source_app": "Application Name",
+    "event_source_app_slug": "ApplicationName",
+    "event_source_service_key": "app | email | notification | SMS …",
+    "tenant_id": 2232,
+    "account_id": 334, //billing
+    "user_id": 9937,
+    “user_ip”: 
+    “server_ip”: 
+    "entity_name": "users",
+    "entity_url": "", 
+    "entity_primary_key": "id",
+    "entity_primary_key_value": "id",
+    "event_time": "datetime_in_UTC"
+    “call_stack_array”: [<arr_of_parent_event_ids>]
+  },
+  "data": "<json_data>"
+}
+```
+
 If you want to deploy RabbitMQ locally or on a server, use the file `docker-compose.rabbitmq.yml` under the folder `rabbitmq` in the project root, so something like 
 ```
 docker-compose -f rabbitmq/docker-compose.rabbitmq.yml up
