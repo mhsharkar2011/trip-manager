@@ -46,7 +46,11 @@ class VehiclesController extends Controller
             request('page', 1)
         );
 
-        return view('vehicles.index',['vehicles'=>$vehicles,'vTypes'=>$vTypes])->with('id',(request()->input('page', 1) - 1) * self::ITEMS_PER_PAGE);
+        if( request()->is('api/*')){
+            return $this->respond($vehicles);
+        }else{
+            return view('vehicles.index',['vehicles'=>$vehicles,'vTypes'=>$vTypes])->with('id',(request()->input('page', 1) - 1) * self::ITEMS_PER_PAGE);
+        }
         // return $this->respond($vehicles);
     }
 

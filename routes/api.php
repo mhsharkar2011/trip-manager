@@ -31,12 +31,13 @@ Route::prefix('v1')->group(function () {
     Route::post('login',[AuthController::class, 'login']);
     Route::post('forgotpassword', [PasswordRecoveryController::class,'passwordRecovery']);
     Route::post('change/password/{user}', [PasswordRecoveryController::class,'changePassword']);
+    Route::apiResource('vehicles', 'App\Http\Controllers\VehiclesController', ['except' => ['create', 'edit']]);
 });
 
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
 
 
@@ -53,9 +54,8 @@ Route::prefix('v1')->middleware([
 
 Route::post('user-avatar/{id}',[DriverController::class,'avatarUpdate']);
 // Vehicles APIs
-Route::apiResource('vehicles', 'App\Http\Controllers\VehiclesController',['names'=>'api/vehicles'], ['except' => ['create', 'edit']]);
 Route::apiResource('vehicle-types', 'App\Http\Controllers\VehicleTypesController', ['names'=>'api/vehicle-types'], ['except' => ['create', 'edit']]);
-Route::resource('user-vehicles', 'App\Http\Controllers\DriverVehiclesController', ['except' => ['create', 'edit']]);
+// Route::resource('user-vehicles', 'App\Http\Controllers\DriverVehiclesController', ['except' => ['create', 'edit']]);
 // Fuel APIs
 Route::resource('fuels', 'App\Http\Controllers\FuelsController', ['names'=>'api/fuels'], ['except' => ['create', 'edit']]);
 Route::resource('fuel-types', 'App\Http\Controllers\FuelTypesController',['names'=>'api/fuel-types'], ['except' => ['create', 'edit']]);
