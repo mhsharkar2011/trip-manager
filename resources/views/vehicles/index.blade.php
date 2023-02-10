@@ -7,7 +7,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8 mt-5">
             <div class="card">
-                <div class="card-header bg-success text-white">Vehicle List</div>
+                <div class="card-header bg-success text-white">Total Vehicle <span class="badge bg-danger"> {{ $vehicles->count() }} </span></div>
                 <div class="card-body">
                     <table class="table table-striped table-bordered table-hover table-sm m-12">
                         <thead>
