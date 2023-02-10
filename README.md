@@ -70,7 +70,7 @@ If you want to use a different Database client, then you can use the following h
 Host: 127.0.0.1
 Port: 33006
 ```
-Get the database name, user and password from the `docker-compose-local.yml` file
+Get the database name, user and password from the `docker-compose-local.yml` file.
 
 ### 1.3. Helper script like Laravel Sail
 You will continuously need to run various commands in the php container, commands like `"php artisan migrate"`, `"composer require pckg/foo"` etc. 
