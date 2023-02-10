@@ -72,7 +72,7 @@ If you want to use a different Database client, then you can use the following h
 Host: 127.0.0.1
 Port: 33006
 ```
-Get the database name, user and password from the `docker-compose-local.yml` file
+Get the database name, user and password from the `docker-compose-local.yml` file.
 
 ### 1.3. Helper script like Laravel Sail
 You will continuously need to run various commands in the php container, commands like `"php artisan migrate"`, `"composer require pckg/foo"` etc. 
@@ -419,17 +419,119 @@ For local events, Follow Laravel default event mechanism
 https://laravel.com/docs/9.x/events
 
 ### 12.2. Externalize Local event
-All events we create under `App\Events` will be published to a RabbitMQ Broker.
-We do this centrally through a catch all event listener in `EventServiceProvider`. For interacting with RabbitMQ we use our own `App\RabbitMQService` service class. So no extra code is necessary for this. So whatever local events we define under `App\Events` gets published to RabbitMQ by default.
+All events we create under `App\Events` or `App\Providers` will be published to a RabbitMQ Broker.
+We do this centrally through a catch all event listener in `EventServiceProvider`. For interacting with RabbitMQ we use our own `App\RabbitMQService` service class. So no extra code is necessary for this. So whatever local events we define under `App\Events` or `App\Providers` gets published to RabbitMQ by default.
 
 If you want to receive some event/message from the RabbitMQ broker, local or external, doesn't matter, run the following artisan command `php artisan project:consume-rabbitmq-event`  
-After running you will get more instruction regarding required inputs.
+After running the command you will get more instruction propmted to you regarding required inputs.
+
+If you need to do additional publish/listen for cross app events then use the following methods of the `App\RabbitMQService` class. 
+
+This is an example code for publishing an event/msg
+
+```
+//publish
+$routing_key = 'pmapp.card.update'; //this is an example, probable values are explained more later
+RabbitMQService::publish($routing_key, $data_array);
+```
+
+This is an example code for consuming an event/msg
+```
+//consume/listen/subscribe
+$routing_key = 'pmapp.#' //this is an example, probable values are explained more later
+RabbitMQService::consume($routing_key, $callback);
+
+$callback = function($msg) {
+    logger('received event from broker: ' . $msg->delivery_info['routing_key'], (array) $msg->body);
+    $msg->ack(); //only after ack() rabbitmq will delete the event/msg from queue
+}
+```
+A bit more about routing key. We are using topic based RabbitMQ exchange, it is a list of words, delimited by dots and supports wildcards `(# and *)` in the key which helps consume selective events. Our convention for routing key is: ```<app_slug>.<entity>.<action>```, so some examples would be
+```
+pmapp.card.created
+pmapp.card.state.changed
+pmapp.project.state.changed
+```
+
+When consuming we can use following wildcards in routing key
+```
+* (star) can substitute for exactly one word.
+# (hash) can substitute for zero or more words
+```
+
+Some examples of routing keys with wildcards
+```
+#                  -> all events
+pmapp.#            -> all pmapp related events
+pmapp.card.#       -> all pmapp card related events
+pmapp.*.state.#    -> all pmapp state related events for any entity
+```
+You can read more about RabbitMQ topic exchange here
+https://www.rabbitmq.com/tutorials/tutorial-five-php.html
+
+For event data payload, our convention is the following:
+
+```
+{
+  "attributes": {
+    "event_name": "Any Name of Event",
+    “event_key”: “<app>.<entity>....<sub_entity>.<action>” //pmapp.card.comment.updated     
+    “event_id”: "<uuid>" 
+    "event_source_app": "Application Name",
+    "event_source_app_slug": "ApplicationName",
+    "event_source_service_key": "app | email | notification | SMS …",
+    "tenant_id": 2232,
+    "account_id": 334, //billing
+    "user_id": 9937,
+    “user_ip”: 
+    “server_ip”: 
+    "entity_name": "users",
+    "entity_primary_key": "id",
+    "entity_primary_key_value": "id",
+    "entity_url": "", 
+    "event_time": "datetime_in_UTC"
+    “call_stack_array”: [<arr_of_parent_event_ids>]
+  },
+  "data": "<json_actual_event_data>"
+}
+```
+
+Here is a description of each of these attributes
+
+| Attribute   | Description  | Example Value |
+| ----------- | --------- | ----------- |
+| event_name  |  A readable name of the event. Something that would make sense to a human.        | `"PMAPP - An user was removed from a card"` |
+| event_key   | A slug for the event name, that can be used in code and won't change arbitrarily.        | `pmapp.card.user.removed` |
+| event_id   | A UUID that uniquely identifies each event, there will be use cases where this would be needed, one for example can be when we need to mention the parent event for an event.         | `"e7230264-9b76-49f6-9c57-e513b7bc6044"` |
+| event_source_app   | A readable name for the source app from where the event has originated        | `"PMApp"` |
+| event_source_app_slug   | A slug for the source app name that can be used in code and won't change arbitrarily.        | `"pmapp"` |
+| event_source_service_key   | TBD by Reza      |  `"app or email or notification or SMS …"`  |
+| tenant_id   | Our apps are multi-tenant aware by default, so the current tenant id under which the event originated from.       | `2232` |
+| account_id   | TBD by Reza       | `334` |
+| user_id   | Current user's id under which the event originated from, so in the context of an API call, the current user would be the corresponding user to the bearer token for the API call.         | `25` |
+| user_ip   | Current user's IP, in the context of a PHP backend this would be "REMOTE_ADDR" from the event originating app/server  | `"103.217.109.154"` |
+| server_ip   | IP of the server from where the event is being published.        | `"154.27.70.236"` |
+| entity_name   | The actual event data payload can have arbitrary key values. So it's important for the originating app/service to mention the main entity for the event         | `"users"` |
+| entity_primary_key   | For the same reason mentioned above.        | `"id"` |
+| entity_primary_key_value   | Looks like this is redundant, TBD by Reza        | |
+| entity_url   | If the event has originated due to a API call, then the URI of that API call.        | `https://pmapp-api.dev.sandbox3000.com/api/users/80/cards/3834`
+| event_time   | The date time in UTC or timestamp when the app/service is publishing the event. This is important/useful for many reasons, for example, you can see if there delay and by how much to receive an event, if an event can be deemed outdated etc.          | `1675868365` |
+| call_stack_array   | An array of the owing event ids. There would be use cases where events are being fired due to events being received thus forming a parent > child > children relationship. This attribute will store the event ids in order so the relationship is captured.          | `["e7230264-9b76-49f6-9c57-e513b7bc6044", "817b907d-c683-4e70-a8e1-19d78869c142"]` |
 
 If you want to deploy RabbitMQ locally or on a server, use the file `docker-compose.rabbitmq.yml` under the folder `rabbitmq` in the project root, so something like 
 ```
 docker-compose -f rabbitmq/docker-compose.rabbitmq.yml up
 ```  
 There is no Dockerfile or other file dependency, so you can also copy the file or content anywhere and use it as needed. 
+
+After deployment add the proper host, port, user, pass values in `.env`
+
+```
+RABBITMQ_HOST=
+RABBITMQ_PORT=5670
+RABBITMQ_USER=
+RABBITMQ_PASSWORD=
+```
 
 If you want to know more about the way we use RabbitMQ, as in how and what type of exchange and queues we use, check the following doc, the doc also has POC repo link which you use to try it out as a separate project.
 [Events POC - RabbitMQ](https://docs.google.com/document/d/1N1f-7kXIQJiEGDEGaDE9iYx_cf5Awey7qkNtfht87Mo/edit?usp=sharing)
