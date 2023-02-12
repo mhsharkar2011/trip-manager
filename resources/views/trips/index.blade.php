@@ -16,7 +16,7 @@
                     <div class="table-responsive">
                         <table class="table table-responsive table-bordered table-hover table-sm m-12">
                             <thead>
-                                <tr>
+                                <tr style="font-size: 12px; text-align: center;vertical-align: middle;">
 
                                     <th>SL No.</th>
                                     <th>Booking ID</th>
@@ -31,11 +31,11 @@
                                     <th>Cost Details</th>
                                     <th>Total Cost</th>
                                     <th>Balance In</th>
-                                    <th>Trip Details</th>
-                                    <th>Distance</th>
+                                    <th colspan="2" >Trip From/TO</th>
+                                    <th >Distance</th>
                                     <th>Trip Earning</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
+                                    <th >Status</th>
+                                    <th colspan="2" >Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -54,13 +54,13 @@
                                     </td>
 
                                     <td>
-                                        {{ str_limit($trip->package_details,'10') }}
+                                        {{ str_limit($trip->package_details,'5') }}
                                     </td>
                                     <td>
                                         {{ $trip->package_amount}}
                                     </td>
                                     <td>
-                                        {{ Carbon\Carbon::parse($trip->bookig_date)->format('Y-m-d') }}
+                                        {{ Carbon\Carbon::parse($trip->bookig_date)->format('Y/m/d') }}
                                         {{-- {{ $trip->bookig_date->format('Y-m-d')}} --}}
                                         
                                     </td>
@@ -74,7 +74,7 @@
                                         {{ $trip->bkash_charge}}
                                     </td>
                                     <td>
-                                        {{ $trip->cost_details}}
+                                        {{ str_limit($trip->cost_details,'10')}}
                                     </td>
                                     <td>
                                         {{ $trip->cost_amount}}
@@ -83,7 +83,11 @@
                                         {{ $trip->balance_in}}
                                     </td>
                                     <td>
-                                        <h5>From:</h5> {{ str_limit($trip->from_area,'5')}} <h5>To:</h5>{{ str_limit($trip->to_area,'5')}}
+                                        {{ str_limit($trip->from_area,'5')}}
+                                    </td>
+                                    <td>
+                                       {{ str_limit($trip->to_area,'5')}}
+                                        
                                     </td>
                                     <td>
                                         {{ $trip->distance}}
@@ -102,6 +106,8 @@
                                             <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
                                         </svg>
                                         </a>
+                                    </td>
+                                    <td>
                                         <a class="btn btn-danger" href="#">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                                             <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
