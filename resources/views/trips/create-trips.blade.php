@@ -10,7 +10,7 @@
             <div class="card">
                 <div class="card-header bg-success text-white text-center">
                     <a style="float: center" class="btn btn-success text-center" href="">Trips Form</a>
-                    {{-- <a style="float:right" class="btn btn-success text-center" href="{{ asset('trips') }}">Trips List</a> --}}
+                    <a style="float:right" class="btn btn-success text-center" href="{{ asset('trips') }}">Trips List</a>
                 </div>
                 <div class="card-body">
                     <form class="row g-3" method="post" action="{{ route('trips.store') }}">
