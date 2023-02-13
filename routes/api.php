@@ -1,11 +1,10 @@
 <?php
 
-
+use App\Http\Controllers\ActivityController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\PasswordRecoveryController;
-use App\Http\Controllers\PostController;
-use App\Http\Controllers\ReportController;
+use App\Http\Controllers\RolePermissionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SocialLoginController;
 use App\Http\Controllers\UserProfileController;
@@ -80,11 +79,9 @@ Route::prefix('v1')
 });
 
 
-// Driver API
-Route::post('user-avatar/{id}',[DriverController::class,'avatarUpdate']);
 
 // Vehicles APIs
-Route::apiResource('vehicle-types', 'App\Http\Controllers\VehicleTypesController', ['names'=>'api/vehicle-types'], ['except' => ['create', 'edit']]);
+Route::resource('vehicle-types', 'App\Http\Controllers\VehicleTypesController', ['names'=>'api/vehicle-types'], ['except' => ['create', 'edit']]);
 Route::resource('user-vehicles', 'App\Http\Controllers\DriverVehiclesController', ['except' => ['create', 'edit']]);
 
 // Fuel APIs
@@ -99,14 +96,14 @@ Route::resource('leave-configs', 'App\Http\Controllers\LeaveConfigsController', 
 Route::resource('leaves', 'App\Http\Controllers\LeavesController', ['except' => ['create', 'edit']]);
 
 // Transport APIs
-Route::apiResource('trips', 'App\Http\Controllers\TransportsController', ['names'=>'api/trips'], ['except' => ['create', 'edit']]);
-Route::apiResource('mileages', 'App\Http\Controllers\MileagesController',['names'=>'api/mileages'], ['except' => ['create', 'edit']]);
-Route::get('reports',[ReportController::class,'index']);
+Route::resource('trips', 'App\Http\Controllers\TransportsController', ['names'=>'api/trips'], ['except' => ['create', 'edit']]);
+Route::resource('mileages', 'App\Http\Controllers\MileagesController',['names'=>'api/mileages'], ['except' => ['create', 'edit']]);
 Route::resource('roles', 'App\Http\Controllers\RolesController', ['except' => ['create', 'edit']]);
 Route::resource('role-users', 'App\Http\Controllers\RoleUsersController', ['except' => ['create', 'edit']]);
 
-// Route::apiResource('posts',PostController::class);
-// Route::apiResource('comments',CommentController::class);
+// Route::resource('posts',PostController::class);
+// Route::resource('comments',CommentController::class);
 
 
-Route::resource('package', 'App\Http\Controllers\PackageController',['names'=>'api/package'], ['except' => ['create', 'edit']]);
+Route::resource('trip-packages-', 'App\Http\Controllers\PackageController',['names'=>'api/package'], ['except' => ['create', 'edit']]);
+Route::resource('trip-packages', 'App\Http\Controllers\PackageController',['names'=>'api/package'], ['except' => ['create', 'edit']]);

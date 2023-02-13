@@ -29,7 +29,19 @@ class VehicleFactory extends Factory
                 return [
                     'owner_id'=>1,
                     'sl_no' => $sl_no."-".rand(6,10000),
-                    'name' => $this->faker->name,
+                    // 'name' => $this->faker->name,
+                    'name' => $this->faker->unique()->randomElement([
+                        "Toyota Corolla",
+                        "Honda Civic",
+                        "Toyota Camry",
+                        "Honda CR-V",
+                        "Toyota RAV4",
+                        "Nissan Rogue",
+                        "Ford F-150",
+                        "Chevrolet Silverado",
+                        "Ram 1500",
+                        "Hyundai Sonata"
+                    ]),
                     'model' => $model."-".Str::random(4),
                     'tank_capacity' => '200',
                     'license_no' => $license_no.rand(8,100000000)
