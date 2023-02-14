@@ -72,10 +72,6 @@ Route::prefix('v1')
     Route::post('users/{user}/permission', [RolePermissionController::class, 'user_permission_store']);
     Route::get('users/{user}/permission', [RolePermissionController::class, 'user_permission_show']);
     Route::delete('users/{user}/permission', [RolePermissionController::class, 'user_permission_destroy']);
-    Route::resource('activity', 'App\Http\Controllers\ActivityController', ['except' => ['create', 'edit']]);
-    Route::get('users/{user_id}/activities', [ActivityController::class, 'userActivity']);
-
-
 });
 
 Route::resource('help-content', 'App\Http\Controllers\HelpContentController', ['except' => ['create', 'edit']]);
