@@ -76,3 +76,5 @@ Route::prefix('v1')
 
 
 });
+
+Route::resource('help-content', 'App\Http\Controllers\HelpContentController', ['except' => ['create', 'edit']]);
