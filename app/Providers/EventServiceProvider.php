@@ -7,6 +7,7 @@ use App\RabbitMQService;
 use App\Listeners\LogLoginEvent;
 use App\Listeners\RabbitMQMessageLog;
 use App\Listeners\RabbitMQMessageOutputToConsole;
+use App\Listeners\RabbitMQMessageSaveInDB;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -31,6 +32,7 @@ class EventServiceProvider extends ServiceProvider
             LogLoginEvent::class,
         ],
         RabbitMQMessageReceived::class => [
+            RabbitMQMessageSaveInDB::class,
             RabbitMQMessageLog::class,
             RabbitMQMessageOutputToConsole::class,
         ],
