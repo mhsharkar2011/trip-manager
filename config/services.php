@@ -66,5 +66,6 @@ return [
         'port' => env('RABBITMQ_PORT'),
         'user' => env('RABBITMQ_USER'),
         'password' => env('RABBITMQ_PASSWORD'),
+        'auto_publish_eloquent_events' => env('RABBITMQ_AUTO_PUBLISH_ELOQUENT_EVENTS', false),
     ],    
 ];

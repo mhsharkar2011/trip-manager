@@ -19,10 +19,12 @@ trait RabbitMQPublishEloquentEventsTrait {
     }
 
     private static function _publish($model, $action) {
-        RabbitMQService::publish(
-            static::_get_routing_key($model, $action), 
-            $model->toArray()
-        );
+        if (RabbitMQService::should_publish_eloquent_events()) {
+            RabbitMQService::publish(
+                static::_get_routing_key($model, $action), 
+                $model->toArray()
+            );
+        }
     }
 
     public static function bootRabbitMQPublishEloquentEventsTrait() {
