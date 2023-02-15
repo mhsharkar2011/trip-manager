@@ -96,7 +96,7 @@ Route::resource('leave-configs', 'App\Http\Controllers\LeaveConfigsController', 
 Route::resource('leaves', 'App\Http\Controllers\LeavesController', ['except' => ['create', 'edit']]);
 
 // Transport APIs
-Route::resource('trips', 'App\Http\Controllers\TransportsController', ['names'=>'api/trips'], ['except' => ['create', 'edit']]);
+Route::resource('trips', 'App\Http\Controllers\TripController', ['names'=>'api/trips'], ['except' => ['create', 'edit']]);
 Route::resource('mileages', 'App\Http\Controllers\MileagesController',['names'=>'api/mileages'], ['except' => ['create', 'edit']]);
 Route::resource('roles', 'App\Http\Controllers\RolesController', ['except' => ['create', 'edit']]);
 Route::resource('role-users', 'App\Http\Controllers\RoleUsersController', ['except' => ['create', 'edit']]);
