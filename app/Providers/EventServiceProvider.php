@@ -2,8 +2,11 @@
 
 namespace App\Providers;
 
+use App\Events\RabbitMQMessageReceived;
 use App\RabbitMQService;
 use App\Listeners\LogLoginEvent;
+use App\Listeners\RabbitMQMessageLog;
+use App\Listeners\RabbitMQMessageOutputToConsole;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -26,6 +29,10 @@ class EventServiceProvider extends ServiceProvider
         ],
         Login::class => [
             LogLoginEvent::class,
+        ],
+        RabbitMQMessageReceived::class => [
+            RabbitMQMessageLog::class,
+            RabbitMQMessageOutputToConsole::class,
         ],
         // \SocialiteProviders\Manager\SocialiteWasCalled::class => [
         //     // ... other providers
@@ -57,13 +64,18 @@ class EventServiceProvider extends ServiceProvider
 
                 // logger('catch all event handler, event name:' . $eventName, (array)$data);    
 
-                //get the last part from App\Events|Providers\<Event>
-                $eventName = explode('\\', $eventName);
-                $eventName = end($eventName);
+                $should_publish = $eventName::SHOULD_PUBLISH_AUTO !== false;
+                
+                if ($should_publish) {
+                    //get the last part from App\Events|Providers\<Event>
+                    $eventName = explode('\\', $eventName);
+                    $eventName = end($eventName);
+    
+                    $routing_key = sprintf('%s.%s', config('app.name'), $eventName);
+    
+                    RabbitMQService::publish($routing_key, $data);
+                }
 
-                $routing_key = sprintf('%s.%s', config('app.name'), $eventName);
-
-                RabbitMQService::publish($routing_key, $data);
             }
         });
     }

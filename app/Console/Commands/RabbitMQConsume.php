@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Events\RabbitMQMessageReceived;
 use App\RabbitMQService;
 use Illuminate\Console\Command;
 
@@ -54,11 +55,8 @@ class RabbitMQConsume extends Command
         }
 
         $callback = function ($msg) {
-            echo 'received event from broker' . PHP_EOL;
-            print_r(json_decode($msg->body, true));
-
-            logger('received event from broker: ' . $msg->delivery_info['routing_key'], (array) $msg->body);
-            $msg->ack();
+            RabbitMQMessageReceived::dispatch($msg);
+            $msg->ack(); //todo: ack() in a try catch success
         };
 
 
