@@ -3,11 +3,11 @@
 @section('title','Trips | List')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-12 mt-5">
-            <div class="card">
-                <div class="card-header bg-success text-white">
+{{-- <div class="container"> --}}
+    {{-- <div class="row justify-content-center"> --}}
+        {{-- <div class="col-md-12 mt-5"> --}}
+            {{-- <div class="card"> --}}
+                {{-- <div class="card-header bg-success text-white"> --}}
                     <a class="btn btn-success" href="#">Total Trip <span class="badge bg-danger"> {{ $trips->count() }} </span></a>
                     <a style="float: right" class="btn btn-success text-right" href="{{ asset('trips/create') }}">Create New Trips</a>
                 </div>
@@ -60,8 +60,10 @@
                                         {{ $trip->package_amount }}
                                     </td>
                                     <td>
-                                        {{ Carbon\Carbon::parse($trip->booking_date)->format('Y/m/d') }}
+                                        {{ Carbon\Carbon::parse($trip->booking_date)->format('local-time') }}
+                                        {{-- {{ Carbon\Carbon::parse($trip->booking_date)->format('local-time') }} --}}
                                         {{-- {{ $trip->bookig_date->format('Y-m-d')}} --}}
+                                        {{-- SELECT DATE_FORMAT(mydatetime, '%a, %d %b %Y %h:%i:%s %p') AS mydatetime_formatted FROM mytable; --}}
                                         
                                     </td>
                                     <td>

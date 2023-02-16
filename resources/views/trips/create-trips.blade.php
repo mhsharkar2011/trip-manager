@@ -23,7 +23,7 @@
                         <br>
                         <div class="col-md-6">
                             <label class="label">Booking Date: </label>
-                            <input type="datetime-local" name="booking_date" class="form-control" />
+                            <input type="datetime" id="datetime" pattern="\d{4}-\d{2}-\d{2} \d{2}:\d{2}" name="booking_date" class="form-control" placeholder="YYYY-MM-DD HH:MM" />
                         </div>
                         <br>
 

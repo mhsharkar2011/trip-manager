@@ -26,7 +26,7 @@ Dashboard- Admin Panel
                             <h3>{{ $trips->count() }}</h3> Total Trips
                         </div>
                     </div>
-                  <a class="card-footer text-white clearfix small z-1" href="{{ route('vehicles.index') }}">
+                  <a class="card-footer text-white clearfix small z-1" href="{{ route('trips.index') }}">
                         <span class="float-left">View Details</span>
                         <span class="float-right">
                             <i class="fas fa-angle-right"></i>
@@ -56,7 +56,7 @@ Dashboard- Admin Panel
                             <h3>{{ $vehicles->count() }}</h3> Total Vehicles
                         </div>
                     </div>
-                    <a class="card-footer text-white clearfix small z-1" href="{#">
+                    <a class="card-footer text-white clearfix small z-1" href="{{ route('vehicles.index') }}">
                         <span class="float-left">View Details</span>
                         <span class="float-right">
                             <i class="fas fa-angle-right"></i>

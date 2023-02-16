@@ -33,17 +33,17 @@
     </li>
     <li class="nav-item">
       <a class="nav-link" href="#">
-        <i class="fas fa-graduation-cap"></i>
+        <i class="fa-solid fa-clipboard-user"></i>
         <span>Attendance</span></a>
     </li>
     <li class="nav-item">
       <a class="nav-link" href="#">
-        <i class="fas fa-fw fa-chart-area"></i>
+        <i class="fa-solid fa-person-walking-arrow-right"></i>
         <span>Leave</span></a>
     </li>
       <li class="nav-item">
         <a class="nav-link" href="#">
-            <i class="fas fa-flag-checkered"></i>
+          <i class="fa-solid fa-chalkboard-user"></i>
           <span>Planing Board</span></a>
       </li>
   </ul>
