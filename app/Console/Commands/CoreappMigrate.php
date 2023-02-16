@@ -54,6 +54,18 @@ class CoreappMigrate extends Command
         $this->comment('Running artisan migrate now');
         $this->call('migrate');
 
+        $this->comment('Making some users table column nullable');
+
+        DB::statement('ALTER TABLE `users` CHANGE `usertype` `usertype` int NULL;');
+        DB::statement('ALTER TABLE `users` CHANGE `user_roles` `user_roles` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL');
+        DB::statement('ALTER TABLE `users` CHANGE `address` `address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL;');
+        DB::statement('ALTER TABLE `users` CHANGE `area` `area` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL;');
+        DB::statement('ALTER TABLE `users` CHANGE `city_id` `city_id` int NULL;');
+        DB::statement('ALTER TABLE `users` CHANGE `district_province` `district_province` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL;');
+        DB::statement('ALTER TABLE `users` CHANGE `name` `name` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL;');
+
+        $this->comment('All Done!');
+        
         return 0;
     }
 }
