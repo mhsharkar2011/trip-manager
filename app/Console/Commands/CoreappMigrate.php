@@ -41,17 +41,9 @@ class CoreappMigrate extends Command
         $this->comment('Importing the following sql file');
         $this->line(database_path('/coreapp-dev-schema.sql'));
         
-        // DB::unprepared('DROP DATABASE ' . DB::connection()->getDatabaseName() . ';');
-        // DB::unprepared('CREATE DATABASE ' . DB::connection()->getDatabaseName() . ';');
-
-        // return 0;
-        
         DB::unprepared(file_get_contents(database_path('/coreapp-dev-schema.sql')));
         
-        // DB::statement(file_get_contents(database_path('/example.sql')));
-
         $this->comment('Imported coreapp tables');
-
 
         //insert migration files in migration tables that has already been created manually
         DB::table('migrations')->insert([
