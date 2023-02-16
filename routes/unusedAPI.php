@@ -1,0 +1,1 @@
+// Route::post('user-avatar/{id}',[DriverController::class,'avatarUpdate']);

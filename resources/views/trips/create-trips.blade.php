@@ -10,7 +10,7 @@
             <div class="card">
                 <div class="card-header bg-success text-white text-center">
                     <a style="float: center" class="btn btn-success text-center" href="">Trips Form</a>
-                    {{-- <a style="float:right" class="btn btn-success text-center" href="{{ asset('trips') }}">Trips List</a> --}}
+                    <a style="float:right" class="btn btn-success text-center" href="{{ asset('trips') }}">Trips List</a>
                 </div>
                 <div class="card-body">
                     <form class="row g-3" method="post" action="{{ route('trips.store') }}">
@@ -23,7 +23,7 @@
                         <br>
                         <div class="col-md-6">
                             <label class="label">Booking Date: </label>
-                            <input type="datetime-local" name="bookig_date" class="form-control" />
+                            <input type="datetime" id="datetime" pattern="\d{4}-\d{2}-\d{2} \d{2}:\d{2}" name="booking_date" class="form-control" placeholder="YYYY-MM-DD HH:MM" />
                         </div>
                         <br>
 

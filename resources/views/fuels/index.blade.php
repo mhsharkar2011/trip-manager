@@ -7,7 +7,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8 mt-5" id="fuel-list">
             <div class="card">
-                <div class="card-header bg-success text-white">Fuel List <span class="badge bg-danger">{{ $fuels->count() }}</span></div>
+                <div class="card-header bg-success text-white">Fuel<span class="badge bg-danger">{{ $fuels->count() }}</span></div>
                 <div class="card-body">
                     <table class="table table-striped table-bordered table-hover table-sm m-12">
                         <thead>

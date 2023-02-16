@@ -33,11 +33,11 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'first_name'
-        ,'last_name'
-        ,'email'
-        ,'password'
-        ,'role'
+        'first_name',
+        'last_name',
+        'email',
+        'password',
+        'role'
     ];
 
     /**
@@ -89,9 +89,9 @@ class User extends Authenticatable
         return [
             'first_name' => 'required'
             ,'last_name' => 'required'
-            ,'email' => 'required|email|unique:users,email'
-            ,'password' => 'required'
-            ,'role' => 'required'
+            // ,'email' => 'required|email|unique:users,email'
+            // ,'password' => 'required'
+            // ,'role' => 'required'
         ];
     }
 
@@ -104,11 +104,11 @@ class User extends Authenticatable
     {
         $rules = static::validation_rules();
 
-        $rules['email'] = [
-            'required',
-            'email',
-            Rule::unique('users')->ignore($user_id),
-        ];
+        // $rules['email'] = [
+        //     'required',
+        //     'email',
+        //     Rule::unique('users')->ignore($user_id),
+        // ];
 
         unset($rules['password']);
 

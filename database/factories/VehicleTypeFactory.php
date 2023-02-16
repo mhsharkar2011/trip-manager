@@ -22,7 +22,18 @@ class VehicleTypeFactory extends Factory
     public function definition()
     {
             return [
-                'title' => $this->faker->name
+                'title' => $this->faker->unique()->randomElement([
+                    "Sedan",
+                    "SUV",
+                    "Truck",
+                    "Hatchback",
+                    "Wagon",
+                    "Crossover",
+                    "Coupe",
+                    "Convertible",
+                    "Pickup Truck",
+                    "Van"
+                ])
             ];
     }
 }
