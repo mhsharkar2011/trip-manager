@@ -31,7 +31,7 @@ class RabbitMQMessageSaveInDB
         $data = $event->data ?? null;
 
         try {
-            RabbitmqEvent::create([
+            RabbitmqEvent::createQuietly([ //supress eloquent created event which would publish to rabbitmq
                 'routing_key' => $routing_key,
                 'message' => $data,
             ]);
