@@ -66,7 +66,7 @@ class EventServiceProvider extends ServiceProvider
 
                 // logger('catch all event handler, event name:' . $eventName, (array)$data);    
 
-                $should_publish = $eventName::SHOULD_PUBLISH_AUTO !== false;
+                $should_publish = optional($eventName)->should_publish_auto() !== false;
                 
                 if ($should_publish) {
                     //get the last part from App\Events|Providers\<Event>

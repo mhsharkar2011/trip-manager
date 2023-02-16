@@ -14,11 +14,13 @@ class RabbitMQMessageReceived
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    const SHOULD_PUBLISH_AUTO = false;
-    
     public $msg_raw;
     public $routing_key;
     public $data;
+
+    public function should_publish_auto() {
+        return false;
+    }
 
     /**
      * Create a new event instance.
