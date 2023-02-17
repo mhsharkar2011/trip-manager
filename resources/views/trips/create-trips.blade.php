@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.master-admin')
 
 @section('title','Trips | From')
 
@@ -23,7 +23,7 @@
                         <br>
                         <div class="col-md-6">
                             <label class="label">Booking Date: </label>
-                            <input type="datetime" id="datetime" pattern="\d{4}-\d{2}-\d{2} \d{2}:\d{2}" name="booking_date" class="form-control" placeholder="YYYY-MM-DD HH:MM" />
+                            <input type="datetime-local" id="date" name="booking_date" class="form-control" />
                         </div>
                         <br>
 

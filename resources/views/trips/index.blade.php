@@ -15,7 +15,7 @@
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-responsive table-bordered table-hover table-sm m-12">
-                            <thead>
+                            <thead class="table-dark">
                                 <tr style="font-size: 12px; text-align: center;vertical-align: middle;">
 
                                     <th>SL No.</th>
@@ -60,10 +60,7 @@
                                         {{ $trip->package_amount }}
                                     </td>
                                     <td>
-                                        {{ Carbon\Carbon::parse($trip->booking_date)->format('local-time') }}
-                                        {{-- {{ Carbon\Carbon::parse($trip->booking_date)->format('local-time') }} --}}
-                                        {{-- {{ $trip->bookig_date->format('Y-m-d')}} --}}
-                                        {{-- SELECT DATE_FORMAT(mydatetime, '%a, %d %b %Y %h:%i:%s %p') AS mydatetime_formatted FROM mytable; --}}
+                                        {{ Carbon\Carbon::parse($trip->booking_date)->format('Y/m/d h:i A') }}
                                         
                                     </td>
                                     <td>

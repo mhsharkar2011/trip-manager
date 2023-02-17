@@ -27,37 +27,18 @@ $('#attendanceFrom td span').click(function(){
 });
 
 
-
-
-function updateLocalTime() {
-      const now = new Date();
-      const utcTime = now.toISOString();
-    //   const localTime = now.toLocaleString();
-    //   const dateTime = explode('-',localTime);
-      const utcTimeFormatted = utcTime.replace('T', ' ').replace('Z', '');
-      const years = now.getFullYear().toLocaleString().padStart(4, '0');
-      const months = now.getMonth().toLocaleString().padStart(2, '0');
-      const dates = now.getDate().toLocaleString().padStart(2, '0');
-      const hours = now.getHours().toLocaleString().padStart(2, '0');
-      const minutes = now.getMinutes().toLocaleString().padStart(2, '0');
-      const seconds = now.getSeconds().toLocaleString().padStart(2, '0');
-      const localTimeFormatted = `${years}-${months}-${dates} ${hours}:${minutes}:${seconds}`;
-
-      document.getElementById('local-time').textContent = utcTime;
-      
-      
-    //   document.getElementById('utc-time').innerHTML = localTime;
-    //   document.getElementById('utc-time').textContent = dateTime;
-    }
-
-    updateLocalTime(); // initial call to update the local time
-
-    setInterval(updateLocalTime, 1000); // update the local time every second
- 
-
-
-
-var datetimeInput = document.getElementById('datetime');
-var datetimeValue = datetimeInput.value;
-var datetime = new Date(datetimeValue.replace(' ', 'T') + ':00Z');
-var isoDatetime = datetime.toISOString();
+$(document).ready( function() {
+   
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = now.getMonth() + 1;
+    const day = now.getDate();
+    const hours = now.getHours();
+    const minutes = now.getMinutes();
+    const seconds = now.getSeconds();
+    const formattedTime = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')} ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    $('#date22').val(formattedTime);
+    
+    // updateDate();
+    // setInterval(updateDate, 10);
+});
