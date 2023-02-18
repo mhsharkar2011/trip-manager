@@ -62,6 +62,15 @@ services:
   #     volumes:
   #       - /var/run/docker.sock:/var/run/docker.sock
 
+  supervisor:
+      build: 
+        context: ./docker/supervisor/
+        dockerfile: supervisor.dockerfile
+      container_name: supervisor
+      volumes:
+        - ./:/var/www/html    
+        - ./docker/supervisor/conf:/etc/supervisor/conf.d
+
 # networks:
 #     itconquest:
 #         external: true
