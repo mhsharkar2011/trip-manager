@@ -70,8 +70,9 @@ class HelpContentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(HelpContent $helpcontent)
+    public function show(Request $request, $key)
     {
+        $helpcontent = HelpContent::where('key', $key)->first();
         if ($with = request('with')) { //load relationships
             $helpcontent->with(explode(',', $with));
         }

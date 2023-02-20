@@ -8,6 +8,7 @@ use App\Http\Controllers\RolePermissionController;
 use App\Http\Controllers\SocialLoginController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserProfileController;
+use App\Http\Controllers\HelpContentController;
 
 /*
 |--------------------------------------------------------------------------
