@@ -88,11 +88,12 @@ class HelpContentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, HelpContent $helpcontent)
+    public function update(Request $request, $key)
     {
+        $helpcontent = HelpContent::where('key', $key)->first();
         $validation = Validator::make(
             $request->all(),
-            HelpContent::validation_rules_for_update(),
+            HelpContent::validation_rules_for_update($helpcontent->id),
             HelpContent::validation_messages_for_update(),
         );
 

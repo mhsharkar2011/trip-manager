@@ -74,6 +74,7 @@ Route::prefix('v1')
     Route::get('users/{user}/permission', [RolePermissionController::class, 'user_permission_show']);
     Route::delete('users/{user}/permission', [RolePermissionController::class, 'user_permission_destroy']);
 
-    Route::resource('help-content', 'App\Http\Controllers\HelpContentController', ['except' => ['create', 'edit','show']]);
+    Route::resource('help-content', 'App\Http\Controllers\HelpContentController', ['except' => ['create', 'edit', 'show', 'update']]);
     Route::get('help-content/{help_content:key}', [HelpContentController::class, 'show']);
+    Route::put('help-content/{help_content:key}', [HelpContentController::class, 'update']);
 });

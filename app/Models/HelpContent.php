@@ -34,15 +34,23 @@ class HelpContent extends baseModel
     ];
 
     protected static function validation_rules() {
-        return [];
+        return [
+            "key" => 'required|unique:help_contents,key',
+        ];
     }
 
     protected static function validation_messages() {
         return [];
     }
 
-    protected static function validation_rules_for_update() {
-        return self::validation_rules();
+    protected static function validation_update_rules($id) {
+        return [
+            "key" => 'unique:help_contents,key,'.$id,
+        ];
+    }
+
+    protected static function validation_rules_for_update($id) {
+        return self::validation_update_rules($id);
     }
 
     protected static function validation_messages_for_update() {
