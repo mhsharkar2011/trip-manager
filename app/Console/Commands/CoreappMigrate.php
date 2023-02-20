@@ -48,8 +48,10 @@ class CoreappMigrate extends Command
         //insert migration files in migration tables that has already been created manually
         DB::table('migrations')->insert([
             ['migration' => '2023_01_24_095644_create_projects_table', 'batch' => 1]
-            ,['migration' => '2023_02_02_094012_create_permission_tables', 'batch' => 1]
+            // ,['migration' => '2023_02_02_094012_create_permission_tables', 'batch' => 1]
         ]);
+
+        DB::statement('DROP TABLE `roles`'); //seems to be unused and conflicts with boilerplate role permission tables
 
         $this->comment('Running artisan migrate now');
         $this->call('migrate');
