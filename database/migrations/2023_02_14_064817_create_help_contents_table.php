@@ -14,13 +14,13 @@ class CreateHelpContentsTable extends Migration
     {
         Schema::create('help_contents', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamps();
             $table->string('name')->nullable();
             $table->string('key')->nullable();
             $table->longText('description')->nullable();
             $table->integer('tenant_id')->unsigned();
             $table->foreign('tenant_id')->references('id')->on('tenants')->onDelete('cascade')->onUpdate('cascade');
-            });
+            $table->timestamps();
+        });
     }
 
     /**

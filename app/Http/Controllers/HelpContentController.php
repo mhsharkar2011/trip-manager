@@ -21,7 +21,7 @@ class HelpContentController extends Controller
 
         if ($with = request('with')) { //load relationships
             $helpcontent->with(explode(',', $with));
-        }        
+        }
 
         //filter, sorting, selective-columns
         $helpcontent->filter(HelpContent::parseRequest(request('query')));
@@ -29,10 +29,10 @@ class HelpContentController extends Controller
         //set default sorting
         if (! HelpContent::hasSorting(request('query'))) {
             $helpcontent->filter(HelpContent::getDefaultSorting());
-        }          
-        
+        }
+
         $helpcontent = $helpcontent->paginateWrap(
-            request('items_per_page', self::ITEMS_PER_PAGE), 
+            request('items_per_page', self::ITEMS_PER_PAGE),
             request('page', 1)
         );
 
@@ -49,14 +49,14 @@ class HelpContentController extends Controller
     public function store(Request $request)
     {
         $validation = Validator::make(
-            $request->all(), 
+            $request->all(),
             HelpContent::validation_rules(),
             HelpContent::validation_messages(),
         );
 
         if ($validation->fails()) {
             return $this->respondValidationError($validation->errors());
-        }   
+        }
 
         $helpcontent = HelpContent::create($request->all());
 
@@ -74,7 +74,7 @@ class HelpContentController extends Controller
     {
         if ($with = request('with')) { //load relationships
             $helpcontent->with(explode(',', $with));
-        }   
+        }
 
         return $this->respond($helpcontent);
     }
@@ -90,14 +90,14 @@ class HelpContentController extends Controller
     public function update(Request $request, HelpContent $helpcontent)
     {
         $validation = Validator::make(
-            $request->all(), 
+            $request->all(),
             HelpContent::validation_rules_for_update(),
             HelpContent::validation_messages_for_update(),
         );
 
         if ($validation->fails()) {
             return $this->respondValidationError($validation->errors());
-        }   
+        }
 
         $helpcontent->update($request->all());
 

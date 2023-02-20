@@ -8,9 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class HelpContent extends baseModel
 {
-
-    
-    
     /**
      * The database table used by the model.
      *
@@ -30,11 +27,11 @@ class HelpContent extends baseModel
      *
      * @var array
      */
-    //protected $fillable = ['name', 'key', 'description', 'tenant_id'];
+    protected $fillable = ['name', 'key', 'description', 'tenant_id'];
 
     protected $guarded = [
         'id'
-    ];    
+    ];
 
     protected static function validation_rules() {
         return [];
@@ -42,7 +39,7 @@ class HelpContent extends baseModel
 
     protected static function validation_messages() {
         return [];
-    } 
+    }
 
     protected static function validation_rules_for_update() {
         return self::validation_rules();
@@ -50,7 +47,7 @@ class HelpContent extends baseModel
 
     protected static function validation_messages_for_update() {
         return self::validation_messages();
-    }           
+    }
 
-    
+
 }
