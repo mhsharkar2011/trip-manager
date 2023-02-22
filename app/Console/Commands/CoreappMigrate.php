@@ -68,6 +68,8 @@ class CoreappMigrate extends Command
 
         $this->comment('All Done!');
         
+        $this->comment('If you need Coreapp data locally, import all table data without migrations table data and start import after setting "SET foreign_key_checks = 0;" first.');
+        
         return 0;
     }
 }
