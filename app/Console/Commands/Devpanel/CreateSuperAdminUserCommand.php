@@ -13,8 +13,8 @@ class CreateSuperAdminUserCommand extends Command
      * @var string
      */
     protected $signature = 'project:create-super-admin
-    {--name=Reza : name of the super admin user}
-    {--email=reza@itconquest.com : login email, has to be unique and not existing already}
+    {--name=SuperAdmin : name of the super admin user}
+    {--email= : login email, has to be unique and not existing already}
     {--password= : password for the login}
     ';
 
@@ -49,9 +49,13 @@ class CreateSuperAdminUserCommand extends Command
     {
         $this->name = $this->option('name');
         $this->email = $this->option('email');
-        $this->password = $this->option('password') ?: '@#ITC132132';
+        $this->password = $this->option('password') ?: '123456';
 
         $userT = \DB::table('users');
+
+        if (! $this->email) {
+            $this->email = 'adminitc_' . time() . '@example.com';
+        }
 
         if ($userT->where('email', $this->email)->exists()) {
             return $this->error('The email ('. $this->email .') already exists in the database');

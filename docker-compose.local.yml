@@ -52,7 +52,18 @@ services:
     restart: unless-stopped
     depends_on: [mysql]
     ports:
-      - 8080:80    
+      - 8089:80
+  
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: rabbitmq
+    restart: unless-stopped
+    ports:
+        - 5672:5672
+        - 15672:15672
+    environment:
+        - RABBITMQ_DEFAULT_USER=admin
+        - RABBITMQ_DEFAULT_PASS=secret          
 
   # scheduler:
   #     image: funkyfuture/deck-chores:1
@@ -61,6 +72,15 @@ services:
   #       TIMEZONE: Asia/Dhaka
   #     volumes:
   #       - /var/run/docker.sock:/var/run/docker.sock
+
+  supervisor:
+      build: 
+        context: ./docker/supervisor/
+        dockerfile: supervisor.dockerfile
+      container_name: supervisor
+      volumes:
+        - ./:/var/www/html    
+        - ./docker/supervisor/conf:/etc/supervisor/conf.d
 
 # networks:
 #     itconquest:

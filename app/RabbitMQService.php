@@ -87,4 +87,8 @@ class RabbitMQService {
         static::$connection->close();     
     }
 
+    public static function should_publish_eloquent_events() {
+        return config('services.rabbitmq.auto_publish_eloquent_events');
+    }
+
 }
