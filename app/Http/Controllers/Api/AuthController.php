@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
+    const LOGIN_API_TOKEN = 'login_api_token';
 
     public function store(Request $request)
     {
@@ -21,13 +22,13 @@ class AuthController extends Controller
 
         $user = User::create($request->all());
 
-        if (app()->environment() !== 'production') {
-            $user->email_verified_at = now();
-            $user->save();
-        }
-        
+        //tmp: we don't have verification email yet
+        //so untill then verifying email by default
+        $user->email_verified_at = now();
+        $user->save();
+
         return $this->respond($user);
-    }    
+    }
 
     public function login()
     {
@@ -38,9 +39,9 @@ class AuthController extends Controller
         if($user && $user->email_verified_at === NULL) {
             return $this->respondForbidden('Your account is not active! Please verify your email address.');
         }
-        
+
         if($user && Hash::check(\request('password'),$user->password)) {
-            $token = $user->createToken('api_token')->plainTextToken;
+            $token = $user->createToken(self::LOGIN_API_TOKEN)->plainTextToken;
 
             //tmp: for now returning all companies to test Multi-tenancy
             //later we will return only companies that user belong to
@@ -94,6 +95,14 @@ class AuthController extends Controller
         return response()->json(["msg" => "Password has been successfully changed"]);
     }
 
+<<<<<<< HEAD
+    public function logout(Request $request)
+    {
+        $request->user()->tokens()->where('name', self::LOGIN_API_TOKEN)->delete();
+
+        return response()->json(["msg" => "User logged out"], 200);
+    }
+=======
     //impersonation: for admin to login as any user
     public function getATokenForAutoLogin($user_id)
     {
@@ -112,7 +121,7 @@ class AuthController extends Controller
 
     public function auto_login()
     {
-        $validation = Validator::make(request()->all(), 
+        $validation = Validator::make(request()->all(),
             [
                 'token' => 'required',
             ]
@@ -120,8 +129,8 @@ class AuthController extends Controller
 
         if ($validation->fails()) {
             return $this->respondValidationError($validation->errors());
-        }          
-        
+        }
+
         $user = optional(\Laravel\Sanctum\PersonalAccessToken::findToken(request('token')))->tokenable;
 
         if (! $user) {
@@ -137,7 +146,7 @@ class AuthController extends Controller
                 "id" => $t->id,
                 "company_name" => $t->name,
             ];
-        });            
+        });
 
         $response['companies'] = $companies;
         $response['roles'] = [];
@@ -147,8 +156,9 @@ class AuthController extends Controller
             ,'session_start' => 0
         ];
         $response['user_info'] = $user;
-        
-        return $this->respond($response);      
-    }    
+
+        return $this->respond($response);
+    }
+>>>>>>> develop
 
 }

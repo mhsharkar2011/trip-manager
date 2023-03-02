@@ -33,6 +33,8 @@
         - [12.2. Externalize Local event](#122-externalize-local-event)
     - [13. SaaS/Multi-tenancy](#13-saasmulti-tenancy)
 - [Deployment](#deployment)
+- [Prebuild Crud](#PreBuildCrud)
+  - [1. Tasks](#1-Tasks)
 
 <!-- /TOC -->
 
@@ -420,8 +422,13 @@ https://laravel.com/docs/9.x/events
 All events we create under `App\Events` or `App\Providers` will be published to a RabbitMQ Broker.
 We do this centrally through a catch all event listener in `EventServiceProvider`. For interacting with RabbitMQ we use our own `App\RabbitMQService` service class. So no extra code is necessary for this. So whatever local events we define under `App\Events` or `App\Providers` gets published to RabbitMQ by default.
 
-If you want to receive some event/message from the RabbitMQ broker, local or external, doesn't matter, run the following artisan command `php artisan project:consume-rabbitmq-event`  
-After running the command you will get more instruction propmted to you regarding required inputs.
+If you have used the dockerized local setup then already a RabbitMQ service is running and appropriate config is already added in `.env`.
+You can readily try out msg/event publishing and consuming using the following two commands:
+
+```
+./cli art project:rabbitmq-consume --routing-key=#
+./cli art project:rabbitmq-publish
+```
 
 If you need to do additional publish/listen for cross app events then use the following methods of the `App\RabbitMQService` class. 
 
@@ -516,21 +523,6 @@ Here is a description of each of these attributes
 | event_time   | The date time in UTC or timestamp when the app/service is publishing the event. This is important/useful for many reasons, for example, you can see if there delay and by how much to receive an event, if an event can be deemed outdated etc.          | `1675868365` |
 | call_stack_array   | An array of the owing event ids. There would be use cases where events are being fired due to events being received thus forming a parent > child > children relationship. This attribute will store the event ids in order so the relationship is captured.          | `["e7230264-9b76-49f6-9c57-e513b7bc6044", "817b907d-c683-4e70-a8e1-19d78869c142"]` |
 
-If you want to deploy RabbitMQ locally or on a server, use the file `docker-compose.rabbitmq.yml` under the folder `rabbitmq` in the project root, so something like 
-```
-docker-compose -f rabbitmq/docker-compose.rabbitmq.yml up
-```  
-There is no Dockerfile or other file dependency, so you can also copy the file or content anywhere and use it as needed. 
-
-After deployment add the proper host, port, user, pass values in `.env`
-
-```
-RABBITMQ_HOST=
-RABBITMQ_PORT=5670
-RABBITMQ_USER=
-RABBITMQ_PASSWORD=
-```
-
 If you want to know more about the way we use RabbitMQ, as in how and what type of exchange and queues we use, check the following doc, the doc also has POC repo link which you use to try it out as a separate project.
 [Events POC - RabbitMQ](https://docs.google.com/document/d/1N1f-7kXIQJiEGDEGaDE9iYx_cf5Awey7qkNtfht87Mo/edit?usp=sharing)
 
@@ -543,4 +535,18 @@ TBD
 # Deployment 
 TBD
 
-
+# Prebuild Crud
+### 1. Tasks
+1. Crud for any tasks with assign any users. API (e.g., `POST api/v1/tasks`)
+```
+{
+	"title":"Need to change data model for durojan",
+	"description":"Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia",
+	"project_id":1,
+	"parent_id":"",
+	"sequence": 2,
+	"due_date":"2023-02-01T10:21:58.000000Z",
+	"time_estimate":"1",
+	"user_ids":[1,3]
+}
+```
