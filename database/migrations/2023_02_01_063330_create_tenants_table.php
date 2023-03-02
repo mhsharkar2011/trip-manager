@@ -3,6 +3,7 @@
 use App\Devpanel\Models\Tenant;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 
 class CreateTenantsTable extends Migration
 {
@@ -21,8 +22,8 @@ class CreateTenantsTable extends Migration
 
         //tmp: for now doing a hard coded entry 
         //so that SaaS can be tested
-        Tenant::create(['name' => 'ITC']);
-        Tenant::create(['name' => 'ProInfoSys']);
+        DB::table('tenants')->insert(['name' => 'ITC']);
+        DB::table('tenants')->insert(['name' => 'ProInfoSys']);
     }
 
     /**

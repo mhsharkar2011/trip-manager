@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Devpanel\Models\FilterTrait;
+use App\Traits\Comment;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;

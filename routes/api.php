@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\PasswordRecoveryController;
+use App\Http\Controllers\RolePermissionController;
 use App\Http\Controllers\SocialLoginController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserProfileController;
@@ -48,8 +49,17 @@ Route::prefix('v1')
     Route::resource('projects.jobs', 'App\Http\Controllers\ProjectJobController', ['except' => ['create', 'edit']]);
     Route::resource('jobs.milestone', 'App\Http\Controllers\JobMilestoneController', ['except' => ['create', 'edit']]);
 
-    // Role permission api lists
 
+    // Comment feature apis lists
+    Route::resource('comment', 'App\Devpanel\Controllers\CommentController', ['except' => ['store', 'create', 'edit']]);
+    Route::get('comment-type', [\App\Devpanel\Controllers\CommentController::class, 'commentType']);
+
+    Route::post('{entity}/{id}/comment', [\App\Devpanel\Controllers\CommentController::class, 'store'])
+        ->where('entity', '[a-z-A-Z]+')->whereNumber('id');
+    Route::get('{entity}/{id}/comment', [\App\Devpanel\Controllers\CommentController::class, 'getEntityComment'])
+        ->where('entity', '[a-z-A-Z]+')->whereNumber('id');
+
+    // Role permission api lists
 
     Route::get('roles', [RolePermissionController::class, 'roles']);
     Route::post('roles', [RolePermissionController::class, 'role_store']);
@@ -71,8 +81,6 @@ Route::prefix('v1')
     Route::post('users/{user}/permission', [RolePermissionController::class, 'user_permission_store']);
     Route::get('users/{user}/permission', [RolePermissionController::class, 'user_permission_show']);
     Route::delete('users/{user}/permission', [RolePermissionController::class, 'user_permission_destroy']);
-    Route::resource('activity', 'App\Http\Controllers\ActivityController', ['except' => ['create', 'edit']]);
-    Route::get('users/{user_id}/activities', [ActivityController::class, 'userActivity']);
     Route::resource('tasks', 'App\Http\Controllers\TaskController', ['except' => ['create', 'edit']]);
 
 });
