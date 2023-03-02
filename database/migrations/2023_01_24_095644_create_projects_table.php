@@ -17,6 +17,7 @@ class CreateProjectsTable extends Migration
             $table->timestamps();
             $table->string('name');
             $table->text('description')->nullable();
+            $table->integer('tenant_id')->unsigned();
             });
     }
 

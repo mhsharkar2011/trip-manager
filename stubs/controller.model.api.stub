@@ -67,6 +67,10 @@ class {{ class }} extends Controller
      */
     public function show({{ model }} ${{ modelVariable }})
     {
+        if ($with = request('with')) { //load relationships
+            ${{ modelVariable }}->with(explode(',', $with));
+        }
+                
         return $this->respond(${{ modelVariable }});
     }
 

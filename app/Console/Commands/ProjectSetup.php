@@ -55,6 +55,9 @@ class ProjectSetup extends Command
             '--force' => '',
             '--seed' => '',
         ]);
+
+        $this->call('storage:link');
+        
         exec('chmod -R 777 storage bootstrap/cache');
         
         return 0;

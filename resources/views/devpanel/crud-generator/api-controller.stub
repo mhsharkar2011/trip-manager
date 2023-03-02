@@ -72,6 +72,10 @@ class DummyClass extends Controller
      */
     public function show({{modelName}} ${{crudNameSingular}})
     {
+        if ($with = request('with')) { //load relationships
+            ${{crudNameSingular}}->with(explode(',', $with));
+        }   
+
         return $this->respond(${{crudNameSingular}});
     }
 

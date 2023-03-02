@@ -42,6 +42,11 @@ class Project extends baseModel
         ];
     }
 
+    public function jobs()
+    {
+        return $this->hasMany(Job::class);
+    }
+
     protected static function validation_messages() {
         return [];
     } 

@@ -2,10 +2,10 @@ version: "3.1"
 
 services:
   mysql:
-    container_name: app_mysql
+    container_name: mysql
     restart: always
     image: mysql:8.0
-    hostname: app_mysql
+    hostname: mysql
     command: --default-authentication-plugin=mysql_native_password    
     ports:
         - "33006:3306"
@@ -39,6 +39,32 @@ services:
     #   deck-chores.job1.command: sh -c "cd /var/www/html && php artisan schedule:run &> /proc/1/fd/1"
     #   deck-chores.job1.cron: '* * * * * * * 0' # every minute
 
+  phpmyadmin:
+    image: beeyev/phpmyadmin-lightweight:latest
+    links:
+      - mysql
+    environment:
+      # TZ: UTC
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: secret
+    restart: unless-stopped
+    depends_on: [mysql]
+    ports:
+      - 8089:80
+  
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: rabbitmq
+    restart: unless-stopped
+    ports:
+        - 5672:5672
+        - 15672:15672
+    environment:
+        - RABBITMQ_DEFAULT_USER=admin
+        - RABBITMQ_DEFAULT_PASS=secret          
+
   # scheduler:
   #     image: funkyfuture/deck-chores:1
   #     restart: unless-stopped
@@ -46,6 +72,15 @@ services:
   #       TIMEZONE: Asia/Dhaka
   #     volumes:
   #       - /var/run/docker.sock:/var/run/docker.sock
+
+  supervisor:
+      build: 
+        context: ./docker/supervisor/
+        dockerfile: supervisor.dockerfile
+      container_name: supervisor
+      volumes:
+        - ./:/var/www/html    
+        - ./docker/supervisor/conf:/etc/supervisor/conf.d
 
 # networks:
 #     itconquest:

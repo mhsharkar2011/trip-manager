@@ -1,0 +1,27 @@
+{
+    "fields": [
+        {
+            "name": "name",
+            "type": "string"
+        },
+        {
+            "name": "project_id",
+            "type": "integer#unsigned"
+        }
+    ],
+    "foreign_keys": [
+        {
+            "column": "project_id",
+            "references": "id",
+            "on": "projects",
+            "onDelete": "cascade"
+        }
+    ],
+    "relationships": [
+        {
+            "name": "project",
+            "type": "belongsTo",
+            "class": "App\\Models\\project"
+        }
+    ]
+}
