@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\PasswordRecoveryController;
+use App\Http\Controllers\RolePermissionController;
 use App\Http\Controllers\SocialLoginController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserProfileController;
@@ -80,8 +81,4 @@ Route::prefix('v1')
     Route::post('users/{user}/permission', [RolePermissionController::class, 'user_permission_store']);
     Route::get('users/{user}/permission', [RolePermissionController::class, 'user_permission_show']);
     Route::delete('users/{user}/permission', [RolePermissionController::class, 'user_permission_destroy']);
-    Route::resource('activity', 'App\Http\Controllers\ActivityController', ['except' => ['create', 'edit']]);
-    Route::get('users/{user_id}/activities', [ActivityController::class, 'userActivity']);
-
-
 });

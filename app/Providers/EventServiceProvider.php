@@ -2,8 +2,12 @@
 
 namespace App\Providers;
 
+use App\Events\RabbitMQMessageReceived;
 use App\RabbitMQService;
 use App\Listeners\LogLoginEvent;
+use App\Listeners\RabbitMQMessageLog;
+use App\Listeners\RabbitMQMessageOutputToConsole;
+use App\Listeners\RabbitMQMessageSaveInDB;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -27,6 +31,11 @@ class EventServiceProvider extends ServiceProvider
         Login::class => [
             LogLoginEvent::class,
         ],
+        RabbitMQMessageReceived::class => [
+            RabbitMQMessageSaveInDB::class,
+            RabbitMQMessageLog::class,
+            RabbitMQMessageOutputToConsole::class,
+        ],
         // \SocialiteProviders\Manager\SocialiteWasCalled::class => [
         //     // ... other providers
         //     'SocialiteProviders\\Shopify\\ShopifyExtendSocialite@handle',
@@ -45,20 +54,30 @@ class EventServiceProvider extends ServiceProvider
             //Framework has a lot of events
             //if we want to log all events for testing, we have to skip the log event itself,
             //otherwise will fall into infinite loop
-            if ('Illuminate\Log\Events\MessageLogged' !== $eventName) {
+            if ('Illuminate\Log\Events\MessageLogged' == $eventName) {
                 // logger('catch all event handler, event name:' . $eventName, (array)$data);
+                return;
             }
 
-            if (Str::startsWith($eventName, 'App\Events')) { //handle only custom events that we add for this app
+            if (
+                Str::startsWith($eventName, 'App\Events')
+                || Str::startsWith($eventName, 'App\Providers')
+            ) { //handle only custom events that we add for this app
+
                 // logger('catch all event handler, event name:' . $eventName, (array)$data);    
 
-                //get the last part from App\Events\<Event>
-                $eventName = explode('\\', $eventName);
-                $eventName = end($eventName);
+                $should_publish = optional($eventName)->should_publish_auto() !== false;
+                
+                if ($should_publish) {
+                    //get the last part from App\Events|Providers\<Event>
+                    $eventName = explode('\\', $eventName);
+                    $eventName = end($eventName);
+    
+                    $routing_key = sprintf('%s.%s', config('app.name'), $eventName);
+    
+                    // RabbitMQService::publish($routing_key, $data);
+                }
 
-                $routing_key = sprintf('%s.%s', config('app.name'), $eventName);
-
-                RabbitMQService::publish($routing_key, $data);
             }
         });
     }

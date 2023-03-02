@@ -22,6 +22,7 @@ class CreateMilestonesTable extends Migration
             $table->string('status')->nullable();
             $table->longText('description')->nullable();
             $table->foreign('job_id')->references('id')->on('jobs')->onDelete('cascade')->onUpdate('cascade');
+            $table->integer('tenant_id')->unsigned();
             });
     }
 

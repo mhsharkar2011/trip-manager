@@ -21,17 +21,17 @@ class AuthController extends Controller
 
         $user = User::create($request->all());
 
-        if (app()->environment() !== 'production') {
-            $user->email_verified_at = now();
-            $user->save();
-        }
-        
+        //tmp: we don't have verification email yet
+        //so untill then verifying email by default
+        $user->email_verified_at = now();
+        $user->save();
+    
         return $this->respond($user);
     }    
 
     public function login()
     {
-        $user = User::where([
+        $user = User::with('roles.permissions')->where([
             'email'=> request('email')
         ])->firstOrFail();
 
@@ -51,7 +51,7 @@ class AuthController extends Controller
                 ];
             });
             $response['companies'] = $companies;
-            $response['roles'] = [];
+            $response['roles'] = $user->roles;
             $response['session'] = [
                 'access_token' => $token
                 ,'session_last_access' => 0
