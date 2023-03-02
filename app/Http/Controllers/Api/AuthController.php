@@ -95,14 +95,12 @@ class AuthController extends Controller
         return response()->json(["msg" => "Password has been successfully changed"]);
     }
 
-<<<<<<< HEAD
     public function logout(Request $request)
     {
         $request->user()->tokens()->where('name', self::LOGIN_API_TOKEN)->delete();
 
         return response()->json(["msg" => "User logged out"], 200);
     }
-=======
     //impersonation: for admin to login as any user
     public function getATokenForAutoLogin($user_id)
     {
@@ -159,6 +157,5 @@ class AuthController extends Controller
 
         return $this->respond($response);
     }
->>>>>>> develop
 
 }
