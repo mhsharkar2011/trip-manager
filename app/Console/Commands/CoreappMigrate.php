@@ -41,6 +41,10 @@ class CoreappMigrate extends Command
         $this->comment('Inserting rows in migrations table that were created manually');
         DB::table('migrations')->insert([
             ['migration' => '2023_01_24_095644_create_projects_table', 'batch' => 1]
+            // ,['migration' => '2014_10_12_000000_create_users_table', 'batch' => 1]
+            // ,['migration' => '2014_10_12_100000_create_password_resets_table', 'batch' => 1]
+            // ,['migration' => '2020_09_19_062623_create_sessions_table', 'batch' => 1]
+            // ,['migration' => '2021_04_27_203812_create_media_table', 'batch' => 1]            
         ]);
         
         $this->comment('Dropping conflicting tables');
