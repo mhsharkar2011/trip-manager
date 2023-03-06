@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DriverController;
 use App\Http\Controllers\FuelTypesController;
@@ -30,26 +30,33 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Route::get('create',[AuthController::class,'create'])->name('auth.create');
-// Route::post('register',[AuthController::class,'register'])->name('auth.register');
+Route::prefix('/')->name('admin.')->group(function () {
+    Route::get('login',[AuthController::class,'login'])->name('login');
+    Route::post('login',[AuthController::class,'storeLogin'])->name('storeLogin');
+    Route::get('register',[AuthController::class,'register'])->name('register');
+    Route::post('register',[AuthController::class,'storeRegister'])->name('storeRegister');
 
-
-Route::middleware(['auth:sanctum', 'verified'])
-->group(function () {
-    Route::resource('dashboard',AdminController::class);
 });
 
-Route::resource('vehicles',VehiclesController::class);
-Route::resource('vehicle-types',VehicleTypesController::class);
+
+Route::group(['middleware'=>'auth'], function() {
+    Route::prefix('/')->name('admin.')->group(function() {
+        Route::resource('dashboard',AdminController::class);
+        Route::get('logout',[AuthController::class,'logout'])->name('logout');
+        Route::resource('vehicle-types',VehicleTypesController::class);
+        Route::resource('vehicles',VehiclesController::class);
+        Route::resource('trips',TripController::class);
+        Route::resource('package', 'App\Http\Controllers\PackageController');
+    });
+});
+
 
 
 Route::resource('fuel-types', FuelTypesController::class);
 Route::resource('fuels', 'App\Http\Controllers\FuelsController', ['except' => ['create', 'edit']]);
 
 
-Route::resource('trips',TripController::class);
 
-Route::resource('package', 'App\Http\Controllers\PackageController');
 
 
 

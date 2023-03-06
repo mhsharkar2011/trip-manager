@@ -4,14 +4,11 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8 mt-5">
-            <div class="card">
-                <div class="card-header bg-success text-white">Total Vehicle <span class="badge bg-danger"> {{ $vehicles->count() }} </span></div>
-                <div class="card-body">
-                    <table class="table table-striped table-bordered table-hover table-sm m-12">
-                        <thead>
-                            <tr>
+    <a style="float: right" class="btn btn-success text-right" href="{{ route('admin.vehicles.create') }}">Add Vehicle</a>
+            <div class="table-responsive">
+                <table class="table table-responsive table-bordered table-hover table-sm m-12">
+                    <thead class="table-dark">
+                        <tr style="font-size: 12px; text-align: center;vertical-align: middle;">
                                 <th>ID</th>
                                 <th>SL No.</th>
                                 <th>Owner Name</th>

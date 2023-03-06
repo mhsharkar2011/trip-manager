@@ -98,17 +98,17 @@
                                         {{ $trip->status}}
                                     </td>
                                     <td>
-                                        <a  class="btn btn-success mr-3" href="{{ route('trips.show', $trip->id) }}">
+                                        <a  class="btn btn-success mr-3" href="{{ route('admin.trips.show', $trip->id) }}">
                                             <i class="far fa-eye"></i>
                                         </a>
                 
                                     </td>
                                     <td>
-                                        <a class="btn btn-success" href="{{ route('trips.edit', $trip->id)  }}"><i class="fas fa-edit"></i></a>
+                                        <a class="btn btn-success" href="{{ route('admin.trips.edit', $trip->id)  }}"><i class="fas fa-edit"></i></a>
                                     </td>
                                     <td>
 
-                                        <form action="{{ route('trips.destroy', $trip->id) }}" method="post">
+                                        <form action="{{ route('admin.trips.destroy', $trip->id) }}" method="post">
                                             @csrf
                                             @method('DELETE')
                                         

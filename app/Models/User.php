@@ -88,7 +88,7 @@ class User extends Authenticatable
     {
         return [
             'first_name' => 'required'
-            ,'last_name' => 'required'
+            // ,'last_name' => 'required'
             // ,'email' => 'required|email|unique:users,email'
             // ,'password' => 'required'
             // ,'role' => 'required'

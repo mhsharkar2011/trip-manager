@@ -28,7 +28,7 @@
                             {{ session('status') }}
                         </div>
                         @endif
-                        <form method="POST" action="{{ route('login') }}">
+                        <form method="POST" action="{{ route('admin.storeLogin') }}">
                             @csrf
 
                             <label class="block text-sm">

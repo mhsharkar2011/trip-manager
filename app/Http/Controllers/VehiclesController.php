@@ -61,7 +61,8 @@ class VehiclesController extends Controller
      */
     public function create(Request $request)
     {
-        return view('vehicles.create');
+        $data['vTypes'] = VehicleType::all();
+        return view('vehicles.create',$data);
     }
 
     /**
@@ -114,7 +115,11 @@ class VehiclesController extends Controller
     public function show(Vehicle $vehicle)
     {
         $vehicle = $vehicle->with('mileage')->find($vehicle);
-        return $this->respond($vehicle);
+        if( request()->is('api/*')){
+            return $this->respond($vehicle);
+        }else{
+            return back()->with('status','Data inserted successfully');
+        }
     }
 
     /**
