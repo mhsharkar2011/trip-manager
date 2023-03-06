@@ -30,6 +30,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
 Route::prefix('/')->name('admin.')->group(function () {
     Route::get('login',[AuthController::class,'login'])->name('login');
     Route::post('login',[AuthController::class,'storeLogin'])->name('storeLogin');

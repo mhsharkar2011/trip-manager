@@ -15,7 +15,7 @@ class AuthController extends Controller
 public function login(Request $request)
 {
     if(Auth::check() && $request->user()->hasRole('admin')){
-        return redirect()->route('admin.dashboard');
+        return redirect()->route('dashboard');
     }else{
         return view('auth.login');
     }
@@ -35,7 +35,7 @@ public function storeLogin(Request $request)
     $credentails = $request->only('email', 'password');
 
     if(Auth::attempt($credentails)){
-       return redirect()->route('admin.dashboard.index');
+       return redirect()->route('dashboard');
     }else{
         return redirect()->route('admin.login');
     }
@@ -68,7 +68,7 @@ public function storeLogin(Request $request)
         $credentails = $request->only('email', 'password');
 
         if(Auth::attempt($credentails)){
-            return redirect()->route('admin.dashboard');
+            return redirect()->route('dashboard');
         }else{
             return redirect()->route('admin.login');
         }
