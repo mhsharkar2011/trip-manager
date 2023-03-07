@@ -1,0 +1,12 @@
+1. npm installed 
+2. Created a Soketi in Docker Yml locally
+3. Down and up project from docker
+----------------------------------------------------------------
+4. 
+git clone https://github.com/laravel/echo
+cd echo
+npm install
+npm run compile
+
+----------------------------------------------------------------
+
