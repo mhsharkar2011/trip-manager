@@ -15,7 +15,8 @@ class CreateTripsTable extends Migration
     {
         Schema::create('trips', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedBigInteger('user_id')->nullable();
+            $table->unsignedInteger('driver_id')->nullable();
+            $table->unsignedInteger('customer_id')->nullable();
             $table->unsignedInteger('vehicle_id')->nullable();
             $table->integer('booking_id');
             $table->timestamp('booking_date');
@@ -32,6 +33,8 @@ class CreateTripsTable extends Migration
             $table->integer('distance')->nullable();
             $table->integer('trip_earning')->nullable();
             $table->string('status');
+            $table->foreign('driver_id')->references('id')->on('drivers')->cascadeOnDelete();
+            $table->foreign('customer_id')->references('id')->on('customers')->cascadeOnDelete();
             $table->foreign('vehicle_id')->references('id')->on('vehicles')->cascadeOnDelete();
             $table->timestamps();
             });

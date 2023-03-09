@@ -28,16 +28,31 @@
                         <br>
 
                         <div class="col-md-6">
-                            <label for="inputEmail4" class="form-label">Customer Name</label>
-                            <select class="form-select" name="user_id">
-                                <option value="">Select Customer</option>
-                                @foreach ($users as $user)
-                                    <option value="{{ $user->id }}" >
-                                        {{ $user->full_name }}
+                            <label for="inputEmail4" class="form-label">Driver Name</label>
+                            <select class="form-select" name="driver_id">
+                                <option value="">Select Driver</option>
+                                @foreach ($drivers as $driver)
+                                    <option value="{{ $driver->id }}" >
+                                        {{ $driver->first_name }}
+                                        {{ $driver->last_name }}
                                     </option>
                                 @endforeach
                             </select>
                           </div>
+
+                          <div class="col-md-6">
+                            <label for="inputEmail4" class="form-label">Customer Name</label>
+                            <select class="form-select" name="customer_id">
+                                <option value="">Select customer</option>
+                                @foreach ($customers as $customer)
+                                    <option value="{{ $customer->id }}" >
+                                        {{ $customer->first_name }}
+                                        {{ $customer->last_name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                          </div>
+                          
                           <div class="col-md-6">
                             <label for="inputPassword4" class="form-label">Vehicle Name</label>
                             <select class="form-select" name="vehicle_id">
@@ -49,11 +64,14 @@
                                 @endforeach
                             </select>
                           </div>
-                        <br>
-                        <div class="form-group">
-                            <label class="label">Booking Period: </label>
-                            <input type="number" name="booking_period" class="form-control" />
+
+                        <div class="col-md-6"> 
+                            <div class="form-group">
+                                <label class="label">Booking Period: </label>
+                                <input type="number" name="booking_period" class="form-control" />
+                            </div>
                         </div>
+
                         <br>
                         <div class="form-group">
                             <label class="label">Advance </label>

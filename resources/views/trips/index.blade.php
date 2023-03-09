@@ -9,7 +9,7 @@
             {{-- <div class="card"> --}}
                 {{-- <div class="card-header bg-success text-white"> --}}
                     <a class="btn btn-success" href="#">Total Trip <span class="badge bg-danger"> {{ $trips->count() }} </span></a>
-                    <a style="float: right" class="btn btn-success text-right" href="{{ asset('trips/create') }}">Create New Trips</a>
+                    <a style="float: right" class="btn btn-success text-right" href="{{ route('admin.trips.create') }}">Create New Trips</a>
                 </div>
 
                 <div class="card-body">
@@ -47,13 +47,13 @@
                                     {{ $trip->booking_id}}
                                     </td>
                                     <td>
-                                        {{ $trip->user->customer->first_name ?? '' }}
-                                        {{ $trip->user->customer->last_name ?? '' }}
+                                        {{ $trip->customer->first_name ?? '' }}
+                                        {{ $trip->customer->last_name ?? '' }}
                                     </td>
 
                                     <td>
-                                        {{ $trip->user->driver->first_name ?? '' }}
-                                        {{ $trip->user->driver->last_name ?? '' }}
+                                        {{ $trip->driver->first_name ?? '' }}
+                                        {{ $trip->driver->last_name ?? '' }}
                                     </td>
 
                                     <td>

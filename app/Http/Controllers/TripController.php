@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
+use App\Models\Driver;
 use App\Models\Trip;
 use App\Models\User;
 use App\Models\Vehicle;
@@ -50,10 +52,10 @@ class TripController extends Controller
    
     public function create(Request $request)
     {
-        $users = User::all();
-        $vehicles = Vehicle::all();
-
-        return view('trips.create-trips',['users'=>$users,'vehicles'=>$vehicles]);
+        $data['drivers'] = Driver::all();
+        $data['customers'] = Customer::all();
+        $data['vehicles'] = Vehicle::all();
+        return view('trips.create-trips',$data);
     }
 
     public function store(Request $request)
