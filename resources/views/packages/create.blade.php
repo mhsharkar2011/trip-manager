@@ -1,33 +1,33 @@
 @extends('layouts.app')
 
-@section('title','Vehicle Types')
+@section('title','Packages')
 
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8 mt-5">
             <div class="card">
-                <div class="card-header bg-success text-white">Vehicle Type List</div>
+                <div class="card-header bg-success text-white">Packages</div>
                 <div class="card-body">
                     <table class="table table-striped table-bordered table-hover table-sm m-12">
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Vehicle Type Name</th>
+                                <th>Packages Name</th>
                                 <th>Created At</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($vehicleTypes as $vType )
+                            @foreach ($packages as $package )
                             <tr>
                                 <td>
                                    {{ ++$id}}
                                 </td>
                                 <td>
-                                    {{ $vType->title }}
+                                    {{ $package->title }}
                                 </td>
                                 <td>
-                                    {{ $vType->created_at }}
+                                    {{ $package->created_at }}
                                 </td>
                                 </tr>
                                 @endforeach
@@ -38,10 +38,10 @@
             </div>
         </div>
 
-        {{-- Vehicle Insert --}}
+        {{-- Package Insert --}}
         <div class="col-md-4 mt-5">
             <div class="card">
-                <div class="card-header bg-success text-white">Add Vehicle Type</div>
+                <div class="card-header bg-success text-white">Add Package Type</div>
                 <div class="card-body">
                     @if (session('status'))
                         <div class="alert alert-success">
@@ -49,11 +49,11 @@
                         </div>
                     @endif
 
-                    <form method="post" action="{{ route('vehicle-types.store') }}">
+                    <form method="post" action="{{ route('admin.Package-types.store') }}">
                         @csrf
                         <div class="form-group">
-                            <label class="label">Vehicle Type: </label>
-                            <input type="text" name="title" class="form-control" placeholder="Enter Vehicle Type" />
+                            <label class="label">Package Type: </label>
+                            <input type="text" name="title" class="form-control" placeholder="Enter Package Type" />
                         </div>
                         <br>
 

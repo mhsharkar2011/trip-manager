@@ -17,31 +17,31 @@ class PackageController extends Controller
      */
     public function index(Request $request)
     {
-        $package = Package::query();
+        $packages = Package::query();
 
         if ($with = request('with')) { //load relationships
-            $package->with(explode(',', $with));
+            $packages->with(explode(',', $with));
         }        
 
         //filter, sorting, selective-columns
-        $package->filter(Package::parseRequest(request('query')));
+        $packages->filter(Package::parseRequest(request('query')));
 
         //set default sorting
         if (! Package::hasSorting(request('query'))) {
-            $package->filter(Package::getDefaultSorting());
+            $packages->filter(Package::getDefaultSorting());
         }          
         
-        $package = $package->paginateWrap(
+        $packages = $packages->paginateWrap(
             request('items_per_page', self::ITEMS_PER_PAGE), 
             request('page', 1)
         );
 
         if( request()->is('api/*')){
             //an api call
-            return $this->respond($package);
+            return $this->respond($packages);
         }else{
             //a web call
-            return view('trips.trip-package',['packages'=>$package])->with('id',(request()->input('page', 1) - 1) * self::ITEMS_PER_PAGE);
+            return view('trips.trip-package',['packages'=>$packages])->with('id',(request()->input('page', 1) - 1) * self::ITEMS_PER_PAGE);
         }
         
     }

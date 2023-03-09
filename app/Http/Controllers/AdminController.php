@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Attendance;
+use App\Models\Customer;
+use App\Models\Driver;
+use App\Models\Package;
 use App\Models\Trip;
 use App\Models\Vehicle;
 use Illuminate\Http\Request;
@@ -15,9 +19,13 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $trips = Trip::all();
-        $vehicles = Vehicle::all();
-        return view('admin.dashboard', compact('trips','vehicles'));
+        $data['trips'] = Trip::all();
+        $data['customers'] = Customer::all();
+        $data['vehicles'] = Vehicle::all();
+        $data['drivers'] = Driver::all();
+        $data['packages'] = Package::all();
+        $data['attendance'] = Attendance::all();
+        return view('admin.dashboard',$data);
     }
 
     /**

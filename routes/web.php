@@ -3,8 +3,10 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DriverController;
 use App\Http\Controllers\FuelTypesController;
+use App\Http\Controllers\PackageController;
 use App\Http\Controllers\PasswordRecoveryController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
@@ -46,10 +48,11 @@ Route::group(['middleware'=>'auth'], function() {
         Route::resource('dashboard',AdminController::class);
         Route::get('logout',[AuthController::class,'logout'])->name('logout');
         Route::resource('drivers',DriverController::class);
+        Route::resource('customers',CustomerController::class);
         Route::resource('vehicle-types',VehicleTypesController::class);
         Route::resource('vehicles',VehiclesController::class);
         Route::resource('trips',TripController::class);
-        Route::resource('package', 'App\Http\Controllers\PackageController');
+        Route::resource('trip-packages', PackageController::class);
     });
 });
 

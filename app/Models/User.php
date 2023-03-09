@@ -155,6 +155,11 @@ class User extends Authenticatable
         return $this->hasOne(Driver::class,'user_id');
     }
 
+    public function customer()
+    {
+        return $this->hasOne(Customer::class,'user_id');
+    }
+
     protected static function boot()
     {
         parent::boot();
@@ -165,6 +170,12 @@ class User extends Authenticatable
                 $driver->first_name = $user->first_name;
                 $driver->last_name = $user->last_name;
                 $driver->save();   
+
+                $customer = new Customer();
+                $customer->user_id = $user->id;
+                $customer->first_name = $user->first_name;
+                $customer->last_name = $user->last_name;
+                $customer->save(); 
         });
     }
     

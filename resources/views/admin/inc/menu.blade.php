@@ -18,7 +18,7 @@
     </li>
 
     <li class="nav-item">
-        <a class="nav-link" href="#">
+        <a class="nav-link" href="{{ route('admin.trip-packages.index') }}">
           <i class="fa-solid fa-cubes"></i>
           <span>Packages</span></a>
     </li>
@@ -36,7 +36,7 @@
     </li>
 
     <li class="nav-item">
-      <a class="nav-link" href="#">
+      <a class="nav-link" href="{{ route('admin.customers.index') }}">
         <i class="fa-solid fa-person-walking-luggage"></i>
         <span>Customers</span></a>
     </li>

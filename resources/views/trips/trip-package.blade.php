@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.master-admin')
 
 @section('title','Trips | Package')
 
@@ -49,7 +49,7 @@
                         </div>
                     @endif
 
-                    <form method="post" action="{{ route('package.store') }}">
+                    <form method="post" action="{{ route('admin.trip-packages.store') }}">
                         @csrf
                         <div class="form-group">
                             <label class="label">Package Type: </label>

@@ -58,6 +58,16 @@ class Trip extends baseModel
         return $this->belongsTo(User::class,'user_id');
     }
 
+    public function driver()
+    {
+        return $this->belongsTo(Driver::class,'user_id');
+    }
+
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class,'user_id');
+    }
+
     public function vehicle()
     {
         return $this->belongsTo(Vehicle::class,'vehicle_id');

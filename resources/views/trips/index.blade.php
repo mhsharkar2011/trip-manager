@@ -21,6 +21,7 @@
                                     <th>SL No.</th>
                                     <th>Booking ID</th>
                                     <th>Customer Name</th>
+                                    <th>Driver Name</th>
                                     <th>Vehicle Name</th>
                                     <th>Package Details</th>
                                     <th>Trip Amount</th>
@@ -46,7 +47,13 @@
                                     {{ $trip->booking_id}}
                                     </td>
                                     <td>
-                                        {{ $trip->user->full_name }}
+                                        {{ $trip->user->customer->first_name ?? '' }}
+                                        {{ $trip->user->customer->last_name ?? '' }}
+                                    </td>
+
+                                    <td>
+                                        {{ $trip->user->driver->first_name ?? '' }}
+                                        {{ $trip->user->driver->last_name ?? '' }}
                                     </td>
 
                                     <td>
