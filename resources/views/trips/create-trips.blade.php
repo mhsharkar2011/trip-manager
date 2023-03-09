@@ -13,7 +13,7 @@
                     <a style="float:right" class="btn btn-success text-center" href="{{ asset('trips') }}">Trips List</a>
                 </div>
                 <div class="card-body">
-                    <form class="row g-3" method="post" action="{{ route('trips.store') }}">
+                    <form class="row g-3" method="post" action="{{ route('admin.trips.store') }}">
                         @csrf
 
                         <div class="col-md-6">

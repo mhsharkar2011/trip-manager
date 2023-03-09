@@ -30,8 +30,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/login',[AuthController::class,'login'])->name('login');
 
-Route::prefix('/')->name('admin.')->group(function () {
+Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('login',[AuthController::class,'login'])->name('login');
     Route::post('login',[AuthController::class,'storeLogin'])->name('storeLogin');
     Route::get('register',[AuthController::class,'register'])->name('register');

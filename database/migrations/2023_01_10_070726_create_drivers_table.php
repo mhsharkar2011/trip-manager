@@ -15,10 +15,9 @@ class CreateDriversTable extends Migration
     {
         Schema::create('drivers', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('first_name');
-            $table->string('last_name');
-            $table->string('user_name');
-            $table->string('password');
+            $table->foreignId('user_id')->nullable()->constrained('users');
+            $table->string('first_name')->nullable();
+            $table->string('last_name')->nullable();
             $table->string('avatar')->nullable();
             $table->boolean('is_active')->default(0);
             $table->string('driving_license')->nullable();

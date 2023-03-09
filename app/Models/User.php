@@ -149,6 +149,21 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Vehicle::class);
     }
+
+
+    protected static function boot()
+    {
+        parent::boot();
+    
+        static::created(function ($user) {
+            if ($user->type == 'Driver') {
+                $driver = new Driver();
+                $driver->user_id = $user->id;
+                $driver->name = $user->name;
+                $driver->save();   
+            }
+        });
+    }
     
 
 }
