@@ -15,7 +15,7 @@ class CreateDriversTable extends Migration
     {
         Schema::create('drivers', function (Blueprint $table) {
             $table->increments('id');
-            $table->foreignId('user_id')->nullable()->constrained('users');
+            $table->unsignedInteger('user_id')->nullable()->index();
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
             $table->string('avatar')->nullable();
@@ -24,6 +24,7 @@ class CreateDriversTable extends Migration
             $table->string('contact_number')->nullable();
             $table->text('address')->nullable();
             $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
             });
     }
 

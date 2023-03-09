@@ -49,7 +49,7 @@
                         </div>
                     @endif
 
-                    <form method="post" action="{{ route('admin.vehicle-types.store') }}">
+                    <form method="post" action="{{ route('vehicle-types.store') }}">
                         @csrf
                         <div class="form-group">
                             <label class="label">Vehicle Type: </label>

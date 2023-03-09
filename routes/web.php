@@ -45,6 +45,7 @@ Route::group(['middleware'=>'auth'], function() {
     Route::prefix('/')->name('admin.')->group(function() {
         Route::resource('dashboard',AdminController::class);
         Route::get('logout',[AuthController::class,'logout'])->name('logout');
+        Route::resource('drivers',DriverController::class);
         Route::resource('vehicle-types',VehicleTypesController::class);
         Route::resource('vehicles',VehiclesController::class);
         Route::resource('trips',TripController::class);

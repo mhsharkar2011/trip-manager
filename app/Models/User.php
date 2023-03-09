@@ -150,18 +150,21 @@ class User extends Authenticatable
         return $this->belongsTo(Vehicle::class);
     }
 
+    public function driver()
+    {
+        return $this->hasOne(Driver::class,'user_id');
+    }
 
     protected static function boot()
     {
         parent::boot();
     
         static::created(function ($user) {
-            if ($user->type == 'Driver') {
                 $driver = new Driver();
                 $driver->user_id = $user->id;
-                $driver->name = $user->name;
+                $driver->first_name = $user->first_name;
+                $driver->last_name = $user->last_name;
                 $driver->save();   
-            }
         });
     }
     

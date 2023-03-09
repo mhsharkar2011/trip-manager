@@ -17,7 +17,7 @@ class Driver extends baseModel
      *
      * @var string
      */
-    protected $table = 'users';
+    protected $table = 'drivers';
 
     /**
     * The database primary key value.
