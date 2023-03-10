@@ -30,7 +30,7 @@
                                 <input type="hidden" name="email" class="form-control" value="{{ $user->email }}"/>
                             </div>
                             <div class="form-group">
-                                <x-select-field name="role" :options="$roles->pluck('name', 'name')" :value="$user->role" />
+                                <x-select-field name="role" label="Select Role" :options="$roles->pluck('name', 'id')"  />
                             </div>
                             <div class="form-group text-center">
                                 <input type="submit" class="btn btn-success text-uppercase" />

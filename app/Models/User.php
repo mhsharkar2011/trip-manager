@@ -162,7 +162,7 @@ class User extends Authenticatable
 
     public function roles()
     {
-        return $this->hasMany(Role::class,'role');
+        return $this->belongsToMany(Role::class,'role_users');
     }
 
     protected static function boot()

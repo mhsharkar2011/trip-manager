@@ -7,6 +7,7 @@ use App\Models\Customer;
 use App\Models\Driver;
 use App\Models\Package;
 use App\Models\Trip;
+use App\Models\User;
 use App\Models\Vehicle;
 use Illuminate\Http\Request;
 
@@ -19,12 +20,21 @@ class AdminController extends Controller
      */
     public function index()
     {
+        $data['usersName'] = auth()->user()->full_name;
         $data['trips'] = Trip::all();
+        $data['tripCount'] = Trip::count();
+        $increase = $data['tripCount'] * 0.10;
+        $data['totalTrips'] = $data['tripCount'] + $increase;
         $data['customers'] = Customer::all();
+        $data['customerCount'] = Customer::count();
         $data['vehicles'] = Vehicle::all();
+        $data['vehicleCount'] = Vehicle::count();
         $data['drivers'] = Driver::all();
+        $data['driverCount'] = Driver::count();
         $data['packages'] = Package::all();
+        $data['packageCount'] = Package::count();
         $data['attendance'] = Attendance::all();
+        $data['attendanceCount'] = Attendance::count();
         return view('admin.dashboard',$data);
     }
 

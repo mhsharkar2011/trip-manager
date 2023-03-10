@@ -26,13 +26,47 @@
     <!-- Custom styles for this template-->
     <link href="{{ asset('customAdmin/css/sb-admin.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('customAdmin/css/custom.css') }}">
+ 
+	<!-- Fontawesome CSS -->
+	<link rel="stylesheet" href="{{ URL::to('assets/css/font-awesome.min.css') }}">
+	<!-- Lineawesome CSS -->
+	<link rel="stylesheet" href="{{ URL::to('assets/css/line-awesome.min.css') }}">
+	<!-- Datatable CSS -->
+	<link rel="stylesheet" href="{{ URL::to('assets/css/dataTables.bootstrap4.min.css') }}">
+	<!-- Select2 CSS -->
+	<link rel="stylesheet" href="{{ URL::to('assets/css/select2.min.css') }}">
+	<!-- Datetimepicker CSS -->
+	<link rel="stylesheet" href="{{ URL::to('assets/css/bootstrap-datetimepicker.min.css') }}">
+	<!-- Chart CSS -->
+	<link rel="stylesheet" href="{{ URL::to('ssets/plugins/morris/morris.css') }}">
+	<!-- Main CSS -->
+	<link rel="stylesheet" href="{{ URL::to('assets/css/style.css') }}">
+
+	{{-- message toastr --}}
+	<link rel="stylesheet" href="{{ URL::to('assets/css/toastr.min.css') }}">
+	<script src="{{ URL::to('assets/js/toastr_jquery.min.js') }}"></script>
+	<script src="{{ URL::to('assets/js/toastr.min.js') }}"></script>
 
     @yield('singlePageStyle')
 
 </head>
 
-<body id="page-top">
-
+<body id="page-top" class="bg-dark">
+	<!-- Main Wrapper -->
+<div class="main-wrapper">
+    
+    <!-- Loader -->
+    <div id="loader-wrapper">
+        <div id="loader">
+            <div class="loader-ellips">
+                <span class="loader-ellips__dot"></span>
+                <span class="loader-ellips__dot"></span>
+                <span class="loader-ellips__dot"></span>
+                <span class="loader-ellips__dot"></span>
+            </div>
+        </div>
+    </div>
+    <!-- /Loader -->
     <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
         <a class="navbar-brand mr-1" href="#">Admin Panel</a>
@@ -42,7 +76,7 @@
         </button>
 
         <!-- Navbar Search -->
-        <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+        <form class="bg-dark d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
             <div class="input-group">
                 <input type="text" class="form-control" placeholder="Search for..." aria-label="Search"
                     aria-describedby="basic-addon2">
@@ -109,10 +143,8 @@
             </div>
         </div>
     </footer>
+</div>
 
-
-
-    </div>
     <!-- /#wrapper -->
 
     <!-- Scroll to Top Button-->
@@ -159,6 +191,35 @@
     <script src="{{ asset('customAdmin/js/demo/datatables-demo.js') }}"></script>
     {{-- <script src="{{ asset('customAdmin/js/demo/chart-area-demo.js') }}"></script> --}}
     <script src="{{ asset('customAdmin/js/custom.js') }}"></script>
+
+    <!-- /Main Wrapper -->
+
+	<!-- jQuery -->
+	<script src="{{ URL::to('assets/js/jquery-3.5.1.min.js') }}"></script>
+	<!-- Bootstrap Core JS -->
+	<script src="{{ URL::to('assets/js/popper.min.js') }}"></script>
+	<script src="{{ URL::to('assets/js/bootstrap.min.js') }}"></script>
+	<!-- Chart JS -->
+	<script src="{{ URL::to('assets/plugins/morris/morris.min.js') }}"></script>
+	<script src="{{ URL::to('assets/plugins/raphael/raphael.min.js') }}"></script>
+	<script src="{{ URL::to('assets/js/chart.js') }}"></script>
+	<script src="{{ URL::to('assets/js/Chart.min.js') }}"></script>
+	<script src="{{ URL::to('assets/js/line-chart.js') }}"></script>	
+	<!-- Slimscroll JS -->
+	<script src="{{ URL::to('assets/js/jquery.slimscroll.min.js') }}"></script>
+	<!-- Select2 JS -->
+	<script src="{{ URL::to('assets/js/select2.min.js') }}"></script>
+	<!-- Datetimepicker JS -->
+	<script src="{{ URL::to('assets/js/moment.min.js') }}"></script>
+	<script src="{{ URL::to('assets/js/bootstrap-datetimepicker.min.js') }}"></script>
+	<!-- Datatable JS -->
+	<script src="{{ URL::to('assets/js/jquery.dataTables.min.js') }}"></script>
+	<script src="{{ URL::to('assets/js/dataTables.bootstrap4.min.js') }}"></script>
+	<!-- Multiselect JS -->
+	<script src="{{ URL::to('assets/js/multiselect.min.js') }}"></script>		
+	<!-- Custom JS -->
+	<script src="{{ URL::to('assets/js/app.js') }}"></script>
+	@yield('script')
     @yield('singlePageScript')
 
 </body>
