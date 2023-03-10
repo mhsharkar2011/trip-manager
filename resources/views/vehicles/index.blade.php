@@ -10,6 +10,7 @@
                     <thead class="table-dark">
                         <tr style="font-size: 12px; text-align: center;vertical-align: middle;">
                                 <th>ID</th>
+                                <th>Vehicle Type</th>
                                 <th>SL No.</th>
                                 <th>Owner Name</th>
                                 <th> Vehicle Name</th>
@@ -24,6 +25,9 @@
                             <tr>
                                 <td>
                                    {{ ++$id}}
+                                </td>
+                                <td>
+                                    {{ $vehicle->vehicleType->title}}
                                 </td>
                                 <td>
                                     {{ $vehicle->sl_no}}

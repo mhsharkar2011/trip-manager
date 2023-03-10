@@ -89,9 +89,9 @@ class User extends Authenticatable
         return [
             'first_name' => 'required'
             // ,'last_name' => 'required'
-            // ,'email' => 'required|email|unique:users,email'
-            // ,'password' => 'required'
-            // ,'role' => 'required'
+            ,'email' => 'required|email|unique:users,email'
+            ,'password' => 'required'
+            ,'role' => 'required'
         ];
     }
 
@@ -104,11 +104,11 @@ class User extends Authenticatable
     {
         $rules = static::validation_rules();
 
-        // $rules['email'] = [
-        //     'required',
-        //     'email',
-        //     Rule::unique('users')->ignore($user_id),
-        // ];
+        $rules['email'] = [
+            'required',
+            'email',
+            Rule::unique('users')->ignore($user_id),
+        ];
 
         unset($rules['password']);
 
@@ -160,22 +160,32 @@ class User extends Authenticatable
         return $this->hasOne(Customer::class,'user_id');
     }
 
+    public function roles()
+    {
+        return $this->hasMany(Role::class,'role');
+    }
+
     protected static function boot()
     {
         parent::boot();
     
         static::created(function ($user) {
-                $driver = new Driver();
-                $driver->user_id = $user->id;
-                $driver->first_name = $user->first_name;
-                $driver->last_name = $user->last_name;
-                $driver->save();   
+                if($user->role == 'driver'){
+                    $driver = new Driver();
+                    $driver->user_id = $user->id;
+                    $driver->first_name = $user->first_name;
+                    $driver->last_name = $user->last_name;
+                    $driver->save();  
+                } 
 
-                $customer = new Customer();
-                $customer->user_id = $user->id;
-                $customer->first_name = $user->first_name;
-                $customer->last_name = $user->last_name;
-                $customer->save(); 
+                if($user->role == 'customer') {
+                    $customer = new Customer();
+                    $customer->user_id = $user->id;
+                    $customer->first_name = $user->first_name;
+                    $customer->last_name = $user->last_name;
+                    $customer->save(); 
+                }
+                
         });
     }
     

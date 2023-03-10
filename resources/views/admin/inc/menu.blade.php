@@ -6,6 +6,12 @@
       </a>
     </li>
     
+    <li class="nav-item active">
+      <a class="nav-link" href="{{ route('admin.users.index') }}">
+        <i class="fas fa-fw fa-tachometer-alt"></i>
+        <span>All Users</span>
+      </a>
+    </li>
     <li class="nav-item">
       <a class="nav-link" href="{{ route('admin.drivers.index') }}">
         <i class="fas fa-fw fa-car"></i>

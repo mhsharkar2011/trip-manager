@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -29,16 +30,25 @@ class UserController extends Controller
             $user->filter(User::getDefaultSorting());
         }          
                 
-        $user = $user->paginate(
+        $data['users'] = $user->paginate(
             $items_per_page = request('items_per_page', self::ITEMS_PER_PAGE), 
             $columns = ['*'], 
             $pageName = 'page',             
             request('page', 1)
         );
 
-        return $this->respond($user);
+        if(request()->is('api*')){
+            return $this->respond($user);
+        }else{
+            return view('users.index',$data);
+        }
     }
 
+    public function create()
+    {
+        $roles = Role::all();
+        return view('users.create',compact('roles'));
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -67,7 +77,11 @@ class UserController extends Controller
             $user->save();
         }
 
-        return $this->respondCreated($user);
+        if(request()->is('api*')) {
+            return $this->respondCreated($user);
+        }else {
+            return redirect()->route('admin.users.index');
+        }
     }
 
     /**
@@ -82,9 +96,17 @@ class UserController extends Controller
             $user->load(explode(',', $with));
         }        
 
-        return $this->respond($user);
+        if(request()->is('api*')){
+            return $this->respond($user);
+        }else{
+            return view('users.show',compact('user'));
+        }
     }
 
+    public function edit(User $user){
+        $roles = Role::all();
+        return view('users.edit', compact('user','roles'));    
+    }
     /**
      * Update the specified resource in storage.
      *
@@ -106,7 +128,11 @@ class UserController extends Controller
 
         $user->update($request->except('password'));
 
-        return $this->respond($user);
+        if(request()->is('api*')){
+            return $this->respond($user);
+        }else{
+            return back()->with('User Updated Successfully');
+        }
     }
 
     /**

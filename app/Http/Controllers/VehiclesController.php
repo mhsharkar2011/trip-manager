@@ -62,6 +62,7 @@ class VehiclesController extends Controller
     public function create(Request $request)
     {
         $data['vTypes'] = VehicleType::all();
+        $data['user'] = User::all();
         return view('vehicles.create',$data);
     }
 
@@ -86,7 +87,6 @@ class VehiclesController extends Controller
         }   
 
         $input = $request->all();
-        $input['owner_id'] = auth()->user()->id;
         $vehicle = Vehicle::create($input);
 
         $mileage = new Mileage();

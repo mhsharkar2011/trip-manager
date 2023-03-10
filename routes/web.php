@@ -12,6 +12,7 @@ use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SocialiteController;
 use App\Http\Controllers\TripController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\VehiclesController;
 use App\Http\Controllers\VehicleTypesController;
 use App\Http\Controllers\Web\TestController;
@@ -45,6 +46,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
 Route::group(['middleware'=>'auth'], function() {
     Route::prefix('/')->name('admin.')->group(function() {
+        Route::resource('users',UserController::class);
         Route::resource('dashboard',AdminController::class);
         Route::get('logout',[AuthController::class,'logout'])->name('logout');
         Route::resource('drivers',DriverController::class);

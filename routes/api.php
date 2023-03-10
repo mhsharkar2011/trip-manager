@@ -40,7 +40,7 @@ Route::prefix('v1')
     'auth:sanctum'     
 ])
 ->group(function () { //auth required routes will go here
-    Route::resource('users', UserController::class)->except(['edit', 'create']);
+    // Route::resource('users', UserController::class)->except(['edit', 'create']);
     Route::get('roles-old', [UserController::class, 'get_roles']);
     
     Route::get('my-profile', [UserProfileController::class, 'get']);

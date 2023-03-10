@@ -21,10 +21,24 @@
                                 <label class="label">SL No. </label>
                                 <input type="text" name="sl_no" class="form-control" placeholder="Enter Vehicle SL Numnber" />
                             </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="d-flex flex-column">
+                                    <x-select-field name="owner_id" label="Select Owner" :options="$user->pluck('full_name', 'id')" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="d-flex flex-column">
+                                    <x-select-field name="vehicle_type_id" label="Select Vehicle Type" :options="$vTypes->pluck('title', 'id')" />
+                                    </div>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label class="label">Vehicle Name: </label>
                                 <input type="text" name="name" class="form-control" placeholder="Enter Vehicle Name" />
                             </div>
+
+
                             <div class="form-group">
                                 <label class="label">Model: </label>
                                 <input type="text" name="model" class="form-control" placeholder="Enter Model Number" />
@@ -40,17 +54,6 @@
                             <div class="form-group">
                                 <label class="label">Vehicle License No. </label>
                                 <input type="text" name="license_no" class="form-control" placeholder="Enter License Number" />
-                            </div>
-                            {{-- <input type="hidden" name="vehicle_type_id" value="{{ $input }}" /> --}}
-                            <div class="form-group"> Vehicle Type:
-                                <select class="form-select" name="vehicle_type_id">
-                                    <option value="">Select Vehicle Type</option>
-                                    @foreach ($vTypes as $vType)
-                                        <option value="{{ $vType->id }}" >
-                                            {{ $vType->title }}
-                                        </option>
-                                    @endforeach
-                                </select>
                             </div>
                             <div class="form-group text-center">
                                 <input type="submit" class="btn btn-success text-uppercase" />
