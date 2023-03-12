@@ -104,9 +104,8 @@ class UserController extends Controller
     }
 
     public function edit(User $user){
-        $roles = $user->roles();
-        dd($roles);
-        return view('users.edit', compact('user','roles'));    
+        // $roles = $user->roles();
+        return view('users.edit', compact('user'));    
     }
     /**
      * Update the specified resource in storage.

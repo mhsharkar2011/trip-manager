@@ -10,6 +10,7 @@ use App\Models\Trip;
 use App\Models\User;
 use App\Models\Vehicle;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class AdminController extends Controller
 {
@@ -20,21 +21,38 @@ class AdminController extends Controller
      */
     public function index()
     {
+        $data['driverAvatar'] = Session::get('name');
         $data['usersName'] = auth()->user()->full_name;
         $data['trips'] = Trip::all();
         $data['tripCount'] = Trip::count();
         $increase = $data['tripCount'] * 0.10;
         $data['totalTrips'] = $data['tripCount'] + $increase;
+        // Customer
         $data['customers'] = Customer::all();
         $data['customerCount'] = Customer::count();
+        $increase = $data['tripCount'] * 0.10;
+        $data['totalTrips'] = $data['tripCount'] + $increase;
+        // Vehicles
         $data['vehicles'] = Vehicle::all();
         $data['vehicleCount'] = Vehicle::count();
+        $increase = $data['vehicleCount'] * 0.10;
+        $data['totalVehicles'] = $data['vehicleCount'] + $increase;
+        // Drivers
         $data['drivers'] = Driver::all();
         $data['driverCount'] = Driver::count();
+        $increase = $data['tripCount'] * 0.10;
+        $data['totalTrips'] = $data['tripCount'] + $increase;
+        // Package
         $data['packages'] = Package::all();
         $data['packageCount'] = Package::count();
+        $increase = $data['tripCount'] * 0.10;
+        $data['totalTrips'] = $data['tripCount'] + $increase;
+        // Attendance
         $data['attendance'] = Attendance::all();
         $data['attendanceCount'] = Attendance::count();
+        $increase = $data['tripCount'] * 0.10;
+        $data['totalTrips'] = $data['tripCount'] + $increase;
+        
         return view('admin.dashboard',$data);
     }
 
@@ -103,4 +121,6 @@ class AdminController extends Controller
     {
         //
     }
+
+    
 }

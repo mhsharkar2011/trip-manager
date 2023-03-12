@@ -11,9 +11,9 @@
 
     <title>@yield('title')</title>
 
-    <!-- Custom fonts for this template-->
+    {{-- <!-- Custom fonts for this template-->
     <link href="{{ asset('customAdmin/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" /> --}}
 
     <!-- Page level plugin CSS-->
     <link href="{{ asset('customAdmin/vendor/datatables/dataTables.bootstrap4.css') }}" rel="stylesheet">
@@ -51,149 +51,308 @@
 
 </head>
 
-<body id="page-top" class="bg-dark">
+<body class="bg-dark">
+    <style>    
+		.invalid-feedback{
+			font-size: 14px;
+		}
+	</style>
 	<!-- Main Wrapper -->
-<div class="main-wrapper">
-    
-    <!-- Loader -->
-    <div id="loader-wrapper">
-        <div id="loader">
-            <div class="loader-ellips">
-                <span class="loader-ellips__dot"></span>
-                <span class="loader-ellips__dot"></span>
-                <span class="loader-ellips__dot"></span>
-                <span class="loader-ellips__dot"></span>
-            </div>
-        </div>
-    </div>
-    <!-- /Loader -->
-    <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
+	<div class="main-wrapper">
+		
+		<!-- Loader -->
+		<div id="loader-wrapper">
+			<div id="loader">
+				<div class="loader-ellips">
+				  <span class="loader-ellips__dot"></span>
+				  <span class="loader-ellips__dot"></span>
+				  <span class="loader-ellips__dot"></span>
+				  <span class="loader-ellips__dot"></span>
+				</div>
+			</div>
+		</div>
+		<!-- /Loader -->
 
-        <a class="navbar-brand mr-1" href="#">Admin Panel</a>
+		<!-- Header -->
+		<div class="header">
+			<!-- Logo -->
+			<div class="header-left">
+				<a href="{{ route('admin.dashboard.index') }}" class="logo">
+					<img src="#" width="40" height="40" alt="Avatar">
+				</a>
+			</div>
+			<!-- /Logo -->
+			<a id="toggle_btn" href="javascript:void(0);">
+				<span class="bar-icon">
+					<span></span>
+					<span></span>
+					<span></span>
+				</span>
+			</a>
+			<!-- Header Title -->
+			{{-- <div class="page-title-box">
+				<h3>Hi, {{ Session::get('name') }}</h3>
+			</div> --}}
+			<!-- /Header Title -->
+			<a id="mobile_btn" class="mobile_btn" href="#sidebar"><i class="fa fa-bars"></i></a>
+			<!-- Header Menu -->
+			<ul class="nav user-menu">
+				<!-- Search -->
+				<li class="nav-item">
+					<div class="top-nav-search">
+						<a href="javascript:void(0);" class="responsive-search"> <i class="fa fa-search"></i> </a>
+						<form action="search.html">
+							<input class="form-control" type="text" placeholder="Search here">
+							<button class="btn" type="submit">
+								<i class="fa fa-search"></i>
+							</button>
+						</form>
+					</div>
+				</li>
+				<!-- /Search -->
 
-        <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
-            <i class="fas fa-bars"></i>
-        </button>
+				<!-- Flag -->
+				<li class="nav-item dropdown has-arrow flag-nav">
+					<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button">
+						<img src="{{ URL::to('assets/img/flags/us.png') }}" alt="" height="20"> <span>English</span>
+					</a>
+					<div class="dropdown-menu dropdown-menu-right">
+						<a href="javascript:void(0);" class="dropdown-item">
+						<img src="{{ URL::to('assets/img/flags/us.png') }}" alt="" height="16"> English </a>
+						<a href="javascript:void(0);" class="dropdown-item">
+						<img src="{{ URL::to('assets/img/flags/bangla.png') }}" alt="" height="16"> Bangla </a>
+					</div>
+				</li>
+				<!-- /Flag -->
 
-        <!-- Navbar Search -->
-        <form class="bg-dark d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="Search for..." aria-label="Search"
-                    aria-describedby="basic-addon2">
-                <div class="input-group-append">
-                    <button class="btn btn-primary" type="button">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </div>
-            </div>
-        </form>
+				<!-- Notifications -->
+				<li class="nav-item dropdown">
+					<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+						<i class="fa fa-bell-o"></i>
+						<span class="badge badge-pill">3</span> 
+					</a>
+					<div class="dropdown-menu notifications">
+						<div class="topnav-dropdown-header">
+							<span class="notification-title">Notifications</span> 
+							<a href="javascript:void(0)" class="clear-noti"> Clear All </a> 
+						</div>
+						<div class="noti-content">
+							<ul class="notification-list">
+								<li class="notification-message">
+									<a href="activities.html">
+										<div class="media">
+											<span class="avatar">
+												<img alt="" src="{{ URL::to('/assets/images/'.Auth::user()->avatar) }}">
+											</span>
+											<div class="media-body">
+												<p class="noti-details"><span class="noti-title">John Doe</span> added new task <span class="noti-title">Patient appointment booking</span></p>
+												<p class="noti-time"><span class="notification-time">4 mins ago</span></p>
+											</div>
+										</div>
+									</a>
+								</li>
+								<li class="notification-message">
+									<a href="activities.html">
+										<div class="media">
+											<span class="avatar">
+												<img alt="" src="{{ URL::to('/assets/images/'.Auth::user()->avatar) }}">
+											</span>
+											<div class="media-body">
+												<p class="noti-details"><span class="noti-title">Tarah Shropshire</span> changed the task name <span class="noti-title">Appointment booking with payment gateway</span></p>
+												<p class="noti-time"><span class="notification-time">6 mins ago</span></p>
+											</div>
+										</div>
+									</a>
+								</li>
+								<li class="notification-message">
+									<a href="activities.html">
+										<div class="media">
+											<span class="avatar">
+												<img alt="" src="{{ URL::to('/assets/images/'.Auth::user()->avatar) }}">
+											</span>
+											<div class="media-body">
+												<p class="noti-details"><span class="noti-title">Misty Tison</span> added <span class="noti-title">Domenic Houston</span> and <span class="noti-title">Claire Mapes</span> to project <span class="noti-title">Doctor available module</span></p>
+												<p class="noti-time"><span class="notification-time">8 mins ago</span></p>
+											</div>
+										</div>
+									</a>
+								</li>
+								<li class="notification-message">
+									<a href="activities.html">
+										<div class="media">
+											<span class="avatar">
+												<img alt="" src="{{ URL::to('/assets/images/'.Auth::user()->avatar) }}">
+											</span>
+											<div class="media-body">
+												<p class="noti-details"><span class="noti-title">Rolland Webber</span> completed task <span class="noti-title">Patient and Doctor video conferencing</span></p>
+												<p class="noti-time"><span class="notification-time">12 mins ago</span></p>
+											</div>
+										</div>
+									</a>
+								</li>
+								<li class="notification-message">
+									<a href="activities.html">
+										<div class="media">
+											<span class="avatar">
+												<img alt="" src="{{ URL::to('/assets/images/'.Auth::user()->avatar) }}">
+											</span>
+											<div class="media-body">
+												<p class="noti-details"><span class="noti-title">Bernardo Galaviz</span> added new task <span class="noti-title">Private chat module</span></p>
+												<p class="noti-time"><span class="notification-time">2 days ago</span></p>
+											</div>
+										</div>
+									</a>
+								</li>
+							</ul>
+						</div>
+						<div class="topnav-dropdown-footer"> <a href="activities.html">View all Notifications</a> </div>
+					</div>
+				</li>
+				<!-- /Notifications -->
+				
+				<!-- Message Notifications -->
+				<li class="nav-item dropdown">
+					<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+						<i class="fa fa-comment-o"></i> <span class="badge badge-pill">8</span>
+					</a>
+					<div class="dropdown-menu notifications">
+						<div class="topnav-dropdown-header">
+							<span class="notification-title">Messages</span> 
+							<a href="javascript:void(0)" class="clear-noti"> Clear All </a>
+						 </div>
+						<div class="noti-content">
+							<ul class="notification-list">
+								<li class="notification-message">
+									<a href="chat.html">
+										<div class="list-item">
+											<div class="list-left">
+												<span class="avatar">
+													<img alt="" src="{{ URL::to('/assets/images/'.Auth::user()->avatar) }}">
+												</span>
+											</div>
+											<div class="list-body">
+												<span class="message-author">Richard Miles </span> 
+												<span class="message-time">12:28 AM</span>
+												<div class="clearfix"></div>
+												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span> 
+											</div>
+										</div>
+									</a>
+								</li>
+								<li class="notification-message">
+									<a href="chat.html">
+										<div class="list-item">
+											<div class="list-left">
+												<span class="avatar">
+													<img alt="" src="{{ URL::to('/assets/images/'. Auth::user()->avatar) }}">
+												</span>
+											</div>
+											<div class="list-body">
+												<span class="message-author">John Doe</span> 
+												<span class="message-time">6 Mar</span>
+												<div class="clearfix"></div> 
+												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span> 
+											</div>
+										</div>
+									</a>
+								</li>
+								<li class="notification-message">
+									<a href="chat.html">
+										<div class="list-item">
+											<div class="list-left">
+												<span class="avatar">
+													<img alt="" src="{{ URL::to('/assets/images/'. Auth::user()->avatar) }}">
+												</span>
+											</div>
+											<div class="list-body">
+												<span class="message-author"> Tarah Shropshire </span>
+												<span class="message-time">5 Mar</span>
+												<div class="clearfix"></div> 
+												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span> 
+											</div>
+										</div>
+									</a>
+								</li>
+								<li class="notification-message">
+									<a href="chat.html">
+										<div class="list-item">
+											<div class="list-left">
+												<span class="avatar">
+													<img alt="" src="{{ URL::to('/assets/images/'. Auth::user()->avatar) }}">
+													</span>
+												</div>
+											<div class="list-body">
+												<span class="message-author">Mike Litorus</span>
+												<span class="message-time">3 Mar</span>
+												<div class="clearfix"></div>
+												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span> 
+											</div>
+										</div>
+									</a>
+								</li>
+								<li class="notification-message">
+									<a href="chat.html">
+										<div class="list-item">
+											<div class="list-left">
+												<span class="avatar">
+													<img alt="" src="{{ URL::to('/assets/images/'.Auth::user()->avatar) }}">
+												</span>
+											</div>
+											<div class="list-body">
+												<span class="message-author"> Catherine Manseau </span>
+												<span class="message-time">27 Feb</span>
+												<div class="clearfix"></div>
+												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+											</div>
+										</div>
+									</a>
+								</li>
+							</ul>
+						</div>
+						<div class="topnav-dropdown-footer"> <a href="chat.html">View all Messages</a> </div>
+					</div>
+				</li>
+				<!-- /Message Notifications -->
+				<li class="nav-item dropdown has-arrow main-drop">
+					<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+						<span class="user-img">
+						<img src="{{ URL::to('/assets/images/'. Auth::user()->avatar) }}" alt="{{ Auth::user()->name }}">
+						<span class="status online"></span></span>
+						<span>{{ Session::get('name') }}</span>
+					</a>
+					<div class="dropdown-menu">
+						<a class="dropdown-item" href="#">My Profile</a>
+						<a class="dropdown-item" href="#">Settings</a>
+						<a class="dropdown-item" href="#">Logout</a>
+					</div>
+				</li>
+			</ul>
+			<!-- /Header Menu -->
 
-        <!-- Navbar -->
-        <ul class="navbar-nav ml-auto ml-md-0">
-            <li class="nav-item dropdown no-arrow mx-1">
-                <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-                <span class="badge badge-danger">9+</span>
-                    <i class="fas fa-bell fa-fw"></i>
-                </a>
-            </li>
-            <li class="nav-item dropdown no-arrow mx-1">
-                <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-                    <span class="badge badge-danger">7</span>
-                    <i class="fas fa-envelope fa-fw"></i>
-                </a>
-            </li>
-            <li class="nav-item dropdown no-arrow">
-                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa-user-circle fa-fw"></i>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                    <a class="dropdown-item" href="#">Settings</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
-                </div>
-            </li>
-        </ul>
-    </nav>
+			<!-- Mobile Menu -->
+			<div class="dropdown mobile-user-menu">
+				<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+					<i class="fa fa-ellipsis-v"></i>
+				</a>
+				<div class="dropdown-menu dropdown-menu-right">
+					<a class="dropdown-item" href="#">My Profile</a>
+					<a class="dropdown-item" href="#">Settings</a>
+					<a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
+				</div>
+			</div>
+			<!-- /Mobile Menu -->
 
-
-    <div class="row mr-0">
-        <div class="col-2 leftMenu">
-            @include('admin.inc.menu')
-        </div>
-        <div class="col-10">
-            <div class="container">
-                @include('admin.inc.message')
-                @yield('content')
-            </div>
-
-        </div>
-    </div>
-
-
-
-
-    <!-- Sticky Footer -->
-    <footer class="">
-        <div class="container my-auto">
-            <div class="copyright text-center my-auto">
-                {{-- <span>Copyright © Abdul Mabud 2019</span> --}}
-            </div>
-        </div>
-    </footer>
-</div>
-
-    <!-- /#wrapper -->
-
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
-
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="{{ route('admin.logout') }}">Logout</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Bootstrap core JavaScript-->
-    <script src="{{ asset('customAdmin/vendor/jquery/jquery.min.js') }}"></script>
-    <script src="{{ asset('customAdmin/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-
-    <!-- Core plugin JavaScript-->
-    <script src="{{ asset('customAdmin/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
-
-    <!-- Page level plugin JavaScript-->
-    {{-- <script src="{{ asset('customAdmin/vendor/chart.js/Chart.min.js') }}"></script> --}}
-    <script src="{{ asset('customAdmin/vendor/datatables/jquery.dataTables.js') }}"></script>
-    <script src="{{ asset('customAdmin/vendor/datatables/dataTables.bootstrap4.js') }}"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="{{ asset('customAdmin/js/sb-admin.min.js') }}"></script>
-
-    <!-- Demo scripts for this page-->
-    <script src="{{ asset('customAdmin/js/demo/datatables-demo.js') }}"></script>
-    {{-- <script src="{{ asset('customAdmin/js/demo/chart-area-demo.js') }}"></script> --}}
-    <script src="{{ asset('customAdmin/js/custom.js') }}"></script>
+		</div>
+		<!-- /Header -->
+		<!-- Sidebar -->
+		@include('admin.inc.menu')
+		<!-- /Sidebar -->
+		<!-- Page Wrapper -->
+		@yield('content')
+		<!-- /Page Wrapper -->
+	</div>
 
     <!-- /Main Wrapper -->
-
 	<!-- jQuery -->
 	<script src="{{ URL::to('assets/js/jquery-3.5.1.min.js') }}"></script>
 	<!-- Bootstrap Core JS -->
