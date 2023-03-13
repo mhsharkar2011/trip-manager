@@ -6,6 +6,7 @@ use App\Http\Requests;
 
 use App\Models\Driver;
 use App\Models\User;
+use Brian2694\Toastr\Facades\Toastr;
 use Database\Seeders\UserSeeder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -79,7 +80,7 @@ class DriverController extends Controller
         $driverObj->last_name = $request->last_name;
         $driverObj->contact_number = $request->contact_number;
         $driverObj->save();
-
+        Toastr::success('Data Added successfully',"Success");
         return redirect()->route('admin.drivers.index')->with('success', 'Driver Added Successfully');
     }
 

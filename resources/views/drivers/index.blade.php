@@ -3,6 +3,12 @@
 @section('title','Drivers')
 
 @section('content')
+
+ {{-- message --}}
+ {!! Toastr::message() !!}
+ <!-- Statistics Widget -->
+
+ 
 <div class="container">
     <a style="float: right" class="btn btn-success text-right" href="{{ route('admin.drivers.create') }}">Add driver</a>
             <div class="table-responsive">

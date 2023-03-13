@@ -11,9 +11,9 @@
 
     <title>@yield('title')</title>
 
-    {{-- <!-- Custom fonts for this template-->
+    <!-- Custom fonts for this template-->
     <link href="{{ asset('customAdmin/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" /> --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- Page level plugin CSS-->
     <link href="{{ asset('customAdmin/vendor/datatables/dataTables.bootstrap4.css') }}" rel="stylesheet">
@@ -24,8 +24,8 @@
 
 
     <!-- Custom styles for this template-->
-    <link href="{{ asset('customAdmin/css/sb-admin.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('customAdmin/css/custom.css') }}">
+    {{-- <link href="{{ asset('customAdmin/css/sb-admin.css') }}" rel="stylesheet"> --}}
+    {{-- <link rel="stylesheet" href="{{ asset('customAdmin/css/custom.css') }}"> --}}
  
 	<!-- Fontawesome CSS -->
 	<link rel="stylesheet" href="{{ URL::to('assets/css/font-awesome.min.css') }}">
@@ -101,7 +101,7 @@
 				<li class="nav-item">
 					<div class="top-nav-search">
 						<a href="javascript:void(0);" class="responsive-search"> <i class="fa fa-search"></i> </a>
-						<form action="search.html">
+						<form action="#">
 							<input class="form-control" type="text" placeholder="Search here">
 							<button class="btn" type="submit">
 								<i class="fa fa-search"></i>
@@ -120,7 +120,7 @@
 						<a href="javascript:void(0);" class="dropdown-item">
 						<img src="{{ URL::to('assets/img/flags/us.png') }}" alt="" height="16"> English </a>
 						<a href="javascript:void(0);" class="dropdown-item">
-						<img src="{{ URL::to('assets/img/flags/bangla.png') }}" alt="" height="16"> Bangla </a>
+						<img src="{{ URL::to('assets/img/flags/bd.png') }}" alt="" height="16"> Bangla </a>
 					</div>
 				</li>
 				<!-- /Flag -->
@@ -147,58 +147,6 @@
 											<div class="media-body">
 												<p class="noti-details"><span class="noti-title">John Doe</span> added new task <span class="noti-title">Patient appointment booking</span></p>
 												<p class="noti-time"><span class="notification-time">4 mins ago</span></p>
-											</div>
-										</div>
-									</a>
-								</li>
-								<li class="notification-message">
-									<a href="activities.html">
-										<div class="media">
-											<span class="avatar">
-												<img alt="" src="{{ URL::to('/assets/images/'.Auth::user()->avatar) }}">
-											</span>
-											<div class="media-body">
-												<p class="noti-details"><span class="noti-title">Tarah Shropshire</span> changed the task name <span class="noti-title">Appointment booking with payment gateway</span></p>
-												<p class="noti-time"><span class="notification-time">6 mins ago</span></p>
-											</div>
-										</div>
-									</a>
-								</li>
-								<li class="notification-message">
-									<a href="activities.html">
-										<div class="media">
-											<span class="avatar">
-												<img alt="" src="{{ URL::to('/assets/images/'.Auth::user()->avatar) }}">
-											</span>
-											<div class="media-body">
-												<p class="noti-details"><span class="noti-title">Misty Tison</span> added <span class="noti-title">Domenic Houston</span> and <span class="noti-title">Claire Mapes</span> to project <span class="noti-title">Doctor available module</span></p>
-												<p class="noti-time"><span class="notification-time">8 mins ago</span></p>
-											</div>
-										</div>
-									</a>
-								</li>
-								<li class="notification-message">
-									<a href="activities.html">
-										<div class="media">
-											<span class="avatar">
-												<img alt="" src="{{ URL::to('/assets/images/'.Auth::user()->avatar) }}">
-											</span>
-											<div class="media-body">
-												<p class="noti-details"><span class="noti-title">Rolland Webber</span> completed task <span class="noti-title">Patient and Doctor video conferencing</span></p>
-												<p class="noti-time"><span class="notification-time">12 mins ago</span></p>
-											</div>
-										</div>
-									</a>
-								</li>
-								<li class="notification-message">
-									<a href="activities.html">
-										<div class="media">
-											<span class="avatar">
-												<img alt="" src="{{ URL::to('/assets/images/'.Auth::user()->avatar) }}">
-											</span>
-											<div class="media-body">
-												<p class="noti-details"><span class="noti-title">Bernardo Galaviz</span> added new task <span class="noti-title">Private chat module</span></p>
-												<p class="noti-time"><span class="notification-time">2 days ago</span></p>
 											</div>
 										</div>
 									</a>

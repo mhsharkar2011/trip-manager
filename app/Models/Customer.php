@@ -12,6 +12,16 @@ class Customer extends baseModel
         'id'
     ];
 
+    protected $appends = [
+        // 'profile_photo_url',
+        'full_name'
+    ];
+
+    public function getFullNameAttribute(){
+        return $this->first_name.' '.$this->last_name;
+    }
+
+
     protected static function validation_rules() {
         return [];
     }
@@ -26,6 +36,11 @@ class Customer extends baseModel
 
     protected static function validation_messages_for_update() {
         return self::validation_messages();
-    }     
+    }  
+    
+    public function user()
+    {
+        return $this->belongsTo(User::class,'user_id');
+    }
 
 }

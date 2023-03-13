@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Role;
 use App\Models\User;
+use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -76,7 +77,7 @@ class UserController extends Controller
             $user->email_verified_at = now();
             $user->save();
         }
-
+        Toastr::success('Data Added successfully',"Success");
         if(request()->is('api*')) {
             return $this->respondCreated($user);
         }else {

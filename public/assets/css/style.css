@@ -1326,11 +1326,11 @@ table.dataTable thead > tr > td.sorting {
 -----------------------*/
 
 .header {
-	background: #f43b48;
-	background: -moz-linear-gradient(left, #f43b48 0%, #453a94 100%);
+	background: #212529;
+	/* background: -moz-linear-gradient(left, #f43b48 0%, #453a94 100%);
 	background: -webkit-linear-gradient(left, #f43b48 0%, #453a94 100%);
 	background: -ms-linear-gradient(left, #f43b48 0%, #453a94 100%);
-	background: linear-gradient(to right, #f43b48 0%, #453a94 100%);
+	background: linear-gradient(to right, #f43b48 0%, #453a94 100%); */
 	border-bottom: 1px solid transparent;
 	box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);
 	height: 60px;
@@ -1936,19 +1936,19 @@ table.dataTable thead > tr > td.sorting {
 -----------------------*/
 
 .card-table .card-header {
-	background-color: #fff;
-	border-bottom: 1px solid #ddd;
+	background-color: #333;
+	border-bottom: 1px solid #6c757d;
 	padding: 15px;
 }
 .card-table .card-body {
 	padding: 0;
 }
 .card-table .card-footer {
-	background-color: #fff;
+	background-color: #333;
 	text-align: center;
 }
 .card-table .card-footer a {
-	color: #333;
+	color: #ddd;
 }
 .card-title > a.btn {
 	color: #fff;

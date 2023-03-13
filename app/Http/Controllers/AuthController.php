@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -45,6 +46,7 @@ public function storeLogin(Request $request)
     public function register()
     {
         $data['title'] = "Register Page";
+        $data['roles'] = Role::all();
         return view('auth.register',$data);
     }
 
@@ -63,6 +65,7 @@ public function storeLogin(Request $request)
             'first_name' => $request->input('first_name'),
             'email' => $request->input('email'),
             'password' => Hash::make($request->input('password')),
+            'role' => $request->input('role'),
         ]);
         Auth::login($patient);
         $credentails = $request->only('email', 'password');

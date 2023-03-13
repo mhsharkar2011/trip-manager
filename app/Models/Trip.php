@@ -79,6 +79,11 @@ class Trip extends baseModel
         return $this->belongsTo(Mileage::class,'vehicle_id');
     }
 
+    public function packages()
+    {
+        return $this->hasMany(Package::class,'package_id as booking_id');
+    }
+
 
 
     
