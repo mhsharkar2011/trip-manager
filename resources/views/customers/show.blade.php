@@ -12,6 +12,7 @@
             <h5>Customer Name</h5><p class="card-title">{{ $customer->first_name}} {{$customer->lirst_name }}</p>
             <h5>Contact Number</h5><p class="card-title">{{ $customer->contact_number }}</p>
             <p class="card-text">{{ $customer->avatar }}</p>
+            <a style="float: right" class="btn btn-success text-right" href="{{ route('admin.customers.edit',$customer->id) }}">Edit</a>
             <a style="float: right" class="btn btn-success text-right" href="{{ route('admin.customers.index') }}">Go Back</a>
         </div>
         </div>

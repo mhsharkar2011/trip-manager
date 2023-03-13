@@ -28,6 +28,7 @@
                                         <th>ID</th>
                                         <th>Full Name</th>
                                         <th>Email</th>
+                                        <th>User Type</th>
                                         <th colspan="3">Action</th>
                                     </tr>
                                 </thead>
@@ -43,6 +44,9 @@
                                         </td>
                                         <td>
                                             {{ $user->email}}
+                                        </td>
+                                        <td>
+                                            {{ $user->role}}
                                         </td>
                                         <td>
                                             <x-link-button route="{{ route('admin.users.show', $user->id) }}" label="" icon="fas fa-eye" class="btn btn-info" />

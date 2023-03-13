@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Validator;
 
 class CustomerController extends Controller
 {
@@ -81,7 +83,8 @@ class CustomerController extends Controller
      */
     public function edit(Customer $customer)
     {
-        //
+        $user = User::all();
+        return view('customers.edit',compact('customer','user'));
     }
 
     /**
@@ -93,7 +96,19 @@ class CustomerController extends Controller
      */
     public function update(Request $request, Customer $customer)
     {
-        //
+        $validation = Validator::make(
+            $request->all(), 
+            Customer::validation_rules_for_update(),
+            Customer::validation_messages_for_update(),
+        );
+
+        if ($validation->fails()) {
+            return $this->respondValidationError($validation->errors());
+        }   
+
+        $customer->update($request->all());
+
+        return redirect()->route('admin.customers.index')->with('success', 'Customer Added Successfully');
     }
 
     /**
