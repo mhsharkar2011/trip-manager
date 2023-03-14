@@ -5,7 +5,7 @@ Dashboard- Admin Panel
 
 @section('content')
 <div class="page-wrapper">
-<!-- Page Content -->
+    <!-- Page Content -->
     <div class="content container-fluid">
         <!-- Page Header -->
         <div class="page-header">
@@ -13,19 +13,19 @@ Dashboard- Admin Panel
                 <div class="col-sm-12">
                     <h3 class="page-title text-white">Welcome {{ $usersName }} ! </h3>
                     <ul class="breadcrumb bg-dark">
-                        <li class="breadcrumb-item active">Dashboard</li>
+                        {{-- <li class="breadcrumb-item active">Dashboard</li> --}}
                     </ul>
                 </div>
             </div>
         </div>
+        <!-- Page Top Cards -->
         <div class="row">
             <x-card count="{{ $tripCount ?? '0' }}"     label="Total Trips"        icon="fa-solid fa-truck-plane" />
             <x-card count="{{ $driverCount ?? '0' }}"   label="Total Driver"       icon="fa fa-user" />
             <x-card count="{{ $vehicleCount ?? '0' }}"  label="Total Vehicles"     icon="fa fa-car" />
-            <x-card count="{{ $totalEarn ?? '0' }}"       label="Total Earning"      icon="fa fa-usd" />
-
+            <x-card count="{{ $totalEarn ?? '0' }}"     label="Total Earning"      icon="fa fa-usd" />
         </div>
-
+        <!-- Page Chart -->
         <div class="row">
             <div class="col-md-12">
                 <div class="row">
@@ -34,12 +34,12 @@ Dashboard- Admin Panel
                 </div>
             </div>
         </div>
-
+        <!-- Page Progress Bar -->
         <div class="row">
-            <x-trip-progress-bar col="3" bgdark="dark" color="white" title="New Trips" percent="{{ $totalTrips }}" totalNewValue="{{ $newTripCount }}" totalValue="{{ $tripCount }}" footerTitle="Overall Trips"  />
-            <x-progress-bar col="3" bgdark="dark" color="white" title="Earnings" headerValue="{{ $totalEarn}}" totalValue="{{ $currentMonthEarn }}" footerTitle="Previous Month"  footerValue="{{ $lastMonthEarn }}" />
-            <x-progress-bar col="3" bgdark="dark" color="white" title="Expenses" headerValue="{{ $totalExpenses ?? '0' }}" totalValue="{{ $currentMonthExpenses }}" footerTitle="Previous Month" footerValue="{{ $lastMonthExpenses }}"  />
-            <x-progress-bar col="3" bgdark="dark" color="white" title="Profit" headerValue="{{ $totalProfit ?? '0' }}" totalValue="{{ $currentMonthProfit ?? '0' }}" footerTitle="Previous Month" footerValue="{{ $lastMonthProfit }}"  />
+            <x-progress-bar col="3" bgdark="dark" color="white" title="Top Trip" headerValue="{{ $topTrip }}"        totalValue="{{ $currentMonthTrips }}"    footerTitle="Previous Month Trips" footerValue="{{ $lastMonthTrips }}" />
+            <x-progress-bar col="3" bgdark="dark" color="white" title="Earnings" headerValue="{{ $totalEarn }}"      totalValue="{{ $currentMonthEarn }}"     footerTitle="Previous Month"       footerValue="{{ $lastMonthEarn }}" />
+            <x-progress-bar col="3" bgdark="dark" color="white" title="Expenses" headerValue="{{ $totalExpenses }}"  totalValue="{{ $currentMonthExpenses }}" footerTitle="Previous Month"       footerValue="{{ $lastMonthExpenses }}" />
+            <x-progress-bar col="3" bgdark="dark" color="white" title="Profit  " headerValue="{{ $totalProfit }}"    totalValue="{{ $currentMonthProfit }}"   footerTitle="Previous Month"       footerValue="{{ $lastMonthProfit }}" />
         </div>
 
         <!-- Statistics Widget -->

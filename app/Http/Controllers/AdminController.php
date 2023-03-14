@@ -29,21 +29,31 @@ class AdminController extends Controller
         
         // Trips
         $data['trips'] = Trip::all();
+        $data['topTrip'] = Trip::latest()->paginate();
         $data['tripCount'] = Trip::count();
+
         $increase = $data['tripCount'] * 0.10;
+        $data['totalTrips'] = $data['tripCount'] + $increase;
+        
         // New Trips
         $data['newTrip'] = Trip::where('status','pending')->get();
         $data['newTripCount'] = Trip::where('status','pending')->count();
-        $data['totalTrips'] = $data['tripCount'] + $increase;
 
-        // Earnings ------------------------------------------------------
-        $data['totalEarn'] = Trip::where('status','completed')->sum('trip_earning');
+        // Calculate the date range for the Current month
+        $now = Carbon::now();
+        $startOfTripMonth = $now->startOfMonth()->toDateTimeString();
+        $endOfTripMonth = $now->endOfMonth()->toDateTimeString();
+        $data['currentMonthTrips'] = Trip::where('status','completed')->where('booking_date','>=',$startOfTripMonth)->where('booking_date','<=',$endOfTripMonth)
+                              ->count();
+
         // Calculate the date range for the last month
         $now = Carbon::now();
-        $startOfLastMonth = $now->subMonth()->startOfMonth()->toDateTimeString();
-        $endOfLastMonth = $now->endOfMonth()->toDateTimeString();
-        $data['lastMonthEarn'] = Trip::where('status','completed')->where('booking_date','>=',$startOfLastMonth)->where('booking_date','<=',$endOfLastMonth)
-                              ->sum('trip_earning');
+        $startOfTripLastMonth = $now->subMonth()->startOfMonth()->toDateTimeString();
+        $endOfTripLastMonth = $now->endOfMonth()->toDateTimeString();
+        $data['lastMonthTrips'] = Trip::where('status','completed')->where('booking_date','>=',$startOfTripLastMonth)->where('booking_date','<=',$endOfTripLastMonth)
+                              ->count();
+        // Earnings ------------------------------------------------------
+        $data['totalEarn'] = Trip::where('status','completed')->sum('trip_earning');
 
         // Calculate the date range for the Current month
         $now = Carbon::now();
@@ -52,6 +62,14 @@ class AdminController extends Controller
         $data['currentMonthEarn'] = Trip::where('status','completed')->where('booking_date','>=',$startOfMonth)->where('booking_date','<=',$endOfMonth)
                               ->sum('trip_earning');
 
+        // Calculate the date range for the last month
+        $now = Carbon::now();
+        $startOfLastMonth = $now->subMonth()->startOfMonth()->toDateTimeString();
+        $endOfLastMonth = $now->endOfMonth()->toDateTimeString();
+        $data['lastMonthEarn'] = Trip::where('status','completed')->where('booking_date','>=',$startOfLastMonth)->where('booking_date','<=',$endOfLastMonth)
+                              ->sum('trip_earning');
+
+        
         // Expenses ------------------------------------------------------
         $data['totalExpenses'] = Trip::where('status','completed')->sum('cost_amount');
         // Calculate the date range for the last month

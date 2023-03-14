@@ -87,26 +87,34 @@ class TripController extends Controller
         return view('trips.show',['trip'=>$trip]);
     }
 
-    public function edit(Trip $trip, User $user)
+    public function edit(Trip $trip)
     {
-        $vehicles = Vehicle::all();
-        return view('trips.edit',['trip'=>$trip,'users'=>$user,'vehicles'=>$vehicles]);
+        return view('trips.edit',['trip'=>$trip]);
     }
 
  
     public function update(Request $request, Trip $Trip)
     {
-        $validation = Validator::make(
-            $request->all(), 
-            Trip::validation_rules_for_update(),
-            Trip::validation_messages_for_update(),
-        );
+        // $validation = Validator::make(
+        //     $request->all(), 
+        //     Trip::validation_rules_for_update(),
+        //     Trip::validation_messages_for_update(),
+        // );
 
-        if ($validation->fails()) {
-            return $this->respondValidationError($validation->errors());
-        }   
+        // if ($validation->fails()) {
+        //     return $this->respondValidationError($validation->errors());
+        // }   
 
-        $Trip->update($request->all());
+        $packageAmount = $request->package_amount;
+        $advanceAmount = $request->advance_amount;
+        $balanceIn = $packageAmount - $advanceAmount;
+
+        $Trip->update([
+            'package_amount' => $packageAmount,
+            'advance_amount' => $advanceAmount,
+            'balance_in' => $balanceIn,
+            'trip_earning' => $advanceAmount
+        ]);
 
         return back()->with('status', 'success');
     }

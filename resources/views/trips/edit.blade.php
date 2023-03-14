@@ -27,33 +27,6 @@
                             <input type="datetime-local" name="bookig_date" class="form-control" value="{{ $trip->booking_date }}" />
                         </div>
                         <br>
-
-                        <div class="col-md-6">
-                            <label for="inputEmail4" class="form-label">Customer Name</label>
-                            <select class="form-select" name="user_id">
-                                <option value="{{ $trip->customer->id }}">{{ $trip->user->full_name }}</option>
-                                @foreach ($users as $user)
-                                    @if ($user->id !== $trip->user->id)
-                                        <option value="{{ $user->id }}" >
-                                            {{ $user->full_name }}
-                                        </option>
-                                    @endif
-                                @endforeach
-                            </select>
-                          </div>
-                          <div class="col-md-6">
-                            <label for="inputPassword4" class="form-label">Vehicle Name</label>
-                            <select class="form-select" name="vehicle_id">
-                                <option value="{{ $trip->vehicle->id }}">{{ $trip->vehicle->name }}</option>
-                                @foreach ($vehicles as $vehicle)
-                                    @if ($vehicle->id !== $trip->vehicle->id)
-                                        <option value="{{ $vehicle->id }}" >
-                                            {{ $vehicle->name }}
-                                        </option>
-                                    @endif
-                                @endforeach
-                            </select>
-                          </div>
                         <br>
                         <div class="form-group">
                             <label class="label">Booking Period: </label>
