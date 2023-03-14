@@ -15,9 +15,10 @@ class CustomerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data['customers'] = Customer::all();
+        $page = $request->per_page ?? 1;
+        $data['customers'] = Customer::latest()->paginate($page);
         return view('customers.index',$data);
     }
 

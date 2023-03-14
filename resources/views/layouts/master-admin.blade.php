@@ -76,10 +76,8 @@
 		<!-- Header -->
 		<div class="header">
 			<!-- Logo -->
-			<div class="header-left">
-				<a href="{{ route('admin.dashboard.index') }}" class="logo">
-					<img src="#" width="40" height="40" alt="Avatar">
-				</a>
+			<div class="header-left mt-4 text-start text-white">
+				<span>Admin Panel</span>
 			</div>
 			<!-- /Logo -->
 			<a id="toggle_btn" href="javascript:void(0);">
