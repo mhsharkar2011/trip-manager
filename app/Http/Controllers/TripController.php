@@ -89,10 +89,8 @@ class TripController extends Controller
 
     public function edit(Trip $trip, User $user)
     {
-
-        $users = User::all();
         $vehicles = Vehicle::all();
-        return view('trips.edit',['trip'=>$trip,'users'=>$users,'vehicles'=>$vehicles]);
+        return view('trips.edit',['trip'=>$trip,'users'=>$user,'vehicles'=>$vehicles]);
     }
 
  

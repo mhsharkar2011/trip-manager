@@ -27,12 +27,12 @@
                             <table class="table table-dark text-white">
                                 <thead class="border-secondary">
                                         <tr style="font-size: 12px; text-align: center;vertical-align: middle;">
-                                            {{-- <th>SL No.</th> --}}
+                                            <th>SL No.</th>
                                             <th>Booking ID</th>
                                             <th>Customer Name</th>
                                             <th>Driver Name</th>
                                             <th>Vehicle Name</th>
-                                            {{-- <th>Package Details</th> --}}
+                                            <th>Package Details</th>
                                             <th>Trip Amount</th>
                                             <th>Booking Date</th>
                                             <th>Booking Period</th>
@@ -51,85 +51,50 @@
                                     <tbody>
                                         @foreach ($trips as $trip )
                                         <tr>
-                                            {{-- <td>{{ ++$id }}</td> --}}
+                                            <td>{{ ++$id }}</td>
+                                            <td>{{ $trip->booking_id}}</td>
+                                            <td>{{ $trip->customer->first_name ?? '' }}{{ $trip->customer->last_name ?? '' }}</td>
+                                            <td>{{ $trip->driver->first_name ?? '' }}{{ $trip->driver->last_name ?? '' }}</td>
+                                            <td>{{$trip->vehicle->name}}</td>
+                                            <td>{{ str_limit($trip->package_details,'5') }}</td>
+                                            <td>{{ $trip->package_amount }}</td>
+                                            <td>{{ Carbon\Carbon::parse($trip->booking_date)->format('Y/m/d h:i A') }}</td>
+                                            <td>{{ $trip->booking_period }}</td>
+                                            <td>{{ $trip->advance_amount }}</td>
+                                            <td>{{ $trip->bkash_charge }}</td>
+                                            <td>{{ str_limit($trip->cost_details,'10') }}</td>
+                                            <td>{{ $trip->cost_amount }}</td>
+                                            <td>{{ $trip->balance_in }}</td>
+                                            <td>{{ str_limit($trip->from_area,'5') }}</td>
+                                            <td>{{ str_limit($trip->to_area,'5') }}</td>
+                                            <td>{{ $trip->distance }}</td>
+                                            <td>{{ $trip->trip_earning }}</td>
+                                            <td>{{ $trip->status}}</td>
+                                            {{-- <td><a  class="btn btn-success mr-3" href="{{ route('admin.trips.show', $trip->id) }}"><i class="far fa-eye"></i></a></td>
+                                            <td><a class="btn btn-success" href="{{ route('admin.trips.edit', $trip->id)  }}"><i class="fas fa-edit"></i></a></td>
                                             <td>
-                                            {{ $trip->booking_id}}
-                                            </td>
-                                            <td>
-                                                {{ $trip->customer->first_name ?? '' }}
-                                                {{ $trip->customer->last_name ?? '' }}
-                                            </td>
-
-                                            <td>
-                                                {{ $trip->driver->first_name ?? '' }}
-                                                {{ $trip->driver->last_name ?? '' }}
-                                            </td>
-
-                                            <td>
-                                                {{$trip->vehicle->name}}
-                                            </td>
-
-                                            {{-- <td>
-                                                {{ str_limit($trip->package_details,'5') }}
-                                            </td> --}}
-                                            <td>
-                                                {{ $trip->package_amount }}
-                                            </td>
-                                            {{-- <td>
-                                                {{ Carbon\Carbon::parse($trip->booking_date)->format('Y/m/d h:i A') }}
-                                                
-                                            </td> --}}
-                                            <td>
-                                                {{ $trip->booking_period }}
-                                            </td>
-                                            <td>
-                                                {{ $trip->advance_amount }}
-                                            </td>
-                                            <td>
-                                                {{ $trip->bkash_charge }}
-                                            </td>
-                                            <td>
-                                                {{ str_limit($trip->cost_details,'10') }}
-                                            </td>
-                                            <td>
-                                                {{ $trip->cost_amount }}
-                                            </td>
-                                            <td>
-                                                {{ $trip->balance_in }}
-                                            </td>
-                                            <td>
-                                                {{ str_limit($trip->from_area,'5') }}
-                                            </td>
-                                            <td>
-                                            {{ str_limit($trip->to_area,'5') }}
-                                                
-                                            </td>
-                                            <td>
-                                                {{ $trip->distance }}
-                                            </td>
-                                            <td>
-                                                {{ $trip->trip_earning }}
-                                            </td>
-                                            <td>
-                                                {{ $trip->status}}
-                                            </td>
-                                            <td>
-                                                <a  class="btn btn-success mr-3" href="{{ route('admin.trips.show', $trip->id) }}">
-                                                    <i class="far fa-eye"></i>
-                                                </a>
-                        
-                                            </td>
-                                            <td>
-                                                <a class="btn btn-success" href="{{ route('admin.trips.edit', $trip->id)  }}"><i class="fas fa-edit"></i></a>
-                                            </td>
-                                            <td>
-
                                                 <form action="{{ route('admin.trips.destroy', $trip->id) }}" method="post">
                                                     @csrf
                                                     @method('DELETE')
-                                                
                                                     <button type="submit" class="btn btn-danger mr-3"><i class="far fa-trash-alt"></i></button>
                                                 </form>
+                                            </td> --}}
+                                            <td class="text-end">
+                                                <div class="dropdown dropdown-action">
+                                                    <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                                    <div class="dropdown-menu dropdown-menu-right">
+                                                        <a class="dropdown-item" href="javascript:void(0)" onclick="editTrip({{ $trip->id }})">
+                                                            <i class="fa fa-pencil m-r-5"></i> Edit
+                                                        </a>
+                                                        <form action="{{ route('admin.trips.destroy', $trip->id) }}" method="post">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                        <a class="dropdown-item" href="javascript:void(0)">
+                                                            <i class="fa fa-trash-o m-r-5"></i> Delete
+                                                        </a>
+                                                        </form>
+                                                    </div>
+                                                </div>
                                             </td>
                                             </tr>
                                             @endforeach
@@ -144,4 +109,11 @@
         </div>
     </div>
 </div>
+<script>
+    function editTrip(id) {
+    // Redirect to the edit trip page with the trip ID as a parameter
+    window.location.href = '/trips/' + id + '/edit';
+}
+
+</script>
 @endsection

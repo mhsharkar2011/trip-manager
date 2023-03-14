@@ -20,9 +20,9 @@ Dashboard- Admin Panel
         </div>
         <div class="row">
             <x-card count="{{ $tripCount ?? '0' }}"     label="Total Trips"        icon="fa-solid fa-truck-plane" />
-            <x-card count="{{ $customerCount ?? '0' }}" label="Total Client"       icon="fa fa-user" />
+            <x-card count="{{ $driverCount ?? '0' }}"   label="Total Driver"       icon="fa fa-user" />
             <x-card count="{{ $vehicleCount ?? '0' }}"  label="Total Vehicles"     icon="fa fa-car" />
-            <x-card count="{{ $earning ?? '0' }}"       label="Total Earning"      icon="fa fa-usd" />
+            <x-card count="{{ $totalEarn ?? '0' }}"       label="Total Earning"      icon="fa fa-usd" />
 
         </div>
 
@@ -36,10 +36,10 @@ Dashboard- Admin Panel
         </div>
 
         <div class="row">
-            <x-progress-bar col="3" bgdark="dark" color="white" title="New Trips" percent="{{ $totalTrips }}" totalValue="{{ $tripCount }}" footerTitle="Overall Employee"  />
-            <x-progress-bar col="3" bgdark="dark" color="white" title="New Client" percent="{{ $totalTrips }}" totalValue="{{ $customerCount }}" footerTitle="Overall Client"  />
-            <x-progress-bar col="3" bgdark="dark" color="white" title="New Vehicle" percent="{{ $totalVehicles }}" totalValue="{{ $vehicleCount }}" footerTitle="Overall Vehicle"  />
-            <x-progress-bar col="3" bgdark="dark" color="white" title="Current Month Earning" percent="{{ $totalTrips }}" totalValue="{{ $earningCount ?? '0' }}" footerTitle="Overall Earning"  />
+            <x-trip-progress-bar col="3" bgdark="dark" color="white" title="New Trips" percent="{{ $totalTrips }}" totalNewValue="{{ $newTripCount }}" totalValue="{{ $tripCount }}" footerTitle="Overall Trips"  />
+            <x-progress-bar col="3" bgdark="dark" color="white" title="Earnings" headerValue="{{ $totalEarn}}" totalValue="{{ $currentMonthEarn }}" footerTitle="Previous Month"  footerValue="{{ $lastMonthEarn }}" />
+            <x-progress-bar col="3" bgdark="dark" color="white" title="Expenses" headerValue="{{ $totalExpenses ?? '0' }}" totalValue="{{ $currentMonthExpenses }}" footerTitle="Previous Month" footerValue="{{ $lastMonthExpenses }}"  />
+            <x-progress-bar col="3" bgdark="dark" color="white" title="Profit" headerValue="{{ $totalProfit ?? '0' }}" totalValue="{{ $currentMonthProfit ?? '0' }}" footerTitle="Previous Month" footerValue="{{ $lastMonthProfit }}"  />
         </div>
 
         <!-- Statistics Widget -->
@@ -242,7 +242,7 @@ Dashboard- Admin Panel
             <div class="col-md-6 d-flex">
                 <div class="card card-table border-secondary flex-fill">
                     <div class="card-header bg-dark">
-                        <h3 class="card-title  text-white mb-0">Client <span class="badge bg-inverse-danger ml-2">{{ $customerCount }}</span></h3> </div>
+                        <h3 class="card-title  text-white mb-0">Client <span class="badge bg-inverse-danger ml-2">{{ $clientCount ?? '' }}</span></h3> </div>
                     <div class="card-body bg-dark">
                         <div class="table table-dark">
                             <table class="table table-dark text-white">
@@ -255,13 +255,13 @@ Dashboard- Admin Panel
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($customers as $customer)   
+                                    @foreach ($clients as $client)   
                                     <tr>
-                                        <td>{{ $customer->full_name }}</td>
+                                        <td>{{ $client->full_name }}</td>
                                         <td>
-                                            <h2 ><a class="text-white text-decoration-none" href="#">{{ $customer->user->email }}</a></h2>
+                                            <h2 ><a class="text-white text-decoration-none" href="#">{{ $client->user->email }}</a></h2>
                                         </td>
-                                        <td>{{ $customer->is_active }}</td>
+                                        <td>{{ $client->is_active }}</td>
                                         <td>...</td>
                                     </tr>
                                     @endforeach

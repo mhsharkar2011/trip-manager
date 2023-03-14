@@ -14,7 +14,7 @@
                     <a style="float:right" class="btn btn-success text-center" href="{{ asset('trips') }}">Trips List</a>
                 </div>
                 <div class="card-body">
-                    <form class="row g-3" method="post" action="{{ route('trips.update',$trip->id) }}">
+                    <form class="row g-3" method="post" action="{{ route('admin.trips.update',$trip->id) }}">
                         @csrf
                         @method('PUT')
                         <div class="col-md-6">
@@ -31,7 +31,7 @@
                         <div class="col-md-6">
                             <label for="inputEmail4" class="form-label">Customer Name</label>
                             <select class="form-select" name="user_id">
-                                <option value="{{ $trip->user->id }}">{{ $trip->user->full_name }}</option>
+                                <option value="{{ $trip->customer->id }}">{{ $trip->user->full_name }}</option>
                                 @foreach ($users as $user)
                                     @if ($user->id !== $trip->user->id)
                                         <option value="{{ $user->id }}" >

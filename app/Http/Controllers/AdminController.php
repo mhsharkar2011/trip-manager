@@ -9,7 +9,9 @@ use App\Models\Package;
 use App\Models\Trip;
 use App\Models\User;
 use App\Models\Vehicle;
+use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class AdminController extends Controller
@@ -24,15 +26,51 @@ class AdminController extends Controller
         $user_id = auth()->user()->id;
         $data['driverAvatar'] = Session::get('name');
         $data['usersName'] = auth()->user()->full_name;
+        
+        // Trips
         $data['trips'] = Trip::all();
         $data['tripCount'] = Trip::count();
         $increase = $data['tripCount'] * 0.10;
+        // New Trips
+        $data['newTrip'] = Trip::where('status','pending')->get();
+        $data['newTripCount'] = Trip::where('status','pending')->count();
         $data['totalTrips'] = $data['tripCount'] + $increase;
-        // Customer
-        $data['customers'] = Customer::all();
-        $data['customerCount'] = Customer::count();
-        $increase = $data['tripCount'] * 0.10;
-        $data['totalTrips'] = $data['tripCount'] + $increase;
+
+        // Earnings ------------------------------------------------------
+        $data['totalEarn'] = Trip::where('status','completed')->sum('trip_earning');
+        // Calculate the date range for the last month
+        $now = Carbon::now();
+        $startOfLastMonth = $now->subMonth()->startOfMonth()->toDateTimeString();
+        $endOfLastMonth = $now->endOfMonth()->toDateTimeString();
+        $data['lastMonthEarn'] = Trip::where('status','completed')->where('booking_date','>=',$startOfLastMonth)->where('booking_date','<=',$endOfLastMonth)
+                              ->sum('trip_earning');
+
+        // Calculate the date range for the Current month
+        $now = Carbon::now();
+        $startOfMonth = $now->startOfMonth()->toDateTimeString();
+        $endOfMonth = $now->endOfMonth()->toDateTimeString();
+        $data['currentMonthEarn'] = Trip::where('status','completed')->where('booking_date','>=',$startOfMonth)->where('booking_date','<=',$endOfMonth)
+                              ->sum('trip_earning');
+
+        // Expenses ------------------------------------------------------
+        $data['totalExpenses'] = Trip::where('status','completed')->sum('cost_amount');
+        // Calculate the date range for the last month
+        $now = Carbon::now();
+        $startOfLastMonth = $now->subMonth()->startOfMonth()->toDateTimeString();
+        $endOfLastMonth = $now->endOfMonth()->toDateTimeString();
+        $data['lastMonthExpenses'] = Trip::where('status','completed')->where('booking_date','>=',$startOfLastMonth)->where('booking_date','<=',$endOfLastMonth)
+                              ->sum('cost_amount');
+
+        // Calculate the date range for the Current month
+        $now = Carbon::now();
+        $startOfMonth = $now->startOfMonth()->toDateTimeString();
+        $endOfMonth = $now->endOfMonth()->toDateTimeString();
+        $data['currentMonthExpenses'] = Trip::where('status','completed')->where('booking_date','>=',$startOfMonth)->where('booking_date','<=',$endOfMonth)
+                              ->sum('cost_amount');
+        // Profit ---------------------------------------------------------
+        $data['currentMonthProfit'] = $data['currentMonthEarn'] - $data['currentMonthExpenses'];
+        $data['lastMonthProfit'] = $data['lastMonthEarn'] - $data['lastMonthExpenses'];
+        $data['totalProfit'] = $data['totalEarn'] - $data['totalExpenses'];
         // Vehicles
         $data['vehicles'] = Vehicle::all();
         $data['vehicleCount'] = Vehicle::count();
@@ -48,6 +86,12 @@ class AdminController extends Controller
         $data['packageCount'] = Package::count();
         $increase = $data['tripCount'] * 0.10;
         $data['totalTrips'] = $data['tripCount'] + $increase;
+        // Client
+        $data['clients'] = Customer::all();
+        $data['clientCount'] = Customer::count();
+        $increase = $data['clientCount'] * 0.10;
+        $data['totalClient'] = $data['clientCount'] + $increase;
+
         // Attendance
         $data['attendance'] = Attendance::all();
         $data['attendanceCount'] = Attendance::count();
