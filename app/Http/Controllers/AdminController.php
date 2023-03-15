@@ -125,15 +125,17 @@ class AdminController extends Controller
         // $users_2_days_ago = User::whereDate('created_at', today()->subDays(2))->count();
 
         $chartTripEarn = new TripEarnChart();
-        $chartTripProfit = new TripEarnChart();
-
-        $chartTripEarn->labels(['Last Month','Current Month' ]);
-        $chartTripProfit->labels(['Last Month Profit','Current Month Profit']);
-        $chartTripEarn->dataset('Earning', 'bar', [$data['lastMonthEarn'],$data['currentMonthEarn']]);
-        $chartTripEarn->dataset('Expenses', 'bar', [$data['lastMonthExpenses'],$data['currentMonthExpenses']]);
-        $chartTripProfit->dataset('Profile', 'line', [$data['currentMonthProfit'],$data['lastMonthProfit']]);
-
+        $chartTripEarn->labels(['Last Month','Current Month']);
+        // $chartTripEarn->barWidth(0.9);
+        $chartTripEarn->title($title = 'TOTAL REVENUE',$font_size = 24, $color = '#fff',$bold = true, $font_family = "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif");
         
+        $chartTripProfit = new TripEarnChart();
+        $chartTripProfit->labels(['Last Month Profit','Current Month Profit']);
+        $chartTripProfit->title($title = 'TOTAL PROFIT',$font_size = 24, $color = '#fff',$bold = true, $font_family = "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif");
+        $chartTripEarn->dataset('Earning', 'bar', [$data['lastMonthEarn'],$data['currentMonthEarn']])->backgroundColor('#f43b48');
+        $chartTripEarn->dataset('Expenses', 'bar', [$data['lastMonthExpenses'],$data['currentMonthExpenses']])->backgroundColor('blue');
+        $chartTripProfit->dataset('Profile', 'line', [$data['currentMonthProfit'],$data['lastMonthProfit']])->backgroundColor('darkgreen');
+
         return view('admin.dashboard',$data,['chartTripEarn'=>$chartTripEarn,'chartTripProfit'=>$chartTripProfit],);
     }
 
