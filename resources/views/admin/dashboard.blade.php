@@ -29,8 +29,30 @@ Dashboard- Admin Panel
         <div class="row">
             <div class="col-md-12">
                 <div class="row">
-                    <x-chart color="text-white" title="Total Revenue" chartId="bar-charts" />
-                    <x-chart color="text-white" title="Sales Overview" chartId="line-charts" />
+                    {{-- <x-chart color="text-white" title="Total Revenue" chartId="bar-charts" />
+                    <x-chart color="text-white" title="Sales Overview" chartId="line-charts" /> --}}
+
+                    <div class="row">
+                        <div class="col-md-6 text-center text-white">
+                            <div class="card border-secondary" style="border:1px solid #333; border-radious:6px">
+                                <div class="card-body bg-dark">
+                                    <h3 class="card-title text-white">Transection Overview</h3>
+                                    {!! $chartTripEarn->container() !!}
+                                    {!! $chartTripEarn->script() !!}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 text-center text-white">
+                            <div class="card border-secondary" style="border:1px solid #333; border-radious:6px">
+                                <div class="card-body bg-dark">
+                                    <h3 class="card-title text-white">Total Revenue</h3>
+                                    {!! $chartTripProfit->container() !!}
+                                    {!! $chartTripProfit->script() !!}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

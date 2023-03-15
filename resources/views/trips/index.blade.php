@@ -18,6 +18,7 @@
             </div>
         </div>
         <div class="row ">
+
             <div class="col-md-12 d-flex">
                 <div class="card card-table border-secondary flex-fill">
                     <div class="card-header bg-dark">
@@ -106,6 +107,7 @@
                         </div>
                     </div>
                 </div>
+                
         </div>
     </div>
 </div>
@@ -116,4 +118,5 @@
 }
 
 </script>
+
 @endsection

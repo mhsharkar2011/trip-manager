@@ -1,4 +1,4 @@
-@props(['title', 'chartId','color'])
+@props(['title', 'chartId','color','data'])
 
 <div class="col-md-6 text-center {{ $color }}">
     <div class="card border-secondary" style="border:1px solid #333; border-radious:6px">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Charts\TripEarnChart;
 use App\Models\Attendance;
 use App\Models\Customer;
 use App\Models\Driver;
@@ -23,6 +24,7 @@ class AdminController extends Controller
      */
     public function index()
     {
+
         $user_id = auth()->user()->id;
         $data['driverAvatar'] = Session::get('name');
         $data['usersName'] = auth()->user()->full_name;
@@ -115,8 +117,24 @@ class AdminController extends Controller
         $data['attendanceCount'] = Attendance::count();
         $increase = $data['tripCount'] * 0.10;
         $data['totalTrips'] = $data['tripCount'] + $increase;
+
+
+        // Chart 
+        // $today_users = User::whereDate('created_at', today())->count();
+        // $yesterday_users = User::whereDate('created_at', today()->subDays(1))->count();
+        // $users_2_days_ago = User::whereDate('created_at', today()->subDays(2))->count();
+
+        $chartTripEarn = new TripEarnChart();
+        $chartTripProfit = new TripEarnChart();
+
+        $chartTripEarn->labels(['Last Month','Current Month' ]);
+        $chartTripProfit->labels(['Last Month Profit','Current Month Profit']);
+        $chartTripEarn->dataset('Earning', 'bar', [$data['lastMonthEarn'],$data['currentMonthEarn']]);
+        $chartTripEarn->dataset('Expenses', 'bar', [$data['lastMonthExpenses'],$data['currentMonthExpenses']]);
+        $chartTripProfit->dataset('Profile', 'line', [$data['currentMonthProfit'],$data['lastMonthProfit']]);
+
         
-        return view('admin.dashboard',$data);
+        return view('admin.dashboard',$data,['chartTripEarn'=>$chartTripEarn,'chartTripProfit'=>$chartTripProfit],);
     }
 
     /**
