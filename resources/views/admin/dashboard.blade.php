@@ -30,7 +30,7 @@ Dashboard- Admin Panel
             <div class="col-md-12">
                 <div class="row">
                     <x-chart color="text-white" title="Total Revenue" chartId="bar-charts" />
-                    <x-chart color="text-white" title="Sales Overview<" chartId="line-charts" />
+                    <x-chart color="text-white" title="Sales Overview" chartId="line-charts" />
                 </div>
             </div>
         </div>
