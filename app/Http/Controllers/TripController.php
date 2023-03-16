@@ -113,7 +113,8 @@ class TripController extends Controller
             'package_amount' => $packageAmount,
             'advance_amount' => $advanceAmount,
             'balance_in' => $balanceIn,
-            'trip_earning' => $advanceAmount
+            'trip_earning' => $advanceAmount,
+            'status'=>$request->status,
         ]);
 
         return back()->with('status', 'success');

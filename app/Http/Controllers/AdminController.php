@@ -136,6 +136,8 @@ class AdminController extends Controller
         $chartTripEarn->dataset('Expenses', 'bar', [$data['lastMonthExpenses'],$data['currentMonthExpenses']])->backgroundColor('blue');
         $chartTripProfit->dataset('Profile', 'line', [$data['currentMonthProfit'],$data['lastMonthProfit']])->backgroundColor('darkgreen');
 
+        $data['notification'] = User::all()->count();
+
         return view('admin.dashboard',$data,['chartTripEarn'=>$chartTripEarn,'chartTripProfit'=>$chartTripProfit],);
     }
 

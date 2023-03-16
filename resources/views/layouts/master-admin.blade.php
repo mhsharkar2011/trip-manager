@@ -76,8 +76,17 @@
 		<!-- Header -->
 		<div class="header">
 			<!-- Logo -->
-			<div class="header-left mt-4 text-start text-white">
-				<span>Admin Panel</span>
+			<div class="header-left mt-2 text-center text-white">
+				<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+					<span class="user-img">
+						@if ($auth->profile_photo_path)
+						<img height="48" src="{{ URL::to('/assets/images/'. $auth->profile_photo_path) }}" alt="Avatar">
+						@else
+						<img height="38" src="{{ asset('/img/default.png') }}" alt="Avatar">
+						@endif
+					<span class="status online"></span></span>
+				</a>
+
 			</div>
 			<!-- /Logo -->
 			<a id="toggle_btn" href="javascript:void(0);">
@@ -88,9 +97,9 @@
 				</span>
 			</a>
 			<!-- Header Title -->
-			{{-- <div class="page-title-box">
-				<h3>Hi, {{ Session::get('name') }}</h3>
-			</div> --}}
+			<div class="page-title-box">
+				<h3>Hi, {{ $auth->full_name }}</h3>
+			</div>
 			<!-- /Header Title -->
 			<a id="mobile_btn" class="mobile_btn" href="#sidebar"><i class="fa fa-bars"></i></a>
 			<!-- Header Menu -->
@@ -127,7 +136,7 @@
 				<li class="nav-item dropdown">
 					<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
 						<i class="fa fa-bell-o"></i>
-						<span class="badge badge-pill">3</span> 
+						<span class="badge badge-pill">{{ $notification ?? '0' }}</span> 
 					</a>
 					<div class="dropdown-menu notifications">
 						<div class="topnav-dropdown-header">
@@ -136,19 +145,36 @@
 						</div>
 						<div class="noti-content">
 							<ul class="notification-list">
+							@foreach ($trips as $key => $trip)
 								<li class="notification-message">
-									<a href="activities.html">
+									<a href="activities.html" class="text-decoration-none">
 										<div class="media">
 											<span class="avatar">
-												<img alt="" src="{{ URL::to('/assets/images/'.Auth::user()->avatar) }}">
+												<img alt="" src="{{ URL::to('/assets/images/'. $trip->customer->profile_photo_path) }}">
 											</span>
 											<div class="media-body">
-												<p class="noti-details"><span class="noti-title">John Doe</span> added new task <span class="noti-title">Patient appointment booking</span></p>
-												<p class="noti-time"><span class="notification-time">4 mins ago</span></p>
+												<p class="noti-details"><span class="noti-title">{{ $trip->customer->full_name }}</span> added booking <span class="noti-title">time:{{ $bookingTime[$key] }}</span></p>												
+													@if($trip->status != 'Completed')
+													<div class="text-warning">
+														{{ $trip->status }}
+													</div>
+													@elseif ($trip->status = 'Completed')
+													<div class="text-success">
+														{{ $trip->status }}
+													</div>
+													@else
+													<div class="text-danger">
+														No Data Found
+													</div>
+													
+													@endif
+												</span>
+												
 											</div>
 										</div>
 									</a>
 								</li>
+							@endforeach
 							</ul>
 						</div>
 						<div class="topnav-dropdown-footer"> <a href="activities.html">View all Notifications</a> </div>
@@ -159,7 +185,7 @@
 				<!-- Message Notifications -->
 				<li class="nav-item dropdown">
 					<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-						<i class="fa fa-comment-o"></i> <span class="badge badge-pill">8</span>
+						<i class="fa fa-comment-o"></i> <span class="badge badge-pill">0</span>
 					</a>
 					<div class="dropdown-menu notifications">
 						<div class="topnav-dropdown-header">
@@ -169,86 +195,18 @@
 						<div class="noti-content">
 							<ul class="notification-list">
 								<li class="notification-message">
-									<a href="chat.html">
+									<a href="#">
 										<div class="list-item">
 											<div class="list-left">
 												<span class="avatar">
-													<img alt="" src="{{ URL::to('/assets/images/'.Auth::user()->avatar) }}">
+													<img alt="" src="#">
 												</span>
 											</div>
 											<div class="list-body">
-												<span class="message-author">Richard Miles </span> 
+												<span class="message-author">{{ $auth->full_name }}</span> 
 												<span class="message-time">12:28 AM</span>
 												<div class="clearfix"></div>
-												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span> 
-											</div>
-										</div>
-									</a>
-								</li>
-								<li class="notification-message">
-									<a href="chat.html">
-										<div class="list-item">
-											<div class="list-left">
-												<span class="avatar">
-													<img alt="" src="{{ URL::to('/assets/images/'. Auth::user()->avatar) }}">
-												</span>
-											</div>
-											<div class="list-body">
-												<span class="message-author">John Doe</span> 
-												<span class="message-time">6 Mar</span>
-												<div class="clearfix"></div> 
-												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span> 
-											</div>
-										</div>
-									</a>
-								</li>
-								<li class="notification-message">
-									<a href="chat.html">
-										<div class="list-item">
-											<div class="list-left">
-												<span class="avatar">
-													<img alt="" src="{{ URL::to('/assets/images/'. Auth::user()->avatar) }}">
-												</span>
-											</div>
-											<div class="list-body">
-												<span class="message-author"> Tarah Shropshire </span>
-												<span class="message-time">5 Mar</span>
-												<div class="clearfix"></div> 
-												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span> 
-											</div>
-										</div>
-									</a>
-								</li>
-								<li class="notification-message">
-									<a href="chat.html">
-										<div class="list-item">
-											<div class="list-left">
-												<span class="avatar">
-													<img alt="" src="{{ URL::to('/assets/images/'. Auth::user()->avatar) }}">
-													</span>
-												</div>
-											<div class="list-body">
-												<span class="message-author">Mike Litorus</span>
-												<span class="message-time">3 Mar</span>
-												<div class="clearfix"></div>
-												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span> 
-											</div>
-										</div>
-									</a>
-								</li>
-								<li class="notification-message">
-									<a href="chat.html">
-										<div class="list-item">
-											<div class="list-left">
-												<span class="avatar">
-													<img alt="" src="{{ URL::to('/assets/images/'.Auth::user()->avatar) }}">
-												</span>
-											</div>
-											<div class="list-body">
-												<span class="message-author"> Catherine Manseau </span>
-												<span class="message-time">27 Feb</span>
-												<div class="clearfix"></div>
-												<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+												<span class="message-content">No Data Found</span> 
 											</div>
 										</div>
 									</a>
@@ -262,14 +220,18 @@
 				<li class="nav-item dropdown has-arrow main-drop">
 					<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
 						<span class="user-img">
-						<img src="{{ URL::to('/assets/images/'. Auth::user()->avatar) }}" alt="{{ Auth::user()->name }}">
+							@if ($auth->profile_photo_path)
+							<img src="{{ URL::to('/assets/images/'. $auth->profile_photo_path) }}" alt="Avatar">
+							@else
+							<img src="{{ asset('/img/default.png') }}" alt="Avatar">
+							@endif
 						<span class="status online"></span></span>
-						<span>{{ Session::get('name') }}</span>
+						<span>{{ $auth->full_name }}</span>
 					</a>
 					<div class="dropdown-menu">
 						<a class="dropdown-item" href="#">My Profile</a>
 						<a class="dropdown-item" href="#">Settings</a>
-						<a class="dropdown-item" href="#">Logout</a>
+						<a class="dropdown-item" href="{{ route('admin.logout') }}">Logout</a>
 					</div>
 				</li>
 			</ul>
@@ -283,7 +245,7 @@
 				<div class="dropdown-menu dropdown-menu-right">
 					<a class="dropdown-item" href="#">My Profile</a>
 					<a class="dropdown-item" href="#">Settings</a>
-					<a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
+					<a class="dropdown-item" href="{{ route('admin.logout') }}">Logout</a>
 				</div>
 			</div>
 			<!-- /Mobile Menu -->

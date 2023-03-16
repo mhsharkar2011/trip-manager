@@ -3,13 +3,17 @@
 namespace App\Providers;
 
 use App\Models\Trip;
+use App\Models\User;
+use Carbon\Carbon;
 use Davidhsianturi\Compass\Contracts\RequestRepository;
 use Davidhsianturi\Compass\Contracts\ResponseRepository;
 use Davidhsianturi\Compass\Storage\DatabaseRequestRepository;
 use Davidhsianturi\Compass\Storage\DatabaseResponseRepository;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
+use phpseclib3\Crypt\TripleDES;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -53,5 +57,26 @@ class AppServiceProvider extends ServiceProvider
            \URL::forceScheme('https');
         }
       
+        view()->composer('layouts.master-admin',function ($view){
+               $data['notification'] = Trip::all()->count();
+               $data['trips'] = Trip::latest()->get();
+               $data['auth'] = Auth::user();
+
+            //    $bookingDate = Trip::select('booking_date')->get();
+            //    $carbonBookingDate = Carbon::createFromTimestamp(strtotime($bookingDate));
+            //    $data['bookingNotify'] = $carbonBookingDate->format('h:i A');
+
+
+               $trips = Trip::all();
+                $bookingTime = [];
+                foreach ($trips as $trip) {
+                    $carbonBookingDate = Carbon::createFromTimestamp(strtotime($trip->booking_date));
+                    $bookingTime[] = $carbonBookingDate->format('h:i A');
+                }
+                $data['bookingTime'] = $bookingTime;
+
+               $view->with($data);
+            }
+        );
     }
 }
