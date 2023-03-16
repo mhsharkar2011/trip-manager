@@ -104,6 +104,10 @@ class TripController extends Controller
         // if ($validation->fails()) {
         //     return $this->respondValidationError($validation->errors());
         // }   
+        $amount = $request->input('advance_amount');
+
+        $charge = ($amount / 1000) * 20;
+
 
         $packageAmount = $request->package_amount;
         $advanceAmount = $request->advance_amount;
@@ -115,6 +119,7 @@ class TripController extends Controller
             'balance_in' => $balanceIn,
             'trip_earning' => $advanceAmount,
             'status'=>$request->status,
+            'bkash_charge'=>$charge,
         ]);
 
         return back()->with('status', 'success');

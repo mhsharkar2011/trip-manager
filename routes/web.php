@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BikashChargeController;
+use App\Http\Controllers\BikashController;
 use App\Http\Controllers\CalculatorController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CustomerController;
@@ -66,6 +68,15 @@ Route::resource('fuels', 'App\Http\Controllers\FuelsController', ['except' => ['
 
 Route::get('/calculator', [CalculatorController::class, 'index']);
 Route::post('/calculator', [CalculatorController::class, 'calculate']);
+
+
+// Bikash Charge Calculation
+// Route::get('/bikash-charge', [BikashChargeController::class, 'index']);
+// Route::post('/bikash-charge', [BikashChargeController::class, 'calculateCharge'])->name('calculate.charge');
+
+Route::get('/bikash', [BikashController::class, 'index']);
+Route::get('/bikash/charge', [BikashController::class, 'calculateCharge'])->name('bikash-charge');
+
 
 
 

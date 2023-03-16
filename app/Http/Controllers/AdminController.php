@@ -74,6 +74,7 @@ class AdminController extends Controller
         
         // Expenses ------------------------------------------------------
         $data['totalExpenses'] = Trip::where('status','completed')->sum('cost_amount');
+        
         // Calculate the date range for the last month
         $now = Carbon::now();
         $startOfLastMonth = $now->subMonth()->startOfMonth()->toDateTimeString();
@@ -81,45 +82,49 @@ class AdminController extends Controller
         $data['lastMonthExpenses'] = Trip::where('status','completed')->where('booking_date','>=',$startOfLastMonth)->where('booking_date','<=',$endOfLastMonth)
                               ->sum('cost_amount');
 
-        // Calculate the date range for the Current month
+        // Calculate the date range for the Current month ----------------------
         $now = Carbon::now();
         $startOfMonth = $now->startOfMonth()->toDateTimeString();
         $endOfMonth = $now->endOfMonth()->toDateTimeString();
         $data['currentMonthExpenses'] = Trip::where('status','completed')->where('booking_date','>=',$startOfMonth)->where('booking_date','<=',$endOfMonth)
                               ->sum('cost_amount');
-        // Profit ---------------------------------------------------------
+        // Profit -------------------------------------------------------------
         $data['currentMonthProfit'] = $data['currentMonthEarn'] - $data['currentMonthExpenses'];
         $data['lastMonthProfit'] = $data['lastMonthEarn'] - $data['lastMonthExpenses'];
         $data['totalProfit'] = $data['totalEarn'] - $data['totalExpenses'];
-        // Vehicles
+
+        // Vehicles -----------------------------------------------------------
         $data['vehicles'] = Vehicle::all();
         $data['vehicleCount'] = Vehicle::count();
         $increase = $data['vehicleCount'] * 0.10;
         $data['totalVehicles'] = $data['vehicleCount'] + $increase;
-        // Drivers
+
+        // Drivers -------------------------------------------------------------
         $data['drivers'] = Driver::all();
         $data['driverCount'] = Driver::count();
         $increase = $data['tripCount'] * 0.10;
         $data['totalTrips'] = $data['tripCount'] + $increase;
-        // Package
+
+        // Package -------------------------------------------------------------
         $data['packages'] = Package::all();
         $data['packageCount'] = Package::count();
         $increase = $data['tripCount'] * 0.10;
         $data['totalTrips'] = $data['tripCount'] + $increase;
-        // Client
+
+        // Client ---------------------------------------------------------------
         $data['clients'] = Customer::all();
         $data['clientCount'] = Customer::count();
         $increase = $data['clientCount'] * 0.10;
         $data['totalClient'] = $data['clientCount'] + $increase;
 
-        // Attendance
+        // Attendance -----------------------------------------------------------
         $data['attendance'] = Attendance::all();
         $data['attendanceCount'] = Attendance::count();
         $increase = $data['tripCount'] * 0.10;
         $data['totalTrips'] = $data['tripCount'] + $increase;
 
 
-        // Chart 
+        // Chart ----------------------------------------------------------------
         // $today_users = User::whereDate('created_at', today())->count();
         // $yesterday_users = User::whereDate('created_at', today()->subDays(1))->count();
         // $users_2_days_ago = User::whereDate('created_at', today()->subDays(2))->count();

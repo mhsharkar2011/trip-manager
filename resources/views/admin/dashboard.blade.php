@@ -254,7 +254,7 @@ Dashboard- Admin Panel
                                         <th>Name</th>
                                         <th>Email</th>
                                         <th>Status</th>
-                                        <th>Action</th>
+                                        <th class="text-end">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -265,7 +265,23 @@ Dashboard- Admin Panel
                                             <h2 ><a class="text-white text-decoration-none" href="#">{{ $client->user->email }}</a></h2>
                                         </td>
                                         <td>{{ $client->is_active }}</td>
-                                        <td>...</td>
+                                        <td class="text-end">
+                                            <div class="dropdown dropdown-action">
+                                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a class="dropdown-item" href="javascript:void(0)" onclick="editClient({{ $client->id }})">
+                                                        <i class="fa fa-pencil m-r-5"></i> Edit
+                                                    </a>
+                                                    <form action="{{ route('admin.customers.destroy', $client->id) }}" method="post">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                    <a class="dropdown-item" href="javascript:void(0)">
+                                                        <i class="fa fa-trash-o m-r-5"></i> Delete
+                                                    </a>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </td>
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -342,6 +358,12 @@ Dashboard- Admin Panel
 
     </div>
 </div>
+<script>
+    function editClient(id) {
+    // Redirect to the edit trip page with the trip ID as a parameter
+    window.location.href = '/customers/' + id + '/edit';
+}
 
+</script>
 
 @endsection

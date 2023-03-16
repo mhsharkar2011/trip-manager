@@ -17,7 +17,7 @@ class CustomerController extends Controller
      */
     public function index(Request $request)
     {
-        $page = $request->per_page ?? 1;
+        $page = $request->per_page ?? 10;
         $data['customers'] = Customer::latest()->paginate($page);
         return view('customers.index',$data);
     }
