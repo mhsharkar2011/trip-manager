@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CalculatorController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DriverController;
@@ -63,6 +64,8 @@ Route::group(['middleware'=>'auth'], function() {
 Route::resource('fuel-types', FuelTypesController::class);
 Route::resource('fuels', 'App\Http\Controllers\FuelsController', ['except' => ['create', 'edit']]);
 
+Route::get('/calculator', [CalculatorController::class, 'index']);
+Route::post('/calculator', [CalculatorController::class, 'calculate']);
 
 
 
