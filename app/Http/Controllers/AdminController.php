@@ -24,13 +24,10 @@ class AdminController extends Controller
      */
     public function index()
     {
-
-        $user_id = auth()->user()->id;
-        $data['driverAvatar'] = Session::get('name');
         $data['usersName'] = auth()->user()->full_name;
         
         // Trips
-        $data['trips'] = Trip::all();
+        $data['trips'] = Trip::latest()->paginate(5);
         $data['topTrip'] = Trip::latest()->paginate();
         $data['tripCount'] = Trip::count();
 

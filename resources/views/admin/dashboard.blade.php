@@ -298,7 +298,8 @@ Dashboard- Admin Panel
             <div class="col-md-6 d-flex">
                 <div class="card card-table border-secondary flex-fill">
                     <div class="card-header bg-dark">
-                        <h3 class="card-title text-white mb-0">Recent Trips <span class="badge bg-inverse-danger ml-2">{{ $tripCount }}</span></h3> </div>
+                        <h3 class="card-title text-white mb-0">Recent Trips <span class="badge bg-inverse-danger ml-2">{{ $tripCount }}</span></h3> 
+                    </div>
                     <div class="card-body bg-dark">
                         <div class="table-responsive">
                             <table class="table table-dark custom-table mb-0">
@@ -346,9 +347,10 @@ Dashboard- Admin Panel
                                 </tbody>
                             </table>
                         </div>
+                        {{-- <div class="pagination justify-content-center">{{ $trips->links() }}</div> --}}
                     </div>
                     <div class="card-footer bg-dark">
-                        <a class="text-white text-decoration-none" href="invoices.html">View all invoices</a>
+                        <a class="text-white text-decoration-none" href="{{ route('admin.trips.index') }}">View all trips</a>
                     </div>
                 </div>
             </div>

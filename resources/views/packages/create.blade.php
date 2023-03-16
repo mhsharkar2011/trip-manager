@@ -3,12 +3,27 @@
 @section('title','Packages')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8 mt-5">
-            <div class="card">
-                <div class="card-header bg-success text-white">Packages</div>
-                <div class="card-body">
+<<div class="page-wrapper">
+    <!-- Page Content -->
+    <div class="content container-fluid">
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-10">
+                    <h3 class="page-title text-white">Welcome to Durojan ! </h3>
+                    <ul class="breadcrumb bg-dark mt-2">
+                        <a style="float: right" class="btn btn-success text-right" href="{{ route('admin.vehicles.create') }}">Add Vehicle</a>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">     
+            <div class="col-md-10 d-flex">
+                <div class="card card-table border-secondary flex-fill justify-content-center">
+                    <div class="card-header bg-dark">
+                        <h3 class="card-title  text-white mb-0">Vehicles <span class="badge bg-inverse-danger ml-2">#</span> </h3> </div>
+                    <div class="card-body bg-dark">
+                        <div class="table table-responsive md-5">
                     <table class="table table-striped table-bordered table-hover table-sm m-12">
                         <thead>
                             <tr>

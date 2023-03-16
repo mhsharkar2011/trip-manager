@@ -31,7 +31,7 @@
                                             <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                             <div class="dropdown-menu dropdown-menu-right">
                                                 <a class="dropdown-item" href="javascript:void(0)" onclick="editClient({{ $customer->id }})">
-                                                    <i class="fa fa-pencil m-r-5"></i> Edit
+                                                     <i class="fa fa-pencil m-r-5"></i>  Edit
                                                 </a>
                                                 <form action="{{ route('admin.customers.destroy', $customer->id) }}" method="post">
                                                     @csrf
@@ -62,7 +62,6 @@
     // Redirect to the edit trip page with the trip ID as a parameter
     window.location.href = '/customers/' + id + '/edit';
 }
-
 </script>
 
 @endsection

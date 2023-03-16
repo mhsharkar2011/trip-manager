@@ -41,7 +41,7 @@ class UserController extends Controller
         if(request()->is('api*')){
             return $this->respond($user);
         }else{
-            return view('users.index',$data);
+            return view('users.index',$data)->with('id',(request()->input('page', 1) - 1) * self::ITEMS_PER_PAGE);
         }
     }
 

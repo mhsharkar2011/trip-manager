@@ -3,52 +3,76 @@
 @section('title','Drivers')
 
 @section('content')
+<div class="page-wrapper">
+    <!-- Page Container -->
+    <div class="content container-fluid">
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="row">
+            <div class="col-sm-10">
+                <h3 class="page-title text-white">Welcome to Durojan ! </h3>
+                <ul class="breadcrumb bg-dark mt-2">
+                    <a style="float: right" class="btn btn-success text-right" href="{{ route('admin.drivers.create')  }}">Add Vehicle</a>
+                </ul>
+            </div>
+        </div>
+    </div>
 
- {{-- message --}}
- {!! Toastr::message() !!}
- <!-- Statistics Widget -->
-
- 
-<div class="container">
-    <a style="float: right" class="btn btn-success text-right" href="{{ route('admin.drivers.create') }}">Add driver</a>
-            <div class="table-responsive">
-                <table class="table table-responsive table-bordered table-hover table-sm m-12">
-                    <thead class="table-dark">
-                        <tr style="font-size: 12px; text-align: center;vertical-align: middle;">
-                                <th>ID</th>
-                                <th>Avatar</th>
-                                <th>Driver Name</th>
-                                <th>Contact Number</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($drivers as $driver )
-                            <tr>
-                                <td>
-                                   {{ $driver->id}}
-                                </td>
-                                <td>
-                                    {{ $driver->avatar}}
-                                 </td>
-                                <td>
-                                    {{ $driver->first_name}}
-                                    {{ $driver->last_name}}
-                                </td>
-                                <td>
-                                    {{ $driver->contact_number}}
-                                </td>
+    <div class="row justify-content-center">     
+        <div class="col-md-10 d-flex">
+            <div class="card card-table border-secondary flex-fill justify-content-center">
+                <div class="card-header bg-dark">
+                    <h3 class="card-title  text-white mb-0">Driver <span class="badge bg-inverse-danger ml-2">#</span></h3> 
+                </div>
+                <div class="card-body bg-dark">
+                    <div class="table table-responsive md-5">
+                        <table class="table table-dark text-white">
+                            <thead class="border-secondary">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Avatar</th>
+                                    <th>Driver Name</th>
+                                    <th>Contact Number</th>
+                                    <th class="text-end">Action</th>
                                 </tr>
-                                @endforeach
-                        </tbody>
-    
-                    </table>
-                    <div class="pagination justify-content-center">
-                        {{ $drivers->links() }}
+                            </thead>
+                                <tbody class="text-white">
+                                    @foreach ($drivers as $driver )
+                                    <tr>
+                                        <td>{{ $driver->id}}</td>
+                                        <td>{{ $driver->avatar}}</td>
+                                        <td>{{ $driver->first_name}} {{ $driver->last_name}}</td>
+                                        <td>{{ $driver->contact_number}}</td>
+                                        <td class="text-end">
+                                            <div class="dropdown dropdown-action">
+                                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a class="dropdown-item" href="javascript:void(0)" onclick="editDriver({{ $driver->id }})"><i class="fa fa-pencil m-r-5"></i>  Edit</a>
+                                                    <form action="{{ route('admin.drivers.destroy', $driver->id) }}" method="post">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                    <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                        </table>
+                        <div class="pagination justify-content-center">{{ $drivers->links() }}</div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    </div>
 </div>
+
+<script>
+    function editDriver(id) {
+    window.location.href = '/drivers/' + id + '/edit';
+}
+</script>
 
 @endsection
