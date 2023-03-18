@@ -17,6 +17,17 @@
                         @csrf
 
                         <div class="col-md-6">
+                            <label class="form-label">Packages</label>
+                            <select class="form-select" name="package_id">
+                                @foreach ($packages as $package)
+                                    <option value="{{ $package->id }}" >
+                                        {{ $package->title }} {{ '-' }} {{ $package->package_amount }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="col-md-6">
                             <label class="label">Booking ID: </label>
                             <input type="number" name="booking_id" class="form-control" />
                         </div>
@@ -28,7 +39,7 @@
                         <br>
 
                         <div class="col-md-6">
-                            <label for="inputEmail4" class="form-label">Driver Name</label>
+                            <label class="form-label">Driver Name</label>
                             <select class="form-select" name="driver_id">
                                 <option value="">Select Driver</option>
                                 @foreach ($drivers as $driver)
@@ -38,32 +49,32 @@
                                     </option>
                                 @endforeach
                             </select>
-                          </div>
+                        </div>
 
-                          <div class="col-md-6">
-                            <label for="inputEmail4" class="form-label">Customer Name</label>
-                            <select class="form-select" name="customer_id">
-                                <option value="">Select customer</option>
-                                @foreach ($customers as $customer)
-                                    <option value="{{ $customer->id }}" >
-                                        {{ $customer->first_name }}
-                                        {{ $customer->last_name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                          </div>
+                        <div class="col-md-6">
+                        <label class="form-label">Customer Name</label>
+                        <select class="form-select" name="customer_id">
+                            <option value="">Select customer</option>
+                            @foreach ($customers as $customer)
+                                <option value="{{ $customer->id }}" >
+                                    {{ $customer->first_name }}
+                                    {{ $customer->last_name }}
+                                </option>
+                            @endforeach
+                        </select>
+                        </div>
                           
-                          <div class="col-md-6">
-                            <label for="inputPassword4" class="form-label">Vehicle Name</label>
-                            <select class="form-select" name="vehicle_id">
-                                <option value="">Select Vehicle</option>
-                                @foreach ($vehicles as $vehicle)
-                                    <option value="{{ $vehicle->id }}" >
-                                        {{ $vehicle->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                          </div>
+                        <div class="col-md-6">
+                        <label class="form-label">Vehicle Name</label>
+                        <select class="form-select" name="vehicle_id">
+                            <option value="">Select Vehicle</option>
+                            @foreach ($vehicles as $vehicle)
+                                <option value="{{ $vehicle->id }}" >
+                                    {{ $vehicle->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                        </div>
 
                         <div class="col-md-6"> 
                             <div class="form-group">
@@ -78,10 +89,10 @@
                             <input type="number" name="advance_amount" class="form-control" />
                         </div>
                         <br>
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <label class="label">Bkash Charge </label>
                             <input type="number" name="bkash_charge" class="form-control" />
-                        </div>
+                        </div> --}}
                         <br>
 
                         <div class="col-md-6">
@@ -94,21 +105,11 @@
                             <input type="text" name="cost_details" class="form-control" />
                         </div>
                         <br>
-                        <div class="col-md-6">
-                            <label class="label">Package Details </label>
-                            <input type="text" name="package_details" class="form-control" />
-                        </div>
-                        <br>
-                        <div class="col-md-6">
-                            <label class="label">Package Amount</label>
-                            <input type="number" name="package_amount" class="form-control" />
-                        </div>
-                        <br>
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <label class="label">Balance In </label>
                             <input type="number" name="balance_in" class="form-control" />
                         </div>
-                        <br>
+                        <br> --}}
                         
                         
                         

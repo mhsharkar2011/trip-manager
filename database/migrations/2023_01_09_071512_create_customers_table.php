@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\Status;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -19,7 +20,7 @@ class CreateCustomersTable extends Migration
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
             $table->string('avatar')->nullable();
-            $table->boolean('is_active')->default(0);
+            $table->enum('status',[Status::ACTIVE,Status::INACTIVE])->default('ACTIVE');
             $table->string('contact_number')->nullable();
             $table->text('address')->nullable();
             $table->timestamps();

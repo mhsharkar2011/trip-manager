@@ -39,10 +39,10 @@ Dashboard- Admin Panel
                 
         <!-- Page Progress Bar -->
         <div class="row">
-            <x-progress-bar col="3" bgdark="dark" color="white" title="Top Trip" headerValue="{{ $topTrip }}"        totalValue="{{ $currentMonthTrips }}"    footerTitle="Previous Month Trips" footerValue="{{ $lastMonthTrips }}" />
-            <x-progress-bar col="3" bgdark="dark" color="white" title="Earnings" headerValue="{{ $totalEarn }}"      totalValue="{{ $currentMonthEarn }}"     footerTitle="Previous Month"       footerValue="{{ $lastMonthEarn }}" />
-            <x-progress-bar col="3" bgdark="dark" color="white" title="Expenses" headerValue="{{ $totalExpenses }}"  totalValue="{{ $currentMonthExpenses }}" footerTitle="Previous Month"       footerValue="{{ $lastMonthExpenses }}" />
-            <x-progress-bar col="3" bgdark="dark" color="white" title="Profit  " headerValue="{{ $totalProfit }}"    totalValue="{{ $currentMonthProfit }}"   footerTitle="Previous Month"       footerValue="{{ $lastMonthProfit }}" />
+            <x-progress-bar col="3" bgdark="dark" color="white" title="Trips"    headerValue="{{ $totalTripsAmount ?? '0' }}" totalValue="{{ $currentMonthTrips }}"    footerTitle="Previous Month Trips" footerValue="{{ $lastMonthTrips }}" />
+            <x-progress-bar col="3" bgdark="dark" color="white" title="Earnings" headerValue="{{ $totalEarn }}"        totalValue="{{ $currentMonthEarn }}"     footerTitle="Previous Month"       footerValue="{{ $lastMonthEarn }}" />
+            <x-progress-bar col="3" bgdark="dark" color="white" title="Expenses" headerValue="{{ $totalExpenses }}"    totalValue="{{ $currentMonthExpenses }}" footerTitle="Previous Month"       footerValue="{{ $lastMonthExpenses }}" />
+            <x-progress-bar col="3" bgdark="dark" color="white" title="Profit  " headerValue="{{ $totalProfit }}"      totalValue="{{ $currentMonthProfit }}"   footerTitle="Previous Month"       footerValue="{{ $lastMonthProfit }}" />
         </div>
 
         <!-- Statistics Widget -->
@@ -92,7 +92,7 @@ Dashboard- Admin Panel
             <div class="col-md-12 col-lg-6 col-xl-4 d-flex">
                 <div class="card flex-fill bg-dark text-white border-secondary">
                     <div class="card-body">
-                        <h4 class="card-title text-white">Task Statistics</h4>
+                        <h4 class="card-title text-white">Trip Statistics</h4>
                         <div class="statistics">
                             <div class="row">
                                 <div class="col-md-6 col-6 text-center">
@@ -213,7 +213,7 @@ Dashboard- Admin Panel
                             <table class="table table-dark text-white">
                                 <thead class="border-secondary">
                                     <tr>
-                                        <th>Invoice ID</th>
+                                        <th>Payment ID</th>
                                         <th>Client</th>
                                         <th>Payment Type</th>
                                         <th>Paid Date</th>
@@ -236,7 +236,7 @@ Dashboard- Admin Panel
                         </div>
                     </div>
                     <div class="card-footer bg-dark">
-                        <a class="text-white text-decoration-none" href="invoices.html">View all invoices</a>
+                        <a class="text-white text-decoration-none" href="invoices.html">View all Payment</a>
                     </div>
                 </div>
             </div>
@@ -289,7 +289,7 @@ Dashboard- Admin Panel
                         </div>
                     </div>
                     <div class="card-footer bg-dark">
-                        <a class="text-white text-decoration-none" href="#">View all invoices</a>
+                        <a class="text-white text-decoration-none" href="#">View all client</a>
                     </div>
                 </div>
             </div>

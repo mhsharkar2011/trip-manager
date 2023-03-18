@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use App\Models\Vehicle;
 use App\Models\VehicleType;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -23,11 +24,14 @@ class VehicleFactory extends Factory
      */
     public function definition()
     {
+        $owners = User::where('role','Owner')->get();
+        $vehicle_types = VehicleType::all();
         static $sl_no = "s";
         static $model = "m";
         static $license_no = "dha-";
                 return [
-                    'owner_id'=>1,
+                    'owner_id' => $this->faker->randomElement($owners->pluck('id')),
+                    'vehicle_type_id' => $this->faker->randomElement($vehicle_types->pluck('id')),
                     'sl_no' => $sl_no."-".rand(6,10000),
                     // 'name' => $this->faker->name,
                     'name' => $this->faker->unique()->randomElement([

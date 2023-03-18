@@ -62,7 +62,7 @@ class VehiclesController extends Controller
     public function create(Request $request)
     {
         $data['vTypes'] = VehicleType::all();
-        $data['user'] = User::all();
+        $data['user'] = User::where('role','owner')->get();
         return view('vehicles.create',$data);
     }
 

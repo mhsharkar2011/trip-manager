@@ -68,5 +68,13 @@ class DatabaseSeeder extends Seeder
             ],            
         ]);
 
+        $this->call([
+            PackageTableSeeder::class,
+            RoleTableSeeder::class,
+            UserSeeder::class,
+            VehicleTypeSeeder::class,
+            VehicleSeeder::class,
+            
+        ]);
     }
 }

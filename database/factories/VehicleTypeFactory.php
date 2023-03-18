@@ -23,16 +23,11 @@ class VehicleTypeFactory extends Factory
     {
             return [
                 'title' => $this->faker->unique()->randomElement([
-                    "Sedan",
-                    "SUV",
-                    "Truck",
-                    "Hatchback",
-                    "Wagon",
-                    "Crossover",
-                    "Coupe",
-                    "Convertible",
-                    "Pickup Truck",
-                    "Van"
+                    "Car",
+                    "Bus",
+                    "School Van",
+                    "Mini-bus",
+                    "Micro-bus",
                 ])
             ];
     }

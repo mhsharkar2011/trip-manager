@@ -150,7 +150,7 @@
 									<a href="activities.html" class="text-decoration-none">
 										<div class="media">
 											<span class="avatar">
-												<img alt="" src="{{ URL::to('/assets/images/'. $trip->customer->profile_photo_path) }}">
+												{{-- <img alt="" src="{{ URL::to('/assets/images/') }}"> --}}
 											</span>
 											<div class="media-body">
 												<p class="noti-details"><span class="noti-title">{{ $trip->customer->full_name }}</span> added booking <span class="noti-title">time:{{ $bookingTime[$key] }}</span></p>												

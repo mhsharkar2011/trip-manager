@@ -9,10 +9,10 @@
             Trip Details
         </div>
         <div class="card-body">
-            <h5>Customer Name</h5><p class="card-title">{{ $trip->user->full_name }}</p>
+            <h5>Customer Name</h5><p class="card-title">{{ $trip->customer->full_name }}</p>
             <h5>Vehicle Name</h5><p class="card-title">{{ $trip->vehicle->name }}</p>
             <p class="card-text">{{ $trip->booking_date }}</p>
-            <a style="float: right" class="btn btn-success text-right" href="{{ route('trips.index') }}">Go Back</a>
+            <a style="float: right" class="btn btn-success text-right" href="{{ route('admin.trips.index') }}">Go Back</a>
         </div>
         </div>
 </div>   

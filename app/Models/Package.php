@@ -50,7 +50,12 @@ class Package extends baseModel
 
     protected static function validation_messages_for_update() {
         return self::validation_messages();
-    }           
+    }
+    
+    public function trips()
+    {
+        return $this->hasMany(Trip::class);
+    }
 
     
 }

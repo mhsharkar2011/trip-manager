@@ -145,9 +145,9 @@ class User extends Authenticatable
         return strtolower($this->role) === 'admin';
     }    
 
-    public function vehicle()
+    public function vehicles()
     {
-        return $this->belongsTo(Vehicle::class);
+        return $this->hasMany(Vehicle::class,'owner_id');
     }
 
     public function driver()
@@ -170,7 +170,7 @@ class User extends Authenticatable
         parent::boot();
     
         static::created(function ($user) {
-                if($user->role == 'driver'){
+                if($user->role == 'Driver'){
                     $driver = new Driver();
                     $driver->user_id = $user->id;
                     $driver->first_name = $user->first_name;
@@ -178,7 +178,7 @@ class User extends Authenticatable
                     $driver->save();  
                 } 
 
-                if($user->role == 'customer') {
+                if($user->role == 'Customer') {
                     $customer = new Customer();
                     $customer->user_id = $user->id;
                     $customer->first_name = $user->first_name;

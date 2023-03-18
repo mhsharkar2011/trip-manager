@@ -11,4 +11,5 @@ class Status
     const INACTIVE = "INACTIVE";
     const REJECTED = "REJECTED";
     const ARCHIVED = "ARCHIVED";
+    const LEAVE = "LEAVE";
 }

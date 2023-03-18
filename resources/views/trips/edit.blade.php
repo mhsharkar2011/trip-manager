@@ -17,14 +17,25 @@
                     <form class="row g-3" method="post" action="{{ route('admin.trips.update',$trip->id) }}">
                         @csrf
                         @method('PUT')
+
+                        <div class="col-md-6">
+                            <label class="label">Package Name</label>
+                            <input type="text" name="package_id" class="form-control" value="{{ str_limit($trip->package->title,'200') }}" readonly/>
+                        </div>
+                        <br>
+                        <div class="col-md-6">
+                            <label class="label">Package Amount</label>
+                            <input type="number" name="package_amount" class="form-control" value="{{ $trip->package->package_amount }}" readonly/>
+                        </div>
+                        <br>
                         <div class="col-md-6">
                             <label class="label">Booking ID: </label>
-                            <input type="number" name="booking_id" class="form-control" value="{{ $trip->booking_id }}"/>
+                            <input type="number" name="booking_id" class="form-control" value="{{ $trip->booking_id }}" readonly/>
                         </div>
                         <br>
                         <div class="col-md-6">
                             <label class="label">Booking Date: </label>
-                            <input type="datetime-local" name="bookig_date" class="form-control" value="{{ $trip->booking_date }}" />
+                            <input type="datetime-local" name="booking_date" class="form-control" value="{{ $trip->booking_date }}" />
                         </div>
                         <br>
                         <br>
@@ -42,36 +53,21 @@
                             <label class="label">Bkash Charge </label>
                             <input type="number" name="bkash_charge" class="form-control" value="{{ $trip->bkash_charge }}"/>
                         </div>
-                        <br>
-
-                        <div class="col-md-6">
-                            <label class="label">Other Cost </label>
-                            <input type="number" name="cost_amount" class="form-control" value="{{ $trip->cost_amount }}"/>
-                        </div>
-                        <br>
-                        <div class="col-md-6">
-                            <label class="label">Cost Details </label>
-                            <input type="text" name="cost_details" class="form-control" value="{{ str_limit($trip->cost_details,'10') }}"/>
-                        </div>
-                        <br>
-                        <div class="col-md-6">
-                            <label class="label">Package Details </label>
-                            <input type="text" name="package_details" class="form-control" value="{{ str_limit($trip->package_details,'5') }}"/>
-                        </div>
-                        <br>
-                        <div class="col-md-6">
-                            <label class="label">Package Amount</label>
-                            <input type="number" name="package_amount" class="form-control" value="{{ $trip->package_amount }}"/>
-                        </div>
-                        <br>
-                        <div class="form-group">
+                        <div class="form-group mt-2">
                             <label class="label">Balance In </label>
                             <input type="number" name="balance_in" class="form-control" value="{{ $trip->balance_in }}"/>
                         </div>
+                        <div class="col-md-6">
+                            <label class="label">Fuel Cost </label>
+                            <input type="number" name="fuel_cost" class="form-control" value="{{ $trip->fuel_cost }}"/>
+                        </div>
                         <br>
+                        <div class="col-md-6">
+                            <label class="label">Other Cost </label>
+                            <input type="number" name="other_cost" class="form-control" value="{{ $trip->other_cost }}"/>
+                        </div>
                         
-                        
-                        
+                        <br>
                         <div class="form-group">
                             <label class="label">From Area: </label>
                             <input type="textarea" row="5" name="from_area" class="form-control" value="{{ str_limit($trip->from_area,'5') }}"/>

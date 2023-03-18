@@ -18,16 +18,15 @@ class CreateTripsTable extends Migration
             $table->unsignedInteger('driver_id')->nullable();
             $table->unsignedInteger('customer_id')->nullable();
             $table->unsignedInteger('vehicle_id')->nullable();
+            $table->unsignedInteger('package_id')->nullable();
             $table->integer('booking_id');
             $table->timestamp('booking_date');
             $table->integer('booking_period');
             $table->integer('advance_amount');
             $table->integer('bkash_charge');
-            $table->string('cost_details')->nullable();
-            $table->integer('cost_amount')->nullable();
-            $table->string('package_details')->nullable();
-            $table->integer('package_amount')->nullable();
             $table->integer('balance_in')->nullable();
+            $table->string('fuel_cost')->nullable();
+            $table->integer('other_cost')->nullable();
             $table->string('from_area')->nullable();
             $table->string('to_area')->nullable();
             $table->integer('distance')->nullable();
@@ -36,6 +35,8 @@ class CreateTripsTable extends Migration
             $table->foreign('driver_id')->references('id')->on('drivers')->cascadeOnDelete();
             $table->foreign('customer_id')->references('id')->on('customers')->cascadeOnDelete();
             $table->foreign('vehicle_id')->references('id')->on('vehicles')->cascadeOnDelete();
+            $table->foreign('package_id')->references('id')->on('packages')->cascadeOnDelete();
+            $table->softDeletes();
             $table->timestamps();
             });
     }

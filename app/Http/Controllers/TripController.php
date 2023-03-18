@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Customer;
 use App\Models\Driver;
+use App\Models\Package;
 use App\Models\Trip;
 use App\Models\User;
 use App\Models\Vehicle;
@@ -55,6 +56,7 @@ class TripController extends Controller
         $data['drivers'] = Driver::all();
         $data['customers'] = Customer::all();
         $data['vehicles'] = Vehicle::all();
+        $data['packages'] = Package::all();
         return view('trips.create-trips',$data);
     }
 
@@ -69,10 +71,30 @@ class TripController extends Controller
 
         if ($validation->fails()) {
             return $this->respondValidationError($validation->errors());
-        }   
+        }
 
-        $input = $request->all();
-        $Trip = Trip::create($input);
+        $package = Package::findOrFail($request->package_id);
+        $packageAmount = $package->package_amount;
+        $advanceAmount = $request->advance_amount;
+        $balanceIn = $packageAmount - $advanceAmount;
+
+        // $amount = $request->input('advance_amount');
+        $bkashCharge = ($advanceAmount / 1000) * 20;
+
+        Trip::create([
+            'booking_id' => $request->booking_id,
+            'driver_id' => $request->driver_id,
+            'customer_id' => $request->customer_id,
+            'vehicle_id' => $request->vehicle_id,
+            'package_id' => $request->package_id,
+            'booking_date' => $request->booking_date,
+            'booking_period' => $request->booking_period,
+            'advance_amount' => $advanceAmount,
+            'status' => $request->status,
+            'balance_in' => $balanceIn,
+            'bkash_charge'=>$bkashCharge,
+        ]
+        );
         
 
 
@@ -104,22 +126,25 @@ class TripController extends Controller
         // if ($validation->fails()) {
         //     return $this->respondValidationError($validation->errors());
         // }   
-        $amount = $request->input('advance_amount');
-
-        $charge = ($amount / 1000) * 20;
-
-
-        $packageAmount = $request->package_amount;
         $advanceAmount = $request->advance_amount;
+        $bkashCharge = $request->bkash_charge;
+        $totalCharge = ($advanceAmount / 1000) * $bkashCharge;
+        $packageAmount = $request->package_amount;
+        // After deduction by bkash charge advance amount
+        $tripEarning = $advanceAmount-$totalCharge;
+        $fuelCost = $request->fuel_cost;
+        $otherCost = $request->other_cost;
         $balanceIn = $packageAmount - $advanceAmount;
+        
+        $totalProfit = $tripEarning-($fuelCost+$otherCost);
 
         $Trip->update([
-            'package_amount' => $packageAmount,
+            'booking_date' => $request->booking_date,
             'advance_amount' => $advanceAmount,
             'balance_in' => $balanceIn,
-            'trip_earning' => $advanceAmount,
+            'trip_earning' => $totalProfit,
             'status'=>$request->status,
-            'bkash_charge'=>$charge,
+            'bkash_charge'=>$bkashCharge,
         ]);
 
         return back()->with('status', 'success');

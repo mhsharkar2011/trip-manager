@@ -18,10 +18,11 @@ class CreateFuelsTable extends Migration
             $table->unsignedBigInteger('user_id')->default(0);
             $table->unsignedInteger('vehicle_id')->nullable();
             $table->unsignedInteger('fuel_type_id')->nullable();
-            $table->timestamp('refueling');
-            $table->integer('volume')->nullable();
-            $table->integer('cost')->nullable();
-            $table->string('gas_station')->nullable();
+            $table->string('purchase_from')->nullable();
+            $table->timestamp('purchase_date')->nullable();
+            $table->string('purchased_by')->nullable();
+            $table->decimal('purchased_quantity')->nullable();
+            $table->integer('amount')->nullable();
             $table->timestamps();
             $table->foreign('vehicle_id')->references('id')->on('vehicles')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('fuel_type_id')->references('id')->on('fuel_types')->onDelete('cascade')->onUpdate('cascade');

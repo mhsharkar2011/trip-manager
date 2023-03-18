@@ -38,11 +38,15 @@ class Trip extends baseModel
     
 
     protected static function validation_rules() {
-        return [];
+        return [
+            // 'booking_id' => 'required|unique:trips,booking_id',
+        ];
     }
 
     protected static function validation_messages() {
-        return [];
+        return [
+            // 'booking_id.unique' => 'This booking ID is already taken.',
+        ];
     } 
 
     protected static function validation_rules_for_update() {
@@ -79,12 +83,8 @@ class Trip extends baseModel
         return $this->belongsTo(Mileage::class,'vehicle_id');
     }
 
-    public function packages()
+    public function package()
     {
-        return $this->hasMany(Package::class,'package_id as booking_id');
+        return $this->belongsTo(Package::class,'package_id');
     }
-
-
-
-    
 }
