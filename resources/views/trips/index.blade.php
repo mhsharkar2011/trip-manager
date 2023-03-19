@@ -43,9 +43,11 @@
                                             <th>Balance In</th>
                                             <th colspan="2" >Trip From/TO</th>
                                             <th >Distance</th>
-                                            <th>Cost Details</th>
-                                            <th>Total Cost</th>
                                             <th>Trip Earning</th>
+                                            <th>Fuel Cost</th>
+                                            <th>Other Cost</th>
+                                            <th>Total Expenses</th>
+                                            <th>Total Profit</th>
                                             <th >Status</th>
                                             <th colspan="3" >Action</th>
                                         </tr>
@@ -64,14 +66,16 @@
                                             <td>{{ $trip->customer->first_name ?? '' }}{{ $trip->customer->last_name ?? '' }}</td>
                                             <td>{{ $trip->advance_amount }}</td>
                                             <td>{{ $trip->bkash_charge }}</td>
-                                            <td>{{ $totalBkashCharge ?? '0' }}</td>
+                                            <td>{{ $totalBkashCharge = ($trip->advance_amount/1000) * $trip->bkash_charge }}</td>
                                             <td>{{ $trip->balance_in }}</td>
                                             <td>{{ str_limit($trip->from_area,'5') }}</td>
                                             <td>{{ str_limit($trip->to_area,'5') }}</td>
                                             <td>{{ $trip->distance }}</td>
-                                            <td>{{ str_limit($trip->cost_details,'10') }}</td>
-                                            <td>{{ $trip->cost_amount }}</td>
                                             <td>{{ $trip->trip_earning }}</td>
+                                            <td>{{ str_limit($trip->fuel_amount,'10') }}</td>
+                                            <td>{{ $trip->amount }}</td>
+                                            <td>{{ $trip->trip_expenses }}</td>
+                                            <td>{{ $tripProfit = $trip->trip_earning - $trip->trip_expenses  }}</td>
                                             <td>{{ $trip->status}}</td>
                                             <td class="text-end">
                                                 <div class="dropdown dropdown-action">

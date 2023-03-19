@@ -92,7 +92,7 @@ class TripController extends Controller
         
         $tripExpenses = $fuelAmount+$itemAmount;
 
-        if ($advanceAmount < $balanceIn) {
+        if ($advanceAmount < $packageAmount) {
             $status = 'Pending';
         } else {
             $status = 'Completed';
@@ -113,6 +113,9 @@ class TripController extends Controller
             'fuel_amount' => $fuelAmount,
             'item_name' =>$itemName,
             'amount' =>$itemAmount,
+            'from_area' =>$request->from_area,
+            'to_area' =>$request->to_area,
+            'distance' =>$request->distance,
             'trip_earning' =>$tripEarning,
             'trip_expenses' =>$tripExpenses,
             'status' =>$status,
@@ -134,7 +137,8 @@ class TripController extends Controller
 
     public function edit(Trip $trip)
     {
-        return view('trips.edit',['trip'=>$trip]);
+        $data['fuelTypes'] = [FuelTypes::PETROL,FuelTypes::DIESEL,FuelTypes::CNG,FuelTypes::LPG]; // Enum class
+        return view('trips.edit',['trip'=>$trip],$data);
     }
 
  
@@ -149,25 +153,49 @@ class TripController extends Controller
         if ($validation->fails()) {
             return $this->respondValidationError($validation->errors());
         }   
+
+        $packageAmount = $request->package_amount;
         $advanceAmount = $request->advance_amount;
+        $balanceIn = $packageAmount - $advanceAmount;
         $bkashCharge = $request->bkash_charge;
         $totalCharge = ($advanceAmount / 1000) * $bkashCharge;
-        $packageAmount = $request->package_amount;
         // After deduction by bkash charge advance amount
         $tripEarning = $advanceAmount-$totalCharge;
-        $fuelCost = $request->fuel_cost;
-        $otherCost = $request->other_cost;
+        $fuelName = $request->fuel_name;
+        $fuelAmount = $request->fuel_amount;
+        $itemName = $request->item_name;
+        $itemAmount = $request->amount;
         $balanceIn = $packageAmount - $advanceAmount;
         
-        $totalProfit = $tripEarning-($fuelCost+$otherCost);
+        $tripExpenses = $fuelAmount+$itemAmount;
+
+        if ($advanceAmount < $packageAmount) {
+            $status = 'Pending';
+        } else {
+            $status = 'Completed';
+        }
 
         $Trip->update([
+            // 'booking_id' => $request->booking_id,
+            // 'driver_id' => $request->driver_id,
+            // 'customer_id' => $request->customer_id,
+            // 'vehicle_id' => $request->vehicle_id,
+            // 'package_id' => $request->package_id,
             'booking_date' => $request->booking_date,
+            'booking_period' => $request->booking_period,
             'advance_amount' => $advanceAmount,
-            'balance_in' => $balanceIn,
-            'trip_earning' => $totalProfit,
-            'status'=>$request->status,
             'bkash_charge'=>$bkashCharge,
+            'balance_in' => $balanceIn,
+            'fuel_name' => $fuelName,
+            'fuel_amount' => $fuelAmount,
+            'item_name' =>$itemName,
+            'amount' =>$itemAmount,
+            'from_area' =>$request->from_area,
+            'to_area' =>$request->to_area,
+            'distance' =>$request->distance,
+            'trip_earning' =>$tripEarning,
+            'trip_expenses' =>$tripExpenses,
+            'status' =>$status,
         ]);
 
         return back()->with('status', 'success');

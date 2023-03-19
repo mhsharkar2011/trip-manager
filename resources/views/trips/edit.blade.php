@@ -57,17 +57,24 @@
                             <label class="label">Balance In </label>
                             <input type="number" name="balance_in" class="form-control" value="{{ $trip->balance_in }}"/>
                         </div>
-                        <div class="col-md-6">
-                            <label class="label">Fuel Cost </label>
-                            <input type="number" name="fuel_cost" class="form-control" value="{{ $trip->fuel_cost }}"/>
+                        <!------------------------------ Expese Section Start----------------------------->
+                        <div class="col-md-6 mt-2">
+                            <label class="form-label">Fuel Name</label>
+                            <input type="text" name="fuel_name" class="form-control" value="{{ $trip->fuel_name }}" />
                         </div>
-                        <br>
-                        <div class="col-md-6">
-                            <label class="label">Other Cost </label>
-                            <input type="number" name="other_cost" class="form-control" value="{{ $trip->other_cost }}"/>
+                        <div class="col-md-3 mt-2">
+                            <label class="label">Fuel Amount</label>
+                            <input type="number" name="fuel_amount" class="form-control" value="{{ $trip->fuel_amount }}" />
                         </div>
-                        
-                        <br>
+                        <div class="col-md-6 mt-2">
+                            <label class="label">Item Name (Other) </label>
+                            <input type="text" name="item_name" class="form-control" value="{{ $trip->item_name }}"/>
+                        </div>
+                        <div class="col-md-6 mt-2">
+                            <label class="label">Cost Amount </label>
+                            <input type="number" name="amount" class="form-control" value="{{ $trip->amount }}" />
+                        </div>
+                        <!------------------------------ Expese Section End ----------------------------->
                         <div class="form-group">
                             <label class="label">From Area: </label>
                             <input type="textarea" row="5" name="from_area" class="form-control" value="{{ str_limit($trip->from_area,'5') }}"/>
@@ -87,24 +94,7 @@
                             <label class="label">Trip Earning:</label>
                             <input type="number" name="trip_earning" class="form-control" value="{{ $trip->trip_earning }}"/>
                         </div>
-                        <br>
-
-                        <div class="col-md-12">
-                            <label for="status" class="form-label">Trip Status</label>
-                            <select class="form-select" name="status">
-                                <option value="{{ $trip->status}}">{{ $trip->status}}</option>
-                                @if ($trip->status !== "Pending")
-                                    <option value="Pending">Pending</option>
-                                @endif
-                                @if ($trip->status !== "Completed")
-                                    <option value="Completed">Completed</option>
-                                @endif
-                            </select>
-                          </div>
-                        <br>
-
-                        
-                        <div class="form-group text-center">
+                        <div class="form-group text-center mt-4">
                             <input type="submit" class="btn btn-success text-uppercase" />
                         </div>
                     </form>

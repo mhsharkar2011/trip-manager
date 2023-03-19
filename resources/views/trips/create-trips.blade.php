@@ -94,7 +94,7 @@
                             <input type="number" name="bkash_charge" class="form-control" />
                         </div>
                         <br>
-
+<!------------------------------ Expese Section Start----------------------------->
                         <div class="col-md-6">
                             <label class="form-label">Fuel Name</label>
                             <select class="form-select" name="fuel_name">
@@ -106,7 +106,6 @@
                                 @endforeach
                             </select>
                         </div>
-
                         <div class="col-md-3">
                             <label class="label">Fuel Amount</label>
                             <input type="number" name="fuel_amount" class="form-control" />
@@ -120,15 +119,8 @@
                             <label class="label">Cost Amount </label>
                             <input type="number" name="amount" class="form-control" />
                         </div>
-                        <br>
-                        {{-- <div class="form-group">
-                            <label class="label">Balance In </label>
-                            <input type="number" name="balance_in" class="form-control" />
-                        </div>
-                        <br> --}}
-                        
-                        
-                        
+<!------------------------------ Expese Section End ----------------------------->
+
                         <div class="form-group">
                             <label class="label">From Area: </label>
                             <input type="textarea" row="5" name="from_area" class="form-control" />
