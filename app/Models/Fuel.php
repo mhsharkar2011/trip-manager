@@ -37,13 +37,7 @@ class Fuel extends baseModel
     ];    
 
     protected static function validation_rules() {
-        return [
-            // 'fuel_type_id'=>'required',
-            'refueling'=>'required',
-            'volume'=>'required',
-            'cost'=>'required',
-            'gas_station'=>'required'
-        ];
+        return [];
     }
 
     protected static function validation_messages() {
@@ -58,13 +52,8 @@ class Fuel extends baseModel
         return self::validation_messages();
     }           
 
-    public function fuelTypes()
+    public function trip()
     {
-        return $this->belongsTo('App\Models\FuelType','fuel_type_id');
-    }
-
-    public function vehicle()
-    {
-        return $this->belongsTo(Vehicle::class);
+        return $this->belongsTo(Trip::class);
     }
 }

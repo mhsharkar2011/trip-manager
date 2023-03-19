@@ -6,35 +6,11 @@ use App\Devpanel\Models\baseModel;
 use Illuminate\Database\Eloquent\Model;
 
 
-class FuelVehicle extends baseModel
+class Expense extends baseModel
 {
-
-    
-    
-    /**
-     * The database table used by the model.
-     *
-     * @var string
-     */
-    protected $table = 'fuel_vehicles';
-
-    /**
-    * The database primary key value.
-    *
-    * @var string
-    */
-    protected $primaryKey = 'id';
-
-    /**
-     * Attributes that should be mass-assignable.
-     *
-     * @var array
-     */
-    //protected $fillable = ['fuel_id', 'vehicle_id'];
-
     protected $guarded = [
         'id'
-    ];    
+    ];
 
     protected static function validation_rules() {
         return [];
@@ -42,7 +18,7 @@ class FuelVehicle extends baseModel
 
     protected static function validation_messages() {
         return [];
-    } 
+    }
 
     protected static function validation_rules_for_update() {
         return self::validation_rules();
@@ -50,7 +26,10 @@ class FuelVehicle extends baseModel
 
     protected static function validation_messages_for_update() {
         return self::validation_messages();
-    }           
+    }     
 
-    
+    public function trip()
+    {
+        return $this->belongsTo(Trip::class);
+    }
 }

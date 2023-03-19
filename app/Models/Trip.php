@@ -87,4 +87,14 @@ class Trip extends baseModel
     {
         return $this->belongsTo(Package::class,'package_id');
     }
+
+    public function fuel()
+    {
+        return $this->hasOne(Fuel::class);
+    }
+    
+    public function expense()
+    {
+        return $this->hasOne(Expense::class);
+    }
 }

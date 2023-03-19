@@ -1,7 +1,13 @@
 <?php
 
+use App\Enums\FuelTypes;
+use App\Enums\Status;
+use App\Models\User;
+use App\Models\Vehicle;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 class CreateFuelsTable extends Migration
@@ -15,17 +21,17 @@ class CreateFuelsTable extends Migration
     {
         Schema::create('fuels', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedBigInteger('user_id')->default(0);
-            $table->unsignedInteger('vehicle_id')->nullable();
-            $table->unsignedInteger('fuel_type_id')->nullable();
-            $table->string('purchase_from')->nullable();
-            $table->timestamp('purchase_date')->nullable();
-            $table->string('purchased_by')->nullable();
-            $table->decimal('purchased_quantity')->nullable();
-            $table->integer('amount')->nullable();
+            $table->unsignedInteger('user_id')->nullable();
+            $table->unsignedInteger('trip_id')->nullable();
+            $table->enum('fuel_name',[FuelTypes::DIESEL,FuelTypes::CNG,FuelTypes::PETROL,FuelTypes::LPG])->default('DIESEL');
+            $table->string('fuel_purchase_from')->nullable();
+            $table->string('fuel_purchase_date')->nullable();
+            $table->string('fuel_amount')->nullable();
+            $table->string('fuel_paid_by')->nullable();
+            $table->string('fuel_attachments')->nullable();
             $table->timestamps();
-            $table->foreign('vehicle_id')->references('id')->on('vehicles')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('fuel_type_id')->references('id')->on('fuel_types')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('trip_id')->references('id')->on('trips')->cascadeOnUpdate();
             });
     }
 
