@@ -89,20 +89,36 @@
                             <input type="number" name="advance_amount" class="form-control" />
                         </div>
                         <br>
-                        {{-- <div class="form-group">
+                        <div class="form-group">
                             <label class="label">Bkash Charge </label>
                             <input type="number" name="bkash_charge" class="form-control" />
-                        </div> --}}
+                        </div>
                         <br>
 
                         <div class="col-md-6">
-                            <label class="label">Other Cost </label>
-                            <input type="number" name="cost_amount" class="form-control" />
+                            <label class="form-label">Fuel Name</label>
+                            <select class="form-select" name="fuel_name">
+                                <option value="">Select Fuel</option>
+                                @foreach ($fuelTypes as $key => $value)
+                                    <option value="{{ $key }}">
+                                        {{ $value }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="label">Fuel Amount</label>
+                            <input type="number" name="fuel_amount" class="form-control" />
                         </div>
                         <br>
                         <div class="col-md-6">
-                            <label class="label">Cost Details </label>
-                            <input type="text" name="cost_details" class="form-control" />
+                            <label class="label">Item Name (Other) </label>
+                            <input type="text" name="item_name" class="form-control" />
+                        </div>
+                        <div class="col-md-6">
+                            <label class="label">Cost Amount </label>
+                            <input type="number" name="amount" class="form-control" />
                         </div>
                         <br>
                         {{-- <div class="form-group">
@@ -128,20 +144,6 @@
                             <input type="number" name="distance" class="form-control" />
                         </div>
                         <br>
-                        <div class="form-group">
-                            <label class="label">Trip Earning:</label>
-                            <input type="number" name="trip_earning" class="form-control" />
-                        </div>
-                        <br>
-
-                        <div class="col-md-12">
-                            <label for="status" class="form-label">Trip Status</label>
-                            <select class="form-select" name="status">
-                                <option value="">Select Trip Status</option>
-                                <option value="Pending">Pending</option>
-                                <option value="Completed">Completed</option>
-                            </select>
-                          </div>
                         <br>
 
                         

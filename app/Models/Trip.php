@@ -4,7 +4,8 @@ namespace App\Models;
 
 use App\Devpanel\Models\baseModel;
 use Illuminate\Database\Eloquent\Model;
-
+use Nette\Schema\Expect;
+use PhpParser\Node\Expr\FuncCall;
 
 class Trip extends baseModel
 {
@@ -90,11 +91,30 @@ class Trip extends baseModel
 
     public function fuel()
     {
-        return $this->hasOne(Fuel::class);
+        return $this->hasOne(Fuel::class,'trip_id');
     }
     
     public function expense()
     {
-        return $this->hasOne(Expense::class);
+        return $this->hasOne(Expense::class,'trip_id');
+    }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::created(function ($trip){
+            $fuel = new Fuel();
+            $fuel->trip_id = $trip->id;
+            $fuel->fuel_name = $trip->fuel_name;
+            $fuel->fuel_amount = $trip->fuel_amount;
+            $fuel->save();
+
+            $expense = new Expense();
+            $expense->trip_id = $trip->id;
+            $expense->item_name = $trip->item_name;
+            $expense->amount = $trip->amount;
+            $expense->save(); 
+        });
     }
 }

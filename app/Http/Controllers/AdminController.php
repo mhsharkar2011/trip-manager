@@ -71,21 +71,21 @@ class AdminController extends Controller
 
         
         // Expenses ------------------------------------------------------
-        $data['totalExpenses'] = Trip::where('status','completed')->sum('other_cost');
+        $data['totalExpenses'] = Trip::where('status','completed')->sum(DB::raw('fuel_amount + amount'));
         
         // Calculate the date range for the last month
         $now = Carbon::now();
         $startOfLastMonth = $now->subMonth()->startOfMonth()->toDateTimeString();
         $endOfLastMonth = $now->endOfMonth()->toDateTimeString();
         $data['lastMonthExpenses'] = Trip::where('status','completed')->where('booking_date','>=',$startOfLastMonth)->where('booking_date','<=',$endOfLastMonth)
-                              ->sum('other_cost');
+                            ->sum(DB::raw('fuel_amount + amount'));
 
         // Calculate the date range for the Current month ----------------------
         $now = Carbon::now();
         $startOfMonth = $now->startOfMonth()->toDateTimeString();
         $endOfMonth = $now->endOfMonth()->toDateTimeString();
         $data['currentMonthExpenses'] = Trip::where('status','completed')->where('booking_date','>=',$startOfMonth)->where('booking_date','<=',$endOfMonth)
-                              ->sum('other_cost');
+                              ->sum(DB::raw('fuel_amount + amount'));
         // Profit -------------------------------------------------------------
         $data['currentMonthProfit'] = $data['currentMonthEarn'] - $data['currentMonthExpenses'];
         $data['lastMonthProfit'] = $data['lastMonthEarn'] - $data['lastMonthExpenses'];
@@ -131,13 +131,15 @@ class AdminController extends Controller
         $chartTripEarn->labels(['Last Month','Current Month']);
         // $chartTripEarn->barWidth(0.9);
         $chartTripEarn->title($title = 'TOTAL REVENUE',$font_size = 24, $color = '#fff',$bold = true, $font_family = "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif");
+        $chartTripEarn->dataset('Earning', 'bar', [$data['lastMonthEarn'],$data['currentMonthEarn']])->backgroundColor('#f43b48');
+
+        $chartTripEarn->dataset('Expenses', 'bar', [$data['lastMonthExpenses'],$data['currentMonthExpenses']])->backgroundColor('blue');
         
         $chartTripProfit = new TripEarnChart();
         $chartTripProfit->labels(['Last Month Profit','Current Month Profit']);
         $chartTripProfit->title($title = 'TOTAL PROFIT',$font_size = 24, $color = '#fff',$bold = true, $font_family = "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif");
-        $chartTripEarn->dataset('Earning', 'bar', [$data['lastMonthEarn'],$data['currentMonthEarn']])->backgroundColor('#f43b48');
-        $chartTripEarn->dataset('Expenses', 'bar', [$data['lastMonthExpenses'],$data['currentMonthExpenses']])->backgroundColor('blue');
         $chartTripProfit->dataset('Profile', 'line', [$data['currentMonthProfit'],$data['lastMonthProfit']])->backgroundColor('darkgreen');
+        
 
         $data['notification'] = User::all()->count();
 

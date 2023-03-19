@@ -39,6 +39,7 @@
                                             <th>Customer Name</th>
                                             <th>Advance</th>
                                             <th>Bkash Charge</th>
+                                            <th>Total Bkash Charge</th>
                                             <th>Balance In</th>
                                             <th colspan="2" >Trip From/TO</th>
                                             <th >Distance</th>
@@ -63,6 +64,7 @@
                                             <td>{{ $trip->customer->first_name ?? '' }}{{ $trip->customer->last_name ?? '' }}</td>
                                             <td>{{ $trip->advance_amount }}</td>
                                             <td>{{ $trip->bkash_charge }}</td>
+                                            <td>{{ $totalBkashCharge ?? '0' }}</td>
                                             <td>{{ $trip->balance_in }}</td>
                                             <td>{{ str_limit($trip->from_area,'5') }}</td>
                                             <td>{{ str_limit($trip->to_area,'5') }}</td>

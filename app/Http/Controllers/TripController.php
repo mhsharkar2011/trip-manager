@@ -4,11 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Customer;
 use App\Models\Driver;
+use App\Models\Fuel;
+use App\Enums\FuelTypes;
 use App\Models\Package;
 use App\Models\Trip;
 use App\Models\User;
 use App\Models\Vehicle;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class TripController extends Controller
@@ -20,7 +23,6 @@ class TripController extends Controller
      */
     public function index(Request $request, $format = 'view')
     {
-
         $Trips = Trip::query();
         $search = $request->input('q');
         if ($with = request('with')) { //load relationships
@@ -57,6 +59,7 @@ class TripController extends Controller
         $data['customers'] = Customer::all();
         $data['vehicles'] = Vehicle::all();
         $data['packages'] = Package::all();
+        $data['fuelTypes'] = [FuelTypes::PETROL,FuelTypes::DIESEL,FuelTypes::CNG,FuelTypes::LPG]; // Enum class
         return view('trips.create-trips',$data);
     }
 
@@ -77,10 +80,24 @@ class TripController extends Controller
         $packageAmount = $package->package_amount;
         $advanceAmount = $request->advance_amount;
         $balanceIn = $packageAmount - $advanceAmount;
+        $bkashCharge = $request->bkash_charge;
+        $totalCharge = ($advanceAmount / 1000) * $bkashCharge;
+        // After deduction by bkash charge advance amount
+        $tripEarning = $advanceAmount-$totalCharge;
+        $fuelName = $request->fuel_name;
+        $fuelAmount = $request->fuel_amount;
+        $itemName = $request->item_name;
+        $itemAmount = $request->amount;
+        $balanceIn = $packageAmount - $advanceAmount;
+        
+        $tripExpenses = $fuelAmount+$itemAmount;
 
-        // $amount = $request->input('advance_amount');
-        $bkashCharge = ($advanceAmount / 1000) * 20;
-
+        if ($advanceAmount < $balanceIn) {
+            $status = 'Pending';
+        } else {
+            $status = 'Completed';
+        }
+        
         Trip::create([
             'booking_id' => $request->booking_id,
             'driver_id' => $request->driver_id,
@@ -90,9 +107,15 @@ class TripController extends Controller
             'booking_date' => $request->booking_date,
             'booking_period' => $request->booking_period,
             'advance_amount' => $advanceAmount,
-            'status' => $request->status,
-            'balance_in' => $balanceIn,
             'bkash_charge'=>$bkashCharge,
+            'balance_in' => $balanceIn,
+            'fuel_name' => $fuelName,
+            'fuel_amount' => $fuelAmount,
+            'item_name' =>$itemName,
+            'amount' =>$itemAmount,
+            'trip_earning' =>$tripEarning,
+            'trip_expenses' =>$tripExpenses,
+            'status' =>$status,
         ]
         );
         
@@ -117,15 +140,15 @@ class TripController extends Controller
  
     public function update(Request $request, Trip $Trip)
     {
-        // $validation = Validator::make(
-        //     $request->all(), 
-        //     Trip::validation_rules_for_update(),
-        //     Trip::validation_messages_for_update(),
-        // );
+        $validation = Validator::make(
+            $request->all(), 
+            Trip::validation_rules_for_update(),
+            Trip::validation_messages_for_update(),
+        );
 
-        // if ($validation->fails()) {
-        //     return $this->respondValidationError($validation->errors());
-        // }   
+        if ($validation->fails()) {
+            return $this->respondValidationError($validation->errors());
+        }   
         $advanceAmount = $request->advance_amount;
         $bkashCharge = $request->bkash_charge;
         $totalCharge = ($advanceAmount / 1000) * $bkashCharge;

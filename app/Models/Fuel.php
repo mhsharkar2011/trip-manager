@@ -56,4 +56,15 @@ class Fuel extends baseModel
     {
         return $this->belongsTo(Trip::class);
     }
+
+    protected $enums = [
+        'fuel_name' => [
+            'petrol' => 'Petrol',
+            'diesel' => 'Diesel',
+            'cng' => 'CNG',
+            'octane' => 'Octane',
+            'electric' => 'Electric',
+        ],
+    ];
+    
 }
