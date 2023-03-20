@@ -18,16 +18,23 @@
             </div>
         </div>
         <div class="row ">
-
             <div class="col-md-12 d-flex">
                 <div class="card card-table border-secondary flex-fill">
                     <div class="card-header bg-dark">
-                        <h3 class="card-title  text-white mb-0">Recent Trips <span class="badge bg-inverse-danger ml-2">#</span> </h3> </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h3 class="card-title  text-success mb-0">Total Trips <span class="badge bg-inverse-danger ml-2">{{ $trips->count() }}</span> </h3> 
+                            </div>
+                            <div class="col-md-6 text-end">
+                                <h3 class="card-title  text-warning mb-0">Pending Trips <span class="badge bg-inverse-danger ml-2">{{ $trips->where('status','Pending')->count() }}</span> </h3> 
+                            </div>
+                        </div>
+                    </div>
                     <div class="card-body bg-dark">
                         <div class="table-responsive">
                             <table class="table table-dark text-white">
-                                <thead class="border-secondary text-wrap">
-                                        <tr style="font-size: 14px; text-align: center;vertical-align: middle;">
+                                <thead class="border-secondary text-wrap align-middle text-center font-bold bg-danger">
+                                        <tr class="bg-danger">
                                             <th>SL No.</th>
                                             <th>Booking ID</th>
                                             <th>Booking Date </th>
@@ -76,7 +83,12 @@
                                             <td>{{ $trip->amount }}</td>
                                             <td>{{ $trip->trip_expenses }}</td>
                                             <td>{{ $tripProfit = $trip->trip_earning - $trip->trip_expenses  }}</td>
-                                            <td>{{ $trip->status}}</td>
+                                            @if ($trip->status != 'Pending') {
+                                                <td class="text-success">{{ $trip->status}}</td>
+                                            } @else {
+                                                <td class="text-warning">{{ $trip->status}}</td>
+                                            }
+                                            @endif
                                             <td class="text-end">
                                                 <div class="dropdown dropdown-action">
                                                     <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
@@ -94,7 +106,7 @@
                                                     </div>
                                                 </div>
                                             </td>
-                                            </tr>
+                                        </tr>
                                             @endforeach
                                     </tbody>
 
