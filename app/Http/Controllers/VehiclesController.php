@@ -85,8 +85,9 @@ class VehiclesController extends Controller
         if ($validation->fails()) {
             return $this->respondValidationError($validation->errors());
         }   
-
         $input = $request->all();
+        $sl_no = "s-" . rand(100000,999999);
+        $input['sl_no'] = $sl_no;
         $vehicle = Vehicle::create($input);
 
         $mileage = new Mileage();

@@ -35,7 +35,6 @@ class Vehicle extends baseModel
 
     protected static function validation_rules() {
         return [
-            'sl_no'=>'required|max:20',
             'name'=>'required|max:255',
             'model'=>'required|max:20',
             'tank_capacity'=>'required',
