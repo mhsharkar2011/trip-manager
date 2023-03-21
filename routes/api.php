@@ -76,14 +76,14 @@ Route::prefix('v1')
     Route::delete('users/{user}/permission', [RolePermissionController::class, 'user_permission_destroy']);
 
     // Vehicles APIs
-    Route::resource('vehicle-types', 'App\Http\Controllers\VehicleTypesController', ['names'=>'api/vehicle-types'], ['except' => ['create', 'edit']]);
+    // Route::resource('vehicle-types', 'App\Http\Controllers\VehicleTypesController', ['names'=>'api/vehicle-types'], ['except' => ['create', 'edit']]);
     Route::resource('vehicles',VehiclesController::class,['except' => ['create', 'edit']]);
     Route::resource('user-vehicles', 'App\Http\Controllers\DriverVehiclesController', ['except' => ['create', 'edit']]);
 
     // Fuel APIs
     Route::resource('fuels', 'App\Http\Controllers\FuelsController', ['names'=>'api/fuels'], ['except' => ['create', 'edit']]);
-    Route::resource('fuel-types', 'App\Http\Controllers\FuelTypesController',['names'=>'api/fuel-types'], ['except' => ['create', 'edit']]);
-    Route::resource('fuel-vehicle', 'App\Http\Controllers\FuelVehicleController', ['except' => ['create', 'edit']]);
+    // Route::resource('fuel-types', 'App\Http\Controllers\FuelTypesController',['names'=>'api/fuel-types'], ['except' => ['create', 'edit']]);
+    // Route::resource('fuel-vehicle', 'App\Http\Controllers\FuelVehicleController', ['except' => ['create', 'edit']]);
 
     // Attendance APIs
     Route::resource('attendances', 'App\Http\Controllers\AttendancesController', ['except' => ['create', 'edit']]);

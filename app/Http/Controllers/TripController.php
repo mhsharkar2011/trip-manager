@@ -28,10 +28,10 @@ class TripController extends Controller
         if ($with = request('with')) { //load relationships
             $Trips->with(explode(',', $with));
         }        
-
+        
         //filter, sorting, selective-columns
         $Trips->filter(Trip::parseRequest(request('query')));
-
+        
         //set default sorting
         if (! Trip::hasSorting(request('query'))) {
             $Trips->filter(Trip::getDefaultSorting());
@@ -41,8 +41,7 @@ class TripController extends Controller
             request('items_per_page', self::ITEMS_PER_PAGE), 
             request('page', 1)
         );
-
-
+        
         if( request()->is('api/*')){
             //an api call
             return $this->respond($Trips);
@@ -88,7 +87,6 @@ class TripController extends Controller
         $fuelAmount = $request->fuel_amount;
         $itemName = $request->item_name;
         $itemAmount = $request->amount;
-        $balanceIn = $packageAmount - $advanceAmount;
         
         $tripExpenses = $fuelAmount+$itemAmount;
 
@@ -131,8 +129,9 @@ class TripController extends Controller
     public function show(Trip $trip)
     {
         // return $trip;
-
-        return view('trips.show',['trip'=>$trip]);
+        $data['tripStatus'] = $trip->where('status','Pending')->orWhere('status','Completed')->get();
+        // dd($data['tripStatus']);
+        return view('trips.show',['trip'=>$trip],$data);
     }
 
     public function edit(Trip $trip)
@@ -154,7 +153,7 @@ class TripController extends Controller
             return $this->respondValidationError($validation->errors());
         }   
 
-        $packageAmount = $request->package_amount;
+        $packageAmount = $Trip->package->package_amount;;
         $advanceAmount = $request->advance_amount;
         $balanceIn = $packageAmount - $advanceAmount;
         $bkashCharge = $request->bkash_charge;
@@ -165,7 +164,6 @@ class TripController extends Controller
         $fuelAmount = $request->fuel_amount;
         $itemName = $request->item_name;
         $itemAmount = $request->amount;
-        $balanceIn = $packageAmount - $advanceAmount;
         
         $tripExpenses = $fuelAmount+$itemAmount;
 
@@ -213,6 +211,6 @@ class TripController extends Controller
         // $trip = Trip::find($Trip);
         $Trip->delete();
 
-        return redirect('trips.index')->with('status','Item deleted successfully');
+        return redirect()->route('admin.trips.index')->with('status','Item deleted successfully');
     }
 }

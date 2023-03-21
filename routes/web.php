@@ -8,7 +8,6 @@ use App\Http\Controllers\CalculatorController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DriverController;
-use App\Http\Controllers\FuelTypesController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\PasswordRecoveryController;
 use App\Http\Controllers\PostController;
@@ -54,16 +53,13 @@ Route::group(['middleware'=>'auth'], function() {
         Route::get('logout',[AuthController::class,'logout'])->name('logout');
         Route::resource('drivers',DriverController::class);
         Route::resource('customers',CustomerController::class);
-        Route::resource('vehicle-types',VehicleTypesController::class);
+        // Route::resource('vehicle-types',VehicleTypesController::class);
         Route::resource('vehicles',VehiclesController::class);
         Route::resource('trips',TripController::class);
         Route::resource('trip-packages', PackageController::class);
     });
 });
 
-
-
-Route::resource('fuel-types', FuelTypesController::class);
 Route::resource('fuels', 'App\Http\Controllers\FuelsController', ['except' => ['create', 'edit']]);
 
 Route::get('/calculator', [CalculatorController::class, 'index']);

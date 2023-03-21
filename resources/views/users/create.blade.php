@@ -32,7 +32,7 @@
                                 <label class="label">Password: </label>
                                 <input type="password" name="password" class="form-control" placeholder="Enter  Passwoprd" />
                             </div>
-                                <x-select-field name="role" label="Select User Role" :options="$roles->pluck('name','name')" />
+                                <x-form-select name="role" label="Select User Role" :options="$roles->pluck('name','name')" />
                             <br>
                             <div class="form-group text-center">
                                 <input type="submit" class="btn btn-success text-uppercase" />

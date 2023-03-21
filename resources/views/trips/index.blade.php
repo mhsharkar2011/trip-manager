@@ -31,10 +31,10 @@
                         </div>
                     </div>
                     <div class="card-body bg-dark">
-                        <div class="table-responsive">
-                            <table class="table table-dark text-white">
-                                <thead class="border-secondary text-wrap align-middle text-center font-bold bg-danger">
-                                        <tr class="bg-danger">
+                        <div class="table table-responsive md-5">
+                            <table class="table text-white">
+                                <thead class=" text-wrap align-middle text-center font-bold">
+                                        <tr>
                                             <th>SL No.</th>
                                             <th>Booking ID</th>
                                             <th>Booking Date </th>
@@ -48,18 +48,18 @@
                                             <th>Bkash Charge</th>
                                             <th>Total Bkash Charge</th>
                                             <th>Balance In</th>
-                                            <th colspan="2" >Trip From/TO</th>
-                                            <th >Distance</th>
+                                            {{-- <th colspan="2" >Trip From/TO</th> --}}
+                                            {{-- <th >Distance</th> --}}
                                             <th>Trip Earning</th>
-                                            <th>Fuel Cost</th>
-                                            <th>Other Cost</th>
+                                            {{-- <th>Fuel Cost</th>
+                                            <th>Other Cost</th> --}}
                                             <th>Total Expenses</th>
                                             <th>Total Profit</th>
                                             <th >Status</th>
                                             <th colspan="3" >Action</th>
                                         </tr>
                                     </thead>
-                                    <tbody >
+                                    <tbody>
                                         @foreach ($trips as $trip )
                                         <tr class="text-center">
                                             <td>{{ ++$id }}</td>
@@ -75,33 +75,35 @@
                                             <td>{{ $trip->bkash_charge }}</td>
                                             <td>{{ $totalBkashCharge = ($trip->advance_amount/1000) * $trip->bkash_charge }}</td>
                                             <td>{{ $trip->balance_in }}</td>
-                                            <td>{{ str_limit($trip->from_area,'5') }}</td>
-                                            <td>{{ str_limit($trip->to_area,'5') }}</td>
-                                            <td>{{ $trip->distance }}</td>
+                                            {{-- <td>{{ str_limit($trip->from_area,'5') }}</td>
+                                            <td>{{ str_limit($trip->to_area,'5') }}</td> --}}
+                                            {{-- <td>{{ $trip->distance }}</td> --}}
                                             <td>{{ $trip->trip_earning }}</td>
-                                            <td>{{ str_limit($trip->fuel_amount,'10') }}</td>
-                                            <td>{{ $trip->amount }}</td>
+                                            {{-- <td>{{ str_limit($trip->fuel_amount,'10') }}</td>
+                                            <td>{{ $trip->amount }}</td> --}}
                                             <td>{{ $trip->trip_expenses }}</td>
                                             <td>{{ $tripProfit = $trip->trip_earning - $trip->trip_expenses  }}</td>
-                                            @if ($trip->status != 'Pending') {
+                                            @if ($trip->status !== 'Pending')
                                                 <td class="text-success">{{ $trip->status}}</td>
-                                            } @else {
+                                            @else
                                                 <td class="text-warning">{{ $trip->status}}</td>
-                                            }
                                             @endif
                                             <td class="text-end">
                                                 <div class="dropdown dropdown-action">
                                                     <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                                     <div class="dropdown-menu dropdown-menu-right">
+                                                        <a class="dropdown-item" href="javascript:void(0)" onclick="showTrip({{ $trip->id }})">
+                                                            <i class="fa fa-info m-r-5"></i> View
+                                                        </a>
                                                         <a class="dropdown-item" href="javascript:void(0)" onclick="editTrip({{ $trip->id }})">
                                                             <i class="fa fa-pencil m-r-5"></i> Edit
                                                         </a>
-                                                        <form action="{{ route('admin.trips.destroy', $trip->id) }}" method="post">
+                                                        <form id="delete-trip-form-{{ $trip->id }}" action="{{ route('admin.trips.destroy', $trip->id) }}" method="post">
                                                             @csrf
                                                             @method('DELETE')
-                                                        <a class="dropdown-item" href="javascript:void(0)">
-                                                            <i class="fa fa-trash-o m-r-5"></i> Delete
-                                                        </a>
+                                                            <a class="dropdown-item" href="javascript:void(0)" onclick="deleteTrip({{ $trip->id }})">
+                                                                <i class="fa fa-trash-o m-r-5"></i> Delete
+                                                            </a>
                                                         </form>
                                                     </div>
                                                 </div>
@@ -121,10 +123,22 @@
     </div>
 </div>
 <script>
-    function editTrip(id) {
+    function editTrip(edit) {
     // Redirect to the edit trip page with the trip ID as a parameter
-    window.location.href = '/trips/' + id + '/edit';
-}
+    window.location.href = '/trips/' + edit + '/edit';
+    }
+
+    function showTrip(show) {
+        // Redirect to the edit trip page with the trip ID as a parameter
+        window.location.href = '/trips/' + show;
+    }
+
+    function deleteTrip(tripId) {
+        if (confirm('Are you sure you want to delete this trip?')) {
+            // Submit the form
+            document.getElementById('delete-trip-form-' + tripId).submit();
+        }
+    }
 
 </script>
 

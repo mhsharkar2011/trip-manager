@@ -19,82 +19,31 @@
                             @csrf
                             @method('PUT')
 
-                            <div class="col-md-6">
-                                <label class="label">Package Name</label>
-                                <input type="text" name="package_id" class="form-control" value="{{ str_limit($trip->package->title,'200') }}" readonly/>
-                            </div>
-                            <br>
-                            <div class="col-md-6">
-                                <label class="label">Package Amount</label>
-                                <input type="number" name="package_amount" class="form-control" value="{{ $trip->package->package_amount }}" readonly/>
-                            </div>
-                            <br>
-                            <div class="col-md-6">
-                                <label class="label">Booking ID: </label>
-                                <input type="number" name="booking_id" class="form-control" value="{{ $trip->booking_id }}" readonly/>
-                            </div>
-                            <br>
-                            <div class="col-md-6">
-                                <label class="label">Booking Date: </label>
-                                <input type="datetime-local" name="booking_date" class="form-control" value="{{ $trip->booking_date }}" />
-                            </div>
-                            <br>
-                            <br>
-                            <div class="form-group">
-                                <label class="label">Booking Period: </label>
-                                <input type="number" name="booking_period" class="form-control" value="{{ $trip->booking_period }}" />
-                            </div>
-                            <br>
-                            <div class="form-group">
-                                <label class="label">Advance </label>
-                                <input type="number" name="advance_amount" class="form-control" value="{{ $trip->advance_amount }}"/>
-                            </div>
-                            <br>
-                            <div class="form-group">
-                                <label class="label">Bkash Charge </label>
-                                <input type="number" name="bkash_charge" class="form-control" value="{{ $trip->bkash_charge }}"/>
-                            </div>
-                            <div class="form-group mt-2">
-                                <label class="label">Balance In </label>
-                                <input type="number" name="balance_in" class="form-control" value="{{ $trip->balance_in }}"/>
-                            </div>
+                            <x-form-input col="12" type="text" label="Package Name" for="package_id" id="package_id" name="package_id" class="" placeholder="" value="{{ str_limit($trip->package->title) }} - {{ $trip->package->package_amount }}"  readonly/>
+                            <x-form-input col="6" type="text" label="Booking ID:" for="booking_id" id="booking_id" name="booking_id" class="" placeholder="" value="{{ $trip->booking_id }}"  />
+                            <x-form-input col="6" type="datetime-local" label="Booking Date:" for="booking_date" id="booking_date" name="booking_date" class="" placeholder="" value="{{  $trip->booking_date  }}"  />
+                            <x-form-input col="6" type="number" label="Booking Period:" for="booking_period" id="booking_period" name="booking_period" class="" placeholder="" value="{{ $trip->booking_period }}"  />
+                            <x-form-input col="6" type="number" label="Advance Amount" for="advance_amount" id="advance_amount" name="advance_amount" class="" placeholder="" value="{{ $trip->advance_amount }}"  />
+                            <x-form-input col="6" type="number" label="Bkash Charge" for="bkash_charge" id="bkash_charge" name="bkash_charge" class="" placeholder="" value="{{ $trip->bkash_charge }}"  />
+                            @if ($trip->balance_in > 0)
+                            <x-form-input col="6" type="number" label="Balance In" name="balance_in" id="balance_in" for="balance_in" placeholder="" class="form-control text-danger" value="{{ $trip->balance_in }}" />
+                            @endif
+                            @if ($trip->balance_in == 0)
+                            <x-form-input col="6" type="number" label="Balance In" name="balance_in" id="balance_in" for="balance_in" placeholder="" class="form-control text-success" value="{{ $trip->balance_in }}" />
+                            @endif
                             <!------------------------------ Expese Section Start----------------------------->
-                            <div class="col-md-6 mt-2">
-                                <label class="form-label">Fuel Name</label>
-                                <input type="text" name="fuel_name" class="form-control" value="{{ $trip->fuel_name }}" />
-                            </div>
-                            <div class="col-md-3 mt-2">
-                                <label class="label">Fuel Amount</label>
-                                <input type="number" name="fuel_amount" class="form-control" value="{{ $trip->fuel_amount }}" />
-                            </div>
-                            <div class="col-md-6 mt-2">
-                                <label class="label">Item Name (Other) </label>
-                                <input type="text" name="item_name" class="form-control" value="{{ $trip->item_name }}"/>
-                            </div>
-                            <div class="col-md-6 mt-2">
-                                <label class="label">Cost Amount </label>
-                                <input type="number" name="amount" class="form-control" value="{{ $trip->amount }}" />
-                            </div>
+                            <x-form-input col="6" type="text" label="Fuel Name" for="fuel_name" id="fuel_name" name="fuel_name" class="" placeholder="" value="{{ $trip->fuel_name }}"  />
+                            <x-form-input col="6" type="number" label="Fuel Amount" for="fuel_amount" id="fuel_amount" name="fuel_amount" class="" placeholder="" value="{{ $trip->fuel_amount }}"  />
+                            <x-form-input col="6" type="text" label="Item Name (Other)" for="item_name" id="item_name" name="item_name" class="" placeholder="" value="{{ $trip->item_name }}"  />
+                            <x-form-input col="6" type="number" label="Cost Amount" for="amount" id="amount" name="amount" class="" placeholder="" value="{{ $trip->amount }}"  />
+            
                             <!------------------------------ Expese Section End ----------------------------->
-                            <div class="form-group">
-                                <label class="label">From Area: </label>
-                                <input type="textarea" row="5" name="from_area" class="form-control" value="{{ str_limit($trip->from_area,'5') }}"/>
-                            </div>
-                            <br>
-                            <div class="form-group">
-                                <label class="label">To Area: </label>
-                                <input type="textarea" row="5" name="to_area" class="form-control" value="{{ str_limit($trip->to_area,'5') }}"/>
-                            </div>
-                            <br>
-                            <div class="form-group">
-                                <label class="label">Mileages</label>
-                                <input type="number" name="distance" class="form-control" value="{{ $trip->distance }}"/>
-                            </div>
-                            <br>
-                            <div class="form-group">
-                                <label class="label">Trip Earning:</label>
-                                <input type="number" name="trip_earning" class="form-control" value="{{ $trip->trip_earning }}"/>
-                            </div>
+                            <x-form-textarea label="From Area: " for="from_area" id="from_area" name="from_area" class="" placeholder="From Area" value="{{ $trip->from_area }}" style="width:487px; margin-right:10px"  />
+                            <x-form-textarea label="To Area:" for="to_area" id="to_area" name="to_area" class="" placeholder="To Area" value="{{ $trip->to_area }}" style="width:489px; margin-left:4px"  />
+                            
+
+                            <x-form-input col="6" type="number" label="Mileages" for="distance" id="distance" name="distance" class="" placeholder="" value="{{ $trip->distance }}"  />
+                            <x-form-input col="6" type="number" label="Trip Earning:" for="trip_earning" id="trip_earning" name="trip_earning" class="" placeholder="" value="{{ $trip->trip_earning }}"  />
                             <div class="form-group text-center mt-4">
                                 <input type="submit" class="btn btn-success text-uppercase" />
                             </div>

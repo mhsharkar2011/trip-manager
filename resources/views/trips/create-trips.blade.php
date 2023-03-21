@@ -9,9 +9,8 @@
             {{-- Trip From --}}
             <div class="col-md-8 mt-5">
                 <div class="card">
-                    <div class="card-header text-center">
-                        <a style="float: center" class="btn btn-dark text-center" href="">Trips Form</a>
-                        <a style="float:right" class="btn btn-dark text-center" href="{{ asset('trips') }}">Trips List</a>
+                    <div class="card-header text-end">
+                        <a class="text-decoration-none text-secondary text-uppercase" href="{{ asset('trips') }}">Trips List</a>
                     </div>
                     <div class="card-body text-dark">
                         <form class="row g-3" method="post" action="{{ route('admin.trips.store') }}">
@@ -93,7 +92,7 @@
                                 <select class="form-select" name="fuel_name">
                                     <option value="">Select Fuel</option>
                                     @foreach ($fuelTypes as $key => $value)
-                                        <option value="{{ $key }}">
+                                        <option value="{{ $value }}">
                                             {{ $value }}
                                         </option>
                                     @endforeach
@@ -127,13 +126,7 @@
                                 <label class="label">Mileages</label>
                                 <input type="number" name="distance" class="form-control" />
                             </div>
-                            <br>
-                            <br>
-    
-                            
-                            <div class="form-group text-center">
-                                <input type="submit" class="btn btn-dark text-uppercase" />
-                            </div>
+                            <x-form-button type="submit" class="btn btn-secondary text-uppercase" />
                         </form>
                     </div>
                 </div>

@@ -29,9 +29,11 @@ class CreateFuelsTable extends Migration
             $table->string('fuel_amount')->nullable();
             $table->string('fuel_paid_by')->nullable();
             $table->string('fuel_attachments')->nullable();
+            $table->softDeletes();
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('trip_id')->references('id')->on('trips')->cascadeOnUpdate();
+            $table->foreign('trip_id')->references('id')->on('trips')->cascadeOnDelete()->cascadeOnUpdate();
+
             });
     }
 

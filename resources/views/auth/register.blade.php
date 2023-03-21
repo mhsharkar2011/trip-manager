@@ -54,7 +54,7 @@
                                 <span class="text-gray-700 dark:text-gray-400">
                                     Assign Role
                                 </span>
-                                <x-select-field name="role" label="Select User Role" :options="$roles->pluck('name','name')" />
+                                <x-form-select name="role" label="Select User Role" :options="$roles->pluck('name','name')" />
                             </label>
 
                             <!-- You should use a button here, as the anchor is only used for the example  -->
