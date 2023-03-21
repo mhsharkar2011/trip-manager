@@ -21,10 +21,10 @@
             <div class="col-md-10 d-flex">
                 <div class="card card-table border-secondary flex-fill justify-content-center">
                     <div class="card-header bg-dark">
-                        <h3 class="card-title  text-white mb-0">Vehicles <span class="badge bg-inverse-danger ml-2">#</span> </h3> </div>
+                        <h3 class="card-title  text-white mb-0">Vehicles <span class="badge bg-inverse-danger ml-2">{{ $vehicles->count() }}</span> </h3> </div>
                     <div class="card-body bg-dark">
                         <div class="table table-responsive md-5">
-                            <table class="table table-dark text-white">
+                            <table class="table table-bordered table-dark text-white align-middle text-center">
                                 <thead class="border-secondary">
                                     <tr>
                                         <th>ID</th>

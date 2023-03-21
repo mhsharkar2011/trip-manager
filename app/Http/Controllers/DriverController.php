@@ -45,7 +45,7 @@ class DriverController extends Controller
         // dd($driver);
 
         // return $this->respond($driver);
-        return view('drivers.index',['drivers'=>$drivers]);
+        return view('drivers.index',['drivers'=>$drivers])->with('id',(request()->input('page', 1) - 1) * self::ITEMS_PER_PAGE);
     }
 
     public function create(){

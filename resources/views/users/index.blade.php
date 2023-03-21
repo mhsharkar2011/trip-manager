@@ -7,30 +7,41 @@
     <!-- Page Content -->
     <div class="content container-fluid">
         <!-- Page Header -->
-            <div class="row d-flex">
-                <div class="col-sm-2">
-                    <a class="btn btn-success text-start" href="{{ route('admin.users.create') }}">Add User</a>
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-10">
+                    {{-- <h3 class="page-title text-white">Welcome to Durojan ! </h3> --}}
+                    <ul class="breadcrumb bg-dark mt-2">
+                        <a style="float: right" class="btn btn-success text-right" href="{{ route('admin.users.create') }}">Add User</a>
+                    </ul>
                 </div>
-                <div class="col-sm-8">
-                    <div class="table-responsive">
-                        <table class="table table-bordered">
-                            <thead class=" text-white border-secondary">
-                                <tr class="text-center">
+            </div>
+        </div>
+        <div class="row justify-content-center">     
+            <div class="col-md-10 d-flex">
+                <div class="card card-table border-secondary flex-fill justify-content-center">
+                    <div class="card-header bg-dark">
+                        <h3 class="card-title  text-white mb-0">Users <span class="badge bg-inverse-danger ml-2">{{ $totalUsers }}</span> </h3> </div>
+                    <div class="card-body bg-dark">
+                        <div class="table table-responsive md-5">
+                            <table class="table table-bordered table-dark text-white align-middle text-center">
+                                <thead class="border-secondary">
+                                    <tr>
                                         <th>ID</th>
                                         <th>Full Name</th>
                                         <th>Email</th>
                                         <th>User Type</th>
-                                        <th class="text-end">Action</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
-                                <tbody class="text-white border-secondary align-middle">
+                                <tbody>
                                     @foreach ($users as $user )
                                     <tr>
                                         <td>{{ ++$id}}</td>
-                                        <td>{{ $user->full_name}}</td>
-                                        <td>{{ $user->email}}</td>
+                                        <td class="text-start">{{ $user->full_name}}</td>
+                                        <td class="text-start">{{ $user->email}}</td>
                                         <td>{{ $user->role}}</td>
-                                        <td class="text-end">
+                                        <td>
                                             <div class="dropdown dropdown-action">
                                                 <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                                 <div class="dropdown-menu dropdown-menu-right">
@@ -47,14 +58,17 @@
                                         @endforeach
                                 </tbody>
                             </table>
-                            <div class="pagination justify-content-center">
-                                {{ $users->links() }} 
-                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="pagination justify-content-center">
+            {{ $users->links() }} 
+        </div>
     </div>
 </div>
+
 
 <script>
     function editUser(id) {

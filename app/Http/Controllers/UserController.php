@@ -17,6 +17,7 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
+        $data['totalUsers'] = User::all()->count();
         $user = User::query();
 
         if ($with = request('with')) { //load relationships

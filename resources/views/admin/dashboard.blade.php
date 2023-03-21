@@ -265,8 +265,10 @@ Dashboard- Admin Panel
                             <table class="table table-dark text-white">
                                 <thead class="border-secondary">
                                     <tr>
+                                        <th>Photo</th>
                                         <th>Name</th>
                                         <th>Email</th>
+                                        <th>COntact number</th>
                                         <th>Status</th>
                                         <th class="text-end">Action</th>
                                     </tr>
@@ -274,11 +276,13 @@ Dashboard- Admin Panel
                                 <tbody>
                                     @foreach ($clients as $client)   
                                     <tr>
+                                        <td><x-client-avatar :user="$client->avatar" width="48" height="48" class="rounded-circle" /></td>
                                         <td>{{ $client->full_name }}</td>
                                         <td>
                                             <h2 ><a class="text-white text-decoration-none" href="#">{{ $client->user->email }}</a></h2>
                                         </td>
-                                        <td>{{ $client->is_active }}</td>
+                                        <td>{{ $client->contact_number }}</td>
+                                        <td>{{ $client->status }}</td>
                                         <td class="text-end">
                                             <div class="dropdown dropdown-action">
                                                 <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
