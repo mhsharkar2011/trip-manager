@@ -1,13 +1,13 @@
 @extends('layouts.master-admin')
 @section('content')
-  
+   
     <!-- Page Wrapper -->
     <div class="page-wrapper">
         <!-- Page Content -->
         <div class="content container-fluid">
             <!-- Page Header -->
             <div class="page-header">
-                <div class="row align-items-center">
+                <div class="row align-lists-center">
                     <div class="col">
                         <h3 class="page-title">Employee</h3>
                         <ul class="breadcrumb">
@@ -27,7 +27,7 @@
 			<!-- /Page Header -->
 
             <!-- Search Filter -->
-            <form action="{{ route('all/employee/list/search') }}" method="POST">
+            <form action="{{ route('all/employee/search') }}" method="POST">
                 @csrf
                 <div class="row filter-row">
                     <div class="col-sm-6 col-md-3">  
@@ -38,13 +38,13 @@
                     </div>
                     <div class="col-sm-6 col-md-3">  
                         <div class="form-group form-focus">
-                            <input type="text" class="form-control floating">
+                            <input type="text" class="form-control floating" name="name">
                             <label class="focus-label">Employee Name</label>
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-3"> 
                         <div class="form-group form-focus">
-                            <input type="text" class="form-control floating">
+                            <input type="text" class="form-control floating" name="position">
                             <label class="focus-label">Position</label>
                         </div>
                     </div>
@@ -56,55 +56,29 @@
             <!-- Search Filter -->
             {{-- message --}}
             {!! Toastr::message() !!}
-
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="table-responsive">
-                        <table class="table table-striped custom-table datatable">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Employee ID</th>
-                                    <th>Email</th>
-                                    <th>Mobile</th>
-                                    <th class="text-nowrap">Join Date</th>
-                                    <th>Role</th>
-                                    <th class="text-right no-sort">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($users as $items )
-                                <tr>
-                                    <td>
-                                        <h2 class="table-avatar">
-                                            <a href="{{ url('employee/profile/'.$items->user_id) }}" class="avatar"><img alt="" src="{{ URL::to('/assets/images/'. $items->avatar) }}"></a>
-                                            <a href="{{ url('employee/profile/'.$items->user_id) }}">{{ $items->name }}<span>{{ $items->position }}</span></a>
-                                        </h2>
-                                    </td>
-                                    <td>{{ $items->user_id }}</td>
-                                    <td>{{ $items->email }}</td>
-                                    <td>{{ $items->phone_number }}</td>
-                                    <td>{{ $items->join_date }}</td>
-                                    <td>{{ $items->role_name }}</td>
-                                    <td class="text-right">
-                                        <div class="dropdown dropdown-action">
-                                            <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
-                                            <div class="dropdown-menu dropdown-menu-right">
-                                                <a class="dropdown-item" href="{{ url('all/employee/view/edit/'.$items->user_id) }}"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                                <a class="dropdown-item" href="{{url('all/employee/delete/'.$items->user_id)}}"onclick="return confirm('Are you sure to want to delete it?')"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+            <div class="row staff-grid-row">
+                @foreach ($users as $lists )
+                <div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3">
+                    <div class="profile-widget">
+                        <div class="profile-img">
+                            <a href="{{ url('employee/profile/'.$lists->user_id) }}" class="avatar"><img src="{{ URL::to('/assets/images/'. $lists->avatar) }}" alt="{{ $lists->avatar }}" alt="{{ $lists->avatar }}"></a>
+                        </div>
+                        <div class="dropdown profile-action">
+                            <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="{{ url('all/employee/view/edit/'.$lists->user_id) }}"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                <a class="dropdown-item" href="{{url('all/employee/delete/'.$lists->user_id)}}"onclick="return confirm('Are you sure to want to delete it?')"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                            </div>
+                        </div>
+                        <h4 class="user-name m-t-10 mb-0 text-ellipsis"><a href="profile.html">{{ $lists->name }}</a></h4>
+                        <div class="small text-muted">{{ $lists->position }}</div>
                     </div>
                 </div>
+                @endforeach
             </div>
         </div>
         <!-- /Page Content -->
-      
+
         <!-- Add Employee Modal -->
         <div id="add_employee" class="modal custom-modal fade" role="dialog">
             <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -122,7 +96,7 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label class="col-form-label">Full Name</label>
-                                        <select class="select" id="name" name="name">
+                                        <select class="select select2s-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true" id="name" name="name">
                                             <option value="">-- Select --</option>
                                             @foreach ($userList as $key=>$user )
                                                 <option value="{{ $user->name }}" data-employee_id={{ $user->user_id }} data-email={{ $user->email }}>{{ $user->name }}</option>
@@ -148,9 +122,9 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Gender</label>
-                                        <select class="select form-control" id="gender" name="gender">
-                                            <option value="Male">Male</option>
-                                            <option value="Female">Female</option>
+                                        <select class="select form-control" style="width: 100%;" tabindex="-1" aria-hidden="true" id="gender" name="gender">
+                                            <option value="male">Male</option>
+                                            <option value="female">Female</option>
                                         </select>
                                     </div>
                                 </div>
@@ -163,10 +137,11 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label class="col-form-label">Company</label>
-                                        <select class="select" id="company" name="company">
+                                        <select class="select select2s-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true" id="company" name="company">
                                             <option value="">-- Select --</option>
-                                            <option value="Soeng Souy">Soeng Souy</option>
-                                            <option value="StarGame Kh">StarGame Kh</option>
+                                            @foreach ($userList as $key=>$user )
+                                                <option value="{{ $user->name }}">{{ $user->name }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -232,6 +207,7 @@
             </div>
         </div>
         <!-- /Add Employee Modal -->
+        
     </div>
     <!-- /Page Wrapper -->
     @section('script')
@@ -252,6 +228,13 @@
         });
     </script>
     <script>
+        $(document).ready(function() {
+            $('.select2s-hidden-accessible').select2({
+                closeOnSelect: false
+            });
+        });
+    </script>
+    <script>
         // select auto id and email
         $('#name').on('change',function()
         {
@@ -259,5 +242,35 @@
             $('#email').val($(this).find(':selected').data('email'));
         });
     </script>
+    {{-- update js --}}
+    <script>
+        $(document).on('click','.userUpdate',function()
+        {
+            var _this = $(this).parents('tr');
+            $('#e_id').val(_this.find('.id').text());
+            $('#e_name').val(_this.find('.name').text());
+            $('#e_email').val(_this.find('.email').text());
+            $('#e_phone_number').val(_this.find('.phone_number').text());
+            $('#e_image').val(_this.find('.image').text());
+
+            var name_role = (_this.find(".role_name").text());
+            var _option = '<option selected value="' + name_role+ '">' + _this.find('.role_name').text() + '</option>'
+            $( _option).appendTo("#e_role_name");
+
+            var position = (_this.find(".position").text());
+            var _option = '<option selected value="' +position+ '">' + _this.find('.position').text() + '</option>'
+            $( _option).appendTo("#e_position");
+
+            var department = (_this.find(".department").text());
+            var _option = '<option selected value="' +department+ '">' + _this.find('.department').text() + '</option>'
+            $( _option).appendTo("#e_department");
+
+            var statuss = (_this.find(".statuss").text());
+            var _option = '<option selected value="' +statuss+ '">' + _this.find('.statuss').text() + '</option>'
+            $( _option).appendTo("#e_status");
+            
+        });
+    </script>
     @endsection
+
 @endsection
