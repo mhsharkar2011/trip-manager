@@ -68,7 +68,7 @@
 						@if ($auth->profile_photo_path)
 						<img height="48" src="{{ URL::to('/assets/images/'. $auth->profile_photo_path) }}" alt="Avatar">
 						@else
-						<img height="38" src="{{ asset('/img/default.png') }}" alt="Avatar">
+						<img height="38" src="{{ asset('/img/avatar.png') }}" alt="Avatar">
 						@endif
 					<span class="status online"></span></span>
 				</a>
@@ -209,7 +209,7 @@
 							@if ($auth->profile_photo_path)
 							<img src="{{ URL::to('/assets/images/'. $auth->profile_photo_path) }}" alt="Avatar">
 							@else
-							<img src="{{ asset('/img/default.png') }}" alt="Avatar">
+							<img src="{{ asset('/img/avatar.png') }}" alt="Avatar">
 							@endif
 						<span class="status online"></span></span>
 						<span>{{ $auth->full_name }}</span>

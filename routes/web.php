@@ -5,19 +5,16 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BikashChargeController;
 use App\Http\Controllers\BikashController;
 use App\Http\Controllers\CalculatorController;
-use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DriverController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\PasswordRecoveryController;
-use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SocialiteController;
 use App\Http\Controllers\TripController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VehiclesController;
-use App\Http\Controllers\VehicleTypesController;
-use App\Http\Controllers\Web\TestController;
+
 use Arcanedev\Support\Database\PrefixedModel;
 
 /*
@@ -53,7 +50,6 @@ Route::group(['middleware'=>'auth'], function() {
         Route::get('logout',[AuthController::class,'logout'])->name('logout');
         Route::resource('drivers',DriverController::class);
         Route::resource('customers',CustomerController::class);
-        // Route::resource('vehicle-types',VehicleTypesController::class);
         Route::resource('vehicles',VehiclesController::class);
         Route::resource('trips',TripController::class);
         Route::resource('trip-packages', PackageController::class);
@@ -72,15 +68,3 @@ Route::post('/calculator', [CalculatorController::class, 'calculate']);
 
 Route::get('/bikash', [BikashController::class, 'index']);
 Route::get('/bikash/charge', [BikashController::class, 'calculateCharge'])->name('bikash-charge');
-
-
-
-
-
-
-
-
-// Route::resource('users', TestController::class);
-
-// Route::resource('posts',PostController::class);
-// Route::resource('comments',CommentController::class);

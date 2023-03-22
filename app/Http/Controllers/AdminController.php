@@ -28,9 +28,14 @@ class AdminController extends Controller
         
         // Trips
         $data['trips'] = Trip::latest()->paginate(5);
-        $data['totalTripAmount'] = Package::all()->pluck('package_amount')->count();
-        // dd($data['totalTripAmount']);
+        $packageId = Package::pluck('id');
+        $totalTripsAmount = DB::table('trips as t')->join('packages as p','t.package_id', '=','p.id')
+                                    ->selectRaw('SUM(p.package_amount) as total')
+                                    ->value('total');
+
         $data['tripCount'] = Trip::count();
+        $data['completedTrips'] = Trip::where('status','completed')->count();
+        $data['pendingTrips'] = Trip::where('status','pending')->count();
 
         $increase = $data['tripCount'] * 0.10;
         $data['totalTrips'] = $data['tripCount'] + $increase;
@@ -45,7 +50,12 @@ class AdminController extends Controller
         $endOfTripMonth = $now->endOfMonth()->toDateTimeString();
         $data['currentMonthTrips'] = Trip::where('status','completed')->where('booking_date','>=',$startOfTripMonth)->where('booking_date','<=',$endOfTripMonth)
                               ->count();
-
+        // Calculate the date range for the Current month Trip Amount
+        $data['totalTripsAmount'] = DB::table('trips as t')->join('packages as p','t.package_id', '=','p.id')
+                                        ->where('t.booking_date','>=',$startOfTripMonth)
+                                        ->where('t.booking_date','<=',$endOfTripMonth)
+                                        ->selectRaw('SUM(p.package_amount) as total')
+                                        ->value('total');
         // Calculate the date range for the last month
         $now = Carbon::now();
         $startOfTripLastMonth = $now->subMonth()->startOfMonth()->toDateTimeString();
@@ -148,71 +158,4 @@ class AdminController extends Controller
         return view('admin.dashboard',$data,['chartTripEarn'=>$chartTripEarn,'chartTripProfit'=>$chartTripProfit],);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
-
-    
 }

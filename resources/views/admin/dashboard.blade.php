@@ -45,18 +45,18 @@ Dashboard- Admin Panel
                 {!! $chartTripEarn->container() !!}
                 {!! $chartTripEarn->script() !!}
             </div>
-            <div class="col-md-6 d-flex">
+            <div class="col-md-6 d-flex"> 
                 {!! $chartTripProfit->container() !!}
                 {!! $chartTripProfit->script() !!}
             </div>
         </div>
                 
         <!-- Page Progress Bar -->
-        <div class="row">
-            <x-progress-bar col="3" bgdark="dark" color="white" title="Trips"    headerValue="{{ $totalTripsAmount ?? '0' }}" totalValue="{{ $currentMonthTrips }}"    footerTitle="Previous Month Trips" footerValue="{{ $lastMonthTrips }}" />
-            <x-progress-bar col="3" bgdark="dark" color="white" title="Earnings" headerValue="{{ $totalEarn }}"        totalValue="{{ $currentMonthEarn }}"     footerTitle="Previous Month"       footerValue="{{ $lastMonthEarn }}" />
-            <x-progress-bar col="3" bgdark="dark" color="white" title="Expenses" headerValue="{{ $totalExpenses }}"    totalValue="{{ $currentMonthExpenses }}" footerTitle="Previous Month"       footerValue="{{ $lastMonthExpenses }}" />
-            <x-progress-bar col="3" bgdark="dark" color="white" title="Profit  " headerValue="{{ $totalProfit }}"      totalValue="{{ $currentMonthProfit }}"   footerTitle="Previous Month"       footerValue="{{ $lastMonthProfit }}" />
+        <div class="row mt-4">
+            <x-card-progress-bar col="3" bgdark="dark" color="white" title="Trips"    headerValue="{{ $totalTripsAmount ?? '0' }}" totalValue="{{ $currentMonthTrips }}"    footerTitle="Previous Month Trips" footerValue="{{ $lastMonthTrips }}" />
+            <x-card-progress-bar col="3" bgdark="dark" color="white" title="Earnings" headerValue="{{ $totalEarn ?? '0' }}"        totalValue="{{ $currentMonthEarn }}"     footerTitle="Previous Month"       footerValue="{{ $lastMonthEarn }}" />
+            <x-card-progress-bar col="3" bgdark="dark" color="white" title="Expenses" headerValue="{{ $totalExpenses ?? '0' }}"    totalValue="{{ $currentMonthExpenses }}" footerTitle="Previous Month"       footerValue="{{ $lastMonthExpenses }}" />
+            <x-card-progress-bar col="3" bgdark="dark" color="white" title="Profit  " headerValue="{{ $totalProfit ?? '0' }}"      totalValue="{{ $currentMonthProfit }}"   footerTitle="Previous Month"       footerValue="{{ $lastMonthProfit }}" />
         </div>
 
         <!-- Statistics Widget -->
@@ -79,12 +79,8 @@ Dashboard- Admin Panel
                                     <div class="progress-bar bg-warning" role="progressbar" style="width: 31%" aria-valuenow="31" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                             </div>
-                            <div class="stats-info bg-dark border-dark">
-                                <p>Completed Projects <strong>85 <small>/ 112</small></strong></p>
-                                <div class="progress">
-                                    <div class="progress-bar bg-success" role="progressbar" style="width: 62%" aria-valuenow="62" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </div>
+                            <x-progress-bar bg="success" label="Completed Trips" value="{{ $completedTrips }}" totalValue="{{ $tripCount }}" />
+                            <x-progress-bar bg="warning" label="Pending Trips" value="{{ $pendingTrips }}" totalValue="{{ $tripCount }}" />
                             <div class="stats-info bg-dark border-dark">
                                 <p>Open Tickets <strong>190 <small>/ 212</small></strong></p>
                                 <div class="progress">
@@ -259,7 +255,7 @@ Dashboard- Admin Panel
             <div class="col-md-6 d-flex">
                 <div class="card card-table border-secondary flex-fill">
                     <div class="card-header bg-dark">
-                        <h3 class="card-title  text-white mb-0">Client <span class="badge bg-inverse-danger ml-2">{{ $clientCount ?? '' }}</span></h3> </div>
+                        <h3 class="card-title  text-white mb-0">New Clients</h3> </div>
                     <div class="card-body bg-dark">
                         <div class="table table-dark">
                             <table class="table table-dark text-white">
@@ -268,7 +264,7 @@ Dashboard- Admin Panel
                                         <th>Photo</th>
                                         <th>Name</th>
                                         <th>Email</th>
-                                        <th>COntact number</th>
+                                        <th>Contact number</th>
                                         <th>Status</th>
                                         <th class="text-end">Action</th>
                                     </tr>
@@ -307,7 +303,7 @@ Dashboard- Admin Panel
                         </div>
                     </div>
                     <div class="card-footer bg-dark">
-                        <a class="text-white text-decoration-none" href="#">View all client</a>
+                        <a class="text-white text-decoration-none" href="{{ route('admin.customers.index') }}">View all client</a>
                     </div>
                 </div>
             </div>
@@ -316,7 +312,7 @@ Dashboard- Admin Panel
             <div class="col-md-6 d-flex">
                 <div class="card card-table border-secondary flex-fill">
                     <div class="card-header bg-dark">
-                        <h3 class="card-title text-white mb-0">Recent Trips <span class="badge bg-inverse-danger ml-2">{{ $tripCount }}</span></h3> 
+                        <h3 class="card-title text-white mb-0">Recent Trips</h3> 
                     </div>
                     <div class="card-body bg-dark">
                         <div class="table-responsive">
@@ -383,7 +379,6 @@ Dashboard- Admin Panel
     // Redirect to the edit trip page with the trip ID as a parameter
     window.location.href = '/customers/' + id + '/edit';
 }
-
 </script>
 
 @endsection
