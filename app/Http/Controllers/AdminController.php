@@ -111,6 +111,7 @@ class AdminController extends Controller
 
         // Drivers -------------------------------------------------------------
         $data['drivers'] = Driver::all();
+        
         $data['driverCount'] = Driver::count();
         $increase = $data['tripCount'] * 0.10;
         $data['totalTrips'] = $data['tripCount'] + $increase;

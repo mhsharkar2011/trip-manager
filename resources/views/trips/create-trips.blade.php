@@ -126,7 +126,7 @@
                                 <label class="label">Mileages</label>
                                 <input type="number" name="distance" class="form-control" />
                             </div>
-                            <x-form-button type="submit" class="btn btn-secondary text-uppercase" />
+                            <x-form-button col="" type="submit" class="btn btn-secondary text-uppercase"> Submit</x-form-button>
                         </form>
                     </div>
                 </div>

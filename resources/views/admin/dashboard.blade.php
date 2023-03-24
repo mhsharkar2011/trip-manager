@@ -107,31 +107,32 @@ Dashboard- Admin Panel
                             <div class="row">
                                 <div class="col-md-6 col-6 text-center">
                                     <div class="stats-box bg-dark mb-4 border-secondary">
-                                        <p>Total Tasks</p>
-                                        <h3>385</h3>
+                                        <p>Total Trips</p>
+                                        <h3>{{ $trips->count() }}</h3>
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-6 text-center">
                                     <div class="stats-box bg-dark mb-4 border-secondary">
-                                        <p>Overdue Tasks</p>
-                                        <h3>19</h3>
+                                        <p>Pending Trips</p>
+                                        <h3>{{ $pendingTrips }}</h3>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="progress mb-4">
-                            <div class="progress-bar bg-purple" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">30%</div>
+                            {{-- <x-progress-bar bg="purple" label="" value="30" totalValue="{{ $tripCount }}">30%</x-progress-bar> --}}
+                            <div class="progress-bar bg-purple" role="progressbar" style="width: {{ $completedTrips }}" aria-valuenow="{{ $completedTrips}}" aria-valuemin="0" aria-valuemax="100">{{ $completedTrips }}%</div>
                             <div class="progress-bar bg-warning" role="progressbar" style="width: 22%" aria-valuenow="18" aria-valuemin="0" aria-valuemax="100">22%</div>
                             <div class="progress-bar bg-success" role="progressbar" style="width: 24%" aria-valuenow="12" aria-valuemin="0" aria-valuemax="100">24%</div>
                             <div class="progress-bar bg-danger" role="progressbar" style="width: 26%" aria-valuenow="14" aria-valuemin="0" aria-valuemax="100">21%</div>
                             <div class="progress-bar bg-info" role="progressbar" style="width: 10%" aria-valuenow="14" aria-valuemin="0" aria-valuemax="100">10%</div>
                         </div>
                         <div>
-                            <p><i class="fa fa-dot-circle-o text-purple mr-2"></i>Completed Tasks <span class="float-right">166</span></p>
-                            <p><i class="fa fa-dot-circle-o text-warning mr-2"></i>Inprogress Tasks <span class="float-right">115</span></p>
-                            <p><i class="fa fa-dot-circle-o text-success mr-2"></i>On Hold Tasks <span class="float-right">31</span></p>
-                            <p><i class="fa fa-dot-circle-o text-danger mr-2"></i>Pending Tasks <span class="float-right">47</span></p>
-                            <p class="mb-0"><i class="fa fa-dot-circle-o text-info mr-2"></i>Review Tasks <span class="float-right">5</span></p>
+                            <p><i class="fa fa-dot-circle-o text-purple mr-2"></i> Completed Trips <span class="float-right">{{ $completedTrips }}</span></p>
+                            <p><i class="fa fa-dot-circle-o text-warning mr-2"></i> Inprogress Trips <span class="float-right">0</span></p>
+                            <p><i class="fa fa-dot-circle-o text-success mr-2"></i> On Hold Trips <span class="float-right">0</span></p>
+                            <p><i class="fa fa-dot-circle-o text-danger mr-2"></i> Pending Trips <span class="float-right">{{ $pendingTrips }}</span></p>
+                            <p class="mb-0"><i class="fa fa-dot-circle-o text-info mr-2"></i> Review Trips <span class="float-right">0</span></p>
                         </div>
                     </div>
                 </div>
@@ -139,33 +140,22 @@ Dashboard- Admin Panel
             <div class="col-md-12 col-lg-6 col-xl-4 d-flex">
                 <div class="card flex-fill border-secondary text-white">
                     <div class="card-body bg-dark text-white">
-                        <h4 class="card-title total text-white">Today Absent <span class="badge bg-inverse-danger ml-2">5</span></h4>
+                        <h4 class="card-title total text-white">Today Absent <span class="badge bg-inverse-danger ml-2">0</span></h4>
+                        @foreach ($drivers as $driver )
                         <div class="leave-info-box border-secondary">
                             <div class="media align-items-center">
-                                <a href="profile.html" class="avatar"><img alt="" src="assets/img/user.jpg"></a>
+                                <x-driver-avatar :user="$driver->avatar" width="38" height="38" class="rounded-circle" />
                                 <div class="media-body">
-                                    <div class="text-sm my-0">Martin Lewis</div>
+                                    <div class="text-sm my-0">{{ $driver->full_name }}</div>
                                 </div>
                             </div>
                             <div class="row align-items-center mt-3">
                                 <div class="col-6">
-                                    <h6 class="mb-0">4 Sep 2019</h6> <span class="text-sm text-muted">Leave Date</span> </div>
-                                <div class="col-6 text-right"> <span class="badge bg-inverse-danger">Pending</span> </div>
+                                    <h6 class="mb-0">{{ $driver->created_at }}</h6> <span class="text-sm text-muted">Leave Date</span> </div>
+                                <div class="col-6 text-right"> <span class="badge bg-inverse-danger">{{ $driver->status }}</span> </div>
                             </div>
                         </div>
-                        <div class="leave-info-box border-secondary">
-                            <div class="media align-items-center">
-                                <a href="profile.html" class="avatar"><img alt="" src="assets/img/user.jpg"></a>
-                                <div class="media-body">
-                                    <div class="text-sm my-0">Martin Lewis</div>
-                                </div>
-                            </div>
-                            <div class="row align-items-center mt-3">
-                                <div class="col-6">
-                                    <h6 class="mb-0">4 Sep 2019</h6> <span class="text-sm text-muted">Leave Date</span> </div>
-                                <div class="col-6 text-right"> <span class="badge bg-inverse-success">Approved</span> </div>
-                            </div>
-                        </div>
+                        @endforeach
                         <div class="load-more text-center"> <a class="text-white text-decoration-none bg-dark" href="javascript:void(0);">Load More</a> </div>
                     </div>
                 </div>
