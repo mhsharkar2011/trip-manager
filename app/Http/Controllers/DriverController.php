@@ -11,6 +11,7 @@ use Database\Seeders\UserSeeder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Validator;
 
@@ -136,6 +137,11 @@ class DriverController extends Controller
         return $this->respond($driver);
     }
 
+    public function edit(Driver $driver)
+    {
+        $data['driver'] = $driver;
+        return view('drivers.edit',$data)->with('status','Driver profile updated successfully');
+    }
     /**
      * Update the specified resource in storage.
      *
@@ -146,19 +152,23 @@ class DriverController extends Controller
      */
     public function update(Request $request, Driver $driver)
     {
-        $validation = Validator::make(
-            $request->all(), 
-            Driver::validation_rules_for_update(),
-            Driver::validation_messages_for_update(),
-        );
+        $input = $request->except('avatar');
+        // dd($input);
+        if ($driver->avatar && $request->hasFile('avatar')) {
+            Storage::delete('public/drivers/avatars/' . $driver->avatar);
+            $driver->avatar = null;
+        }
 
-        if ($validation->fails()) {
-            return $this->respondValidationError($validation->errors());
-        }   
+        if ($request->hasFile('avatar')) {
+            $avatar = $request->file('avatar');
+            $filename = $driver->id . '-' . $driver->name . '-' . date('Ymd') . '.' . $avatar->getClientOriginalExtension();
+            $avatar->storeAs('public/drivers/avatars', $filename);
+            $driver->avatar = $filename;
+            $driver->save();
+        }
+        $driver->update($input);
 
-        $driver->update($request->all());
-
-        return $this->respond($driver);
+        return redirect()->route('admin.drivers.index')->with('success', 'Driver Updated Successfully');
     }
 
     /**

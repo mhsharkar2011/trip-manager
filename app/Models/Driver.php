@@ -37,6 +37,15 @@ class Driver extends baseModel
         'id'
     ];    
 
+    protected $appends = [
+        // 'profile_photo_url',
+        'full_name'
+    ];
+
+    public function getFullNameAttribute(){
+        return $this->first_name.' '.$this->last_name;
+    }
+
     protected static function validation_rules() {
         return [
         ];

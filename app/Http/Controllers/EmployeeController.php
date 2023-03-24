@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Employee;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
@@ -14,9 +15,17 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        //
+        $data['users'] = User::all();
+        $data['userList'] = User::all();
+        $data['permission_lists'] = User::all();
+
+        return view('employees.index',$data);
     }
 
+    public function allEmployeeCard()
+    {
+        
+    }
     /**
      * Show the form for creating a new resource.
      *

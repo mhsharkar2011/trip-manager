@@ -12,7 +12,7 @@
                 <div class="col-sm-10">
                     {{-- <h3 class="page-title text-white">Welcome to Durojan ! </h3> --}}
                     <ul class="breadcrumb bg-dark mt-2">
-                        <a style="float: right" class="btn btn-success text-right" href="{{ route('admin.drivers.create') }}">Add Driver</a>
+                        {{-- <a style="float: right" class="btn btn-success text-right" href="{{ route('admin.drivers.create') }}">Add Driver</a> --}}
                     </ul>
                 </div>
             </div>
@@ -38,7 +38,7 @@
                                     @foreach ($drivers as $driver )
                                     <tr>
                                         <td>{{ ++$id}}</td>
-                                        <td><x-client-avatar :user="$driver->avatar" width="48" height="48" class="rounded-circle" /></td>
+                                        <td><x-driver-avatar :user="$driver->avatar" width="48" height="48" class="rounded-circle" /></td>
                                         <td>{{ $driver->first_name}} {{ $driver->last_name}}</td>
                                         <td>{{ $driver->contact_number}}</td>
                                         <td class="text-end">

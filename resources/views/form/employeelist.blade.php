@@ -1,4 +1,4 @@
-@extends('layouts.master-admin')
+@extends('layouts.master')
 @section('content')
   
     <!-- Page Wrapper -->
@@ -18,8 +18,8 @@
                     <div class="col-auto float-right ml-auto">
                         <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_employee"><i class="fa fa-plus"></i> Add Employee</a>
                         <div class="view-icons">
-                            <a href="{{ route('admin.all-employee-card') }}" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
-                            {{-- <a href="{{ route('all/employee/list') }}" class="list-view btn btn-link"><i class="fa fa-bars"></i></a> --}}
+                            <a href="{{ route('all/employee/card') }}" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
+                            <a href="{{ route('all/employee/list') }}" class="list-view btn btn-link"><i class="fa fa-bars"></i></a>
                         </div>
                     </div>
                 </div>
@@ -27,7 +27,7 @@
 			<!-- /Page Header -->
 
             <!-- Search Filter -->
-            <form action="#" method="POST">
+            <form action="{{ route('all/employee/list/search') }}" method="POST">
                 @csrf
                 <div class="row filter-row">
                     <div class="col-sm-6 col-md-3">  
@@ -77,15 +77,15 @@
                                 <tr>
                                     <td>
                                         <h2 class="table-avatar">
-                                            <x-client-avatar :user="$items->avatar" width="48" height="48" class="rounded-circle" /> &nbsp;&nbsp;
-                                            <a class="text-decoration-none" href="{{ url('employee/profile/'.$items->user_id) }}"> {{ $items->full_name }}</a>
+                                            <a href="{{ url('employee/profile/'.$items->user_id) }}" class="avatar"><img alt="" src="{{ URL::to('/assets/images/'. $items->avatar) }}"></a>
+                                            <a href="{{ url('employee/profile/'.$items->user_id) }}">{{ $items->name }}<span>{{ $items->position }}</span></a>
                                         </h2>
                                     </td>
-                                    <td>{{ $items->id }}</td>
+                                    <td>{{ $items->user_id }}</td>
                                     <td>{{ $items->email }}</td>
-                                    <td>{{ $items->driver->contact_number ?? '0' }}</td>
-                                    <td>{{ \Carbon\Carbon::parse($items->created_at)->format('Y-m-d') }}</td>
-                                    <td>{{ $items->role }}</td>
+                                    <td>{{ $items->phone_number }}</td>
+                                    <td>{{ $items->join_date }}</td>
+                                    <td>{{ $items->role_name }}</td>
                                     <td class="text-right">
                                         <div class="dropdown dropdown-action">
                                             <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
@@ -116,7 +116,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="#" method="POST"> //
+                        <form action="{{ route('all/employee/save') }}" method="POST">
                             @csrf
                             <div class="row">
                                 <div class="col-sm-6">
