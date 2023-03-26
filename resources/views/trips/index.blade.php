@@ -22,10 +22,15 @@
                 <div class="card card-table border-secondary flex-fill">
                     <div class="card-header bg-dark">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <h3 class="card-title  text-success mb-0">Total Trips <span class="badge bg-inverse-danger ml-2">{{ $trips->count() }}</span> </h3> 
                             </div>
-                            <div class="col-md-6 text-end">
+                            <div class="col-md-4">
+                                <x-form-search /> 
+                                <x-form-filter /> 
+                            </div>
+
+                            <div class="col-md-4 text-end">
                                 <h3 class="card-title  text-warning mb-0">Pending Trips <span class="badge bg-inverse-danger ml-2">{{ $trips->where('status','Pending')->count() }}</span> </h3> 
                             </div>
                         </div>
@@ -69,8 +74,8 @@
                                             <td>{{ str_limit($trip->package->title,'200') }}</td>
                                             <td>{{ $trip->package->package_amount }}</td>
                                             <td>{{$trip->vehicle->name}}</td>
-                                            <td>{{ $trip->driver->first_name ?? '' }}{{ $trip->driver->last_name ?? '' }}</td>
-                                            <td>{{ $trip->customer->first_name ?? '' }}{{ $trip->customer->last_name ?? '' }}</td>
+                                            <td>{{ $trip->driver->first_name ?? '' }} {{ $trip->driver->last_name ?? '' }}</td>
+                                            <td>{{ $trip->customer->first_name ?? '' }} {{ $trip->customer->last_name ?? '' }}</td>
                                             <td>{{ $trip->advance_amount }}</td>
                                             <td>{{ $trip->bkash_charge }}</td>
                                             <td>{{ $totalBkashCharge = ($trip->advance_amount/1000) * $trip->bkash_charge }}</td>

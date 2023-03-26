@@ -24,7 +24,14 @@ class TripController extends Controller
     public function index(Request $request, $format = 'view')
     {
         $Trips = Trip::query();
-        $search = $request->input('q');
+        $search = $request->input('search');
+        if($search){
+            $Trips->with('package')->whereHas('package', function($q)use ($search){
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('package_amount', 'LIKE',"%{$search}%" )
+                  ->orWhere('status','LIKE',"%{$search}%");
+            });
+        }
         if ($with = request('with')) { //load relationships
             $Trips->with(explode(',', $with));
         }        
@@ -213,4 +220,6 @@ class TripController extends Controller
 
         return redirect()->route('admin.trips.index')->with('status','Item deleted successfully');
     }
+
+
 }
