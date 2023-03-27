@@ -65,6 +65,8 @@ Route::group(['middleware'=>'auth'], function() {
     });
 });
 
+Route::get('/roles', [RoleController::class, 'roles'])->name('roles.index');
+
 
 
 // ----------------------------- form employee ------------------------------//

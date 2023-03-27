@@ -61,13 +61,13 @@ public function storeLogin(Request $request)
         if($validator->fails()){
             return redirect()->back()->withErrors($validator)->withInput();
         }
-        $patient = User::create([
+        $user = User::create([
             'first_name' => $request->input('first_name'),
             'email' => $request->input('email'),
             'password' => Hash::make($request->input('password')),
             'role' => $request->input('role'),
         ]);
-        Auth::login($patient);
+        Auth::login($user);
         $credentails = $request->only('email', 'password');
 
         if(Auth::attempt($credentails)){
