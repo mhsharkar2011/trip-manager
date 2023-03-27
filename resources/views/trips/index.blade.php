@@ -38,7 +38,7 @@
                     </div>
                     <div class="card-body bg-dark">
                         <div class="table-responsive md-5">
-                            <table class="table table-striped table-dark table-sm align-middle  datatable text-white">
+                            <table class="table table-striped table-dark table-sm align-middle text-white" id="tripDataTable">
                                 <thead class=" text-wrap align-middle text-center font-bold">
                                     <tr>
                                         <th>SL No.</th>
@@ -62,7 +62,7 @@
                                         <th>Total Expenses</th>
                                         <th>Total Profit</th>
                                         <th >Status</th>
-                                        <th colspan="3" >Action</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -120,6 +120,7 @@
                             </table>
                         </div>
                         <div class="pagination justify-content-center">{{ $trips->links() }}</div>
+                        
                     </div>
                 </div>
             </div>    
@@ -165,6 +166,32 @@
         $('#employee_id').val($(this).find(':selected').data('employee_id'));
         $('#email').val($(this).find(':selected').data('email'));
     });
-    </script> 
+</script> 
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#tripDataTable').DataTable({
+            "paging": true,
+            "searching": false,
+            "ordering": true,
+            "drawCallback": function (settings) {
+                var pagination = $(this).closest('.dataTables_wrapper').find('.pagination');
+                pagination.toggle(this.api().page.info().pages > 1);
+                if (pagination.children().length !== 0) {
+                    pagination.twbsPagination('destroy');
+                }
+                pagination.twbsPagination({
+                    totalPages: this.api().page.info().pages,
+                    visiblePages: 5,
+                    onPageClick: function (event, page) {
+                        this.api().page(page - 1).draw(false);
+                    }.bind(this)
+                });
+            }
+        });
+    });
+</script>
+
+
     @endsection
 @endsection

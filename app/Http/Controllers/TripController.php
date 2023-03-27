@@ -44,11 +44,13 @@ class TripController extends Controller
             $Trips->filter(Trip::getDefaultSorting());
         }          
         
-        $Trips = $Trips->paginateWrap(
-            request('items_per_page', self::ITEMS_PER_PAGE), 
+        $Trips = $Trips->paginate(
+            $items_per_page = request('items_per_page', self::ITEMS_PER_PAGE), 
+            $columns = ['*'], 
+            $pageName = 'page',             
             request('page', 1)
         );
-        
+
         if( request()->is('api/*')){
             //an api call
             return $this->respond($Trips);
