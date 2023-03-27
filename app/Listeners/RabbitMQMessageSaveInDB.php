@@ -31,10 +31,17 @@ class RabbitMQMessageSaveInDB
         $data = $event->data ?? null;
 
         try {
-            RabbitmqEvent::createQuietly([ //supress eloquent created event which would publish to rabbitmq
-                'routing_key' => $routing_key,
-                'message' => $data,
-            ]);
+            logger('in rabbitmq save event in db');
+            RabbitmqEvent::withoutEvents(function() use ( //supress eloquent created event which would publish to rabbitmq
+                $routing_key,
+                $data
+            ) {
+                $r = RabbitmqEvent::create([ 
+                    'routing_key' => $routing_key,
+                    'message' => $data,
+                ]);
+                logger('saved data: ' . $r);
+            });
           } catch(\Exception $ex) {
             logger('In RabbitMQMessageSaveInDB, saving to DB failed, error: ' . $ex->getMessage()) ;
           }

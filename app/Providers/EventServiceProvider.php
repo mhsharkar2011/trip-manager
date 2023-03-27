@@ -75,7 +75,7 @@ class EventServiceProvider extends ServiceProvider
     
                     $routing_key = sprintf('%s.%s', config('app.name'), $eventName);
     
-                    RabbitMQService::publish($routing_key, $data);
+                    // RabbitMQService::publish($routing_key, $data);
                 }
 
             }

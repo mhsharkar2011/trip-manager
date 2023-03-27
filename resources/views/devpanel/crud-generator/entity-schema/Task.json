@@ -1,0 +1,62 @@
+{
+    "fields": [
+        {
+            "name": "title",
+            "type": "string"
+        },
+        {
+            "name": "description",
+            "type": "longtext"
+        },
+        {
+            "name": "project_id",
+            "type": "integer#unsigned"
+        },
+        {
+            "name": "parent_id",
+            "type": "integer"
+        },
+        {
+            "name": "sequence",
+            "type": "integer"
+        },
+        {
+            "name": "due_date",
+            "type": "datetime"
+        },
+        {
+            "name": "time_estimate",
+            "type": "double"
+        },
+        {
+            "name": "tenant_id",
+            "type": "integer#unsigned"
+        }
+    ],
+    "foreign_keys": [
+        {
+            "column": "tenant_id",
+            "references": "id",
+            "on": "tenants",
+            "onDelete": "cascade"
+        },
+        {
+            "column": "project_id",
+            "references": "id",
+            "on": "projects",
+            "onDelete": "cascade"
+        }
+    ],
+    "relationships": [
+        {
+            "name": "project",
+            "type": "belongsTo",
+            "class": "App\\Models\\Project"
+        },
+        {
+            "name": "tenant",
+            "type": "belongsTo",
+            "class": "App\\Models\\Tenant"
+        }
+    ]
+}

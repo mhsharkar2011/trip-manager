@@ -9,6 +9,7 @@ use App\Http\Controllers\RolePermissionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SocialLoginController;
 use App\Http\Controllers\UserProfileController;
+use App\Http\Controllers\HelpContentController;
 use App\Http\Controllers\VehiclesController;
 
 /*
@@ -25,7 +26,7 @@ use App\Http\Controllers\VehiclesController;
 Route::prefix('v1')->group(function () {
     Route::post('register',[AuthController::class, 'store']);
     Route::post('login',[AuthController::class, 'login']);
-    
+
     Route::get('forgot-password', [PasswordRecoveryController::class, 'send_recovery_email']);
     Route::post('forgot-password', [PasswordRecoveryController::class, 'update_password']);
     // Route::post('change/password/{user}', [PasswordRecoveryController::class,'changePassword']);
@@ -37,23 +38,37 @@ Route::prefix('v1')->group(function () {
 
 Route::prefix('v1')
 ->middleware([
-    'auth:sanctum'     
+    'auth:sanctum'
 ])
 ->group(function () { //auth required routes will go here
-    // Route::resource('users', UserController::class)->except(['edit', 'create']);
+
+    // Log out route
+    Route::post('logout',[AuthController::class, 'logout']);
+
+    Route::resource('users', UserController::class)->except(['edit', 'create']);
+    Route::get('roles', [UserController::class, 'get_roles']);
     Route::get('roles-old', [UserController::class, 'get_roles']);
-    
+
     Route::get('my-profile', [UserProfileController::class, 'get']);
     Route::put('my-profile', [UserProfileController::class, 'update']);
     Route::put('my-password-change', [UserProfileController::class, 'change_password']);
-    
+
     Route::resource('projects', 'App\Http\Controllers\ProjectController', ['except' => ['create', 'edit']]);
     Route::resource('projects.jobs', 'App\Http\Controllers\ProjectJobController', ['except' => ['create', 'edit']]);
     Route::resource('jobs.milestone', 'App\Http\Controllers\JobMilestoneController', ['except' => ['create', 'edit']]);
 
+
+    // Comment feature apis lists
+    Route::resource('comment', 'App\Devpanel\Controllers\CommentController', ['except' => ['store', 'create', 'edit']]);
+    Route::get('comment-type', [\App\Devpanel\Controllers\CommentController::class, 'commentType']);
+
+    Route::post('{entity}/{id}/comment', [\App\Devpanel\Controllers\CommentController::class, 'store'])
+        ->where('entity', '[a-z-A-Z]+')->whereNumber('id');
+    Route::get('{entity}/{id}/comment', [\App\Devpanel\Controllers\CommentController::class, 'getEntityComment'])
+        ->where('entity', '[a-z-A-Z]+')->whereNumber('id');
+
     // Role permission api lists
 
-        
     Route::get('roles', [RolePermissionController::class, 'roles']);
     Route::post('roles', [RolePermissionController::class, 'role_store']);
     Route::put('roles/{role}', [RolePermissionController::class, 'role_update']);
@@ -74,6 +89,11 @@ Route::prefix('v1')
     Route::post('users/{user}/permission', [RolePermissionController::class, 'user_permission_store']);
     Route::get('users/{user}/permission', [RolePermissionController::class, 'user_permission_show']);
     Route::delete('users/{user}/permission', [RolePermissionController::class, 'user_permission_destroy']);
+    Route::resource('help-content', 'App\Http\Controllers\HelpContentController', ['except' => ['create', 'edit', 'show', 'update']]);
+    Route::get('help-content/{help_content:key}', [HelpContentController::class, 'show']);
+    Route::put('help-content/{help_content:key}', [HelpContentController::class, 'update']);
+    Route::resource('tasks', 'App\Http\Controllers\TaskController', ['except' => ['create', 'edit']]);
+
 
     // Vehicles APIs
     // Route::resource('vehicle-types', 'App\Http\Controllers\VehicleTypesController', ['names'=>'api/vehicle-types'], ['except' => ['create', 'edit']]);
