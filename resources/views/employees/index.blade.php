@@ -250,8 +250,6 @@
                 $box.prop("checked", false);
             }
         });
-    </script>
-    <script>
         // select auto id and email
         $('#name').on('change',function()
         {
