@@ -59,18 +59,18 @@
                                                 @method('PUT')
                                                     <div>
                                                         <select style="display:none" name="status" id="status" class="badge bg-inverse-primary ml-2">
-                                                            @if ($driver->status == 'ACTIVE')
+                                                            @if ($driver->status == 1)
                                                             <div class=" badge bg-inverse-success ml-2">
-                                                            <option value="INACTIVE" {{ $driver->status === 'INACTIVE' ? 'selected' : '' }}></option>
+                                                            <option value="0" {{ $driver->status == 0 ? 'selected' : '' }}></option>
                                                             </div>
                                                             @else
-                                                            <option value="ACTIVE" {{ $driver->status === 'ACTIVE' ? 'selected' : '' }}></option>
+                                                            <option value="1" {{ $driver->status == 1 ? 'selected' : '' }}></option>
                                                             @endif
                                                         </select>
                                                     </div>
                                         
                                                 <button type="submit" class="btn">
-                                                    @if ($driver->status != 'ACTIVE')
+                                                    @if ($driver->status != 1)
                                                     <span class="badge bg-inverse-warning ml-2">INACTIVE</span>
                                                     @else
                                                     <span class="badge bg-inverse-success ml-2">ACTIVE</span>

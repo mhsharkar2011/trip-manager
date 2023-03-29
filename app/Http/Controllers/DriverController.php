@@ -185,14 +185,13 @@ class DriverController extends Controller
 
     public function updateStatus(Request $request, Driver $driver)
     {
-        $status = $request->status;
-        if($status == 'ACTIVE' || $status == 'INACTIVE'){
             $status = $request->status;
+            if($status == 1 || $status == 0){
             $driver->status = $status;
             $driver->save();
-            return redirect()->back()->with('success', 'Driver status has been updated.');
-        }else{
-            return redirect()->with('error','Invalid Status');
+                return redirect()->back()->with('success', 'Driver status has been updated.');
+            }else{
+                return redirect()->with('error','Invalid Status');
         }
     }
 }

@@ -178,6 +178,7 @@ class User extends Authenticatable
                     $driver->user_id = $user->id;
                     $driver->first_name = $user->first_name;
                     $driver->last_name = $user->last_name;
+                    $driver->status = 1;
                     $driver->save();  
                 } 
 

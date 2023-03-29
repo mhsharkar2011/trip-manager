@@ -21,13 +21,14 @@
                     <div class="card-header">{{ $driver->full_name ?? 'No Name Found' }}</div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('admin.drivers.updateStatus', $driver) }}">
+                        <form method="POST" action="{{ route('admin.drivers.update-status', $driver->id) }}">
                             @csrf
+                            @method('PUT')
                             <div class="form-group row">
                                 <label for="status" class="col-md-4 col-form-label text-md-right">{{ __('Driver Status') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="status" type="checkbox" class="form-control @error(session('status')) is-invalid @enderror" name="status" value="{{ old('status') ?? $driver->status }}" {{ $driver->status ? 'ACTIVE' : '' }}>
+                                    <input id="status" type="text" class="form-control @error(session('status')) is-invalid @enderror" name="status" value="{{ old('status') ?? $driver->status }}" {{ $driver->status ? 'ACTIVE' : 'INACTIVE' }}>
 
                                     @error(session('status'))
                                         <span class="invalid-feedback" role="alert">
