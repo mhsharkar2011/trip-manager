@@ -8,6 +8,7 @@ use App\Models\Driver;
 use App\Models\User;
 use Brian2694\Toastr\Facades\Toastr;
 use Database\Seeders\UserSeeder;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -134,7 +135,7 @@ class DriverController extends Controller
      */
     public function show(Driver $driver)
     {
-        return $this->respond($driver);
+        return view('drivers.show',compact('driver'));
     }
 
     public function edit(Driver $driver)
@@ -153,12 +154,10 @@ class DriverController extends Controller
     public function update(Request $request, Driver $driver)
     {
         $input = $request->except('avatar');
-        // dd($input);
         if ($driver->avatar && $request->hasFile('avatar')) {
             Storage::delete('public/drivers/avatars/' . $driver->avatar);
             $driver->avatar = null;
         }
-
         if ($request->hasFile('avatar')) {
             $avatar = $request->file('avatar');
             $filename = $driver->id . '-' . $driver->name . '-' . date('Ymd') . '.' . $avatar->getClientOriginalExtension();
@@ -167,7 +166,6 @@ class DriverController extends Controller
             $driver->save();
         }
         $driver->update($input);
-
         return redirect()->route('admin.drivers.index')->with('success', 'Driver Updated Successfully');
     }
 
@@ -182,6 +180,19 @@ class DriverController extends Controller
     {
         $driver->delete();
 
-        return $this->respondDeleted();
+        return redirect()->route('admin.drivers.index')->with('status','Driver deleted successfully');
+    }
+
+    public function updateStatus(Request $request, Driver $driver)
+    {
+        $status = $request->status;
+        if($status == 'ACTIVE' || $status == 'INACTIVE'){
+            $status = $request->status;
+            $driver->status = $status;
+            $driver->save();
+            return redirect()->back()->with('success', 'Driver status has been updated.');
+        }else{
+            return redirect()->with('error','Invalid Status');
+        }
     }
 }

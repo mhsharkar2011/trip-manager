@@ -4,12 +4,14 @@ namespace App\Models;
 
 use App\Devpanel\Models\baseModel;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use PhpParser\Node\Expr\FuncCall;
 
 class Driver extends baseModel
 {
 
+    use SoftDeletes;
     
     
     /**
@@ -18,6 +20,8 @@ class Driver extends baseModel
      * @var string
      */
     protected $table = 'drivers';
+
+    protected $dates = ['deleted_at'];
 
     /**
     * The database primary key value.

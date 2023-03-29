@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Devpanel\Models\FilterTrait;
 use App\Traits\Comment;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Validation\Rule;
@@ -26,6 +27,7 @@ class User extends Authenticatable
     // use InteractsWithMedia;
     use FilterTrait;
     use HasRoles;
+    use SoftDeletes;
 
 
     /**
@@ -89,7 +91,7 @@ class User extends Authenticatable
     {
         return [
             'first_name' => 'required'
-            // ,'last_name' => 'required'
+            ,'last_name' => 'required'
             ,'email' => 'required|email|unique:users,email'
             ,'password' => 'required'
             ,'role' => 'required'
@@ -125,11 +127,11 @@ class User extends Authenticatable
         return $query->where('role', self::ROLE_SUPER_ADMIN);
     }
 
-    public function scopeNonSuperAdmin($query) {
-        return $query
-        ->where('role', '!=', self::ROLE_SUPER_ADMIN)
-        ->orWhereNull('role');
-    }
+    // public function scopeNonSuperAdmin($query) {
+    //     return $query
+    //     ->where('role', '!=', self::ROLE_SUPER_ADMIN)
+    //     ->orWhereNull('role');
+    // }
 
     public static function getSuperAdmin($attr = null) {
         $u = self::superAdmin()->first();
@@ -166,17 +168,12 @@ class User extends Authenticatable
         return $this->hasOne(Customer::class,'user_id');
     }
 
-    public function roles()
-    {
-        return $this->belongsToMany(Role::class,'role_users');
-    }
-
     protected static function boot()
     {
         parent::boot();
     
         static::created(function ($user) {
-                if($user->role == 'Driver'){
+                if($user->role == 'driver'){
                     $driver = new Driver();
                     $driver->user_id = $user->id;
                     $driver->first_name = $user->first_name;
@@ -184,7 +181,7 @@ class User extends Authenticatable
                     $driver->save();  
                 } 
 
-                if($user->role == 'Customer') {
+                if($user->role == 'client') {
                     $customer = new Customer();
                     $customer->user_id = $user->id;
                     $customer->first_name = $user->first_name;

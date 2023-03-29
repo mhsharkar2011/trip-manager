@@ -30,7 +30,7 @@
                                         <th>ID</th>
                                         <th>Full Name</th>
                                         <th>Email</th>
-                                        <th>User Type</th>
+                                        <th>Roles</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -46,10 +46,12 @@
                                                 <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                                 <div class="dropdown-menu dropdown-menu-right">
                                                     <a class="dropdown-item" href="javascript:void(0)" onclick="editUser({{ $user->id }})"><i class="fa fa-pencil m-r-5"></i>  Edit</a>
-                                                    <form action="{{ route('admin.users.destroy', $user->id) }}" method="post">
+                                                    <form id="delete-form-{{ $user->id }}" action="{{ route('admin.users.destroy', $user->id) }}" method="POST">
                                                         @csrf
                                                         @method('DELETE')
-                                                    <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                                        <a class="dropdown-item" href="#" onclick="deleteUser({{ $user->id }})">
+                                                            <i class="fa fa-trash-o m-r-5"></i> Delete
+                                                        </a>
                                                     </form>
                                                 </div>
                                             </div>
@@ -71,8 +73,15 @@
 
 
 <script>
-    function editUser(id) {
+function editUser(id) {
     window.location.href = '/users/' + id + '/edit';
 }
+
+function deleteUser(userId) {
+    if (confirm('Are you sure you want to delete this user?')) {
+        document.getElementById('delete-form-' + userId).submit();
+    }
+}
+
 </script>
 @endsection

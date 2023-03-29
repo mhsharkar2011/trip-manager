@@ -82,7 +82,7 @@ class UserController extends Controller
         if(request()->is('api*')) {
             return $this->respondCreated($user);
         }else {
-            return redirect()->route('admin.users.index');
+            return back()->with('status','User Added successfully');
         }
     }
 
@@ -145,10 +145,12 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+        // $trip = Trip::find($Trip);
         $user->delete();
 
-        return $this->respondDeleted();
+        return redirect()->route('admin.users.index')->with('status','User deleted successfully');
     }
+
 
     public function get_roles()
     {

@@ -62,6 +62,7 @@ Route::group(['middleware'=>'auth'], function() {
         Route::resource('vehicles',VehiclesController::class);
         Route::resource('trips',TripController::class);
         Route::resource('trip-packages', PackageController::class);
+        Route::put('drivers/{driver}/update-status',[DriverController::class,'updateStatus'])->name('drivers.update-status');
     });
 });
 

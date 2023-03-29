@@ -7,7 +7,12 @@
     <div class="row justify-content-center">
         <div class="col-md-6 mt-5">
             <div class="card">
-                <div class="card-header bg-success text-white">New User</div>
+                <div class="card-header bg-success text-white">
+                    <div class="row">
+                        <a class="text-start col-lg text-decoration-none text-white" href="">User Create Form</a>
+                        <a class="text-end col-lg text-decoration-none text-white" href="{{ route('admin.users.index') }}">Use List</a>
+                    </div>
+                </div>
                     @if (session('status'))
                     <div class="alert alert-success">
                         {{ session('status') }}

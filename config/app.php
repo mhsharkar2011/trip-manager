@@ -184,6 +184,7 @@ return [
         App\Providers\JetstreamServiceProvider::class,
         Brian2694\Toastr\ToastrServiceProvider::class,
         // App\Services\Clockify\ClockifyServiceProvider::class,
+        // Spatie\Permission\PermissionServiceProvider::class,
 
     ],
 

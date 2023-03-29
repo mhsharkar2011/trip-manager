@@ -31,6 +31,7 @@
                             <x-form-input col="6" type="text" label="Driving License" for="driving_license" id="driving_license" name="driving_license" class="mt-2" placeholder="" value="{{ $driver->driving_license }}"  />
                             <x-form-input col="6" type="text" label="Contact Number" for="contact_number" id="contact_number" name="contact_number" class="mt-2" placeholder="" value="{{ $driver->contact_number }}"  />
                             <x-form-input col="6" type="text" label="Address" for="address" id="address" name="address" class="mt-2" placeholder="" value="{{ $driver->address }}"  />
+                            <x-form-input col="6" type="text" label="Status" for="status" id="status" name="status" class="mt-2" placeholder="" value="{{ $driver->status }}"  />
                             <x-form-button col="12" type="submit" class="btn btn-success text-uppercase">Submit</x-form-button>
                         </div>
                     </form>

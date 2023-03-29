@@ -26,6 +26,7 @@ class CreateUsersTable extends Migration
             $table->text('profile_photo_path')->nullable();
             $table->string('role')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
 
         \Artisan::call('project:create-super-admin');
