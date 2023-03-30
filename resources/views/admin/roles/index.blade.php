@@ -8,15 +8,15 @@
     <div class="content container-fluid">
         <!-- Page Header -->
         <div class="page-header mt-4">
-            <h3 class="page-title text-white mb-4">Trip Packages ! </h3>
+            <h3 class="page-title text-white mb-4">Roles ! </h3>
             <div class="row">
                 <div class="col-md-6">
                     {{-- Package Insert --}}
                     <div class="card border-secondary bg-dark text-white">
-                        <div class="card-header bg-dark text-white">Add Trip Package</div>
+                        <div class="card-header bg-dark text-white">Add Role</div>
                             <div class="card-body">
-                                <x-messages.alert :status="session('status')" :route="route('admin.trips.index')" />
-                                <form method="post" action="{{ route('admin.trip-packages.store') }}">
+                                <x-messages.alert :status="session('status')" :route="route('admin.roles.index')" />
+                                <form method="post" action="{{ route('admin.roles.store') }}">
                                     @csrf
                                         <div class="row">
                                             <x-form-input col="" type="text" label="Package Name:" for="title" id="title" name="title" class="form-control bg-dark text-white" placeholder="Enter Package Type" value="" />
@@ -32,7 +32,6 @@
                     <div class="col-md-6 d-flex">
                         <div class="card card-table border-secondary flex-fill justify-content-center">
                             <div class="card-header bg-dark">
-                                <h3 class="card-title  text-white mb-0">Vehicles <span class="badge bg-inverse-danger ml-2">{{ $packages->count() }}</span> </h3> </div>
                             <div class="card-body bg-dark">
                                 <div class="table table-responsive md-5">
                                     <table class="table table-bordered table-dark text-white align-middle text-center">

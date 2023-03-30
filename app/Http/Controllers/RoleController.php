@@ -8,7 +8,7 @@ use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class RolesController extends Controller
+class RoleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -36,7 +36,9 @@ class RolesController extends Controller
             request('page', 1)
         );
 
-        return $this->respond($roles);
+        // return $this->respond($roles);
+
+        return view('admin.roles.index',compact('roles'));
     }
 
     /**
@@ -60,7 +62,8 @@ class RolesController extends Controller
 
         $role = Role::create($request->all());
 
-        return $this->respondCreated($role);
+        // return $this->respondCreated($role);
+        return redirect()->back()->with('status','Role added successfully');
     }
 
     /**

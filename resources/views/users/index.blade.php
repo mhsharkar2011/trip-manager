@@ -12,7 +12,7 @@
                 <div class="col-sm-10">
                     {{-- <h3 class="page-title text-white">Welcome to Durojan ! </h3> --}}
                     <ul class="breadcrumb bg-dark mt-2">
-                        <a style="float: right" class="btn btn-success text-right" href="{{ route('admin.users.create') }}">Add User</a>
+                        <a style="float: right" class="btn btn-dark bg-inverse-success text-right" href="{{ route('admin.users.create') }}">Add User</a>
                     </ul>
                 </div>
             </div>

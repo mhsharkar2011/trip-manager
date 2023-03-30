@@ -10,9 +10,9 @@
         <div class="page-header">
             <div class="row">
                 <div class="col-sm-10">
-                    <h3 class="page-title text-white">Welcome to Durojan ! </h3>
+                    {{-- <h3 class="page-title text-white">Welcome to Durojan ! </h3> --}}
                     <ul class="breadcrumb bg-dark mt-2">
-                        <a style="float: right" class="btn btn-success text-right" href="{{ route('admin.vehicles.create') }}">Add Vehicle</a>
+                        <a style="float: right" class="btn btn-dark text-white text-right bg-inverse-success" href="{{ route('admin.vehicles.create') }}">Add Vehicle</a>
                     </ul>
                 </div>
             </div>
@@ -66,7 +66,7 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                            <div class="pagination justify-content-center">{{ $vehicles->links() }}</div>
+                            <div  class="pagination justify-content-center">{{ $vehicles->links() }}</div>
                         </div>
                     </div>
                 </div>
