@@ -31,24 +31,11 @@
             <form action="{{ route('all/employee/search') }}" method="POST">
                 @csrf
                 <div class="row filter-row">
-                    <div class="col-sm-6 col-md-3">  
-                        <div class="form-group form-focus">
-                            <input type="text" class="form-control floating" name="id">
-                            <label class="focus-label">Employee ID</label>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-3">  
-                        <div class="form-group form-focus">
-                            <input type="text" class="form-control floating" name="name">
-                            <label class="focus-label">Employee Name</label>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-3"> 
-                        <div class="form-group form-focus">
-                            <input type="text" class="form-control floating" name="email">
-                            <label class="focus-label">Email</label>
-                        </div>
-                    </div>
+                   <div class="row col-sm-6 col-md-9" style="margin-top: -32px">
+                    <x-form-input  col="4" label="" id="id" for="id" name="id" type="text" class="floating form-focus -mt-4" style="height:50px" placeholder="Employee ID" value=""  />
+                    <x-form-input  col="4" label="" id="name" for="name" name="name" type="text" class="floating form-focus" style="height:50px" placeholder="Employee Name" value=""  />
+                    <x-form-input  col="4" label="" id="email" for="email" name="email" type="text" class="floating form-focus" style="height:50px" placeholder="Email" value=""  />
+                   </div>
                     <div class="col-sm-6 col-md-3">  
                         <button type="sumit" class="btn btn-success btn-block" style="width:100%"> Search </button>  
                     </div>
@@ -60,9 +47,9 @@
             <div class="row staff-grid-row mt-4">
                 @foreach ($users as $lists )
                 <div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3">
-                    <div class="profile-widget">
+                    <div class="profile-widget bg-dark shadow-lg p-3 mb-4 rounded-4 border-1 border-secondary">
                         <div class="profile-img">
-                            <x-employee-avatar :userAvatar="$lists->avatar" />
+                            <a href="{{ url('employee/profile/'.$lists->id) }}" class="avatar"> <x-employee-avatar :userAvatar="$lists->avatar" width="80" height="80" /> </a>
                         </div>
                         <div class="dropdown profile-action">
                             <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
@@ -71,7 +58,7 @@
                                 <a class="dropdown-item" href="{{url('all/employee/delete/'.$lists->id)}}"onclick="return confirm('Are you sure to want to delete it?')"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                             </div>
                         </div>
-                        <h4 class="user-name m-t-10 mb-0 text-ellipsis"><a class="text-decoration-none" href="profile.html">{{ $lists->first_name }} {{ $lists->last_name }}</a></h4>
+                        <h4 class="user-name m-t-10 mb-0 text-ellipsis"><a class="text-decoration-none text-white" href="profile.html">{{ $lists->first_name }} {{ $lists->last_name }}</a></h4>
                         {{-- <div class="small text-muted">{{ $lists->position }}</div> --}}
                     </div>
                 </div>

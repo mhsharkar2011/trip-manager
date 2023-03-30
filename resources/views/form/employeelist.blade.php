@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.master-admin')
 @section('content')
   
     <!-- Page Wrapper -->
@@ -30,62 +30,49 @@
             <form action="{{ route('all/employee/list/search') }}" method="POST">
                 @csrf
                 <div class="row filter-row">
-                    <div class="col-sm-6 col-md-3">  
-                        <div class="form-group form-focus">
-                            <input type="text" class="form-control floating" name="employee_id">
-                            <label class="focus-label">Employee ID</label>
-                        </div>
+                    <div class="row col-sm-6 col-md-9" style="margin-top: -32px">
+                     <x-form-input  col="4" label="" id="id" for="id" name="id" type="text" class="floating form-focus -mt-4" style="height:50px" placeholder="Employee ID" value=""  />
+                     <x-form-input  col="4" label="" id="name" for="name" name="name" type="text" class="floating form-focus" style="height:50px" placeholder="Employee Name" value=""  />
+                     <x-form-input  col="4" label="" id="email" for="email" name="email" type="text" class="floating form-focus" style="height:50px" placeholder="Email" value=""  />
                     </div>
-                    <div class="col-sm-6 col-md-3">  
-                        <div class="form-group form-focus">
-                            <input type="text" class="form-control floating">
-                            <label class="focus-label">Employee Name</label>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-3"> 
-                        <div class="form-group form-focus">
-                            <input type="text" class="form-control floating">
-                            <label class="focus-label">Position</label>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-3">  
-                        <button type="sumit" class="btn btn-success btn-block"> Search </button>  
-                    </div>
-                </div>
+                     <div class="col-sm-6 col-md-3">  
+                         <button type="sumit" class="btn btn-success btn-block" style="width:100%"> Search </button>  
+                     </div>
+                 </div>
             </form>
             <!-- Search Filter -->
             {{-- message --}}
             {!! Toastr::message() !!}
 
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-12 mt-4">
                     <div class="table-responsive">
-                        <table class="table table-striped custom-table datatable">
+                        <table class="table table-dark text-white custom-table datatable">
                             <thead>
-                                <tr>
+                                <tr class="text-white">
                                     <th>Name</th>
                                     <th>Employee ID</th>
                                     <th>Email</th>
-                                    <th>Mobile</th>
+                                    <th>Gender</th>
                                     <th class="text-nowrap">Join Date</th>
-                                    <th>Role</th>
+                                    {{-- <th>Role</th> --}}
                                     <th class="text-right no-sort">Action</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody class="text-white">
                                 @foreach ($users as $items )
                                 <tr>
                                     <td>
                                         <h2 class="table-avatar">
-                                            <a href="{{ url('employee/profile/'.$items->id) }}" class="avatar"> <x-employee-avatar :userAvatar="$items->avatar" /> </a>
-                                            <a href="{{ url('employee/profile/'.$items->id) }}">{{ $items->name }}<span>{{ $items->position }}</span></a>
+                                            <a href="{{ url('employee/profile/'.$items->id) }}" class="avatar"> <x-employee-avatar :userAvatar="$items->avatar" width="38" height="38" /> </a>
+                                            <a class="text-white text-decoration-none" href="{{ url('employee/profile/'.$items->id) }}">{{ $items->first_name }}<span></span></a>
                                         </h2>
                                     </td>
                                     <td>{{ $items->id }}</td>
                                     <td>{{ $items->email }}</td>
-                                    <td>{{ $items->phone_number }}</td>
-                                    <td>{{ $items->join_date }}</td>
-                                    <td>{{ $items->role_name }}</td>
+                                    <td>{{ $items->gender }}</td>
+                                    <td>{{ $items->created_at }}</td>
+                                    {{-- <td>{{ $items->role_name }}</td> --}}
                                     <td class="text-right">
                                         <div class="dropdown dropdown-action">
                                             <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
@@ -125,7 +112,7 @@
                                         <select class="select" id="name" name="name">
                                             <option value="">-- Select --</option>
                                             @foreach ($userList as $key=>$user )
-                                                <option value="{{ $user->name }}" data-employee_id={{ $user->id }} data-email={{ $user->email }}>{{ $user->name }}</option>
+                                                <option value="{{ $user->first_name }}" data-employee_id={{ $user->id }} data-email={{ $user->email }}>{{ $user->first_name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -189,7 +176,7 @@
                                             $key = 0;
                                             $key1 = 0;
                                         ?>
-                                        @foreach ($permission_lists as $lists )
+                                        {{-- @foreach ($permission_lists as $lists )
                                         <tr>
                                             <td>{{ $lists->permission_name }}</td>
                                             <input type="hidden" name="permission[]" value="{{ $lists->permission_name }}">
@@ -219,7 +206,7 @@
                                                 <input type="checkbox" class="export{{ ++$key1 }}" id="export" name="export[]" value="N" {{ $lists->export =="N" ? 'checked' : ''}}>
                                             </td>
                                         </tr>
-                                        @endforeach
+                                        @endforeach --}}
                                     </tbody>
                                 </table>
                             </div>
