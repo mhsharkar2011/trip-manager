@@ -156,7 +156,7 @@ Dashboard- Admin Panel
                             </div>
                         </div>
                         @endforeach
-                        <div class="load-more text-center"> <a class="text-white text-decoration-none bg-dark" href="javascript:void(0);">Load More</a> </div>
+                        <div class="load-more text-center"> <a class="text-white text-decoration-none bg-dark" href="{{ route('admin.drivers.index') }}">Load More</a> </div>
                     </div>
                 </div>
             </div>

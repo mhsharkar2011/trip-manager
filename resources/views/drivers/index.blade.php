@@ -48,7 +48,7 @@
                                     @foreach ($drivers as $driver )
                                     <tr>
                                         <td>{{ ++$id}}</td>
-                                        <td><x-driver-avatar :user="$driver->avatar" width="48" height="48" class="rounded-circle" /></td>
+                                        <td> <x-driver-avatar :userAvatar="$driver->avatar" width="68" height="68" /> </td>
                                         <td>{{ $driver->first_name}} {{ $driver->last_name}}</td>
                                         <td>{{ $driver->driving_license}}</td>
                                         <td>{{ $driver->contact_number}}</td>

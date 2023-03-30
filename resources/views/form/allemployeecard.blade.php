@@ -1,5 +1,5 @@
 
-@extends('layouts.master')
+@extends('layouts.master-admin')
 @section('content')
    
     <!-- Page Wrapper -->
@@ -10,17 +10,17 @@
             <div class="page-header">
                 <div class="row align-lists-center">
                     <div class="col">
-                        <h3 class="page-title">Employee</h3>
+                        <h3 class="page-title text-white">Employee</h3>
                         <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Employee</li>
+                            <li class="breadcrumb-item"><a class="text-white text-decoration-none" href="index.html">Dashboard</a></li>
+                            <li class="breadcrumb-item active text-secondary">Employee</li>
                         </ul>
                     </div>
                     <div class="col-auto float-right ml-auto">
                         <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_employee"><i class="fa fa-plus"></i> Add Employee</a>
                         <div class="view-icons">
-                            <a href="{{ route('all/employee/card') }}" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
-                            <a href="{{ route('all/employee/list') }}" class="list-view btn btn-link"><i class="fa fa-bars"></i></a>
+                            <a href="{{ route('employee.card') }}" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
+                            <a href="{{ route('employee.list') }}" class="list-view btn btn-link"><i class="fa fa-bars"></i></a>
                         </div>
                     </div>
                 </div>
@@ -33,7 +33,7 @@
                 <div class="row filter-row">
                     <div class="col-sm-6 col-md-3">  
                         <div class="form-group form-focus">
-                            <input type="text" class="form-control floating" name="employee_id">
+                            <input type="text" class="form-control floating" name="id">
                             <label class="focus-label">Employee ID</label>
                         </div>
                     </div>
@@ -45,34 +45,34 @@
                     </div>
                     <div class="col-sm-6 col-md-3"> 
                         <div class="form-group form-focus">
-                            <input type="text" class="form-control floating" name="position">
-                            <label class="focus-label">Position</label>
+                            <input type="text" class="form-control floating" name="email">
+                            <label class="focus-label">Email</label>
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-3">  
-                        <button type="sumit" class="btn btn-success btn-block"> Search </button>  
+                        <button type="sumit" class="btn btn-success btn-block" style="width:100%"> Search </button>  
                     </div>
                 </div>
             </form>
             <!-- Search Filter -->
             {{-- message --}}
             {!! Toastr::message() !!}
-            <div class="row staff-grid-row">
+            <div class="row staff-grid-row mt-4">
                 @foreach ($users as $lists )
                 <div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3">
                     <div class="profile-widget">
                         <div class="profile-img">
-                            <a href="{{ url('employee/profile/'.$lists->user_id) }}" class="avatar"><img src="{{ URL::to('/assets/images/'. $lists->avatar) }}" alt="{{ $lists->avatar }}" alt="{{ $lists->avatar }}"></a>
+                            <x-employee-avatar :userAvatar="$lists->avatar" />
                         </div>
                         <div class="dropdown profile-action">
                             <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
                             <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" href="{{ url('all/employee/view/edit/'.$lists->user_id) }}"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                <a class="dropdown-item" href="{{url('all/employee/delete/'.$lists->user_id)}}"onclick="return confirm('Are you sure to want to delete it?')"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                <a class="dropdown-item" href="{{ url('all/employee/view/edit/'.$lists->id) }}"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                <a class="dropdown-item" href="{{url('all/employee/delete/'.$lists->id)}}"onclick="return confirm('Are you sure to want to delete it?')"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                             </div>
                         </div>
-                        <h4 class="user-name m-t-10 mb-0 text-ellipsis"><a href="profile.html">{{ $lists->name }}</a></h4>
-                        <div class="small text-muted">{{ $lists->position }}</div>
+                        <h4 class="user-name m-t-10 mb-0 text-ellipsis"><a class="text-decoration-none" href="profile.html">{{ $lists->first_name }} {{ $lists->last_name }}</a></h4>
+                        {{-- <div class="small text-muted">{{ $lists->position }}</div> --}}
                     </div>
                 </div>
                 @endforeach
@@ -100,7 +100,7 @@
                                         <select class="select select2s-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true" id="name" name="name">
                                             <option value="">-- Select --</option>
                                             @foreach ($userList as $key=>$user )
-                                                <option value="{{ $user->name }}" data-employee_id={{ $user->user_id }} data-email={{ $user->email }}>{{ $user->name }}</option>
+                                                <option value="{{ $user->first_name }}" data-employee_id={{ $user->id }} data-email={{ $user->email }}>{{ $user->first_name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -141,7 +141,7 @@
                                         <select class="select select2s-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true" id="company" name="company">
                                             <option value="">-- Select --</option>
                                             @foreach ($userList as $key=>$user )
-                                                <option value="{{ $user->name }}">{{ $user->name }}</option>
+                                                <option value="{{ $user->first_name }}">{{ $user->first_name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -165,7 +165,7 @@
                                             $key = 0;
                                             $key1 = 0;
                                         ?>
-                                        @foreach ($permission_lists as $lists )
+                                        {{-- @foreach ($permission_lists as $lists )
                                         <tr>
                                             <td>{{ $lists->permission_name }}</td>
                                             <input type="hidden" name="permission[]" value="{{ $lists->permission_name }}">
@@ -195,7 +195,7 @@
                                                 <input type="checkbox" class="export{{ ++$key1 }}" id="export" name="export[]" value="N" {{ $lists->export =="N" ? 'checked' : ''}}>
                                             </td>
                                         </tr>
-                                        @endforeach
+                                        @endforeach --}}
                                     </tbody>
                                 </table>
                             </div>

@@ -58,23 +58,22 @@ Route::group(['middleware'=>'auth'], function() {
         Route::get('logout',[AuthController::class,'logout'])->name('logout');
         Route::resource('drivers',DriverController::class);
         Route::resource('customers',CustomerController::class);
-        Route::resource('employees',EmployeeController::class);
+        // Route::resource('employees',EmployeeController::class);
         Route::get('all/employees/card',[EmployeeController::class,'allEmployeeCard'])->name('all-employee-card');
         Route::resource('vehicles',VehiclesController::class);
         Route::resource('trips',TripController::class);
         Route::resource('trip-packages', PackageController::class);
-        Route::put('drivers/{driver}',[DriverController::class,'updateStatus'])->name('drivers.update-status');
+        Route::put('drivers/{driver}/update-status',[DriverController::class,'updateStatus'])->name('drivers.update-status');
     });
-});
-
-Route::get('/roles', [RoleController::class, 'roles'])->name('roles.index');
-
-
-
-// ----------------------------- form employee ------------------------------//
+    
+    Route::get('/roles', [RoleController::class, 'roles'])->name('roles.index');
+    
+    
+    
+    // ----------------------------- form employee ------------------------------//
 Route::controller(EmployeeController::class)->group(function () {
-    Route::get('all/employee/card', 'cardAllEmployee')->middleware('auth')->name('all/employee/card');
-    Route::get('all/employee/list', 'listAllEmployee')->middleware('auth')->name('all/employee/list');
+    Route::get('all/employee/card', 'cardAllEmployee')->name('employee.card');
+    Route::get('all/employee/list', 'listAllEmployee')->middleware('auth')->name('employee.list');
     Route::post('all/employee/save', 'saveRecord')->middleware('auth')->name('all/employee/save');
     Route::get('all/employee/view/edit/{employee_id}', 'viewRecord');
     Route::post('all/employee/update', 'updateRecord')->middleware('auth')->name('all/employee/update');
@@ -129,6 +128,7 @@ Route::controller(LeavesController::class)->group(function () {
 
 
 Route::resource('fuels', 'App\Http\Controllers\FuelsController', ['except' => ['create', 'edit']]);
+});
 
 Route::get('/calculator', [CalculatorController::class, 'index']);
 Route::post('/calculator', [CalculatorController::class, 'calculate']);

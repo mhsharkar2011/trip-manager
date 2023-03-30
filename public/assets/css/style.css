@@ -1532,6 +1532,7 @@ table.dataTable thead > tr > td.sorting {
 	font-size: 15px;
 	height: auto;
 	padding: 0 20px;
+	text-decoration: none;
 }
 .sidebar-menu li a:hover {
 	color: #fff;

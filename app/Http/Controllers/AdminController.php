@@ -110,7 +110,7 @@ class AdminController extends Controller
         $data['totalVehicles'] = $data['vehicleCount'] + $increase;
 
         // Drivers -------------------------------------------------------------
-        $data['drivers'] = Driver::all();
+        $data['drivers'] = Driver::latest('updated_at')->take(2)->get();
         
         $data['driverCount'] = Driver::count();
         $increase = $data['tripCount'] * 0.10;

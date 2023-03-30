@@ -173,6 +173,14 @@ class User extends Authenticatable
         parent::boot();
     
         static::created(function ($user) {
+
+                if($user->role == 'employee') {
+                    $employee = new Employee();
+                    $employee->user_id = $user->id;
+                    $employee->name = $user->first_name . ' ' . $user->last_name;
+                    $employee->email = $user->email;
+                    $employee->save(); 
+                }
                 if($user->role == 'driver'){
                     $driver = new Driver();
                     $driver->user_id = $user->id;
