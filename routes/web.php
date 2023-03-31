@@ -29,6 +29,8 @@ use Illuminate\Support\Facades\Request;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+/** for side bar menu active */
 function set_active( $route ) {
     if( is_array( $route ) ){
         return in_array(Request::path(), $route) ? 'active' : '';
@@ -59,8 +61,8 @@ Route::group(['middleware'=>'auth'], function() {
         Route::get('logout',[AuthController::class,'logout'])->name('logout');
         Route::resource('drivers',DriverController::class);
         Route::resource('customers',CustomerController::class);
-        // Route::resource('employees',EmployeeController::class);
-        Route::get('all/employees/card',[EmployeeController::class,'allEmployeeCard'])->name('all-employee-card');
+        Route::resource('employees',EmployeeController::class);
+        Route::get('all/employees/card',[EmployeeController::class,'cardAllEmployee'])->name('employee-card');
         Route::resource('vehicles',VehiclesController::class);
         Route::resource('trips',TripController::class);
         Route::resource('trip-packages', PackageController::class);

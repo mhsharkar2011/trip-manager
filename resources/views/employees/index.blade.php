@@ -78,7 +78,7 @@
                                     <td>
                                         <h2 class="table-avatar">
                                             <x-client-avatar :userAvatar="$items->avatar" width="48" height="48" class="rounded-circle" /> &nbsp;&nbsp;
-                                            <a class="text-decoration-none" href="{{ url('employee/profile/'.$items->user_id) }}"> {{ $items->full_name }}</a>
+                                            <a class="text-decoration-none" href="{{ url('employee/profile/'.$items->id) }}"> {{ $items->name }}</a>
                                         </h2>
                                     </td>
                                     <td>{{ $items->id }}</td>

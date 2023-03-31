@@ -77,7 +77,6 @@ class DriverController extends Controller
             $image->move($path, $name);
             $driverObj->avatar = $name;
         }
-        $driverObj->user_id = $request->first_name;
         $driverObj->first_name = $request->first_name;
         $driverObj->last_name = $request->last_name;
         $driverObj->contact_number = $request->contact_number;

@@ -11,7 +11,7 @@
                     <div class="col">
                         <h3 class="page-title text-white">Employee</h3>
                         <ul class="breadcrumb">
-                            <li class="breadcrumb-item text-white"><a href="index.html">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a class="text-white" href="{{ route('admin.dashboard.index') }}">Dashboard</a></li>
                             <li class="breadcrumb-item active text-secondary">Employee</li>
                         </ul>
                     </div>
@@ -51,9 +51,9 @@
                             <thead>
                                 <tr class="text-white">
                                     <th>Name</th>
-                                    <th>Employee ID</th>
-                                    <th>Email</th>
                                     <th>Gender</th>
+                                    <th>Date Of Birth</th>
+                                    <th>Email</th>
                                     <th class="text-nowrap">Join Date</th>
                                     {{-- <th>Role</th> --}}
                                     <th class="text-right no-sort">Action</th>
@@ -65,12 +65,12 @@
                                     <td>
                                         <h2 class="table-avatar">
                                             <a href="{{ url('employee/profile/'.$items->id) }}" class="avatar"> <x-employee-avatar :userAvatar="$items->avatar" width="38" height="38" /> </a>
-                                            <a class="text-white text-decoration-none" href="{{ url('employee/profile/'.$items->id) }}">{{ $items->first_name }}<span></span></a>
+                                            <a class="text-white text-decoration-none" href="{{ url('employee/profile/'.$items->id) }}">{{ $items->name }}<span></span></a>
                                         </h2>
                                     </td>
-                                    <td>{{ $items->id }}</td>
-                                    <td>{{ $items->email }}</td>
                                     <td>{{ $items->gender }}</td>
+                                    <td>{{ $items->birth_date }}</td>
+                                    <td>{{ $items->email }}</td>
                                     <td>{{ $items->created_at }}</td>
                                     {{-- <td>{{ $items->role_name }}</td> --}}
                                     <td class="text-right">
@@ -91,7 +91,6 @@
             </div>
         </div>
         <!-- /Page Content -->
-      
         <!-- Add Employee Modal -->
         <div id="add_employee" class="modal custom-modal fade" role="dialog">
             <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -108,12 +107,11 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label class="col-form-label">First Name</label>
-                                        <select class="select" id="first_name" name="first_name">
+                                        <label class="col-form-label">Full Name</label>
+                                        <select class="form-select" id="full_name" name="name">
                                             <option value="">-- Select --</option>
-                                            
-                                            @foreach ($userList as $key=>$user )
-                                                <option value="{{ $user->first_name }}" data-id={{ $user->id }} data-email={{ $user->email }}>{{ $user->first_name }}</option>
+                                            @foreach ($userList as $user )
+                                                <option value="{{ $user->first_name . ' ' . $user->last_name }}" data-user_id={{ $user->id }} data-employee_email={{ $user->email }}>{{ $user->first_name . ' ' . $user->last_name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -122,21 +120,21 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label class="col-form-label">Email <span class="text-danger">*</span></label>
-                                        <input class="form-control" type="email" id="email" name="email" placeholder="Auto email" readonly>
+                                        <input class="form-control" type="email" id="employee_email" name="email" placeholder="Auto email" readonly>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Birth Date</label>
                                         <div class="cal-icon">
-                                            <input class="form-control datetimepicker" type="text" id="birthDate" name="birthDate">
+                                            <input class="form-control datetimepicker" type="text" id="birth_date" name="birth_date">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Gender</label>
-                                        <select class="select form-control" id="gender" name="gender">
+                                        <select class="form-select form-control" id="gender" name="gender">
                                             <option value="Male">Male</option>
                                             <option value="Female">Female</option>
                                         </select>
@@ -145,17 +143,7 @@
                                 <div class="col-sm-6">  
                                     <div class="form-group">
                                         <label class="col-form-label">Employee ID <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="id" name="id" placeholder="Auto id employee" readonly>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label class="col-form-label">Company</label>
-                                        <select class="select" id="company" name="company">
-                                            <option value="">-- Select --</option>
-                                            <option value="Soeng Souy">Soeng Souy</option>
-                                            <option value="StarGame Kh">StarGame Kh</option>
-                                        </select>
+                                        <input type="text" class="form-control" id="user_id" name="user_id" placeholder="Auto id employee" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -241,10 +229,10 @@
     </script>
     <script>
         // select auto id and email
-        $('#first_name').on('change',function()
+        $('#full_name').on('change',function()
         {
-            $('#id').val($(this).find(':selected').data('id'));
-            $('#email').val($(this).find(':selected').data('email'));
+            $('#user_id').val($(this).find(':selected').data('user_id'));
+            $('#employee_email').val($(this).find(':selected').data('employee_email'));
         });
     </script>
     @endsection
