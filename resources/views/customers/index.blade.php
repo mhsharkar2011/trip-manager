@@ -39,7 +39,7 @@
                                 @foreach ($customers as $customer )
                                 <tr>
                                     <td>{{ $customer->id}}</td>
-                                    <td><x-client-avatar :user="$customer->avatar" width="48" height="48" class="rounded-circle" /></td>
+                                    <td><x-client-avatar :userAvatar="$customer->avatar" width="48" height="48" class="rounded-circle" /></td>
                                     <td>{{ $customer->first_name}} {{ $customer->last_name}}</td>
                                     <td>{{ $customer->contact_number}}</td>
                                     <td>{{ $customer->status}}</td>

@@ -19,7 +19,7 @@
                         <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_employee"><i class="fa fa-plus"></i> Add Employee</a>
                         <div class="view-icons">
                             <a href="{{ route('employee.card') }}" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
-                            <a href="{{ route('employee.list') }}" class="list-view btn btn-link"><i class="fa fa-bars"></i></a>
+                            <a href="{{ route('admin.employees.index') }}" class="list-view btn btn-link"><i class="fa fa-bars"></i></a>
                         </div>
                     </div>
                 </div>
@@ -103,16 +103,17 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{ route('all/employee/save') }}" method="POST">
+                        <form action="{{ route('admin.employees.store') }}" method="POST">
                             @csrf
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label class="col-form-label">Full Name</label>
-                                        <select class="select" id="name" name="name">
+                                        <label class="col-form-label">First Name</label>
+                                        <select class="select" id="first_name" name="first_name">
                                             <option value="">-- Select --</option>
+                                            
                                             @foreach ($userList as $key=>$user )
-                                                <option value="{{ $user->first_name }}" data-employee_id={{ $user->id }} data-email={{ $user->email }}>{{ $user->first_name }}</option>
+                                                <option value="{{ $user->first_name }}" data-id={{ $user->id }} data-email={{ $user->email }}>{{ $user->first_name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -144,7 +145,7 @@
                                 <div class="col-sm-6">  
                                     <div class="form-group">
                                         <label class="col-form-label">Employee ID <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="employee_id" name="employee_id" placeholder="Auto id employee" readonly>
+                                        <input type="text" class="form-control" id="id" name="id" placeholder="Auto id employee" readonly>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
@@ -240,9 +241,9 @@
     </script>
     <script>
         // select auto id and email
-        $('#name').on('change',function()
+        $('#first_name').on('change',function()
         {
-            $('#employee_id').val($(this).find(':selected').data('employee_id'));
+            $('#id').val($(this).find(':selected').data('id'));
             $('#email').val($(this).find(':selected').data('email'));
         });
     </script>

@@ -114,7 +114,7 @@ Route::prefix('v1')
     // Transport APIs
     Route::resource('trips', 'App\Http\Controllers\TripController', ['names'=>'api/trips'], ['except' => ['create', 'edit']]);
     Route::resource('mileages', 'App\Http\Controllers\MileagesController',['names'=>'api/mileages'], ['except' => ['create', 'edit']]);
-    Route::resource('roles', 'App\Http\Controllers\RolesController', ['except' => ['create', 'edit']]);
+    Route::resource('roles', 'App\Http\Controllers\RoleController', ['except' => ['create', 'edit']]);
     Route::resource('role-users', 'App\Http\Controllers\RoleUsersController', ['except' => ['create', 'edit']]);
 
     // Route::resource('posts',PostController::class);

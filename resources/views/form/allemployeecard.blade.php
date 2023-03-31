@@ -20,7 +20,7 @@
                         <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_employee"><i class="fa fa-plus"></i> Add Employee</a>
                         <div class="view-icons">
                             <a href="{{ route('employee.card') }}" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
-                            <a href="{{ route('employee.list') }}" class="list-view btn btn-link"><i class="fa fa-bars"></i></a>
+                            <a href="{{ route('admin.employees.index') }}" class="list-view btn btn-link"><i class="fa fa-bars"></i></a>
                         </div>
                     </div>
                 </div>
@@ -78,7 +78,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{ route('all/employee/save') }}" method="POST">
+                        <form action="{{ route('admin.employees.store') }}" method="POST">
                             @csrf
                             <div class="row">
                                 <div class="col-sm-6">

@@ -1,7 +1,8 @@
-@props(['user'])
+@props(['userAvatar'])
 
-@if ($user)
-    <img src="{{ asset('storage/clients/avatars/'.$user) }}" {{ $attributes }} alt="Avatar">
+@if ($userAvatar)
+    <img src="{{ asset('storage/clients/avatars/'.$userAvatar) }}" {{ $attributes->merge(['class'=>'rounded-circle']) }} alt="Avatar" width="48" height="48" >
 @else
-    <img src="{{ asset('img/avatar.png') }}" alt="{{ $user }}'s avatar" {{ $attributes }} >
+    <img src="{{ asset('img/avatar.png') }}" {{ $attributes->merge(['class'=>'rounded-circle']) }} alt="{{ $userAvatar }}'s avatar" width="48" height="48" >
 @endif
+

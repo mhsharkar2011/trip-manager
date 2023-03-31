@@ -19,7 +19,7 @@
                         @method('PUT')
                         <div class="row">
                             <div class="col-sm-12 text-center">
-                                <x-driver-avatar :user="$driver->avatar" width="200" height="200" class="rounded-circle" />
+                                <x-driver-avatar :userAvatar="$driver->avatar" width="200" height="200" class="rounded-circle" />
                             </div>
                             <div class="col-sm-12 text-center">
                                 <input style="margin-left:215px" type="file" name="avatar" accept="image">

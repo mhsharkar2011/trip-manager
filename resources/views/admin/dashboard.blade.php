@@ -144,7 +144,7 @@ Dashboard- Admin Panel
                         @foreach ($drivers as $driver )
                         <div class="leave-info-box border-secondary">
                             <div class="media align-items-center">
-                                <x-driver-avatar :user="$driver->avatar" width="38" height="38" class="rounded-circle" />
+                                <x-driver-avatar :userAvatar="$driver->avatar" width="38" height="38" />
                                 <div class="media-body">
                                     <div class="text-sm my-0">{{ $driver->full_name }}</div>
                                 </div>
@@ -262,7 +262,7 @@ Dashboard- Admin Panel
                                 <tbody>
                                     @foreach ($clients as $client)   
                                     <tr>
-                                        <td><x-client-avatar :user="$client->avatar" width="48" height="48" class="rounded-circle" /></td>
+                                        <td><x-client-avatar :userAvatar="$client->avatar" width="48" height="48" class="rounded-circle" /></td>
                                         <td>{{ $client->full_name }}</td>
                                         <td>
                                             <h2 ><a class="text-white text-decoration-none" href="#">{{ $client->user->email }}</a></h2>

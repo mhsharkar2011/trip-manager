@@ -1,48 +1,42 @@
 @extends('layouts.master-admin')
 
-@section('title','User')
+@section('title','Profile')
 
 @section('content')
-{{-- Vehicle Insert --}}
 <div class="page-wrapper">
-    <!-- Page Content -->
-    <div class="content container-fluid">
-        <!-- Page Header -->
-            <div class="row d-flex">
-                <div class="col-sm-2">
-                    <a class="btn btn-success text-start" href="{{ route('admin.users.create') }}">Add User</a>
-                </div>
-                <div class="row">
-                    <div class="col-md-8 mt-5 justify-content-center">
-                        <div class="card bg-dark">
-                            <div class="card-header bg-success text-white">User Add Form</div>
-                                @if (session('status'))
-                                <div class="alert alert-success">
-                                    {{ session('status') }}
-                                </div>
-                                @endif
-                            <div class="card-body">
-                                <form method="POST" action="{{ route('admin.users.update',$user->id) }}" enctype="multipart/form-data">
-                                    @csrf
-                                    @method('PUT')
-                                    <div class="form-group">
-                                        <label class="label">First Name:</label>
-                                        <input type="text" name="first_name" class="form-control bg-dark text-white" value="{{ $user->first_name }}"/>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="label">Last Name: </label>
-                                        <input type="text" name="last_name" class="form-control" value="{{ $user->last_name }}"/>
-                                    </div>
-                                    <div class="form-group"><input type="hidden" name="email" class="form-control" value="{{ $user->email }}"/></div>
-                                    <div class="form-group text-center">
-                                        <input type="submit" class="btn btn-success text-uppercase" />
-                                    </div>
-                                </form>
+    <div class="row justify-content-center">
+        <div class="col-md-8 mt-5 justify-content-center">
+            <div class="card">
+                <div class="card-header bg-success text-white">Employee Profile Update</div>
+                    @if (session('status'))
+                    <div class="alert alert-success">
+                        {{ session('status') }}
+                    </div>
+                    @endif
+                <div class="card-body">
+                    <form method="post" action="{{ route('admin.employees.update', $employee->id) }}" enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT')
+                        <div class="row">
+                            <div class="col-sm-12 text-center">
+                                <x-employee-avatar :userAvatar="$driver->avatar" width="200" height="200" />
+                            </div>
+                            <div class="col-sm-12 text-center">
+                                <input style="margin-left:215px" type="file" name="avatar" accept="image">
                             </div>
                         </div>
-                    </div>
+                        <div class="row">
+                            <x-form-input col="6" type="text" label="Full Name" for="name" id="name" name="name" class="" placeholder="" value="{{ $employee->name }}"  />
+                            <x-form-input col="6" type="text" label="Email" for="email" id="email" name="email" class="mt-2" placeholder="" value="{{ $employee->email }}"  />
+                            <x-form-input col="6" type="text" label="Date Of Birth" for="birth_date" id="birth_date" name="birth_date" class="mt-2" placeholder="" value="{{ $employee->birth_date }}"  />
+                            <x-form-input col="6" type="text" label="Gender" for="gender" id="gender" name="gender" class="mt-2" placeholder="" value="{{ $employee->gender }}"  />
+                            <x-form-input col="6" type="number" label="Contact Number" for="contact_number" id="contact_number" name="contact_number" class="mt-2" placeholder="" value="{{ $employee->contact_number }}" readonly />
+                            <x-form-button col="12" type="submit" class="btn btn-success text-uppercase">Submit</x-form-button>
+                        </div>
+                    </form>
                 </div>
             </div>
+        </div>
     </div>
 </div>
 @endsection
