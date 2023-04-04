@@ -332,7 +332,11 @@ Dashboard- Admin Panel
                                                 <div class="progress-bar" role="progressbar" data-toggle="tooltip" title="65%" style="width: 65%"></div>
                                             </div>
                                         </td>
+                                        @if($trip->status != 'Pending')
+                                        <td> <span class="badge bg-inverse-success text-end">{{ $trip->status }}</span></td>
+                                        @else
                                         <td> <span class="badge bg-inverse-warning text-end">{{ $trip->status }}</span></td>
+                                        @endif
                                         <td class="text-end">
                                             <div class="dropdown dropdown-action">
                                                 <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>

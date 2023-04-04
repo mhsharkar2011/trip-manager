@@ -10,6 +10,7 @@ use App\Models\Package;
 use App\Models\Trip;
 use App\Models\User;
 use App\Models\Vehicle;
+use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -130,7 +131,7 @@ class TripController extends Controller
         );
         
 
-
+        Toastr::success('success','Trips Created Successfully');
         return back()->with('status','Trip created successfully');
     }
 
@@ -204,7 +205,7 @@ class TripController extends Controller
             'trip_expenses' =>$tripExpenses,
             'status' =>$status,
         ]);
-
+        Toastr::success('success','Trip Updated Successfully');
         return back()->with('status', 'success');
     }
 
@@ -220,6 +221,7 @@ class TripController extends Controller
         // $trip = Trip::find($Trip);
         $Trip->delete();
 
+        Toastr::success('success','Trip Deleted Successfully');
         return redirect()->route('admin.trips.index')->with('status','Item deleted successfully');
     }
 

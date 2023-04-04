@@ -44,7 +44,7 @@
             <div class="row">
                 <div class="col-md-12 mt-4">
                     <div class="table-responsive">
-                        <table class="table table-dark text-white custom-table datatable">
+                        <table class="table table-striped table-dark text-white custom-table datatable">
                             <thead>
                                 <tr class="text-white">
                                     <th>Name</th>

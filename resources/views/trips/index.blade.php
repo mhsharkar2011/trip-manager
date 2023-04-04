@@ -38,7 +38,7 @@
                     </div>
                     <div class="card-body bg-dark">
                         <div class="table-responsive md-5">
-                            <table class="table table-striped table-dark table-sm align-middle text-white" id="tripDataTable">
+                            <table class="table table-striped table-dark table-sm align-middle text-white datatable">
                                 <thead class=" text-wrap align-middle text-center font-bold">
                                     <tr>
                                         <th>SL No.</th>
@@ -119,7 +119,6 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="pagination justify-content-center">{{ $trips->links() }}</div>
                         
                     </div>
                 </div>
