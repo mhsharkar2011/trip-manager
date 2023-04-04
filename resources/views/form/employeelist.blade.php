@@ -41,9 +41,6 @@
                  </div>
             </form>
             <!-- Search Filter -->
-            {{-- message --}}
-            {!! Toastr::message() !!}
-
             <div class="row">
                 <div class="col-md-12 mt-4">
                     <div class="table-responsive">
@@ -60,25 +57,29 @@
                                 </tr>
                             </thead>
                             <tbody class="text-white">
-                                @foreach ($users as $items )
+                                @foreach ($employees as $employee )
                                 <tr>
                                     <td>
                                         <h2 class="table-avatar">
-                                            <a href="{{ url('employee/profile/'.$items->id) }}" class="avatar"> <x-employee-avatar :userAvatar="$items->avatar" width="38" height="38" /> </a>
-                                            <a class="text-white text-decoration-none" href="{{ url('employee/profile/'.$items->id) }}">{{ $items->name }}<span></span></a>
+                                            <a href="{{ url('employee/profile/'.$employee->id) }}" class="avatar"> <x-employee-avatar :userAvatar="$employee->avatar" width="38" height="38" /> </a>
+                                            <a class="text-white text-decoration-none" href="{{ url('employee/profile/'.$employee->id) }}">{{ $employee->name }}<span></span></a>
                                         </h2>
                                     </td>
-                                    <td>{{ $items->gender }}</td>
-                                    <td>{{ $items->birth_date }}</td>
-                                    <td>{{ $items->email }}</td>
-                                    <td>{{ $items->created_at }}</td>
-                                    {{-- <td>{{ $items->role_name }}</td> --}}
+                                    <td>{{ $employee->gender }}</td>
+                                    <td>{{ $employee->birth_date }}</td>
+                                    <td>{{ $employee->email }}</td>
+                                    <td>{{ $employee->created_at }}</td>
+                                    {{-- <td>{{ $employee->role_name }}</td> --}}
                                     <td class="text-right">
                                         <div class="dropdown dropdown-action">
                                             <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                             <div class="dropdown-menu dropdown-menu-right">
-                                                <a class="dropdown-item" href="{{ url('all/employee/view/edit/'.$items->id) }}"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                                <a class="dropdown-item" href="{{url('all/employee/delete/'.$items->id)}}"onclick="return confirm('Are you sure to want to delete it?')"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                                <a class="dropdown-item" href="{{ url('all/employee/view/edit/'.$employee->id) }}"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                <form id="delete-form-{{ $employee->id }}" action="{{ route('admin.employees.destroy', $employee->id) }}" method="post">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <a class="dropdown-item" href="#" onclick="deleteData({{ $employee->id }})"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                                </form>
                                             </div>
                                         </div>
                                     </td>
@@ -110,7 +111,7 @@
                                         <label class="col-form-label">Full Name</label>
                                         <select class="form-select" id="full_name" name="name">
                                             <option value="">-- Select --</option>
-                                            @foreach ($userList as $user )
+                                            @foreach ($users as $user )
                                                 <option value="{{ $user->first_name . ' ' . $user->last_name }}" data-user_id={{ $user->id }} data-employee_email={{ $user->email }}>{{ $user->first_name . ' ' . $user->last_name }}</option>
                                             @endforeach
                                         </select>

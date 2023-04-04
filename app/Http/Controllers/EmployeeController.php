@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Employee;
 use App\Models\User;
+use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -12,33 +13,34 @@ class EmployeeController extends Controller
     // all employee card view
     public function cardAllEmployee(Request $request)
     {
-        $users = Employee::all(); 
-        $userList = User::all();
-        return view('form.allemployeecard',compact('users','userList'));
+        $employees = Employee::all(); 
+        $users = User::all();
+        return view('form.allemployeecard',compact('employees','users'));
     }
      // all employee list
      public function index()
      {
-        $users = Employee::all();
-        $userList = User::all();
-         return view('form.employeelist',compact('users','userList'));
+        $employees = Employee::all();
+        $users = User::all();
+        return view('form.employeelist',compact('employees','users'));
      }
-
-    
-
-    // public function create()
-    // {   
-    //     $userList = User::all();
-    //     return view('employees.create',compact('userList'));
-    // }
-
 
     public function store(Request $request, Employee $employee)
     {
-        $employee->create($request->all());
+        // $employee = Employee::firstOrCreate($employee);
 
-        return redirect()->back()->with('success','Employee Created Successfully');
+        $employee = $employee->firstOrCreate(
+            ['user_id'=>$request->user_id],
+            $request->all()
+        );
 
+        if($employee->wasRecentlyCreated) {
+            Toastr::success('Employee created successfully','Success');
+        }else {
+            Toastr::warning('Employee already exists','Warning');
+        }
+
+        return redirect()->back();
     }
 
     public function show(Employee $employee)
@@ -59,6 +61,10 @@ class EmployeeController extends Controller
 
     public function destroy(Employee $employee)
     {
-        //
+        $employee->delete();
+        // session()->flash('success', 'Employee deleted');
+        Toastr::success('Employee deleted successfully','Success');
+
+        return redirect()->back();
     }
 }

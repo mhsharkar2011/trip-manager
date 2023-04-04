@@ -23,6 +23,7 @@
     },
     "dependencies": {
         "alpinejs": "^2.8.1",
+        "toastr": "^2.1.4",
         "turbolinks": "^5.2.0"
     }
 }

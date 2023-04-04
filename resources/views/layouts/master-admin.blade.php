@@ -244,6 +244,10 @@
 		<!-- Page Wrapper -->
 		@yield('content')
 		<!-- /Page Wrapper -->
+		<!-- Toastr -->
+		{!! Toastr::message() !!}
+		<!-- /Toastr -->
+
 	</div>
 
     <!-- /Main Wrapper -->
@@ -273,7 +277,10 @@
 	<!-- Custom JS -->
 	<script src="{{ URL::to('assets/js/app.js') }}"></script>
 	@yield('script')
+
     @yield('singlePageScript')
+
+	
 
 </body>
 

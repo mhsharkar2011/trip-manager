@@ -1,9 +1,9 @@
 
 @extends('layouts.master-admin')
 @section('content')
-   
-    <!-- Page Wrapper -->
-    <div class="page-wrapper">
+
+<!-- Page Wrapper -->
+<div class="page-wrapper">
         <!-- Page Content -->
         <div class="content container-fluid">
             <!-- Page Header -->
@@ -31,42 +31,49 @@
             <form action="{{ route('all/employee/search') }}" method="POST">
                 @csrf
                 <div class="row filter-row">
-                   <div class="row col-sm-6 col-md-9" style="margin-top: -32px">
+                    <div class="row col-sm-6 col-md-9" style="margin-top: -32px">
                     <x-form-input  col="4" label="" id="id" for="id" name="id" type="text" class="floating form-focus -mt-4" style="height:50px" placeholder="Employee ID" value=""  />
                     <x-form-input  col="4" label="" id="name" for="name" name="name" type="text" class="floating form-focus" style="height:50px" placeholder="Employee Name" value=""  />
                     <x-form-input  col="4" label="" id="email" for="email" name="email" type="text" class="floating form-focus" style="height:50px" placeholder="Email" value=""  />
                    </div>
-                    <div class="col-sm-6 col-md-3">  
-                        <button type="sumit" class="btn btn-success btn-block" style="width:100%"> Search </button>  
+                   <div class="col-sm-6 col-md-3">  
+                       <button type="sumit" class="btn btn-success btn-block" style="width:100%"> Search </button>  
                     </div>
                 </div>
             </form>
             <!-- Search Filter -->
-            {{-- message --}}
-            {!! Toastr::message() !!}
             <div class="row staff-grid-row mt-4">
-                @foreach ($users as $user )
+                @if ($employees->count() > 0)
+                @foreach ($employees as $employee )
                 <div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3">
                     <div class="profile-widget bg-dark shadow-lg p-3 mb-4 rounded-4 border-1 border-secondary">
                         <div class="profile-img">
-                            <a href="{{ url('employee/profile/'.$user->id) }}" class="avatar"> <x-employee-avatar :userAvatar="$user->avatar" width="80" height="80" /> </a>
+                            <a href="{{ url('employee/profile/'.$employee->id) }}" class="avatar"> <x-employee-avatar :userAvatar="$employee->avatar" width="80" height="80" /> </a>
                         </div>
                         <div class="dropdown profile-action">
                             <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
                             <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" href="{{ url('all/employee/view/edit/'.$user->id) }}"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                <a class="dropdown-item" href="{{url('all/employee/delete/'.$user->id)}}"onclick="return confirm('Are you sure to want to delete it?')"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                    <a class="dropdown-item" href="{{ url('all/employee/view/edit/'.$employee->id) }}"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                <form id="delete-form-{{ $employee->id }}" action="{{ route('admin.employees.destroy', $employee->id) }}" method="post">
+                                    @csrf
+                                    @method('DELETE')
+                                    <a class="dropdown-item" href="#" onclick="deleteData({{ $employee->id }})"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                </form>
                             </div>
                         </div>
-                        <h4 class="user-name m-t-10 mb-0 text-ellipsis"><a class="text-decoration-none text-white" href="profile.html">{{ $user->name }}</a></h4>
-                        {{-- <div class="small text-muted">{{ $user->position }}</div> --}}
+                        <h4 class="user-name m-t-10 mb-0 text-ellipsis"><a class="text-decoration-none text-white" href="#">{{ $employee->name }}</a></h4>
+                        {{-- <div class="small text-muted">{{ $employee->position }}</div> --}}
                     </div>
                 </div>
                 @endforeach
+                @else
+                    <div class="col-lg-12 text-center">
+                        <p class=" text-white mt-4"> No Employee list Found</p>
+                    </div>
+                @endif
             </div>
         </div>
         <!-- /Page Content -->
-
         <!-- Add Employee Modal -->
         <div id="add_employee" class="modal custom-modal fade" role="dialog">
             <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -86,7 +93,7 @@
                                         <label class="col-form-label">Full Name</label>
                                         <select class="form-select" style="width: 100%;" tabindex="-1" aria-hidden="true" id="full_name" name="name">
                                             <option value="">-- Select --</option>
-                                            @foreach ($userList as $user )
+                                            @foreach ($users as $user )
                                                 <option value="{{ $user->first_name . ' ' . $user->last_name }}" data-user_id={{ $user->id }} data-email={{ $user->email }}>{{ $user->first_name . ' ' . $user->last_name }}</option>
                                             @endforeach
                                         </select>
@@ -187,67 +194,4 @@
         
     </div>
     <!-- /Page Wrapper -->
-    @section('script')
-    <script>
-        $("input:checkbox").on('click', function()
-        {
-            var $box = $(this);
-            if ($box.is(":checked"))
-            {
-                var group = "input:checkbox[class='" + $box.attr("class") + "']";
-                $(group).prop("checked", false);
-                $box.prop("checked", true);
-            }
-            else
-            {
-                $box.prop("checked", false);
-            }
-        });
-    </script>
-    <script>
-        $(document).ready(function() {
-            $('.select2s-hidden-accessible').select2({
-                closeOnSelect: false
-            });
-        });
-    </script>
-    <script>
-        // select auto id and email
-        $('#full_name').on('change',function()
-        {
-            $('#user_id').val($(this).find(':selected').data('user_id'));
-            $('#employee_email').val($(this).find(':selected').data('email'));
-        });
-    </script>
-    {{-- update js --}}
-    <script>
-        $(document).on('click','.userUpdate',function()
-        {
-            var _this = $(this).parents('tr');
-            $('#e_id').val(_this.find('.id').text());
-            $('#e_name').val(_this.find('.name').text());
-            $('#e_email').val(_this.find('.email').text());
-            $('#e_phone_number').val(_this.find('.phone_number').text());
-            $('#e_image').val(_this.find('.image').text());
-
-            var name_role = (_this.find(".role_name").text());
-            var _option = '<option selected value="' + name_role+ '">' + _this.find('.role_name').text() + '</option>'
-            $( _option).appendTo("#e_role_name");
-
-            var position = (_this.find(".position").text());
-            var _option = '<option selected value="' +position+ '">' + _this.find('.position').text() + '</option>'
-            $( _option).appendTo("#e_position");
-
-            var department = (_this.find(".department").text());
-            var _option = '<option selected value="' +department+ '">' + _this.find('.department').text() + '</option>'
-            $( _option).appendTo("#e_department");
-
-            var statuss = (_this.find(".statuss").text());
-            var _option = '<option selected value="' +statuss+ '">' + _this.find('.statuss').text() + '</option>'
-            $( _option).appendTo("#e_status");
-            
-        });
-    </script>
     @endsection
-
-@endsection

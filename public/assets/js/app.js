@@ -342,3 +342,62 @@ $(window).on ('load', function (){
 	$('#loader').delay(100).fadeOut('slow');
 	$('#loader-wrapper').delay(500).fadeOut('slow');
 });
+
+// For Checkbox
+$("input:checkbox").on('click', function() {
+	var $box = $(this);
+	if ($box.is(":checked")){
+		var group = "input:checkbox[class='" + $box.attr("class") + "']";
+		$(group).prop("checked", false);
+		$box.prop("checked", true);
+	}else{
+		$box.prop("checked", false);
+	}
+});
+
+$(document).ready(function(){
+	$('.select2s-hidden-accessible').select2({
+		closeOnSelect: false
+	});
+});
+
+// select auto id and email
+$('#full_name').on('change',function(){
+	$('#user_id').val($(this).find(':selected').data('user_id'));
+	$('#employee_email').val($(this).find(':selected').data('email'));
+});
+
+// Delete User
+function deleteData(userId) {
+	if (confirm('Are you sure you want to delete it?')) {
+		document.getElementById('delete-form-' + userId).submit();
+	}
+}
+
+// User Update Form
+$(document).on('click','.userUpdate',function()
+        {
+            var _this = $(this).parents('tr');
+            $('#e_id').val(_this.find('.id').text());
+            $('#e_name').val(_this.find('.name').text());
+            $('#e_email').val(_this.find('.email').text());
+            $('#e_phone_number').val(_this.find('.phone_number').text());
+            $('#e_image').val(_this.find('.image').text());
+
+            var name_role = (_this.find(".role_name").text());
+            var _option = '<option selected value="' + name_role+ '">' + _this.find('.role_name').text() + '</option>'
+            $( _option).appendTo("#e_role_name");
+
+            var position = (_this.find(".position").text());
+            var _option = '<option selected value="' +position+ '">' + _this.find('.position').text() + '</option>'
+            $( _option).appendTo("#e_position");
+            
+            var department = (_this.find(".department").text());
+            var _option = '<option selected value="' +department+ '">' + _this.find('.department').text() + '</option>'
+            $( _option).appendTo("#e_department");
+
+            var statuss = (_this.find(".statuss").text());
+            var _option = '<option selected value="' +statuss+ '">' + _this.find('.statuss').text() + '</option>'
+            $( _option).appendTo("#e_status");
+            
+        });
