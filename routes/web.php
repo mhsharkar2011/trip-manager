@@ -61,8 +61,15 @@ Route::group(['middleware'=>'auth'], function() {
         Route::get('logout',[AuthController::class,'logout'])->name('logout');
         Route::resource('drivers',DriverController::class);
         Route::resource('customers',CustomerController::class);
+
+        // Employee APIs
         Route::resource('employees',EmployeeController::class);
-        Route::get('all/employees/card',[EmployeeController::class,'cardAllEmployee'])->name('employee-card');
+        Route::get('all/employees/card',[EmployeeController::class,'cardAllEmployee'])->name('employees.card');
+        Route::get('employees/card/search', [EmployeeController::class,'employeeSearch'])->name('employees.card.search');
+        Route::get('employees/list/search', [EmployeeController::class,'employeeListSearch'])->name('employee.list.search'); 
+
+
+        // Vehicles APIs
         Route::resource('vehicles',VehiclesController::class);
         Route::resource('trips',TripController::class);
         Route::resource('trip-packages', PackageController::class);
@@ -71,16 +78,6 @@ Route::group(['middleware'=>'auth'], function() {
     });
     
     Route::get('/roles', [RoleController::class, 'roles'])->name('roles.index');
-    
-    
-    
-    // ----------------------------- form employee ------------------------------//
-Route::controller(EmployeeController::class)->group(function () {
-    Route::get('all/employee/card', 'cardAllEmployee')->name('employee.card');
-    Route::post('all/employee/search', 'employeeSearch')->name('all/employee/search');
-    Route::post('all/employee/list/search', 'employeeListSearch')->name('all/employee/list/search'); 
-});
-
 // ----------------------------- profile employee ------------------------------//
 Route::controller(EmployeeController::class)->group(function () {
     Route::get('employee/profile/{user_id}', 'profileEmployee')->middleware('auth');

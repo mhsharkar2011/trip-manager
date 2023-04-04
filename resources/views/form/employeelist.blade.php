@@ -18,7 +18,7 @@
                     <div class="col-auto float-right ml-auto">
                         <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_employee"><i class="fa fa-plus"></i> Add Employee</a>
                         <div class="view-icons">
-                            <a href="{{ route('employee.card') }}" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
+                            <a href="{{ route('admin.employees..card') }}" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
                             <a href="{{ route('admin.employees.index') }}" class="list-view btn btn-link"><i class="fa fa-bars"></i></a>
                         </div>
                     </div>
@@ -27,7 +27,7 @@
 			<!-- /Page Header -->
 
             <!-- Search Filter -->
-            <form action="{{ route('all/employee/list/search') }}" method="POST">
+            <form action="{{ route('admin.employee.list.search') }}" method="POST">
                 @csrf
                 <div class="row filter-row">
                     <div class="row col-sm-6 col-md-9" style="margin-top: -32px">
@@ -41,6 +41,7 @@
                  </div>
             </form>
             <!-- Search Filter -->
+
             <div class="row">
                 <div class="col-md-12 mt-4">
                     <div class="table-responsive">

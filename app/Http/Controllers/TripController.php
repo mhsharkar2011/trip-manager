@@ -27,12 +27,14 @@ class TripController extends Controller
         $Trips = Trip::query();
         $search = $request->input('search');
         if($search){
+            // $Trips = Trip::query();
             $Trips->with('package')->whereHas('package', function($q)use ($search){
                 $q->where('title', 'like', "%{$search}%")
-                  ->orWhere('package_amount', 'LIKE',"%{$search}%" )
-                  ->orWhere('status','LIKE',"%{$search}%");
+                ->orWhere('package_amount', 'LIKE',"%{$search}%" )
+                ->orWhere('status','LIKE',"%{$search}%");
             });
         }
+
         if ($with = request('with')) { //load relationships
             $Trips->with(explode(',', $with));
         }        
@@ -45,19 +47,14 @@ class TripController extends Controller
             $Trips->filter(Trip::getDefaultSorting());
         }          
         
-        $Trips = $Trips->paginate(
-            $items_per_page = request('items_per_page', self::ITEMS_PER_PAGE), 
-            $columns = ['*'], 
-            $pageName = 'page',             
-            request('page', 1)
-        );
+        $Trips = $Trips->paginate();
 
         if( request()->is('api/*')){
             //an api call
             return $this->respond($Trips);
         }else{
             //a web call
-            return view('trips.index',['trips'=>$Trips])->with('id',(request()->input('page', 1) - 1) * self::ITEMS_PER_PAGE);
+            return view('trips.index',['trips'=>$Trips])->with('id');
         }
     }
 

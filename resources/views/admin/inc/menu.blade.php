@@ -20,22 +20,17 @@
         </li>
         <li class="{{set_active(['home','em/dashboard'])}} submenu">
           <a href="#" class="{{ set_active(['home','em/dashboard']) ? 'noti-dot' : '' }}">
-              <i class="la la-dashboard"></i>
+              <i class="fas fa-fw fa-users"></i>
               <span>Employees</span> <span class="menu-arrow"></span>
           </a>
           <ul style="{{ request()->is('/*') ? 'display: block;' : 'display: none;' }}">
-              <li><a class="{{set_active(['home'])}}" href="{{ route('employee.card') }}">All Employees</a></li>
+              <li><a class="{{set_active(['home'])}}" href="{{ route('admin.employees.card') }}">All Employees</a></li>
               <li><a class="{{set_active(['home'])}}" href="{{ route('admin.dashboard.index') }}">Manager</a></li>
-              <li><a class="{{set_active(['home'])}}" href="{{ route('admin.dashboard.index') }}">Drivers</a></li>
-              <li><a class="{{set_active(['home'])}}" href="{{ route('admin.dashboard.index') }}">Users</a></li>
+              <li><a class="{{set_active(['home'])}}" href="{{ route('admin.drivers.index') }}">Drivers</a></li>
+              <li><a class="{{set_active(['home'])}}" href="{{ route('admin.users.index') }}">Users</a></li>
           </ul>
         </li>
 
-        <li class="nav-item shadow-sm p-1 mb-1 rounded-1" style="border-bottom:1px solid #495057">
-          <a class="nav-link" href="{{ route('admin.drivers.index') }}">
-            <i class="fas fa-fw fa-user"></i>
-            <span>Drivers</span></a>
-        </li>
         <li class="nav-item shadow-sm p-1 mb-1 rounded-1" style="border-bottom:1px solid #495057">
           <a class="nav-link" href="{{ route('admin.vehicles.index') }}">
             <i class="fas fa-fw fa-car"></i>

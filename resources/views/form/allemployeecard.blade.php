@@ -19,7 +19,7 @@
                     <div class="col-auto float-right ml-auto">
                         <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_employee"><i class="fa fa-plus"></i> Add Employee</a>
                         <div class="view-icons">
-                            <a href="{{ route('admin.employee-card') }}" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
+                            <a href="{{ route('admin.employees.card') }}" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
                             <a href="{{ route('admin.employees.index') }}" class="list-view btn btn-link"><i class="fa fa-bars"></i></a>
                         </div>
                     </div>
@@ -28,11 +28,12 @@
 			<!-- /Page Header -->
 
             <!-- Search Filter -->
-            <form action="{{ route('all/employee/search') }}" method="POST">
-                @csrf
+            <x-form-search />
+            {{-- <form action="{{ route('admin.employees.card.search') }}" method="GET">
+                
                 <div class="row filter-row">
                     <div class="row col-sm-6 col-md-9" style="margin-top: -32px">
-                    <x-form-input  col="4" label="" id="id" for="id" name="id" type="text" class="floating form-focus -mt-4" style="height:50px" placeholder="Employee ID" value=""  />
+                    <x-form-input  col="4" label="" id="user_id" for="_user_id" name="user_id" type="text" class="floating form-focus -mt-4" style="height:50px" placeholder="Employee ID" value=""  />
                     <x-form-input  col="4" label="" id="name" for="name" name="name" type="text" class="floating form-focus" style="height:50px" placeholder="Employee Name" value=""  />
                     <x-form-input  col="4" label="" id="email" for="email" name="email" type="text" class="floating form-focus" style="height:50px" placeholder="Email" value=""  />
                    </div>
@@ -40,7 +41,7 @@
                        <button type="sumit" class="btn btn-success btn-block" style="width:100%"> Search </button>  
                     </div>
                 </div>
-            </form>
+            </form> --}}
             <!-- Search Filter -->
             <div class="row staff-grid-row mt-4">
                 @if ($employees->count() > 0)
