@@ -9,11 +9,7 @@
             <div class="col-md-8 mt-5 justify-content-center">
                 <div class="card">
                     <div class="card-header bg-success text-white">Driver Add Form</div>
-                        @if (session('status'))
-                        <div class="alert alert-success">
-                            {{ session('status') }}
-                        </div>
-                        @endif
+                    {!! Toastr::message() !!}
                     <div class="card-body">
                         <form method="post" action="{{ route('admin.drivers.store') }}">
                             @csrf

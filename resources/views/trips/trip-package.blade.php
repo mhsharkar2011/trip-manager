@@ -19,8 +19,8 @@
                                 <form method="post" action="{{ route('admin.trip-packages.store') }}">
                                     @csrf
                                         <div class="row">
-                                            <x-form-input col="" type="text" label="Package Name:" for="title" id="title" name="title" class="form-control bg-dark text-white" placeholder="Enter Package Type" value="" />
-                                            <x-form-input col="" type="text" label="Package Amount:" for="package_amount" id="package_amount" name="package_amount" class="form-control bg-dark text-white" placeholder="Enter Package Amount" value="" />
+                                            <x-form-input col="" type="text" label="Package Name:" for="title" id="title" name="title" class="form-control bg-dark text-white" placeholder="Enter Package Name" value="" />
+                                            <x-form-input col="" type="number" label="Package Amount:" for="package_amount" id="package_amount" name="package_amount" class="form-control bg-dark text-white" placeholder="Enter Package Amount" value="" />
                                         </div>
                                         <div class="form-group text-center mt-4">
                                             <input type="submit" class="btn btn-dark bg-inverse-success text-uppercase" />

@@ -12,7 +12,7 @@
                 <div class="col-sm-10">
                     <h3 class="page-title text-white">Welcome to Durojan ! </h3>
                     <ul class="breadcrumb bg-dark mt-2">
-                        <a style="float: right" class="btn btn-success text-right" href="{{ route('admin.customers.create') }}">Add Client</a>
+                        {{-- <a style="float: right" class="btn btn-success text-right" href="{{ route('admin.customers.create') }}">Add Client</a> --}}
                     </ul>
                 </div>
             </div>
@@ -28,7 +28,6 @@
                                 <thead class="border-secondary">
                                     <tr>
                                         <th>ID</th>
-                                        <th>Avatar</th>
                                         <th>Client Name</th>
                                         <th>Contact Number</th>
                                         <th>Status</th>
@@ -39,10 +38,36 @@
                                 @foreach ($customers as $customer )
                                 <tr>
                                     <td>{{ $customer->id}}</td>
-                                    <td><x-client-avatar :userAvatar="$customer->avatar" width="48" height="48" class="rounded-circle" /></td>
-                                    <td>{{ $customer->first_name}} {{ $customer->last_name}}</td>
+                                    <td>
+                                        <x-avatars.customers :userAvatar="$customer->avatar" width="48" height="48" class="rounded-circle" />
+                                        {{ $customer->first_name}} {{ $customer->last_name}}
+                                    </td>
                                     <td>{{ $customer->contact_number}}</td>
-                                    <td>{{ $customer->status}}</td>
+                                    <td>
+                                        <form action="{{ route('admin.customers.update-status', $customer->id) }}" method="POST">
+                                            @csrf
+                                            @method('PUT')
+                                                <div>
+                                                    <select style="display:none" name="status" id="status" class="badge bg-inverse-primary ml-2">
+                                                        @if ($customer->status == 1)
+                                                        <div class=" badge bg-inverse-success ml-2">
+                                                        <option value="0" {{ $customer->status == 0 ? 'selected' : '' }}></option>
+                                                        </div>
+                                                        @else
+                                                        <option value="1" {{ $customer->status == 1 ? 'selected' : '' }}></option>
+                                                        @endif
+                                                    </select>
+                                                </div>
+                                    
+                                            <button type="submit" class="btn">
+                                                @if ($customer->status != 1)
+                                                <span class="badge bg-inverse-warning ml-2">INACTIVE</span>
+                                                @else
+                                                <span class="badge bg-inverse-success ml-2">ACTIVE</span>
+                                                @endif
+                                            </button>
+                                        </form>
+                                    </td>
                                     <td>
                                         <div class="dropdown dropdown-action">
                                             <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>

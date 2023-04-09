@@ -8,11 +8,7 @@
         <div class="col-md-8 mt-5 justify-content-center">
             <div class="card">
                 <div class="card-header bg-success text-white">Driver Profile Update</div>
-                    @if (session('status'))
-                    <div class="alert alert-success">
-                        {{ session('status') }}
-                    </div>
-                    @endif
+                {!! Toastr::message() !!}
                 <div class="card-body">
                     <form method="post" action="{{ route('admin.drivers.update', $driver->id) }}" enctype="multipart/form-data">
                         @csrf

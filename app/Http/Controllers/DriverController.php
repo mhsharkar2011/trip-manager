@@ -188,7 +188,7 @@ class DriverController extends Controller
             if($status == 1 || $status == 0){
             $driver->status = $status;
             $driver->save();
-                return redirect()->back()->with('success', 'Driver status has been updated.');
+                return redirect()->back()->with('status', 'Driver status has been updated.');
             }else{
                 return redirect()->with('error','Invalid Status');
         }

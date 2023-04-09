@@ -24,7 +24,7 @@ class CreateDriversTable extends Migration
             $table->string('contact_number')->nullable();
             $table->text('address')->nullable();
             // $table->enum('status',[Status::ACTIVE,Status::INACTIVE,Status::LEAVE])->default('ACTIVE');
-            $table->integer('status')->default(1);
+            $table->tinyInteger('status')->default(1);
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();

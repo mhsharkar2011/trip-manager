@@ -35,7 +35,6 @@
                                 <thead class="border-secondary">
                                     <tr>
                                     <th>ID</th>
-                                    <th>Avatar</th>
                                     <th>Driver Name</th>
                                     <th>Driver License</th>
                                     <th>Contact Number</th>
@@ -48,8 +47,10 @@
                                     @foreach ($drivers as $driver )
                                     <tr>
                                         <td>{{ ++$id}}</td>
-                                        <td> <x-driver-avatar :userAvatar="$driver->avatar" width="68" height="68" /> </td>
-                                        <td>{{ $driver->first_name}} {{ $driver->last_name}}</td>
+                                        <td> 
+                                            <x-driver-avatar :userAvatar="$driver->avatar" width="68" height="68" /> 
+                                            {{ $driver->first_name}} {{ $driver->last_name}}
+                                        </td>
                                         <td>{{ $driver->driving_license}}</td>
                                         <td>{{ $driver->contact_number}}</td>
                                         <td>{{ $driver->address}}</td>

@@ -60,7 +60,9 @@ Route::group(['middleware'=>'auth'], function() {
         Route::resource('dashboard',AdminController::class);
         Route::get('logout',[AuthController::class,'logout'])->name('logout');
         Route::resource('drivers',DriverController::class);
+        Route::put('drivers/{driver}/update-status',[DriverController::class,'updateStatus'])->name('drivers.update-status');
         Route::resource('customers',CustomerController::class);
+        Route::put('customers/{customer}/update-status',[CustomerController::class,'updateStatus'])->name('customers.update-status');
 
         // Employee APIs
         Route::resource('employees',EmployeeController::class);
@@ -73,7 +75,6 @@ Route::group(['middleware'=>'auth'], function() {
         Route::resource('vehicles',VehiclesController::class);
         Route::resource('trips',TripController::class);
         Route::resource('trip-packages', PackageController::class);
-        Route::put('drivers/{driver}/update-status',[DriverController::class,'updateStatus'])->name('drivers.update-status');
         Route::resource('employees',EmployeeController::class);
     });
     

@@ -28,10 +28,10 @@ class CustomerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        return view('customers.create');
-    }
+    // public function create()
+    // {
+    //     return view('customers.create');
+    // }
 
     /**
      * Store a newly created resource in storage.
@@ -39,31 +39,31 @@ class CustomerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        $request->validate([
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'contact_number' => 'required',
-        ]);
+    // public function store(Request $request)
+    // {
+    //     $request->validate([
+    //         'first_name' => 'required',
+    //         'last_name' => 'required',
+    //         'contact_number' => 'required',
+    //     ]);
 
-        $customerObj = new Customer();
+    //     $customerObj = new Customer();
 
-        if($request->hasFile('avatar')){
-            $image = $request->file('avatar');
-            $name = time().'.'.$image->getClientOriginalExtension();
-            $path = public_path('/upload/customers');
-            $image->move($path, $name);
-            $customerObj->avatar = $name;
-        }
-        $customerObj->user_id = $request->first_name;
-        $customerObj->first_name = $request->first_name;
-        $customerObj->last_name = $request->last_name;
-        $customerObj->contact_number = $request->contact_number;
-        $customerObj->save();
+    //     if($request->hasFile('avatar')){
+    //         $image = $request->file('avatar');
+    //         $name = time().'.'.$image->getClientOriginalExtension();
+    //         $path = public_path('/upload/customers');
+    //         $image->move($path, $name);
+    //         $customerObj->avatar = $name;
+    //     }
+    //     $customerObj->user_id = $request->first_name;
+    //     $customerObj->first_name = $request->first_name;
+    //     $customerObj->last_name = $request->last_name;
+    //     $customerObj->contact_number = $request->contact_number;
+    //     $customerObj->save();
 
-        return redirect()->route('admin.customers.index')->with('success', 'Customer Added Successfully');
-    }
+    //     return redirect()->route('admin.customers.index')->with('success', 'Customer Added Successfully');
+    // }
 
     /**
      * Display the specified resource.
@@ -98,7 +98,7 @@ class CustomerController extends Controller
      */
     public function update(Request $request, Customer $customer)
     {
-        $input = $request->except('avatar');
+        $input = $request->except(['avatar','status']);
         // dd($input);
         if ($customer->avatar && $request->hasFile('avatar')) {
             Storage::delete('public/customers/avatars/' . $customer->avatar);
@@ -130,6 +130,18 @@ class CustomerController extends Controller
             return $this->respond($customer);
         }else{
             return view('admin.customers.index',['customers'=>$customer]);
+        }
+    }
+
+    public function updateStatus(Request $request, Customer $customer)
+    {
+            $status = $request->status;
+            if($status == 1 || $status == 0){
+            $customer->status = $status;
+            $customer->save();
+                return redirect()->back()->with('status', 'Customer status has been updated.');
+            }else{
+                return redirect()->with('error','Invalid Status');
         }
     }
 }

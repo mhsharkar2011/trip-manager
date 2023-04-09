@@ -8,11 +8,7 @@
         <div class="col-md-8 mt-5 justify-content-center">
             <div class="card">
                 <div class="card-header bg-success text-white">Customer Add Form</div>
-                    @if (session('status'))
-                    <div class="alert alert-success">
-                        {{ session('status') }}
-                    </div>
-                    @endif
+                {!! Toastr::message() !!}
                 <div class="card-body">
                     <form method="post" action="{{ route('admin.customers.store') }}">
                         @csrf

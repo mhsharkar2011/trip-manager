@@ -20,7 +20,8 @@ class CreateCustomersTable extends Migration
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
             $table->string('avatar')->nullable();
-            $table->enum('status',[Status::ACTIVE,Status::INACTIVE])->default('ACTIVE');
+            // $table->enum('status',[Status::ACTIVE,Status::INACTIVE])->default('ACTIVE');
+            $table->tinyInteger('status')->default('1');
             $table->string('contact_number')->nullable();
             $table->text('address')->nullable();
             $table->timestamps();
