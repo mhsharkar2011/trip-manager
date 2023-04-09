@@ -7,6 +7,7 @@ use App\Models\User;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class EmployeeController extends Controller
 {
@@ -15,14 +16,14 @@ class EmployeeController extends Controller
     {
         $employees = Employee::all(); 
         $users = User::all();
-        return view('form.allemployeecard',compact('employees','users'));
+        return view('employees.allemployeecard',compact('employees','users'));
     }
      // all employee list
      public function index()
      {
         $employees = Employee::all();
         $users = User::all();
-        return view('form.employeelist',compact('employees','users'));
+        return view('employees.index',compact('employees','users'));
      }
 
     public function store(Request $request, Employee $employee)
@@ -56,7 +57,20 @@ class EmployeeController extends Controller
 
     public function update(Request $request, Employee $employee)
     {
-        //
+        $input = $request->except('avatar');
+        if ($employee->avatar && $request->hasFile('avatar')) {
+            Storage::delete('public/employees/avatars/' . $employee->avatar);
+            $employee->avatar = null;
+        }
+        if ($request->hasFile('avatar')) {
+            $avatar = $request->file('avatar');
+            $filename = $employee->id . '-' . $employee->name . '-' . date('Ymd-Hsi') . '.' . $avatar->getClientOriginalExtension();
+            $avatar->storeAs('public/employees/avatars', $filename);
+            $employee->avatar = $filename;
+            $employee->save();
+        }
+        $employee->update($input);
+        return redirect()->route('admin.customers.index')->with('success', 'Customer Updated Successfully');
     }
 
     public function destroy(Employee $employee)

@@ -98,8 +98,7 @@ class CustomerController extends Controller
      */
     public function update(Request $request, Customer $customer)
     {
-        $input = $request->except(['avatar','status']);
-        // dd($input);
+        $input = $request->except('avatar');
         if ($customer->avatar && $request->hasFile('avatar')) {
             Storage::delete('public/customers/avatars/' . $customer->avatar);
             $customer->avatar = null;
@@ -107,13 +106,12 @@ class CustomerController extends Controller
 
         if ($request->hasFile('avatar')) {
             $avatar = $request->file('avatar');
-            $filename = $customer->id . '-' . $customer->name . '-' . date('Ymd') . '.' . $avatar->getClientOriginalExtension();
+            $filename = $customer->id . '-' . $customer->name . '-' . date('Ymd-Hsi') . '.' . $avatar->getClientOriginalExtension();
             $avatar->storeAs('public/customers/avatars', $filename);
             $customer->avatar = $filename;
             $customer->save();
         }
         $customer->update($input);
-
         return redirect()->route('admin.customers.index')->with('success', 'Customer Updated Successfully');
     }
 

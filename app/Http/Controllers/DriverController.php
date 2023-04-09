@@ -159,7 +159,7 @@ class DriverController extends Controller
         }
         if ($request->hasFile('avatar')) {
             $avatar = $request->file('avatar');
-            $filename = $driver->id . '-' . $driver->name . '-' . date('Ymd') . '.' . $avatar->getClientOriginalExtension();
+            $filename = $driver->id . '-' . $driver->name . '-' . date('Ymd-Hsi') . '.' . $avatar->getClientOriginalExtension();
             $avatar->storeAs('public/drivers/avatars', $filename);
             $driver->avatar = $filename;
             $driver->save();

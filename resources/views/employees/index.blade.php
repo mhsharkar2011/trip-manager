@@ -9,17 +9,17 @@
             <div class="page-header">
                 <div class="row align-items-center">
                     <div class="col">
-                        <h3 class="page-title">Employee</h3>
+                        <h3 class="page-title text-white">Employee</h3>
                         <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Employee</li>
+                            <li class="breadcrumb-item"><a class="text-white" href="{{ route('admin.dashboard.index') }}">Dashboard</a></li>
+                            <li class="breadcrumb-item active text-secondary">Employee</li>
                         </ul>
                     </div>
                     <div class="col-auto float-right ml-auto">
                         <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_employee"><i class="fa fa-plus"></i> Add Employee</a>
                         <div class="view-icons">
-                            <a href="{{ route('admin.all-employee-card') }}" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
-                            {{-- <a href="{{ route('all/employee/list') }}" class="list-view btn btn-link"><i class="fa fa-bars"></i></a> --}}
+                            <a href="{{ route('admin.employees.card') }}" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
+                            <a href="{{ route('admin.employees.index') }}" class="list-view btn btn-link"><i class="fa fa-bars"></i></a>
                         </div>
                     </div>
                 </div>
@@ -27,71 +27,60 @@
 			<!-- /Page Header -->
 
             <!-- Search Filter -->
-            <form action="#" method="POST">
+            <form action="{{ route('admin.employee.list.search') }}" method="POST">
                 @csrf
                 <div class="row filter-row">
-                    <div class="col-sm-6 col-md-3">  
-                        <div class="form-group form-focus">
-                            <input type="text" class="form-control floating" name="employee_id">
-                            <label class="focus-label">Employee ID</label>
-                        </div>
+                    <div class="row col-sm-6 col-md-9" style="margin-top: -32px">
+                     <x-form-input  col="4" label="" id="id" for="id" name="id" type="text" class="floating form-focus -mt-4" style="height:50px" placeholder="Employee ID" value=""  />
+                     <x-form-input  col="4" label="" id="name" for="name" name="name" type="text" class="floating form-focus" style="height:50px" placeholder="Employee Name" value=""  />
+                     <x-form-input  col="4" label="" id="email" for="email" name="email" type="text" class="floating form-focus" style="height:50px" placeholder="Email" value=""  />
                     </div>
-                    <div class="col-sm-6 col-md-3">  
-                        <div class="form-group form-focus">
-                            <input type="text" class="form-control floating">
-                            <label class="focus-label">Employee Name</label>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-3"> 
-                        <div class="form-group form-focus">
-                            <input type="text" class="form-control floating">
-                            <label class="focus-label">Position</label>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-3">  
-                        <button type="sumit" class="btn btn-success btn-block"> Search </button>  
-                    </div>
-                </div>
+                     <div class="col-sm-6 col-md-3">  
+                         <button type="sumit" class="btn btn-success btn-block" style="width:100%"> Search </button>  
+                     </div>
+                 </div>
             </form>
             <!-- Search Filter -->
-            {{-- message --}}
-            {!! Toastr::message() !!}
 
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-12 mt-4">
                     <div class="table-responsive">
-                        <table class="table table-striped custom-table datatable">
+                        <table class="table table-striped table-dark text-white custom-table datatable">
                             <thead>
-                                <tr>
+                                <tr class="text-white">
                                     <th>Name</th>
-                                    <th>Employee ID</th>
+                                    <th>Gender</th>
+                                    <th>Date Of Birth</th>
                                     <th>Email</th>
-                                    <th>Mobile</th>
                                     <th class="text-nowrap">Join Date</th>
-                                    <th>Role</th>
+                                    {{-- <th>Role</th> --}}
                                     <th class="text-right no-sort">Action</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                @foreach ($users as $items )
+                            <tbody class="text-white">
+                                @foreach ($employees as $employee )
                                 <tr>
                                     <td>
                                         <h2 class="table-avatar">
-                                            <x-client-avatar :userAvatar="$items->avatar" width="48" height="48" class="rounded-circle" /> &nbsp;&nbsp;
-                                            <a class="text-decoration-none" href="{{ url('employee/profile/'.$items->id) }}"> {{ $items->name }}</a>
+                                            <a href="{{ url('employee/profile/'.$employee->id) }}" class="avatar"> <x-avatars.employees :userAvatar="$employee->avatar" width="38" height="38" /> </a>
+                                            <a class="text-white text-decoration-none" href="{{ url('employee/profile/'.$employee->id) }}">{{ $employee->name }}<span></span></a>
                                         </h2>
                                     </td>
-                                    <td>{{ $items->id }}</td>
-                                    <td>{{ $items->email }}</td>
-                                    <td>{{ $items->driver->contact_number ?? '0' }}</td>
-                                    <td>{{ \Carbon\Carbon::parse($items->created_at)->format('Y-m-d') }}</td>
-                                    <td>{{ $items->role }}</td>
+                                    <td>{{ $employee->gender }}</td>
+                                    <td>{{ $employee->birth_date }}</td>
+                                    <td>{{ $employee->email }}</td>
+                                    <td>{{ $employee->created_at }}</td>
+                                    {{-- <td>{{ $employee->role_name }}</td> --}}
                                     <td class="text-right">
                                         <div class="dropdown dropdown-action">
                                             <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                             <div class="dropdown-menu dropdown-menu-right">
-                                                <a class="dropdown-item" href="{{ url('all/employee/view/edit/'.$items->user_id) }}"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                                <a class="dropdown-item" href="{{url('all/employee/delete/'.$items->user_id)}}"onclick="return confirm('Are you sure to want to delete it?')"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                                <a class="dropdown-item" href="{{ url('all/employee/view/edit/'.$employee->id) }}"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                <form id="delete-form-{{ $employee->id }}" action="{{ route('admin.employees.destroy', $employee->id) }}" method="post">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <a class="dropdown-item" href="#" onclick="deleteData({{ $employee->id }})"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                                </form>
                                             </div>
                                         </div>
                                     </td>
@@ -104,7 +93,6 @@
             </div>
         </div>
         <!-- /Page Content -->
-      
         <!-- Add Employee Modal -->
         <div id="add_employee" class="modal custom-modal fade" role="dialog">
             <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -116,16 +104,16 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="#" method="POST"> //
+                        <form action="{{ route('admin.employees.store') }}" method="POST">
                             @csrf
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label class="col-form-label">Full Name</label>
-                                        <select class="select" id="name" name="name">
+                                        <select class="form-select" id="full_name" name="name">
                                             <option value="">-- Select --</option>
-                                            @foreach ($userList as $key=>$user )
-                                                <option value="{{ $user->name }}" data-employee_id={{ $user->user_id }} data-email={{ $user->email }}>{{ $user->name }}</option>
+                                            @foreach ($users as $user )
+                                                <option value="{{ $user->first_name . ' ' . $user->last_name }}" data-user_id={{ $user->id }} data-employee_email={{ $user->email }}>{{ $user->first_name . ' ' . $user->last_name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -134,21 +122,21 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label class="col-form-label">Email <span class="text-danger">*</span></label>
-                                        <input class="form-control" type="email" id="email" name="email" placeholder="Auto email" readonly>
+                                        <input class="form-control" type="email" id="employee_email" name="email" placeholder="Auto email" readonly>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Birth Date</label>
                                         <div class="cal-icon">
-                                            <input class="form-control datetimepicker" type="text" id="birthDate" name="birthDate">
+                                            <input class="form-control datetimepicker" type="text" id="birth_date" name="birth_date">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Gender</label>
-                                        <select class="select form-control" id="gender" name="gender">
+                                        <select class="form-select form-control" id="gender" name="gender">
                                             <option value="Male">Male</option>
                                             <option value="Female">Female</option>
                                         </select>
@@ -157,17 +145,7 @@
                                 <div class="col-sm-6">  
                                     <div class="form-group">
                                         <label class="col-form-label">Employee ID <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="employee_id" name="employee_id" placeholder="Auto id employee" readonly>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label class="col-form-label">Company</label>
-                                        <select class="select" id="company" name="company">
-                                            <option value="">-- Select --</option>
-                                            <option value="Soeng Souy">Soeng Souy</option>
-                                            <option value="StarGame Kh">StarGame Kh</option>
-                                        </select>
+                                        <input type="text" class="form-control" id="user_id" name="user_id" placeholder="Auto id employee" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -189,7 +167,7 @@
                                             $key = 0;
                                             $key1 = 0;
                                         ?>
-                                        @foreach ($permission_lists as $lists )
+                                        {{-- @foreach ($permission_lists as $lists )
                                         <tr>
                                             <td>{{ $lists->permission_name }}</td>
                                             <input type="hidden" name="permission[]" value="{{ $lists->permission_name }}">
@@ -219,7 +197,7 @@
                                                 <input type="checkbox" class="export{{ ++$key1 }}" id="export" name="export[]" value="N" {{ $lists->export =="N" ? 'checked' : ''}}>
                                             </td>
                                         </tr>
-                                        @endforeach
+                                        @endforeach --}}
                                     </tbody>
                                 </table>
                             </div>
@@ -250,11 +228,13 @@
                 $box.prop("checked", false);
             }
         });
+    </script>
+    <script>
         // select auto id and email
-        $('#name').on('change',function()
+        $('#full_name').on('change',function()
         {
-            $('#employee_id').val($(this).find(':selected').data('employee_id'));
-            $('#email').val($(this).find(':selected').data('email'));
+            $('#user_id').val($(this).find(':selected').data('user_id'));
+            $('#employee_email').val($(this).find(':selected').data('employee_email'));
         });
     </script>
     @endsection
