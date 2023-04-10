@@ -1,8 +1,5 @@
 @extends('layouts.master-admin')
-@section('title')
-Dashboard- Admin Panel
-@endsection
-
+@section('title','Dashboard | Admin Panel')
 @section('content')
 
 <!-- Loader -->
