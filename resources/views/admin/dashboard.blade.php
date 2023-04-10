@@ -262,7 +262,7 @@ Dashboard- Admin Panel
                                 <tbody>
                                     @foreach ($clients as $client)   
                                     <tr>
-                                        <td><x-client-avatar :userAvatar="$client->avatar" width="48" height="48" class="rounded-circle" /></td>
+                                        <td><x-avatars.customers :userAvatar="$client->avatar" width="48" height="48" class="rounded-circle" /></td>
                                         <td>{{ $client->full_name }}</td>
                                         <td>
                                             <h2 ><a class="text-white text-decoration-none" href="#">{{ $client->user->email }}</a></h2>
