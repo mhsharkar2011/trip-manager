@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Customer;
 use App\Models\User;
+use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
@@ -127,7 +128,8 @@ class CustomerController extends Controller
         if(request()->is('api*')){
             return $this->respond($customer);
         }else{
-            return view('admin.customers.index',['customers'=>$customer]);
+            Toastr::success('Employee deleted successfully','Success');
+            return redirect()->back();
         }
     }
 

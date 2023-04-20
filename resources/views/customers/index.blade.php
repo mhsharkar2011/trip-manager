@@ -29,6 +29,7 @@
                                     <tr>
                                         <th>ID</th>
                                         <th>Client Name</th>
+                                        <th>Address</th>
                                         <th>Contact Number</th>
                                         <th>Status</th>
                                         <th>Action</th>
@@ -38,10 +39,13 @@
                                 @foreach ($customers as $customer )
                                 <tr>
                                     <td>{{ $customer->id}}</td>
-                                    <td>
+                                    <td class="text-start">
                                         <x-avatars.customers :userAvatar="$customer->avatar" width="48" height="48" class="rounded-circle" />
+                                        <span style="margin-left:20px">
                                         {{ $customer->first_name}} {{ $customer->last_name}}
+                                        </span>                                        
                                     </td>
+                                    <td>{{ $customer->address}}</td>
                                     <td>{{ $customer->contact_number}}</td>
                                     <td>
                                         <form action="{{ route('admin.customers.update-status', $customer->id) }}" method="POST">
@@ -75,10 +79,10 @@
                                                 <a class="dropdown-item" href="javascript:void(0)" onclick="editClient({{ $customer->id }})">
                                                      <i class="fa fa-pencil m-r-5"></i>  Edit
                                                 </a>
-                                                <form action="{{ route('admin.customers.destroy', $customer->id) }}" method="post">
+                                                <form id="delete-form-{{ $customer->id }}" action="{{ route('admin.customers.destroy', $customer->id) }}" method="post">
                                                     @csrf
                                                     @method('DELETE')
-                                                <a class="dropdown-item" href="javascript:void(0)">
+                                                <a class="dropdown-item" href="javascript:void(0)" onclick="deleteData({{ $customer->id }})">
                                                     <i class="fa fa-trash-o m-r-5"></i> Delete
                                                 </a>
                                                 </form>
