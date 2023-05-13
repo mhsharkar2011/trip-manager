@@ -41,7 +41,7 @@ class PackageController extends Controller
             return $this->respond($packages);
         }else{
             //a web call
-            return view('trips.trip-package',['packages'=>$packages])->with('id',(request()->input('page', 1) - 1) * self::ITEMS_PER_PAGE);
+            return view('trips.packages.index',['packages'=>$packages])->with('id',(request()->input('page', 1) - 1) * self::ITEMS_PER_PAGE);
         }
         
     }
@@ -53,8 +53,7 @@ class PackageController extends Controller
      */
     public function create(Request $request)
     {
-        
-        return view('trips.trip-package');
+        return view('trips.packages.create');
     }
 
     /**
@@ -81,7 +80,7 @@ class PackageController extends Controller
         if( request()->is('api/*')){
             return $this->respondCreated($package);
         }else{
-            return back()->with('status','Data inserted successfully');
+            return back()->with('status','Package created successfully');
         }
 
     }
@@ -95,7 +94,11 @@ class PackageController extends Controller
      */
     public function show(Package $package)
     {
-        return $this->respond($package);
+        if (request()->is('api/*')){
+            return $this->respond($package);
+        }else{
+            return view('trips.packages.show',['package'=>$package]);
+        }
     }
 
     /**
@@ -120,7 +123,11 @@ class PackageController extends Controller
 
         $package->update($request->all());
 
-        return $this->respond($package);
+        if (request()->is('api/*')){
+            return $this->respond($package);
+        }else{
+            return redirect()->back()->with('status','Package updated successfully');
+        }
     }
 
     /**
@@ -134,6 +141,10 @@ class PackageController extends Controller
     {
         $package->delete();
 
-        return $this->respondDeleted();
+        if (request()->is('api/*')){
+            return $this->respondDeleted();
+        }else{
+            return redirect()->back()->with('status','Package deleted');
+        }
     }
 }
