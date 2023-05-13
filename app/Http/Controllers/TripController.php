@@ -66,7 +66,7 @@ class TripController extends Controller
         $data['vehicles'] = Vehicle::all();
         $data['packages'] = Package::all();
         $data['fuelTypes'] = [FuelTypes::PETROL,FuelTypes::DIESEL,FuelTypes::CNG,FuelTypes::LPG]; // Enum class
-        return view('trips.create-trips',$data);
+        return view('trips.create',$data);
     }
 
     public function store(Request $request)
