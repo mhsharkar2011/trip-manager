@@ -44,15 +44,16 @@ class DriverController extends Controller
             request('page', 1)
         );
 
-        // dd($driver);
-
-        // return $this->respond($driver);
-        return view('drivers.index',['drivers'=>$drivers])->with('id',(request()->input('page', 1) - 1) * self::ITEMS_PER_PAGE);
+        if(request()->is('api/*')){
+            return $this->respond($drivers);
+        }else{
+            return view('drivers.index',['drivers'=>$drivers])->with('id',(request()->input('page', 1) - 1) * self::ITEMS_PER_PAGE);
+        }
     }
 
-    public function create(){
-        return view('drivers.create');
-    }
+    // public function create(){
+    //     return view('drivers.create');
+    // }
     /**
      * Store a newly created resource in storage.
      *
@@ -82,7 +83,12 @@ class DriverController extends Controller
         $driverObj->contact_number = $request->contact_number;
         $driverObj->save();
         Toastr::success('Data Added successfully',"Success");
-        return redirect()->route('admin.drivers.index')->with('success', 'Driver Added Successfully');
+
+        if(request()->is('api/*')){
+            return $this->respond($driverObj);
+        }else{
+            return redirect()->route('admin.drivers.index')->with('success', 'Driver Added Successfully');
+        }
     }
 
     // public function avatarUpdate(Request $request, $id)

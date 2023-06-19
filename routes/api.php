@@ -4,6 +4,7 @@ use App\Http\Controllers\ActivityController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\DriverController;
 use App\Http\Controllers\PasswordRecoveryController;
 use App\Http\Controllers\RolePermissionController;
 use App\Http\Controllers\UserController;
@@ -121,6 +122,7 @@ Route::prefix('v1')
     // Route::resource('comments',CommentController::class);
     
     Route::resource('customers',CustomerController::class);
-
+    
     // Route::resource('trip-packages', 'App\Http\Controllers\PackageController',['names'=>'api/package'], ['except' => ['create', 'edit']]);
+    Route::resource('drivers',DriverController::class)->except('create','edit');
 });

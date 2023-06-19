@@ -8,13 +8,13 @@ services:
     hostname: mysql
     command: --default-authentication-plugin=mysql_native_password    
     ports:
-        - "3307:3306"
+        - "3309:3306"
     volumes:
         - ./db-data/:/var/lib/mysql/
         # - ./docker/db-conf/my.cnf:/etc/mysql/conf.d/my.cnf
     environment:
         - MYSQL_ROOT_PASSWORD=secret
-        - MYSQL_DATABASE=db_laravel
+        - MYSQL_DATABASE=db_trip_manager
         - MYSQL_ALLOW_EMPTY_PASSWORD=no
         - MYSQL_USER=user
         - MYSQL_PASSWORD=secret
@@ -28,7 +28,7 @@ services:
     expose:
         - "80"
     ports:
-      - 8801:80        
+      - 8803:80        
     volumes:
         - ./:/var/www/html
         - ./docker/vhost.conf/:/etc/apache2/sites-available/000-default.conf
@@ -52,18 +52,18 @@ services:
     restart: unless-stopped
     depends_on: [mysql]
     ports:
-      - 8090:80
+      - 8093:80
   
-  rabbitmq:
-    image: rabbitmq:3-management-alpine
-    container_name: rabbitmq_trip_manager
-    restart: unless-stopped
-    ports:
-        - 5673:5672
-        - 15673:15672
-    environment:
-        - RABBITMQ_DEFAULT_USER=admin
-        - RABBITMQ_DEFAULT_PASS=secret          
+  # rabbitmq:
+  #   image: rabbitmq:3-management-alpine
+  #   container_name: rabbitmq_trip_manager
+  #   restart: unless-stopped
+  #   ports:
+  #       - 5673:5672
+  #       - 15673:15672
+  #   environment:
+  #       - RABBITMQ_DEFAULT_USER=admin
+  #       - RABBITMQ_DEFAULT_PASS=secret          
 
   # scheduler:
   #     image: funkyfuture/deck-chores:1
@@ -73,14 +73,14 @@ services:
   #     volumes:
   #       - /var/run/docker.sock:/var/run/docker.sock
 
-  supervisor:
-      build: 
-        context: ./docker/supervisor/
-        dockerfile: supervisor.dockerfile
-      container_name: supervisor_trip_manager
-      volumes:
-        - ./:/var/www/html    
-        - ./docker/supervisor/conf:/etc/supervisor/conf.d
+  # supervisor:
+  #     build: 
+  #       context: ./docker/supervisor/
+  #       dockerfile: supervisor.dockerfile
+  #     container_name: supervisor_trip_manager
+  #     volumes:
+  #       - ./:/var/www/html    
+  #       - ./docker/supervisor/conf:/etc/supervisor/conf.d
 
 # networks:
 #     itconquest:
