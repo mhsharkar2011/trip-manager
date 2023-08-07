@@ -70,13 +70,14 @@
                                                         </select>
                                                     </div>
                                         
-                                                <button type="submit" class="btn">
-                                                    @if ($driver->status != 1)
-                                                    <span class="badge bg-inverse-warning ml-2">INACTIVE</span>
-                                                    @else
-                                                    <span class="badge bg-inverse-success ml-2">ACTIVE</span>
-                                                    @endif
-                                                </button>
+                                                    <button type="submit" class="btn" id="statusButton">
+                                                        @if ($driver->status != 1)
+                                                        <span class="badge bg-inverse-warning ml-2">INACTIVE</span>
+                                                        @else
+                                                        <span class="badge bg-inverse-success ml-2">ACTIVE</span>
+                                                        @endif
+                                                    </button>
+                                                    
                                             </form>
                                         </td>
                                         <td class="text-end">
@@ -124,5 +125,24 @@ function deleteDriver(driverId) {
     }
 }
 </script>
+
+
+<!-- Include jQuery library -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+$(document).ready(function() {
+    var driverStatus = <?php echo json_encode($driver->status); ?>;
+    var button = $("#statusButton");
+
+    if (driverStatus !== 1) {
+        button.find(".badge").removeClass("bg-inverse-success").addClass("bg-inverse-warning").text("INACTIVE");
+    } else {
+        button.find(".badge").removeClass("bg-inverse-warning").addClass("bg-inverse-success").text("ACTIVE");
+    }
+});
+</script>
+
+
 
 @endsection
