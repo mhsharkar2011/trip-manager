@@ -36,3 +36,11 @@ Port: 33006
 ```
 
 Get the database name, user and password from the `docker-compose-local.yml`.
+
+
+### Project Demo
+![Screenshot from 2023-08-27 00-58-41](https://github.com/mhsharkar2011/trip-manager/assets/51879416/67bb758e-2f8f-41e9-93a4-eb827b7a5fce)
+
+![Screenshot from 2023-08-27 00-58-55](https://github.com/mhsharkar2011/trip-manager/assets/51879416/71216e7f-2c9d-4efb-b324-1907a838a7fe)
+
+![Screenshot from 2023-08-27 00-59-05](https://github.com/mhsharkar2011/trip-manager/assets/51879416/fd92bba4-d37c-4a6e-8b77-0afd36ec4284)
