@@ -14,31 +14,31 @@ class EmployeeController extends Controller
     // all employee card view
     public function cardAllEmployee(Request $request)
     {
-        $employees = Employee::all(); 
-        $users = User::all();
-        return view('employees.allemployeecard',compact('employees','users'));
-    }
-     // all employee list
-     public function index()
-     {
         $employees = Employee::all();
         $users = User::all();
-        return view('employees.index',compact('employees','users'));
-     }
+        return view('employees.allemployeecard', compact('employees', 'users'));
+    }
+    // all employee list
+    public function index()
+    {
+        $employees = Employee::all();
+        $users = User::all();
+        return view('employees.index', compact('employees', 'users'));
+    }
 
     public function store(Request $request, Employee $employee)
     {
         // $employee = Employee::firstOrCreate($employee);
 
         $employee = $employee->firstOrCreate(
-            ['user_id'=>$request->user_id],
+            ['user_id' => $request->user_id],
             $request->all()
         );
 
-        if($employee->wasRecentlyCreated) {
-            Toastr::success('Employee created successfully','Success');
-        }else {
-            Toastr::warning('Employee already exists','Warning');
+        if ($employee->wasRecentlyCreated) {
+            Toastr::success('Employee created successfully', 'Success');
+        } else {
+            Toastr::warning('Employee already exists', 'Warning');
         }
 
         return redirect()->back();
@@ -77,15 +77,10 @@ class EmployeeController extends Controller
     {
         $user = $employee->user();
         $employee->delete();
-        if($user){
+        if ($user) {
             $user->delete();
         }
-
-        // session()->flash('success', 'Employee deleted');
-        // if($user){
-        //     $user->delete();
-        // }
-        Toastr::success('Employee deleted successfully','Success');
+        Toastr::success('Employee deleted successfully', 'Success');
 
         return redirect()->back();
     }
