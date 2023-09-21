@@ -75,8 +75,16 @@ class EmployeeController extends Controller
 
     public function destroy(Employee $employee)
     {
+        $user = $employee->user();
         $employee->delete();
+        if($user){
+            $user->delete();
+        }
+
         // session()->flash('success', 'Employee deleted');
+        // if($user){
+        //     $user->delete();
+        // }
         Toastr::success('Employee deleted successfully','Success');
 
         return redirect()->back();

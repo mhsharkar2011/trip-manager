@@ -33,89 +33,95 @@
                         <div class="card-body bg-dark">
                             <div class="table table-responsive md-5">
                                 <table class="table table-bordered table-dark text-white align-middle text-center">
-                                    <thead class="border-secondary">
+                                   @if (isset($drivers) && count($drivers)>0)
+                                   <thead class="border-secondary">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Driver Name</th>
+                                        <th>Driver License</th>
+                                        <th>Contact Number</th>
+                                        <th>Address</th>
+                                        <th>Status</th>
+                                        <th class="text-end">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-white">
+                                    @foreach ($drivers as $driver)
                                         <tr>
-                                            <th>ID</th>
-                                            <th>Driver Name</th>
-                                            <th>Driver License</th>
-                                            <th>Contact Number</th>
-                                            <th>Address</th>
-                                            <th>Status</th>
-                                            <th class="text-end">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="text-white">
-                                        @foreach ($drivers as $driver)
-                                            <tr>
-                                                <td>{{ ++$id }}</td>
-                                                <td>
-                                                    <x-driver-avatar :userAvatar="$driver->avatar" width="48" height="48" />
-                                                    {{ $driver->first_name }} {{ $driver->last_name }}
-                                                </td>
-                                                <td>{{ $driver->driving_license }}</td>
-                                                <td>{{ $driver->contact_number }}</td>
-                                                <td>{{ $driver->address }}</td>
-                                                <td>
-                                                    <form action="{{ route('admin.drivers.update-status', $driver->id) }}"
-                                                        method="POST">
-                                                        @csrf
-                                                        @method('PUT')
-                                                        <div>
-                                                            <select style="display:none" name="status" id="status"
-                                                                class="badge bg-inverse-primary ml-2">
-                                                                @if ($driver->status == 1)
-                                                                    <div class=" badge bg-inverse-success ml-2">
-                                                                        <option value="0"
-                                                                            {{ $driver->status == 0 ? 'selected' : '' }}>
-                                                                        </option>
-                                                                    </div>
-                                                                @else
-                                                                    <option value="1"
-                                                                        {{ $driver->status == 1 ? 'selected' : '' }}>
+                                            <td>{{ ++$id }}</td>
+                                            <td>
+                                                <x-driver-avatar :userAvatar="$driver->avatar" width="48" height="48" />
+                                                {{ $driver->first_name }} {{ $driver->last_name }}
+                                            </td>
+                                            <td>{{ $driver->driving_license }}</td>
+                                            <td>{{ $driver->contact_number }}</td>
+                                            <td>{{ $driver->address }}</td>
+                                            <td>
+                                                <form action="{{ route('admin.drivers.update-status', $driver->id) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <div>
+                                                        <select style="display:none" name="status" id="status"
+                                                            class="badge bg-inverse-primary ml-2">
+                                                            @if ($driver->status == 1)
+                                                                <div class=" badge bg-inverse-success ml-2">
+                                                                    <option value="0"
+                                                                        {{ $driver->status == 0 ? 'selected' : '' }}>
                                                                     </option>
-                                                                @endif
-                                                            </select>
-                                                        </div>
-
-                                                        <button type="submit" class="btn" id="statusButton">
-                                                            @if ($driver->status != 1)
-                                                                <span class="badge bg-inverse-warning ml-2">INACTIVE</span>
+                                                                </div>
                                                             @else
-                                                                <span class="badge bg-inverse-success ml-2">ACTIVE</span>
+                                                                <option value="1"
+                                                                    {{ $driver->status == 1 ? 'selected' : '' }}>
+                                                                </option>
                                                             @endif
-                                                        </button>
-
-                                                    </form>
-                                                </td>
-                                                <td class="text-end">
-                                                    <div class="dropdown dropdown-action">
-                                                        <a href="#" class="action-icon dropdown-toggle"
-                                                            data-toggle="dropdown" aria-expanded="false"><i
-                                                                class="material-icons">more_vert</i></a>
-                                                        <div class="dropdown-menu dropdown-menu-right">
-                                                            <a class="dropdown-item" href="javascript:void(0)"
-                                                                onclick="showDriver({{ $driver->id }})">
-                                                                <i class="fa fa-info m-r-5"></i> View
-                                                            </a>
-                                                            <a class="dropdown-item" href="#"
-                                                                onclick="editDriver({{ $driver->id }})"><i
-                                                                    class="fa fa-pencil m-r-5"></i> Edit</a>
-                                                            <form id="delete-form-{{ $driver->id }}"
-                                                                action="{{ route('admin.drivers.destroy', $driver->id) }}"
-                                                                method="post">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <a class="dropdown-item" href="#"
-                                                                    onclick="deleteDriver({{ $driver->id }})">
-                                                                    <i class="fa fa-trash-o m-r-5"></i> Delete
-                                                                </a>
-                                                            </form>
-                                                        </div>
+                                                        </select>
                                                     </div>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
+
+                                                    <button type="submit" class="btn" id="statusButton">
+                                                        @if ($driver->status != 1)
+                                                            <span class="badge bg-inverse-warning ml-2">INACTIVE</span>
+                                                        @else
+                                                            <span class="badge bg-inverse-success ml-2">ACTIVE</span>
+                                                        @endif
+                                                    </button>
+
+                                                </form>
+                                            </td>
+                                            <td class="text-end">
+                                                <div class="dropdown dropdown-action">
+                                                    <a href="#" class="action-icon dropdown-toggle"
+                                                        data-toggle="dropdown" aria-expanded="false"><i
+                                                            class="material-icons">more_vert</i></a>
+                                                    <div class="dropdown-menu dropdown-menu-right">
+                                                        <a class="dropdown-item" href="javascript:void(0)"
+                                                            onclick="showDriver({{ $driver->id }})">
+                                                            <i class="fa fa-info m-r-5"></i> View
+                                                        </a>
+                                                        <a class="dropdown-item" href="#"
+                                                            onclick="editDriver({{ $driver->id }})"><i
+                                                                class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                        <form id="delete-form-{{ $driver->id }}"
+                                                            action="{{ route('admin.drivers.destroy', $driver->id) }}"
+                                                            method="post">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <a class="dropdown-item" href="#"
+                                                                onclick="deleteDriver({{ $driver->id }})">
+                                                                <i class="fa fa-trash-o m-r-5"></i> Delete
+                                                            </a>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                                    @else
+                                    <h2 class="text-white text-center">
+                                        {{ "No Data Found" }}
+                                    </h2>
+                                   @endif
                                 </table>
                                 <div class="pagination justify-content-center">{{ $drivers->links() }}</div>
                             </div>
@@ -146,22 +152,5 @@
 
     <!-- Include jQuery library -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    <script>
-        $(document).ready(function() {
-            var driverStatus = <?php echo json_encode($driver->status); ?>;
-            var button = $("#statusButton");
-
-            if (driverStatus !== 1) {
-                button.find(".badge").removeClass("bg-inverse-success").addClass("bg-inverse-warning").text(
-                    "INACTIVE");
-            } else {
-                button.find(".badge").removeClass("bg-inverse-warning").addClass("bg-inverse-success").text(
-                    "ACTIVE");
-            }
-        });
-    </script>
-
-
 
 @endsection

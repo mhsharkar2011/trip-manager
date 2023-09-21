@@ -183,8 +183,11 @@ class DriverController extends Controller
      */
     public function destroy(Driver $driver)
     {
+        $user = $driver->user;
         $driver->delete();
-
+        if($user){
+            $user->delete();
+        }
         return redirect()->route('admin.drivers.index')->with('status','Driver deleted successfully');
     }
 

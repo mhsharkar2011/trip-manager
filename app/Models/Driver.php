@@ -76,10 +76,14 @@ class Driver extends baseModel
         // return $vehicles;
     }
 
-    public static function getUser($id)
-    {
-        return User::findOrFail($id);
+    // public static function getUser($id)
+    // {
+    //     return User::findOrFail($id);
         
+    // }
+
+    public function user(){
+        return $this->belongsTo(User::class);
     }
     
 }

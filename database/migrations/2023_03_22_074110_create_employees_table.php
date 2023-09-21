@@ -22,6 +22,7 @@ class CreateEmployeesTable extends Migration
             $table->string('gender')->nullable();
             $table->string('contact_number')->nullable();
             $table->timestamps();
+            $table->softDeletes();
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete()->cascadeOnUpdate();
         });
     }

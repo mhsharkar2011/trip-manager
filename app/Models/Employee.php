@@ -26,6 +26,11 @@ class Employee extends baseModel
 
     protected static function validation_messages_for_update() {
         return self::validation_messages();
-    }     
+    }
+    
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
 }
