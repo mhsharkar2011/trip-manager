@@ -83,8 +83,8 @@ class User extends Authenticatable
     const ROLE_USER = 'user';
 
     const ROLES = [
-        self::ROLE_ADMIN
-        ,self::ROLE_USER
+        self::ROLE_ADMIN,
+        self::ROLE_USER
     ];
 
     public static function validation_rules()
