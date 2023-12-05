@@ -48,7 +48,9 @@ class VehicleFactory extends Factory
                     ]),
                     'model' => $model."-".Str::random(4),
                     'tank_capacity' => '200',
-                    'license_no' => $license_no.rand(8,100000000)
+                    'license_no' => $license_no.rand(8,100000000),
+                    'created_at' =>now(),
+                    'updated_at' =>now(),
                 ];
     }
 }

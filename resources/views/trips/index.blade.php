@@ -22,11 +22,13 @@
                 <div class="card card-table border-secondary flex-fill">
                     <div class="card-header bg-dark ">
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <h3 class="card-title  text-secondary mb-0">Total Trips <span class="badge bg-inverse-danger ml-2">{{ $trips->count() }}</span> </h3> 
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-sm-4">
+                                <form method="GET" action="{{ route('admin.trips.index') }}" class="row gy-2 gx-1 align-items-center">
                                 <x-form-search /> 
+                            </form>
                             </div>
                             <div class="col-md-3 text-end">
                                 <h3 class="card-title  text-success mb-0">Completed Trips <span class="badge bg-inverse-danger ml-2">{{ $trips->where('status','Completed')->count() }}</span> </h3> 
@@ -39,7 +41,7 @@
                     <div class="card-body bg-dark">
                         <div class="table-responsive md-5">
                             <table class="table table-striped table-dark table-sm align-middle text-white datatable">
-                                <thead class=" text-wrap align-middle text-center font-bold">
+                                <thead class="text-wrap align-middle text-center font-bold">
                                     <tr>
                                         <th>SL No.</th>
                                         <th>Booking ID</th>
@@ -167,29 +169,6 @@
     });
 </script> 
 
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('#tripDataTable').DataTable({
-            "paging": true,
-            "searching": false,
-            "ordering": true,
-            "drawCallback": function (settings) {
-                var pagination = $(this).closest('.dataTables_wrapper').find('.pagination');
-                pagination.toggle(this.api().page.info().pages > 1);
-                if (pagination.children().length !== 0) {
-                    pagination.twbsPagination('destroy');
-                }
-                pagination.twbsPagination({
-                    totalPages: this.api().page.info().pages,
-                    visiblePages: 5,
-                    onPageClick: function (event, page) {
-                        this.api().page(page - 1).draw(false);
-                    }.bind(this)
-                });
-            }
-        });
-    });
-</script>
 
 
     @endsection

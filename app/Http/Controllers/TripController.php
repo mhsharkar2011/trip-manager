@@ -31,7 +31,8 @@ class TripController extends Controller
             $Trips->with('package')->whereHas('package', function($q)use ($search){
                 $q->where('title', 'like', "%{$search}%")
                 ->orWhere('package_amount', 'LIKE',"%{$search}%" )
-                ->orWhere('status','LIKE',"%{$search}%");
+                ->orWhere('status','LIKE',"%{$search}%")
+                ->orWhere('booking_period','LIKE',"%{$search}%");
             });
         }
 

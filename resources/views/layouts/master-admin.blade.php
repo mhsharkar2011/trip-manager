@@ -46,7 +46,6 @@
 	<link rel="stylesheet" href="{{ URL::to('assets/css/toastr.min.css') }}">
 	<script src="{{ URL::to('assets/js/toastr_jquery.min.js') }}"></script>
 	<script src="{{ URL::to('assets/js/toastr.min.js') }}"></script>
-
     @yield('singlePageStyle')
 
 </head>
@@ -276,6 +275,7 @@
 	<script src="{{ URL::to('assets/js/multiselect.min.js') }}"></script>		
 	<!-- Custom JS -->
 	<script src="{{ URL::to('assets/js/app.js') }}"></script>
+	<!-- Toastr -->
 	@yield('script')
 
     @yield('singlePageScript')
